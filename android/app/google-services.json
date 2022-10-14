@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "842086655256",
+    "project_id": "nozol-aadd3",
+    "storage_bucket": "nozol-aadd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842086655256:android:6a93bdbbed8c452d696a6d",
+        "android_client_info": {
+          "package_name": "com.example.nozol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_7lb6QLFcYTOVhaQPv3XWTjlT-jbeyKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842086655256:android:e4e28333c4cef724696a6d",
+        "android_client_info": {
+          "package_name": "com.example.nozol_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_7lb6QLFcYTOVhaQPv3XWTjlT-jbeyKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842086655256:android:7eaf3534e2699d66696a6d",
+        "android_client_info": {
+          "package_name": "com.example.nozol_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_7lb6QLFcYTOVhaQPv3XWTjlT-jbeyKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842086655256:android:75bc8812d7e4d3aa696a6d",
+        "android_client_info": {
+          "package_name": "com.example.nozol_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_7lb6QLFcYTOVhaQPv3XWTjlT-jbeyKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842086655256-jftesc11qqi0nuhavr96uqvp6nkj3ljp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
