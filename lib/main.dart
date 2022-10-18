@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nozol_application/firebase_options.dart';
 import 'package:nozol_application/pages/homapage.dart';
+import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import 'package:nozol_application/registration/sign_up.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       '/': (context) => const Welcome(),
       '/signup': (context) => const SignUp(),
       '/login': (context) => const LogIn(),
-      '/HomePage': (context) => const HomePage(),
+      '/NavigationBar': (context) => const NavigationBarPage(),
     });
   }
 }
