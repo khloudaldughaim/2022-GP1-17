@@ -33,7 +33,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 enum SingingCharacter { lafayette, jefferson }
 
 class MyCustomForm extends StatefulWidget {
