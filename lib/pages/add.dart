@@ -27,6 +27,7 @@ class _AddPageState extends State<AddPage> {
   }
 }
 
+
 enum SingingCharacter { lafayette, jefferson }
 
 class MyCustomForm extends StatefulWidget {
@@ -46,6 +47,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isChecked2 = false;
   SingingCharacter? _character = SingingCharacter.lafayette;
   String author = '';
+  int selectedValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +66,98 @@ class MyCustomFormState extends State<MyCustomForm> {
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Column(
+            children: <Widget>[
+              Text(' عقارك: ',
+                  style: TextStyle(fontSize: 20.0),
+                  textDirection: TextDirection.rtl),
+              RadioListTile(
+                title: const Text('للبيع'),
+                value: SingingCharacter.lafayette,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
+                  setState(() {
+                    _character = value;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: const Text('لللايجار'),
+                value: SingingCharacter.jefferson,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
+                  setState(() {
+                    _character = value;
+                  });
+                },
+              ),
+            ],
+          ),
+          Container(
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Text('نوع عقارك: ',
+                        style: TextStyle(fontSize: 20.0),
+                        textDirection: TextDirection.rtl),
+                    Padding(padding: const EdgeInsets.all(20.0)),
+                    Container(
+                      child: DropdownButton(
+                          value: selectedValue,
+                          items: [
+                            DropdownMenuItem(
+                              child: Text("فيلا"),
+                              value: 1,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("شقة"),
+                              value: 2,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("ارض"),
+                              value: 3,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("عمارة"),
+                              value: 4,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("استراحة"),
+                              value: 5,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("مزرعة"),
+                              value: 6,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("مكتب"),
+                              value: 7,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("محل تجاري"),
+                              value: 8,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("مستودع"),
+                              value: 9,
+                            ),
+                          ],
+                          onChanged: (int? value) {
+                            setState(() {
+                              selectedValue = value!;
+                            });
+                          }),
+                    ),
+                  ],
+                )),
+          ),
           TextFormField(
             decoration: const InputDecoration(
-              icon: const Icon(Icons.person),
-              hintText: 'Enter your full name',
-              labelText: 'Name',
+              hintText: 'الرياض',
+              labelText: 'المدينة',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -84,43 +171,136 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-              icon: const Icon(Icons.phone),
-              hintText: 'Enter a phone number',
-              labelText: 'Phone',
+              hintText: 'القيروان',
+              labelText: 'الحي',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter valid phone number';
+                return 'Please enter some text';
               }
               return null;
             },
+            onSaved: (val) {
+              author = val!;
+            },
           ),
-          Row(
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.location_on),
+              hintText: 'العنوان',
+              labelText: 'الموقع',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            onSaved: (val) {
+              author = val!;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.price_change_rounded),
+              hintText: '1000 ر.س',
+              labelText: 'السعر',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            onSaved: (val) {
+              author = val!;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.square_foot),
+              hintText: '500 م2',
+              labelText: 'المساحة',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            onSaved: (val) {
+              author = val!;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: '5 سنوات',
+              labelText: 'عمر العقار',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            onSaved: (val) {
+              author = val!;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.bathroom),
+              hintText: '0',
+              labelText: 'عدد دورات المياه',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            onSaved: (val) {
+              author = val!;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.bedroom_parent),
+              hintText: '0',
+              labelText: 'عدد الغرف',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            onSaved: (val) {
+              author = val!;
+            },
+          ),
+          Column(
             children: <Widget>[
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Checkbox : ',
-                style: TextStyle(fontSize: 17.0),
-              ),
-              Checkbox(
-                checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith(getColor),
-                value: isChecked,
-                onChanged: (bool? value) {
+              Text('يوجد مسبح : ',
+                  style: TextStyle(fontSize: 17.0),
+                  textDirection: TextDirection.rtl),
+              RadioListTile(
+                title: const Text('نعم'),
+                value: SingingCharacter.lafayette,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
                   setState(() {
-                    isChecked = value!;
+                    _character = value;
                   });
                 },
               ),
-              Checkbox(
-                checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith(getColor),
-                value: isChecked2,
-                onChanged: (bool? value) {
+              RadioListTile(
+                title: const Text('لا'),
+                value: SingingCharacter.jefferson,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
                   setState(() {
-                    isChecked2 = value!;
+                    _character = value;
                   });
                 },
               ),
@@ -128,34 +308,60 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           Column(
             children: <Widget>[
-              ListTile(
-                title: const Text('Lafayette'),
-                leading: Radio<SingingCharacter>(
-                  value: SingingCharacter.lafayette,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
-                    setState(() {
-                      _character = value;
-                    });
-                  },
-                ),
+              Text('يوجد قبو : ',
+                  style: TextStyle(fontSize: 17.0),
+                  textDirection: TextDirection.rtl),
+              RadioListTile(
+                title: const Text('نعم'),
+                value: SingingCharacter.lafayette,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
+                  setState(() {
+                    _character = value;
+                  });
+                },
               ),
-              ListTile(
-                title: const Text('Thomas Jefferson'),
-                leading: Radio<SingingCharacter>(
-                  value: SingingCharacter.jefferson,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
-                    setState(() {
-                      _character = value;
-                    });
-                  },
-                ),
+              RadioListTile(
+                title: const Text('لا'),
+                value: SingingCharacter.jefferson,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
+                  setState(() {
+                    _character = value;
+                  });
+                },
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Text('يوجد مصعد : ',
+                  style: TextStyle(fontSize: 17.0),
+                  textDirection: TextDirection.rtl),
+              RadioListTile(
+                title: const Text('نعم'),
+                value: SingingCharacter.lafayette,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
+                  setState(() {
+                    _character = value;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: const Text('لا'),
+                value: SingingCharacter.jefferson,
+                groupValue: _character,
+                onChanged: (SingingCharacter? value) {
+                  setState(() {
+                    _character = value;
+                  });
+                },
               ),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
