@@ -27,8 +27,9 @@ class _AddPageState extends State<AddPage> {
   }
 }
 
+enum classification { rent, sale }
 
-enum SingingCharacter { lafayette, jefferson }
+enum choice { yes, no }
 
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
@@ -43,26 +44,27 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  bool isChecked = false;
-  bool isChecked2 = false;
-  SingingCharacter? _character = SingingCharacter.lafayette;
-  String author = '';
-  int selectedValue = 1;
+  classification? _class = classification.rent;
+  String classification1 = '';
+  choice? _poolCH = choice.no;
+  choice? _basementCH = choice.no;
+  choice? _elevatorCH = choice.no;
+  int type = 1;
+  String type1 = 'villa';
+  String age = '';
+  String city = '';
+  String address = '';
+  String location = '';
+  String price = '';
+  String space = '';
+  String bathNo = '';
+  String roomNo = '';
+  bool pool = false;
+  bool basement = false;
+  bool elevator = false;
 
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -94,21 +96,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             textDirection: TextDirection.rtl),
                                         RadioListTile(
                                           title: const Text('للبيع'),
-                                          value: SingingCharacter.lafayette,
-                                          groupValue: _character,
-                                          onChanged: (SingingCharacter? value) {
+                                          value: classification.sale,
+                                          groupValue: _class,
+                                          onChanged: (classification? value) {
                                             setState(() {
-                                              _character = value;
+                                              _class = value;
+                                              if (_class == classification.sale)
+                                                classification1 = 'sale';
                                             });
                                           },
                                         ),
                                         RadioListTile(
                                           title: const Text('لللايجار'),
-                                          value: SingingCharacter.jefferson,
-                                          groupValue: _character,
-                                          onChanged: (SingingCharacter? value) {
+                                          value: classification.rent,
+                                          groupValue: _class,
+                                          onChanged: (classification? value) {
                                             setState(() {
-                                              _character = value;
+                                              _class = value;
+                                              if (_class == classification.rent)
+                                                classification1 = 'rent';
                                             });
                                           },
                                         ),
@@ -130,7 +136,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                     const EdgeInsets.all(20.0)),
                                             Container(
                                               child: DropdownButton(
-                                                  value: selectedValue,
+                                                  value: type,
                                                   items: [
                                                     DropdownMenuItem(
                                                       child: Text("فيلا"),
@@ -171,7 +177,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   ],
                                                   onChanged: (int? value) {
                                                     setState(() {
-                                                      selectedValue = value!;
+                                                      type = value!;
+                                                      if (type == 1)
+                                                        type1 = 'villa';
+                                                      if (type == 2)
+                                                        type1 = 'apartment';
+                                                      if (type == 3)
+                                                        type1 = 'land';
+                                                      if (type == 4)
+                                                        type1 = 'building';
+                                                      if (type == 5)
+                                                        type1 = 'chalet';
+                                                      if (type == 6)
+                                                        type1 = 'farm';
+                                                      if (type == 7)
+                                                        type1 = 'office';
+                                                      if (type == 8)
+                                                        type1 = 'store';
+                                                      if (type == 9)
+                                                        type1 = 'warehouse';
                                                     });
                                                   }),
                                             ),
@@ -185,12 +209,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      age = val!;
                                     },
                                   ),
                                   Container(
@@ -203,12 +227,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      city = val!;
                                     },
                                   ),
                                   Container(
@@ -221,12 +245,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      address = val!;
                                     },
                                   ),
                                   Container(
@@ -240,12 +264,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      location = val!;
                                     },
                                   ),
                                   Container(
@@ -260,12 +284,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      price = val!;
                                     },
                                   ),
                                   Container(
@@ -279,12 +303,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      space = val!;
                                     },
                                   ),
                                   Container(
@@ -298,12 +322,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      bathNo = val!;
                                     },
                                   ),
                                   Container(
@@ -317,12 +341,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
                                       return null;
                                     },
                                     onSaved: (val) {
-                                      author = val!;
+                                      roomNo = val!;
                                     },
                                   ),
                                   Container(
@@ -337,21 +361,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           textDirection: TextDirection.rtl),
                                       RadioListTile(
                                         title: const Text('نعم'),
-                                        value: SingingCharacter.lafayette,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter? value) {
+                                        value: choice.yes,
+                                        groupValue: _poolCH,
+                                        onChanged: (choice? value) {
                                           setState(() {
-                                            _character = value;
+                                            _poolCH = value;
+                                            if (_poolCH == choice.yes)
+                                              pool = true;
                                           });
                                         },
                                       ),
                                       RadioListTile(
                                         title: const Text('لا'),
-                                        value: SingingCharacter.jefferson,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter? value) {
+                                        value: choice.no,
+                                        groupValue: _poolCH,
+                                        onChanged: (choice? value) {
                                           setState(() {
-                                            _character = value;
+                                            _poolCH = value;
+                                            if (_poolCH == choice.no)
+                                              pool = false;
                                           });
                                         },
                                       ),
@@ -366,21 +394,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           textDirection: TextDirection.rtl),
                                       RadioListTile(
                                         title: const Text('نعم'),
-                                        value: SingingCharacter.lafayette,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter? value) {
+                                        value: choice.yes,
+                                        groupValue: _basementCH,
+                                        onChanged: (choice? value) {
                                           setState(() {
-                                            _character = value;
+                                            _basementCH = value;
+                                            if (_basementCH == choice.yes)
+                                              basement = true;
                                           });
                                         },
                                       ),
                                       RadioListTile(
                                         title: const Text('لا'),
-                                        value: SingingCharacter.jefferson,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter? value) {
+                                        value: choice.no,
+                                        groupValue: _basementCH,
+                                        onChanged: (choice? value) {
                                           setState(() {
-                                            _character = value;
+                                            _basementCH = value;
+                                            if (_basementCH == choice.no)
+                                              basement = false;
                                           });
                                         },
                                       ),
@@ -395,21 +427,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           textDirection: TextDirection.rtl),
                                       RadioListTile(
                                         title: const Text('نعم'),
-                                        value: SingingCharacter.lafayette,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter? value) {
+                                        value: choice.yes,
+                                        groupValue: _elevatorCH,
+                                        onChanged: (choice? value) {
                                           setState(() {
-                                            _character = value;
+                                            _elevatorCH = value;
+                                            if (_elevatorCH == choice.yes)
+                                              elevator = true;
                                           });
                                         },
                                       ),
                                       RadioListTile(
                                         title: const Text('لا'),
-                                        value: SingingCharacter.jefferson,
-                                        groupValue: _character,
-                                        onChanged: (SingingCharacter? value) {
+                                        value: choice.no,
+                                        groupValue: _elevatorCH,
+                                        onChanged: (choice? value) {
                                           setState(() {
-                                            _character = value;
+                                            _elevatorCH = value;
+                                            if (_elevatorCH == choice.no)
+                                              elevator = false;
                                           });
                                         },
                                       ),
@@ -422,10 +458,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
-                                          print("Author $author");
+                                          print(
+                                              "classification: $classification1 , type: $type1 , age: $age , city: $city , address: $address , location: $location , price: $price , space: $space , bathNo: $bathNo , roomNo: $roomNo , pool: $pool , basement: $basement , elevator: $elevator  ");
                                           FirebaseFirestore.instance
                                               .collection('properties')
-                                              .add({'text': author});
+                                              .add({
+                                            'classification': classification1,
+                                            'type': type1,
+                                            'age': age,
+                                            'city': city,
+                                            'address': address,
+                                            'location': location,
+                                            'price': price,
+                                            'space': space,
+                                            'bathNo': bathNo,
+                                            'roomNo': roomNo,
+                                            'pool': pool,
+                                            'basement': basement,
+                                            'elevator': elevator
+                                          });
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             const SnackBar(
