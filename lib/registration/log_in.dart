@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/homapage.dart';
-
+import 'package:nozol_application/pages/navigationbar.dart';
 import '../pages/profile.dart';
 
 class LogIn extends StatefulWidget {
@@ -125,7 +125,7 @@ class _LogInState extends State<LogIn> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ProfilePage())));
+                                              NavigationBarPage())));
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
