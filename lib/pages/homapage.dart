@@ -91,8 +91,38 @@ class _HomePageState extends State<HomePage> {
                       }),
                     ),
 
-               Icon( Icons.schedule, ),
-              Icon( Icons.schedule, ),
+                StreamBuilder<List<Property>>(
+                      stream: readPropertys2(),
+                      builder: ((context, snapshot){
+                        if(snapshot.hasError){
+                          return Text('Something went wrong! ${snapshot.error}');
+                        }else if(snapshot.hasData){
+                          final properties = snapshot.data!;
+                    
+                          return ListView(
+                            children: properties.map(buildProperty).toList(),
+                          );
+                        } else{
+                          return Center(child: CircularProgressIndicator(),);
+                        }
+                      }),
+                    ),
+                StreamBuilder<List<Property>>(
+                      stream: readPropertys3(),
+                      builder: ((context, snapshot){
+                        if(snapshot.hasError){
+                          return Text('Something went wrong! ${snapshot.error}');
+                        }else if(snapshot.hasData){
+                          final properties = snapshot.data!;
+                    
+                          return ListView(
+                            children: properties.map(buildProperty).toList(),
+                          );
+                        } else{
+                          return Center(child: CircularProgressIndicator(),);
+                        }
+                      }),
+                    ),
 
                 ],
               ),
@@ -288,6 +318,20 @@ Widget buildProperty(Property property) =>  Card(
 
 Stream<List<Property>> readPropertys() => FirebaseFirestore.instance
 .collection('properties')
+.snapshots()
+.map((snapshot) =>
+snapshot.docs.map((doc) => Property.fromJson(doc.data())).toList());    
+
+
+Stream<List<Property>> readPropertys2() => FirebaseFirestore.instance
+.collection('properties').where('classification', isEqualTo: 'عقار للبيع')
+.snapshots()
+.map((snapshot) =>
+snapshot.docs.map((doc) => Property.fromJson(doc.data())).toList());    
+
+
+Stream<List<Property>> readPropertys3() => FirebaseFirestore.instance
+.collection('properties').where('classification', isEqualTo: 'عقار للإيجار')
 .snapshots()
 .map((snapshot) =>
 snapshot.docs.map((doc) => Property.fromJson(doc.data())).toList());    
