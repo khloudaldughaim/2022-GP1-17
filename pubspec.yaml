@@ -41,6 +41,8 @@ dependencies:
   firebase_auth: ^4.0.1
   flutter_form_builder: ^7.7.0
   fluttertoast: ^8.1.1
+  image_picker: ^0.8.6
+  firebase_storage: ^11.0.2
 
 
 dev_dependencies:

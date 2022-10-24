@@ -2,6 +2,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -52,6 +56,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  static int i = 1;
+  String property_id = '';
   classification? _class = classification.rent;
   String classification1 = '';
   choice? _poolCH = choice.no;
@@ -70,9 +76,70 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool pool = false;
   bool basement = false;
   bool elevator = false;
+  String imageUrl = '';
 
   @override
   Widget build(BuildContext context) {
+    showAlertDialog(BuildContext context) {
+      // set up the buttons
+      Widget cancelButton = TextButton(
+        child: Text("إلغاء"),
+        onPressed: () async {
+          Navigator.of(context).pop();
+        },
+      );
+      Widget continueButton = TextButton(
+        child: Text("تأكيد"),
+        onPressed: () async {
+          if (imageUrl.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Please upload an image')));
+
+            return;
+          }
+          _formKey.currentState!.save();
+          i++;
+          property_id = "p$i";
+          print(
+              "property_id: $property_id , classification: $classification1 , type: $type1 , property_age: $age , city: $city , neighborhood: $address , location: $location , price: $price , space: $space , number_of_bathroom: $bathNo , number_of_room: $roomNo , pool: $pool , basement: $basement , elevator: $elevator  ");
+          FirebaseFirestore.instance.collection('properties').add({
+            'property_id': property_id,
+            'classification': classification1,
+            'type': type1,
+            'property_age': age,
+            'city': city,
+            'neighborhood': address,
+            'location': location,
+            'price': price,
+            'space': space,
+            'number_of_bathroom': bathNo,
+            'number_of_room': roomNo,
+            'pool': pool,
+            'basement': basement,
+            'elevator': elevator,
+            'image': imageUrl
+          });
+          Navigator.of(context).pop();
+        },
+      );
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("تأكيد"),
+        content: Text("هل أنت متأكد من أنك تريد إضافة هذا العقار؟"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -100,21 +167,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(' عقارك: ',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: "Tajawal-b",
-                                            ),
+                                            style: TextStyle(fontSize: 20.0),
                                             textDirection: TextDirection.rtl),
                                         RadioListTile(
-                                          title: const Text(
-                                            'للبيع',
-                                            style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
-                                            textAlign: TextAlign.start,
-                                          ),
+                                          title: const Text('للبيع'),
                                           value: classification.sale,
                                           groupValue: _class,
                                           onChanged: (classification? value) {
@@ -126,14 +182,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           },
                                         ),
                                         RadioListTile(
-                                          title: const Text(
-                                            'للإيجار',
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
-                                          ),
+                                          title: const Text('لللايجار'),
                                           value: classification.rent,
                                           groupValue: _class,
                                           onChanged: (classification? value) {
@@ -153,10 +202,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         child: Row(
                                           children: [
                                             Text('نوع عقارك: ',
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontFamily: "Tajawal-b",
-                                                ),
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
                                                 textDirection:
                                                     TextDirection.rtl),
                                             Padding(
@@ -167,143 +214,39 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   value: type,
                                                   items: [
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "فيلا",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("فيلا"),
                                                       value: 1,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "شقة",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("شقة"),
                                                       value: 2,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "ارض",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("ارض"),
                                                       value: 3,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "عمارة",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("عمارة"),
                                                       value: 4,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "استراحة",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("استراحة"),
                                                       value: 5,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "مزرعة",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("مزرعة"),
                                                       value: 6,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text(
-                                                        "مكتب",
-                                                        style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
+                                                      child: Text("مكتب"),
                                                       value: 7,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text("محل تجاري",
-                                                          style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              fontFamily:
-                                                                  "Tajawal-m",
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      73,
-                                                                      75,
-                                                                      82))),
+                                                      child: Text("محل تجاري"),
                                                       value: 8,
                                                     ),
                                                     DropdownMenuItem(
-                                                      child: Text("مستودع",
-                                                          style: TextStyle(
-                                                              fontSize: 16.0,
-                                                              fontFamily:
-                                                                  "Tajawal-m",
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      73,
-                                                                      75,
-                                                                      82))),
+                                                      child: Text("مستودع"),
                                                       value: 9,
                                                     ),
                                                   ],
@@ -336,13 +279,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                        hintText: '5 سنوات',
-                                        labelText: 'عمر العقار',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
+                                      hintText: '5 سنوات',
+                                      labelText: 'عمر العقار',
+                                    ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'الرجاء عدم ترك الخانة فارغة!';
@@ -358,13 +297,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                        hintText: 'الرياض',
-                                        labelText: 'المدينة',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
+                                      hintText: 'الرياض',
+                                      labelText: 'المدينة',
+                                    ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'الرجاء عدم ترك الخانة فارغة!';
@@ -380,13 +315,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                        hintText: 'القيروان',
-                                        labelText: 'الحي',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
+                                      hintText: 'القيروان',
+                                      labelText: 'الحي',
+                                    ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'الرجاء عدم ترك الخانة فارغة!';
@@ -402,18 +333,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.location_on,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
+                                      icon: const Icon(Icons.location_on),
                                       hintText: 'العنوان',
                                       labelText: 'الموقع',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -431,17 +353,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   TextFormField(
                                     decoration: const InputDecoration(
                                       icon: const Icon(
-                                        Icons.price_change_rounded,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
+                                          Icons.price_change_rounded),
                                       hintText: '1000 ر.س',
                                       labelText: 'السعر',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -458,18 +372,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.square_foot,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
+                                      icon: const Icon(Icons.square_foot),
                                       hintText: '500 م2',
                                       labelText: 'المساحة',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -486,18 +391,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.bathroom,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
+                                      icon: const Icon(Icons.bathroom),
                                       hintText: '0',
                                       labelText: 'عدد دورات المياه',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -514,18 +410,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   TextFormField(
                                     decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.bedroom_parent,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
+                                      icon: const Icon(Icons.bedroom_parent),
                                       hintText: '0',
                                       labelText: 'عدد الغرف',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -545,21 +432,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text('يوجد مسبح : ',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-b",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
+                                          style: TextStyle(fontSize: 17.0),
                                           textDirection: TextDirection.rtl),
                                       RadioListTile(
-                                        title: const Text(
-                                          'نعم',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
+                                        title: const Text('نعم'),
                                         value: choice.yes,
                                         groupValue: _poolCH,
                                         onChanged: (choice? value) {
@@ -571,14 +447,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         },
                                       ),
                                       RadioListTile(
-                                        title: const Text(
-                                          'لا',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
+                                        title: const Text('لا'),
                                         value: choice.no,
                                         groupValue: _poolCH,
                                         onChanged: (choice? value) {
@@ -596,21 +465,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text('يوجد قبو : ',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-b",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
+                                          style: TextStyle(fontSize: 17.0),
                                           textDirection: TextDirection.rtl),
                                       RadioListTile(
-                                        title: const Text(
-                                          'نعم',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
+                                        title: const Text('نعم'),
                                         value: choice.yes,
                                         groupValue: _basementCH,
                                         onChanged: (choice? value) {
@@ -622,14 +480,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         },
                                       ),
                                       RadioListTile(
-                                        title: const Text(
-                                          'لا',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
+                                        title: const Text('لا'),
                                         value: choice.no,
                                         groupValue: _basementCH,
                                         onChanged: (choice? value) {
@@ -647,21 +498,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text('يوجد مصعد : ',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-b",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
+                                          style: TextStyle(fontSize: 17.0),
                                           textDirection: TextDirection.rtl),
                                       RadioListTile(
-                                        title: const Text(
-                                          'نعم',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
+                                        title: const Text('نعم'),
                                         value: choice.yes,
                                         groupValue: _elevatorCH,
                                         onChanged: (choice? value) {
@@ -673,14 +513,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         },
                                       ),
                                       RadioListTile(
-                                        title: const Text(
-                                          'لا',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
+                                        title: const Text('لا'),
                                         value: choice.no,
                                         groupValue: _elevatorCH,
                                         onChanged: (choice? value) {
@@ -693,59 +526,87 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                     ],
                                   ),
+                                  Container(
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          children: [
+                                            Text(' إرفع صورة: ',
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
+                                                textDirection:
+                                                    TextDirection.rtl),
+                                            IconButton(
+                                                onPressed: () async {
+                                                  ImagePicker imagePicker =
+                                                      ImagePicker();
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery);
+                                                  print('${file?.path}');
+
+                                                  if (file == null) return;
+                                                  //Import dart:core
+                                                  String uniqueFileName =
+                                                      DateTime.now()
+                                                          .millisecondsSinceEpoch
+                                                          .toString();
+
+                                                  /*Step 2: Upload to Firebase storage*/
+                                                  //Install firebase_storage
+                                                  //Import the library
+
+                                                  //Get a reference to storage root
+                                                  Reference referenceRoot =
+                                                      FirebaseStorage.instance
+                                                          .ref();
+                                                  Reference referenceDirImages =
+                                                      referenceRoot
+                                                          .child('images');
+
+                                                  //Create a reference for the image to be stored
+                                                  Reference
+                                                      referenceImageToUpload =
+                                                      referenceDirImages
+                                                          .child('name');
+
+                                                  //Handle errors/success
+                                                  try {
+                                                    //Store the file
+                                                    await referenceImageToUpload
+                                                        .putFile(
+                                                            File(file.path));
+                                                    //Success: get the download URL
+                                                    imageUrl =
+                                                        await referenceImageToUpload
+                                                            .getDownloadURL();
+                                                  } catch (error) {
+                                                    //Some error occurred
+                                                  }
+                                                },
+                                                icon: Icon(Icons.photo_camera)),
+                                          ],
+                                        )),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 10),
                                     child: ElevatedButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          _formKey.currentState!.save();
-                                          print(
-                                              "classification: $classification1 , type: $type1 , age: $age , city: $city , address: $address , location: $location , price: $price , space: $space , bathNo: $bathNo , roomNo: $roomNo , pool: $pool , basement: $basement , elevator: $elevator  ");
-                                          FirebaseFirestore.instance
-                                              .collection('properties')
-                                              .add({
-                                            'classification': classification1,
-                                            'type': type1,
-                                            'age': age,
-                                            'city': city,
-                                            'address': address,
-                                            'location': location,
-                                            'price': price,
-                                            'space': space,
-                                            'bathNo': bathNo,
-                                            'roomNo': roomNo,
-                                            'pool': pool,
-                                            'basement': basement,
-                                            'elevator': elevator
-                                          });
+                                          showAlertDialog(context);
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             const SnackBar(
                                                 content:
-                                                    Text('جاري اضافة العقار')),
+                                                    Text('Processing Data')),
                                           );
                                         }
                                       },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Color.fromARGB(
-                                                    255, 127, 166, 233)),
-                                        padding: MaterialStateProperty.all(
-                                            EdgeInsets.symmetric(
-                                                horizontal: 30, vertical: 10)),
-                                        shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(27))),
-                                      ),
-                                      child: const Text(
-                                        'إرسال',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: "Tajawal-m"),
-                                      ),
+                                      child: const Text('إضافة'),
                                     ),
                                   ),
                                 ],
