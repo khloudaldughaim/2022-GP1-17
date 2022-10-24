@@ -55,26 +55,51 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(       
-        body: StreamBuilder<List<Property>>(
-            stream: readPropertys(),
-            builder: ((context, snapshot){
-              if(snapshot.hasError){
-                return Text('Something went wrong! ${snapshot.error}');
-              }else if(snapshot.hasData){
-                final properties = snapshot.data!;
-    
-                return ListView(
-                  children: properties.map(buildProperty).toList(),
-                );
-              } else{
-                return Center(child: CircularProgressIndicator(),);
-              }
-            }),
+    return MaterialApp(
+      home:  SafeArea(
+        child: DefaultTabController(
+          length: 3,
+            child: Scaffold(  
+               appBar: AppBar(
+                backgroundColor:Color.fromARGB(255, 127, 166, 233),
+                title: const Text('نزل'),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: 'الكل',),
+                Tab(text: 'للبيع',),
+                Tab(text: 'للإيجار', ),
+
+              ],
+            ),  
+               ),   
+              body: TabBarView(
+                children: [
+                  StreamBuilder<List<Property>>(
+                      stream: readPropertys(),
+                      builder: ((context, snapshot){
+                        if(snapshot.hasError){
+                          return Text('Something went wrong! ${snapshot.error}');
+                        }else if(snapshot.hasData){
+                          final properties = snapshot.data!;
+                    
+                          return ListView(
+                            children: properties.map(buildProperty).toList(),
+                          );
+                        } else{
+                          return Center(child: CircularProgressIndicator(),);
+                        }
+                      }),
+                    ),
+
+               Icon( Icons.schedule, ),
+              Icon( Icons.schedule, ),
+
+                ],
+              ),
+              ),
           ),
-        ),
-    );
+      ),
+      );
   }
 }
 
