@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:nozol_application/firebase_options.dart';
 import 'package:nozol_application/pages/homapage.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
+import 'package:nozol_application/registration/forgetPassword.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import 'package:nozol_application/registration/sign_up.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       '/signup': (context) => const SignUp(),
       '/login': (context) => const LogIn(),
       '/NavigationBar': (context) => const NavigationBarPage(),
+      '/forgetPassword': (context) => const forgetPassword(),
     });
   }
 }

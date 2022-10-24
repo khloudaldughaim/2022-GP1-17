@@ -3,8 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/homapage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../pages/navigationbar.dart';
 
 class SignUp extends StatefulWidget {
@@ -38,6 +37,7 @@ class _SignUpState extends State<SignUp> {
           height: double.infinity,
           width: double.infinity,
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Stack(
               children: [
                 SizedBox(
@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUp> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 70,
+                          height: 50,
                         ),
                         Text(
                           "إنشاء حساب",
@@ -57,7 +57,11 @@ class _SignUpState extends State<SignUp> {
                               color: Color.fromARGB(255, 127, 166, 233)),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 8,
+                        ),
+                        Image.asset(
+                          "assets/images/logo.png",
+                          width: 200,
                         ),
                         SizedBox(
                           height: 20,
@@ -121,6 +125,8 @@ class _SignUpState extends State<SignUp> {
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: " البريد الإلكتروني :",
+                                  hintText: "exampel@gmail.com",
+                                  hintStyle: TextStyle(fontSize: 10),
                                   border: InputBorder.none),
                               validator: (value) {
                                 if (value!.isEmpty ||
@@ -159,6 +165,8 @@ class _SignUpState extends State<SignUp> {
                                       size: 19,
                                     ),
                                     labelText: "رقم الجوال :",
+                                    hintText: "05xxxxxxxx",
+                                    hintStyle: TextStyle(fontSize: 10),
                                     border: InputBorder.none),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -201,6 +209,9 @@ class _SignUpState extends State<SignUp> {
                                     size: 19,
                                   ),
                                   labelText: "كلمة المرور:",
+                                  hintText:
+                                      "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ",
+                                  hintStyle: TextStyle(fontSize: 10),
                                   border: InputBorder.none),
                               validator: (value) {
                                 RegExp uper = RegExp(r"(?=.*[A-Z])");
@@ -260,24 +271,56 @@ class _SignUpState extends State<SignUp> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            if (signformkey.currentState!.validate()) {
-                              await FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
-                                      email: _emailController.text.trim(),
-                                      password: _passwordController.text.trim())
-                                  .then((value) {
-                                final suser = Suser(
+                            try {
+                              if (signformkey.currentState!.validate()) {
+                                await FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: _emailController.text.trim(),
+                                        password:
+                                            _passwordController.text.trim())
+                                    .then((value) {
+                                  final suser = Suser(
                                     name: _usernameController.text,
                                     phoneNumber: _phonenumberController.text,
-                                    email: _emailController
-                                        .text); //creat user in database
-                                createSuser(suser);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NavigationBarPage()));
-                              });
+                                    email: _emailController.text,
+                                  ); //creat user in database
+                                  Fluttertoast.showToast(
+                                    msg: "تم تسجيل حسابك بنجاح",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor:
+                                        Color.fromARGB(255, 127, 166, 233),
+                                    textColor:
+                                        Color.fromARGB(255, 248, 249, 250),
+                                    fontSize: 18.0,
+                                  );
+                                  createSuser(suser);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              NavigationBarPage()));
+                                });
+                              }
+                            } on FirebaseAuthException catch (error) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("خطأ"),
+                                      content: Text(
+                                          "البريد الألكتروني موجود مسبقاً"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text("حسناً"),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
                             }
                           },
                           style: ButtonStyle(
@@ -297,7 +340,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -320,6 +363,9 @@ class _SignUpState extends State<SignUp> {
                                   fontSize: 14, fontFamily: "Tajawal-l"),
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                       ],
                     ),
