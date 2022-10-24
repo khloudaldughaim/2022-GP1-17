@@ -87,6 +87,8 @@ class _LogInState extends State<LogIn> {
                                               255, 127, 166, 233),
                                         ),
                                         labelText: " البريد الإلكتروني :",
+                                        labelStyle:
+                                            TextStyle(fontFamily: "Tajawal-l"),
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty || email.text == "") {
@@ -113,11 +115,11 @@ class _LogInState extends State<LogIn> {
                                         AutovalidateMode.onUserInteraction,
                                     obscureText: true,
                                     decoration: InputDecoration(
-                                        suffix: Icon(
-                                          Icons.visibility,
-                                          color: Color.fromARGB(
-                                              255, 127, 166, 233),
-                                        ),
+                                        //suffix: Icon(
+                                        // Icons.visibility,
+                                        // color: Color.fromARGB(
+                                        // 255, 127, 166, 233),
+                                        //  ),
                                         icon: Icon(
                                           Icons.lock,
                                           color: Color.fromARGB(
@@ -125,6 +127,8 @@ class _LogInState extends State<LogIn> {
                                           size: 19,
                                         ),
                                         labelText: "كلمة المرور:",
+                                        labelStyle:
+                                            TextStyle(fontFamily: "Tajawal-l"),
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty ||
@@ -193,7 +197,7 @@ class _LogInState extends State<LogIn> {
                                     Color.fromARGB(255, 127, 166, 233)),
                                 padding: MaterialStateProperty.all(
                                     EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 10)),
+                                        horizontal: 40, vertical: 10)),
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
@@ -202,7 +206,7 @@ class _LogInState extends State<LogIn> {
                               child: Text(
                                 "تسجيل الدخول",
                                 style: TextStyle(
-                                    fontSize: 20, fontFamily: "Tajawal-l"),
+                                    fontSize: 18, fontFamily: "Tajawal-m"),
                               ),
                             ),
                             SizedBox(

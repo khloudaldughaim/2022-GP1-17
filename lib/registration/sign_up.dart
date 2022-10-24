@@ -88,6 +88,8 @@ class _SignUpState extends State<SignUp> {
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: "  الأسم  :",
+                                  labelStyle:
+                                      TextStyle(fontFamily: "Tajawal-l"),
                                   border: InputBorder.none),
                               validator: (value) {
                                 if (value!.isEmpty ||
@@ -125,6 +127,8 @@ class _SignUpState extends State<SignUp> {
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: " البريد الإلكتروني :",
+                                  labelStyle:
+                                      TextStyle(fontFamily: "Tajawal-l"),
                                   hintText: "exampel@gmail.com",
                                   hintStyle: TextStyle(fontSize: 10),
                                   border: InputBorder.none),
@@ -165,6 +169,8 @@ class _SignUpState extends State<SignUp> {
                                       size: 19,
                                     ),
                                     labelText: "رقم الجوال :",
+                                    labelStyle:
+                                        TextStyle(fontFamily: "Tajawal-l"),
                                     hintText: "05xxxxxxxx",
                                     hintStyle: TextStyle(fontSize: 10),
                                     border: InputBorder.none),
@@ -199,16 +205,19 @@ class _SignUpState extends State<SignUp> {
                               enableSuggestions: false,
                               autocorrect: false,
                               decoration: InputDecoration(
-                                  suffix: Icon(
-                                    Icons.visibility,
-                                    color: Color.fromARGB(255, 127, 166, 233),
-                                  ),
+                                  //suffix: Icon(
+                                  // Icons.visibility,
+                                  // color: Color.fromARGB(
+                                  // 255, 127, 166, 233),
+                                  //  ),
                                   icon: Icon(
                                     Icons.lock,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                     size: 19,
                                   ),
                                   labelText: "كلمة المرور:",
+                                  labelStyle:
+                                      TextStyle(fontFamily: "Tajawal-l"),
                                   hintText:
                                       "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ",
                                   hintStyle: TextStyle(fontSize: 10),
@@ -247,16 +256,19 @@ class _SignUpState extends State<SignUp> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
-                                    suffix: Icon(
-                                      Icons.visibility,
-                                      color: Color.fromARGB(255, 127, 166, 233),
-                                    ),
+                                    //suffix: Icon(
+                                    // Icons.visibility,
+                                    // color: Color.fromARGB(
+                                    // 255, 127, 166, 233),
+                                    //  ),
                                     icon: Icon(
                                       Icons.lock,
                                       color: Color.fromARGB(255, 127, 166, 233),
                                       size: 19,
                                     ),
                                     labelText: "تأكيد كلمة المرور:",
+                                    labelStyle:
+                                        TextStyle(fontFamily: "Tajawal-l"),
                                     border: InputBorder.none),
                                 validator: (value) {
                                   if (value !=
@@ -328,7 +340,7 @@ class _SignUpState extends State<SignUp> {
                                 Color.fromARGB(255, 127, 166, 233)),
                             padding: MaterialStateProperty.all(
                                 EdgeInsets.symmetric(
-                                    horizontal: 50, vertical: 10)),
+                                    horizontal: 40, vertical: 10)),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(27))),
@@ -336,7 +348,7 @@ class _SignUpState extends State<SignUp> {
                           child: Text(
                             "إنشاء حساب",
                             style: TextStyle(
-                                fontSize: 20, fontFamily: "Tajawal-l"),
+                                fontSize: 20, fontFamily: "Tajawal-m"),
                           ),
                         ),
                         SizedBox(
