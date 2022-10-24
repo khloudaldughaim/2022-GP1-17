@@ -96,7 +96,7 @@ class _forgetPasswordState extends State<forgetPassword> {
                     }));
                   } on FirebaseAuthException catch (e) {
                     Fluttertoast.showToast(
-                      msg: "أدخل البريد الألكتروني بالشكل الصحيح",
+                      msg: "البريد الإلكتروني غير مسجل لدينا",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 3,
