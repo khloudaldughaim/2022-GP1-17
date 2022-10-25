@@ -49,28 +49,37 @@ class _forgetPasswordState extends State<forgetPassword> {
               ),
               //email textfield
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: Directionality(
                     textDirection: TextDirection.rtl,
-                    child: TextField(
+                    child: TextFormField(
                       controller: email,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromARGB(255, 212, 214, 219),
-                          ),
-                          borderRadius: BorderRadius.circular(20),
+                        prefixIcon: Icon(
+                          Icons.mail,
+                          color: Color.fromARGB(255, 127, 166, 233),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(
-                            color: Color.fromARGB(255, 127, 166, 233),
-                          ),
-                        ),
-                        hintText: "البريد الألكتروني ",
-                        fillColor: Color.fromARGB(255, 212, 214, 219),
+                        labelText: " البريد الإلكتروني :",
+                        labelStyle: TextStyle(fontFamily: "Tajawal-m"),
+                        hintText: "exampel@gmail.com",
+                        hintStyle: TextStyle(fontSize: 10),
+                        fillColor: Color.fromARGB(255, 225, 225, 228),
                         filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(66.0),
+                            borderSide: const BorderSide(
+                                width: 0, style: BorderStyle.none)),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty || email.text.trim() == "") {
+                          return "البريد الألكتروني مطلوب ";
+                        } else if (!RegExp(
+                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                            .hasMatch(value)) {
+                          return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@gmail.com)';
+                        }
+                      },
                     ),
                   )),
               SizedBox(

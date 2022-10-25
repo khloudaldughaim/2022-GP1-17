@@ -64,220 +64,226 @@ class _SignUpState extends State<SignUp> {
                           width: 200,
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 25,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 212, 214, 219),
-                            borderRadius: BorderRadius.circular(66),
-                          ),
-                          width: 310,
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              controller: _usernameController,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              obscureText: false,
-                              enableSuggestions: true,
-                              autocorrect: true,
-                              decoration: InputDecoration(
-                                  icon: Icon(
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: TextFormField(
+                                controller: _usernameController,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(
                                     Icons.person,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: "  الأسم  :",
                                   labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-l"),
-                                  border: InputBorder.none),
-                              validator: (value) {
-                                if (value!.isEmpty ||
-                                    _usernameController.text.trim() == "") {
-                                  return "الأسم مطلوب ";
-                                } else if (value.length < 2) {
-                                  return "الأسم يجب ان يكون خانتين فأكثر ";
-                                }
-                              },
-                            ),
-                          ),
-                        ),
+                                      TextStyle(fontFamily: "Tajawal-m"),
+                                  fillColor: Color.fromARGB(255, 225, 225, 228),
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(66.0),
+                                      borderSide: const BorderSide(
+                                          width: 0, style: BorderStyle.none)),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _usernameController.text.trim() == "") {
+                                    return "الأسم مطلوب ";
+                                  } else if (value.length < 2) {
+                                    return "الأسم يجب ان يكون خانتين فأكثر ";
+                                  }
+                                },
+                              ),
+                            )),
                         SizedBox(
                           height: 23,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 212, 214, 219),
-                            borderRadius: BorderRadius.circular(66),
-                          ),
-                          width: 310,
-                          padding: EdgeInsets.symmetric(horizontal: 3),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              controller: _emailController,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              obscureText: false,
-                              enableSuggestions: true,
-                              autocorrect: true,
-                              decoration: InputDecoration(
-                                  icon: Icon(
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: TextFormField(
+                                controller: _emailController,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(
                                     Icons.mail,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: " البريد الإلكتروني :",
                                   labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-l"),
+                                      TextStyle(fontFamily: "Tajawal-m"),
                                   hintText: "exampel@gmail.com",
                                   hintStyle: TextStyle(fontSize: 10),
-                                  border: InputBorder.none),
-                              validator: (value) {
-                                if (value!.isEmpty ||
-                                    _emailController.text.trim() == "") {
-                                  return "البريد الألكتروني مطلوب ";
-                                } else if (!RegExp(
-                                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                    .hasMatch(value)) {
-                                  return 'أدخل البريد الألكتروني بالشكل الصحيح';
-                                }
-                              },
-                            ),
-                          ),
-                        ),
+                                  fillColor: Color.fromARGB(255, 225, 225, 228),
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(66.0),
+                                      borderSide: const BorderSide(
+                                          width: 0, style: BorderStyle.none)),
+                                ),
+                                validator: (MultiValidator) {
+                                  if (MultiValidator!.isEmpty ||
+                                      _emailController.text.trim() == "") {
+                                    return "البريد الألكتروني مطلوب ";
+                                  } else if (!RegExp(
+                                          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                      .hasMatch(MultiValidator)) {
+                                    return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@gmail.com)';
+                                  }
+                                },
+                              ),
+                            )),
                         SizedBox(
                           height: 23,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 212, 214, 219),
-                            borderRadius: BorderRadius.circular(66),
-                          ),
-                          width: 310,
-                          padding: EdgeInsets.symmetric(horizontal: 3),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                                obscureText: false,
-                                controller: _phonenumberController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                    icon: Icon(
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: TextFormField(
+                                  controller: _phonenumberController,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
                                       Icons.phone_android,
                                       color: Color.fromARGB(255, 127, 166, 233),
                                       size: 19,
                                     ),
                                     labelText: "رقم الجوال :",
                                     labelStyle:
-                                        TextStyle(fontFamily: "Tajawal-l"),
+                                        TextStyle(fontFamily: "Tajawal-m"),
                                     hintText: "05xxxxxxxx",
                                     hintStyle: TextStyle(fontSize: 10),
-                                    border: InputBorder.none),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "رقم الجوال مطلوب ";
-                                  }
-                                  if (!RegExp(r'^(?:[+0]9)?[0-9]{10}$')
-                                      .hasMatch(value)) {
-                                    return 'أدخل رقم الجوال بالشكل الصحيح';
-                                  }
-                                }),
-                          ),
-                        ),
+                                    fillColor:
+                                        Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(66.0),
+                                        borderSide: const BorderSide(
+                                            width: 0, style: BorderStyle.none)),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "رقم الجوال مطلوب ";
+                                    }
+                                    if (!RegExp(
+                                            r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
+                                        .hasMatch(value)) {
+                                      return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
+                                    }
+                                  }),
+                            )),
                         SizedBox(
                           height: 23,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 212, 214, 219),
-                            borderRadius: BorderRadius.circular(66),
-                          ),
-                          width: 310,
-                          padding: EdgeInsets.symmetric(horizontal: 3),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              controller: _passwordController,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              obscureText: true,
-                              enableSuggestions: false,
-                              autocorrect: false,
-                              decoration: InputDecoration(
-                                  //suffix: Icon(
-                                  // Icons.visibility,
-                                  // color: Color.fromARGB(
-                                  // 255, 127, 166, 233),
-                                  //  ),
-                                  icon: Icon(
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: TextFormField(
+                                obscureText: true,
+                                controller: _passwordController,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(
                                     Icons.lock,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                     size: 19,
                                   ),
                                   labelText: "كلمة المرور:",
                                   labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-l"),
+                                      TextStyle(fontFamily: "Tajawal-m"),
                                   hintText:
                                       "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ",
                                   hintStyle: TextStyle(fontSize: 10),
-                                  border: InputBorder.none),
-                              validator: (value) {
-                                RegExp uper = RegExp(r"(?=.*[A-Z])");
-                                RegExp small = RegExp(r"(?=.*[a-z])");
-                                if (value!.isEmpty ||
-                                    _passwordController.text.trim() == "") {
-                                  return "كلمة السر مطلوبة";
-                                } else if (value.length < 8) {
-                                  return "كلمة المرور يجب ان تكون من 8 خانات فأكثر";
-                                } else if (!uper.hasMatch(value)) {
-                                  return "كلمة المرور يجب ان تحتوي على احرف كبيرة";
-                                } else if (!small.hasMatch(value)) {
-                                  return "كلمة المرور يجب ان تحتوي على احرف صغيرة";
-                                }
-                              },
-                            ),
-                          ),
-                        ),
+                                  fillColor: Color.fromARGB(255, 225, 225, 228),
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(66.0),
+                                      borderSide: const BorderSide(
+                                          width: 0, style: BorderStyle.none)),
+                                ),
+                                validator: (value) {
+                                  RegExp uper = RegExp(r"(?=.*[A-Z])");
+                                  RegExp small = RegExp(r"(?=.*[a-z])");
+                                  if (value!.isEmpty ||
+                                      _passwordController.text.trim() == "") {
+                                    return "كلمة السر مطلوبة";
+                                  } else if (value.length < 8 &&
+                                      !uper.hasMatch(value) &&
+                                      !small.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ";
+                                  } else if (value.length < 8 &&
+                                      !uper.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة ";
+                                  } else if (value.length < 8 &&
+                                      !small.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان يكون من 8 خانات واحرف وصغيرة ";
+                                  } else if (!uper.hasMatch(value) &&
+                                      !small.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان تحتوي على احرف كبيرة و وصغيرة ";
+                                  } else if (value.length < 8) {
+                                    return "كلمة المرور يجب ان تكون من 8 خانات فأكثر";
+                                  } else if (!uper.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان تحتوي على احرف كبيرة";
+                                  } else if (!small.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان تحتوي على احرف صغيرة";
+                                  }
+                                },
+                              ),
+                            )),
                         SizedBox(
                           height: 23,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 212, 214, 219),
-                            borderRadius: BorderRadius.circular(66),
-                          ),
-                          width: 310,
-                          padding: EdgeInsets.symmetric(horizontal: 3),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                                obscureText: true,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: TextFormField(
+                                  obscureText: true,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
                                     //suffix: Icon(
                                     // Icons.visibility,
                                     // color: Color.fromARGB(
                                     // 255, 127, 166, 233),
                                     //  ),
-                                    icon: Icon(
+                                    prefixIcon: Icon(
                                       Icons.lock,
                                       color: Color.fromARGB(255, 127, 166, 233),
                                       size: 19,
                                     ),
                                     labelText: "تأكيد كلمة المرور:",
                                     labelStyle:
-                                        TextStyle(fontFamily: "Tajawal-l"),
-                                    border: InputBorder.none),
-                                validator: (value) {
-                                  if (value !=
-                                      _passwordController.text.trim()) {
-                                    return "كلمة المرور غير مطابقة ";
-                                  }
-                                }),
-                          ),
-                        ),
+                                        TextStyle(fontFamily: "Tajawal-m"),
+                                    fillColor:
+                                        Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(66.0),
+                                        borderSide: const BorderSide(
+                                            width: 0, style: BorderStyle.none)),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "تأكيد كلمة المرور مطلوب ";
+                                    } else if (value !=
+                                        _passwordController.text.trim()) {
+                                      return "كلمة المرور غير مطابقة ";
+                                    }
+                                  }),
+                            )),
                         SizedBox(
                           height: 25,
                         ),

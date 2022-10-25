@@ -67,77 +67,111 @@ class _LogInState extends State<LogIn> {
                             SizedBox(
                               height: 20,
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 212, 214, 219),
-                                borderRadius: BorderRadius.circular(66),
-                              ),
-                              width: 310,
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: TextFormField(
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextFormField(
                                     controller: email,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
                                     decoration: InputDecoration(
-                                        icon: Icon(
-                                          Icons.mail,
-                                          color: Color.fromARGB(
-                                              255, 127, 166, 233),
-                                        ),
-                                        labelText: " البريد الإلكتروني :",
-                                        labelStyle:
-                                            TextStyle(fontFamily: "Tajawal-l"),
-                                        border: InputBorder.none),
+                                      prefixIcon: Icon(
+                                        Icons.mail,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                      ),
+                                      labelText: " البريد الإلكتروني :",
+                                      labelStyle:
+                                          TextStyle(fontFamily: "Tajawal-m"),
+                                      hintText: "exampel@gmail.com",
+                                      hintStyle: TextStyle(fontSize: 10),
+                                      fillColor:
+                                          Color.fromARGB(255, 225, 225, 228),
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(66.0),
+                                          borderSide: const BorderSide(
+                                              width: 0,
+                                              style: BorderStyle.none)),
+                                    ),
                                     validator: (value) {
-                                      if (value!.isEmpty || email.text == "") {
+                                      if (value!.isEmpty ||
+                                          email.text.trim() == "") {
                                         return "البريد الألكتروني مطلوب ";
+                                      } else if (!RegExp(
+                                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                          .hasMatch(value)) {
+                                        return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@gmail.com)';
                                       }
-                                    }),
-                              ),
-                            ),
+                                    },
+                                  ),
+                                )),
                             SizedBox(
                               height: 23,
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 212, 214, 219),
-                                borderRadius: BorderRadius.circular(66),
-                              ),
-                              width: 310,
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: TextFormField(
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextFormField(
+                                    obscureText: true,
                                     controller: password,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
-                                    obscureText: true,
                                     decoration: InputDecoration(
-                                        //suffix: Icon(
-                                        // Icons.visibility,
-                                        // color: Color.fromARGB(
-                                        // 255, 127, 166, 233),
-                                        //  ),
-                                        icon: Icon(
-                                          Icons.lock,
-                                          color: Color.fromARGB(
-                                              255, 127, 166, 233),
-                                          size: 19,
-                                        ),
-                                        labelText: "كلمة المرور:",
-                                        labelStyle:
-                                            TextStyle(fontFamily: "Tajawal-l"),
-                                        border: InputBorder.none),
+                                      prefixIcon: Icon(
+                                        Icons.lock,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        size: 19,
+                                      ),
+                                      labelText: "كلمة المرور:",
+                                      labelStyle:
+                                          TextStyle(fontFamily: "Tajawal-m"),
+                                      hintText:
+                                          "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ",
+                                      hintStyle: TextStyle(fontSize: 10),
+                                      fillColor:
+                                          Color.fromARGB(255, 225, 225, 228),
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(66.0),
+                                          borderSide: const BorderSide(
+                                              width: 0,
+                                              style: BorderStyle.none)),
+                                    ),
                                     validator: (value) {
+                                      RegExp uper = RegExp(r"(?=.*[A-Z])");
+                                      RegExp small = RegExp(r"(?=.*[a-z])");
                                       if (value!.isEmpty ||
-                                          password.text == "") {
-                                        return "كلمة المرور مطلوبة ";
+                                          password.text.trim() == "") {
+                                        return "كلمة السر مطلوبة";
+                                      } else if (value.length < 8 &&
+                                          !uper.hasMatch(value) &&
+                                          !small.hasMatch(value)) {
+                                        return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ";
+                                      } else if (value.length < 8 &&
+                                          !uper.hasMatch(value)) {
+                                        return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة ";
+                                      } else if (value.length < 8 &&
+                                          !small.hasMatch(value)) {
+                                        return "كلمة المرور يجب ان يكون من 8 خانات واحرف وصغيرة ";
+                                      } else if (!uper.hasMatch(value) &&
+                                          !small.hasMatch(value)) {
+                                        return "كلمة المرور يجب ان تحتوي على احرف كبيرة و وصغيرة ";
+                                      } else if (value.length < 8) {
+                                        return "كلمة المرور يجب ان تكون من 8 خانات فأكثر";
+                                      } else if (!uper.hasMatch(value)) {
+                                        return "كلمة المرور يجب ان تحتوي على احرف كبيرة";
+                                      } else if (!small.hasMatch(value)) {
+                                        return "كلمة المرور يجب ان تحتوي على احرف صغيرة";
                                       }
-                                    }),
-                              ),
-                            ),
+                                    },
+                                  ),
+                                )),
                             SizedBox(
                               height: 15,
                             ),
