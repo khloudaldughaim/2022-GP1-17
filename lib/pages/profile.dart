@@ -39,10 +39,6 @@ class _ProfilePageState extends State<ProfilePage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               }
-              if (snapshot.hasError) {
-                return Text(
-                    '!هناك خطأ في استرجاع البيانات${snapshot.hasError}');
-              }
               if (snapshot.hasData) {
                 final cuuser = snapshot.data!;
                 return Column(

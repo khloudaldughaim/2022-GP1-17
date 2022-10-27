@@ -33,8 +33,9 @@ class _myPropertyState extends State<myProperty> {
           } else if (snapshot.hasData) {
             final properties = snapshot.data!;
             return ListView(
-              children: properties.map(buildProperty).toList(),
-            );
+                children: List.generate(properties.length, (index) {
+              return buildProperty(properties[index], context);
+            }));
           } else {
             return Center(
               child: CircularProgressIndicator(),
