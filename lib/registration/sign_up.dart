@@ -127,13 +127,13 @@ class _SignUpState extends State<SignUp> {
                                       borderSide: const BorderSide(
                                           width: 0, style: BorderStyle.none)),
                                 ),
-                                validator: (MultiValidator) {
-                                  if (MultiValidator!.isEmpty ||
+                                validator: (value) {
+                                  if (value!.isEmpty ||
                                       _emailController.text.trim() == "") {
                                     return "البريد الألكتروني مطلوب ";
                                   } else if (!RegExp(
                                           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                      .hasMatch(MultiValidator)) {
+                                      .hasMatch(value)) {
                                     return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@gmail.com)';
                                   }
                                 },
