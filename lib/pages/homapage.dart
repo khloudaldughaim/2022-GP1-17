@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/property.dart';
+import 'package:nozol_application/pages/propertydetailes.dart';
 // ignore_for_file: prefer_const_constructors
 
 class HomePage extends StatefulWidget {
@@ -68,7 +69,6 @@ class _HomePageState extends State<HomePage> {
                 Tab(text: 'الكل',),
                 Tab(text: 'للبيع',),
                 Tab(text: 'للإيجار', ),
-
               ],
             ),  
                ),   
@@ -83,7 +83,9 @@ class _HomePageState extends State<HomePage> {
                           final properties = snapshot.data!;
                     
                           return ListView(
-                            children: properties.map(buildProperty).toList(),
+                            children: List.generate(properties.length,(index){
+                              return buildProperty(properties[index], context);
+                            })
                           );
                         } else{
                           return Center(child: CircularProgressIndicator(),);
@@ -100,7 +102,9 @@ class _HomePageState extends State<HomePage> {
                           final properties = snapshot.data!;
                     
                           return ListView(
-                            children: properties.map(buildProperty).toList(),
+                            children: List.generate(properties.length,(index){
+                              return buildProperty(properties[index], context);
+                            })
                           );
                         } else{
                           return Center(child: CircularProgressIndicator(),);
@@ -116,7 +120,9 @@ class _HomePageState extends State<HomePage> {
                           final properties = snapshot.data!;
                     
                           return ListView(
-                            children: properties.map(buildProperty).toList(),
+                            children: List.generate(properties.length,(index){
+                              return buildProperty(properties[index], context);
+                            })
                           );
                         } else{
                           return Center(child: CircularProgressIndicator(),);
@@ -133,7 +139,15 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget buildProperty(Property property) =>  Card(
+Widget buildProperty(Property property , BuildContext context) =>  GestureDetector(
+  
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PropertyDetailes(property: property)),
+      );
+    },
+    child: Card(
       margin: EdgeInsets.fromLTRB(12,12,12,6),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
@@ -173,7 +187,8 @@ Widget buildProperty(Property property) =>  Card(
                     Radius.circular(5),
                   ),
                   border: Border.all(
-                    color: Colors.blue,
+                    width: 1.5,
+                    color: Color.fromARGB(255, 127, 166, 233),
                   ),
                 ),
                 width: 80,
@@ -211,6 +226,7 @@ Widget buildProperty(Property property) =>  Card(
                       Text(
                         'ريال ${property.price}',
                         style: TextStyle(
+                          height: 2,
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -253,10 +269,14 @@ Widget buildProperty(Property property) =>  Card(
                         children: [
                       
                           Icon(
-                            Icons.bed,
+                            Icons.hotel,
                             color: Colors.white,
                             size: 18,
                           ),
+
+                            SizedBox(
+                              width: 3,
+                            ),                          
 
                           Text(
                             '${property.number_of_room}',
@@ -275,6 +295,10 @@ Widget buildProperty(Property property) =>  Card(
                             color: Colors.white,
                             size: 15,
                           ),
+
+                            SizedBox(
+                              width: 1,
+                            ),                          
 
                           Text(
                             '${property.number_of_bathroom}',
@@ -314,7 +338,8 @@ Widget buildProperty(Property property) =>  Card(
           ),
         ),
       ),
-    );
+    ),
+  );
 
 Stream<List<Property>> readPropertys() => FirebaseFirestore.instance
 .collection('properties')

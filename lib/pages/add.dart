@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:csc_picker/csc_picker.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   String type1 = 'villa';
   String age = '';
   String city = '';
-  String address = '';
+  String address1 = '';
   String location = '';
   String price = '';
   String space = '';
@@ -76,9 +77,16 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool basement = false;
   bool elevator = false;
   String imageUrl = '';
+  String countryValue = "";
+  String? stateValue = "";
+  String? cityValue = "";
+  String? address = "";
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<CSCPickerState> _cscPickerKey = GlobalKey();
+    void getCities() async {}
+
     showAlertDialog(BuildContext context) {
       // set up the buttons
       Widget cancelButton = TextButton(
@@ -100,13 +108,13 @@ class MyCustomFormState extends State<MyCustomForm> {
           i++;
           property_id = "p$i";
           print(
-              "property_id: $property_id , classification: $classification1 , type: $type1 , property_age: $age , city: $city , neighborhood: $address , location: $location , price: $price , space: $space , number_of_bathroom: $bathNo , number_of_room: $roomNo , pool: $pool , basement: $basement , elevator: $elevator  ");
+              "property_id: $property_id , classification: $classification1 , type: $type1 , property_age: $age , city: $cityValue , neighborhood: $address , location: $location , price: $price , space: $space , number_of_bathroom: $bathNo , number_of_room: $roomNo , pool: $pool , basement: $basement , elevator: $elevator  ");
           FirebaseFirestore.instance.collection('properties').add({
             'property_id': property_id,
             'classification': classification1,
             'type': type1,
             'property_age': age,
-            'city': city,
+            'city': cityValue,
             'neighborhood': address,
             'location': location,
             'price': price,
@@ -400,46 +408,38 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )),
                                   ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                        hintText: '5 سنوات',
-                                        labelText: 'عمر العقار',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      age = val!;
-                                    },
-                                  ),
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                        hintText: 'الرياض',
-                                        labelText: 'المدينة',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      city = val!;
-                                    },
+                                  Column(
+                                    children: [
+                                      CSCPicker(
+                                        showCities: true,
+                                        flagState: CountryFlag.DISABLE,
+                                        stateSearchPlaceholder: "المنطقة",
+                                        citySearchPlaceholder: "المدينة",
+                                        stateDropdownLabel: "*المنطقة",
+                                        cityDropdownLabel: "*المدينة",
+                                        defaultCountry:
+                                            DefaultCountry.Saudi_Arabia,
+                                        disableCountry: true,
+                                        onCountryChanged: (value) {
+                                          setState(() {
+                                            countryValue = value;
+                                          });
+                                        },
+                                        onStateChanged: (value) {
+                                          setState(() {
+                                            stateValue = value;
+                                          });
+                                        },
+                                        onCityChanged: (value) {
+                                          setState(() {
+                                            cityValue = value;
+                                          });
+                                        },
+                                      )
+                                    ],
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(15),
@@ -489,6 +489,25 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     },
                                     onSaved: (val) {
                                       location = val!;
+                                    },
+                                  ),
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                        hintText: '5 سنوات',
+                                        labelText: 'عمر العقار',
+                                        labelStyle: TextStyle(
+                                            fontSize: 16.0,
+                                            fontFamily: "Tajawal-m",
+                                            color: Color.fromARGB(
+                                                255, 73, 75, 82))),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (val) {
+                                      age = val!;
                                     },
                                   ),
                                   Container(
@@ -832,6 +851,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         horizontal: 10, vertical: 10),
                                     child: ElevatedButton(
                                       onPressed: () async {
+                                        getCities();
+
                                         if (_formKey.currentState!.validate()) {
                                           showAlertDialog(context);
                                           ScaffoldMessenger.of(context)
