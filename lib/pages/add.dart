@@ -71,8 +71,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   String location = '';
   String price = '';
   String space = '';
-  String bathNo = '';
-  String roomNo = '';
   bool pool = false;
   bool basement = false;
   bool elevator = false;
@@ -81,6 +79,14 @@ class MyCustomFormState extends State<MyCustomForm> {
   String? stateValue = "";
   String? cityValue = "";
   String? address = "";
+  int bathNo = 0;
+  int roomNo = 0;
+  TextEditingController rentController = TextEditingController();
+  TextEditingController saleController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+
+  int rentDuration = 1;
+  String rentDuration1 = "Per Year";
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +175,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
+                                    margin: const EdgeInsets.all(10),
+                                  ),
+                                  Container(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -179,47 +188,71 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               fontFamily: "Tajawal-b",
                                             ),
                                             textDirection: TextDirection.rtl),
-                                        RadioListTile(
-                                          title: const Text(
-                                            'للبيع',
-                                            style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
-                                            textAlign: TextAlign.start,
-                                          ),
-                                          value: classification.sale,
-                                          groupValue: _class,
-                                          onChanged: (classification? value) {
-                                            setState(() {
-                                              _class = value;
-                                              if (_class == classification.sale)
-                                                classification1 = 'sale';
-                                            });
-                                          },
-                                        ),
-                                        RadioListTile(
-                                          title: const Text(
-                                            'للإيجار',
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
-                                          ),
-                                          value: classification.rent,
-                                          groupValue: _class,
-                                          onChanged: (classification? value) {
-                                            setState(() {
-                                              _class = value;
-                                              if (_class == classification.rent)
-                                                classification1 = 'rent';
-                                            });
-                                          },
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                              child: RadioListTile(
+                                                title: const Text(
+                                                  'للبيع',
+                                                  style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                                value: classification.sale,
+                                                groupValue: _class,
+                                                onChanged:
+                                                    (classification? value) {
+                                                  setState(() {
+                                                    _class = value;
+                                                    if (_class ==
+                                                        classification.sale)
+                                                      classification1 = 'sale';
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5,
+                                              child: RadioListTile(
+                                                title: const Text(
+                                                  'للإيجار',
+                                                  style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                                value: classification.sale,
+                                                groupValue: _class,
+                                                onChanged:
+                                                    (classification? value) {
+                                                  setState(() {
+                                                    _class = value;
+                                                    if (_class ==
+                                                        classification.sale)
+                                                      classification1 = 'sale';
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(15),
                                   ),
                                   Container(
                                     child: Padding(
@@ -237,6 +270,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 padding:
                                                     const EdgeInsets.all(20.0)),
                                             Container(
+                                              padding:
+                                                  EdgeInsets.only(right: 7),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10)),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1)),
+                                              height: 40,
+                                              width: 150,
                                               child: DropdownButton(
                                                   value: type,
                                                   items: [
@@ -409,7 +455,58 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         )),
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.all(15),
+                                    margin: const EdgeInsets.all(10),
+                                  ),
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                      hintText: 'سنة',
+                                      labelText: 'عمر العقار',
+                                      labelStyle: TextStyle(
+                                          fontSize: 16.0,
+                                          fontFamily: "Tajawal-m",
+                                          color:
+                                              Color.fromARGB(255, 73, 75, 82)),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (val) {
+                                      age = val!;
+                                    },
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(20),
+                                  ),
+                                  TextFormField(
+                                    decoration: const InputDecoration(
+                                      icon: const Icon(
+                                        Icons.square_foot,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                      ),
+                                      hintText: '500 م2',
+                                      labelText: 'المساحة',
+                                      labelStyle: TextStyle(
+                                          fontSize: 16.0,
+                                          fontFamily: "Tajawal-m",
+                                          color:
+                                              Color.fromARGB(255, 73, 75, 82)),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'الرجاء عدم ترك الخانة فارغة!';
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (val) {
+                                      space = val!;
+                                    },
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(30),
                                   ),
                                   Column(
                                     children: [
@@ -423,6 +520,18 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         defaultCountry:
                                             DefaultCountry.Saudi_Arabia,
                                         disableCountry: true,
+                                        dropdownDecoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.grey.shade300,
+                                                width: 1)),
+                                        selectedItemStyle: TextStyle(
+                                            fontSize: 17.0,
+                                            fontFamily: "Tajawal-m",
+                                            color: Color.fromARGB(
+                                                255, 21, 21, 21)),
                                         onCountryChanged: (value) {
                                           setState(() {
                                             countryValue = value;
@@ -491,136 +600,277 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       location = val!;
                                     },
                                   ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                        hintText: '5 سنوات',
-                                        labelText: 'عمر العقار',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      age = val!;
-                                    },
+                                  Container(
+                                    margin: const EdgeInsets.all(20),
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.all(15),
-                                  ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.price_change_rounded,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
-                                      hintText: '1000 ر.س',
-                                      labelText: 'السعر',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(' السعر: ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                        Container(
+                                          margin: const EdgeInsets.all(5),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  EdgeInsets.only(right: 7),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(7),
+                                                  border: Border.all(
+                                                      color: Colors.grey,
+                                                      width: 1)),
+                                              height: 45,
+                                              width: 160,
+                                              child: TextField(
+                                                controller: rentController,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  hintText: 'ريال',
+                                                  labelStyle: TextStyle(
+                                                      fontSize: 16.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Container(
+                                              padding:
+                                                  EdgeInsets.only(right: 7),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10)),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1)),
+                                              height: 45,
+                                              width: 160,
+                                              child: DropdownButton(
+                                                  value: type,
+                                                  items: [
+                                                    DropdownMenuItem(
+                                                      child: Text(
+                                                        "سنوياً",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontFamily:
+                                                                "Tajawal-m",
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    73,
+                                                                    75,
+                                                                    82)),
+                                                      ),
+                                                      value: 1,
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text(
+                                                        "شهرياً",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontFamily:
+                                                                "Tajawal-m",
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    73,
+                                                                    75,
+                                                                    82)),
+                                                      ),
+                                                      value: 2,
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text(
+                                                        "أسبوعياً",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontFamily:
+                                                                "Tajawal-m",
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    73,
+                                                                    75,
+                                                                    82)),
+                                                      ),
+                                                      value: 3,
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text(
+                                                        "يومياً",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontFamily:
+                                                                "Tajawal-m",
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    73,
+                                                                    75,
+                                                                    82)),
+                                                      ),
+                                                      value: 4,
+                                                    )
+                                                  ],
+                                                  onChanged: (int? value) {
+                                                    setState(() {
+                                                      rentDuration = value!;
+                                                      if (rentDuration == 1)
+                                                        rentDuration1 =
+                                                            'Per Year';
+                                                      if (rentDuration == 2)
+                                                        rentDuration1 =
+                                                            'Per Month';
+                                                      if (rentDuration == 3)
+                                                        rentDuration1 =
+                                                            'Per Week';
+                                                      if (rentDuration == 4)
+                                                        rentDuration1 =
+                                                            'Per Night';
+                                                    });
+                                                  }),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      price = val!;
-                                    },
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.all(15),
+                                    margin: const EdgeInsets.all(20),
                                   ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.square_foot,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                  Column(
+                                    children: [
+                                      Text("عددالغرف",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b")),
+                                      SizedBox(
+                                        height: 10,
                                       ),
-                                      hintText: '500 م2',
-                                      labelText: 'المساحة',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      space = val!;
-                                    },
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 73, 75, 82),
+                                                width: 1)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  roomNo++;
+
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.add_circle_outline,
+                                                  color: Color.fromARGB(
+                                                      255, 127, 166, 233),
+                                                )),
+                                            Text("$roomNo",
+                                                style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontFamily: "Tajawal-b",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                                textDirection:
+                                                    TextDirection.rtl),
+                                            IconButton(
+                                                onPressed: () {
+                                                  roomNo == 0 ? null : roomNo--;
+
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.remove_circle_outline,
+                                                  color: Color.fromARGB(
+                                                      255, 127, 166, 233),
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.all(15),
+                                    margin: const EdgeInsets.all(20),
                                   ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.bathroom,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                  Column(
+                                    children: [
+                                      Text("عدد دورات المياه",
+                                          style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontFamily: "Tajawal-b",
+                                          )),
+                                      SizedBox(
+                                        height: 10,
                                       ),
-                                      hintText: '0',
-                                      labelText: 'عدد دورات المياه',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      bathNo = val!;
-                                    },
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.all(15),
-                                  ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.bedroom_parent,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 73, 75, 82),
+                                                width: 1)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  bathNo++;
+
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.add_circle_outline,
+                                                  color: Color.fromARGB(
+                                                      255, 127, 166, 233),
+                                                )),
+                                            Text("$bathNo",
+                                                style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                                textDirection:
+                                                    TextDirection.rtl),
+                                            IconButton(
+                                                onPressed: () {
+                                                  bathNo == 0 ? null : bathNo--;
+
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.remove_circle_outline,
+                                                  color: Color.fromARGB(
+                                                      255, 127, 166, 233),
+                                                ))
+                                          ],
+                                        ),
                                       ),
-                                      hintText: '0',
-                                      labelText: 'عدد الغرف',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      roomNo = val!;
-                                    },
+                                    ],
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(20),
@@ -631,50 +881,68 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     children: <Widget>[
                                       Text('يوجد مسبح : ',
                                           style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-b",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
+                                            fontSize: 20.0,
+                                            fontFamily: "Tajawal-b",
+                                          ),
                                           textDirection: TextDirection.rtl),
-                                      RadioListTile(
-                                        title: const Text(
-                                          'نعم',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
-                                        value: choice.yes,
-                                        groupValue: _poolCH,
-                                        onChanged: (choice? value) {
-                                          setState(() {
-                                            _poolCH = value;
-                                            if (_poolCH == choice.yes)
-                                              pool = true;
-                                          });
-                                        },
-                                      ),
-                                      RadioListTile(
-                                        title: const Text(
-                                          'لا',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
-                                        value: choice.no,
-                                        groupValue: _poolCH,
-                                        onChanged: (choice? value) {
-                                          setState(() {
-                                            _poolCH = value;
-                                            if (_poolCH == choice.no)
-                                              pool = false;
-                                          });
-                                        },
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                            child: RadioListTile(
+                                              title: const Text(
+                                                'نعم',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              value: choice.yes,
+                                              groupValue: _poolCH,
+                                              onChanged: (choice? value) {
+                                                setState(() {
+                                                  _poolCH = value;
+                                                  if (_poolCH == choice.yes)
+                                                    pool = true;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.5,
+                                            child: RadioListTile(
+                                              title: const Text(
+                                                'لا',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              value: choice.no,
+                                              groupValue: _poolCH,
+                                              onChanged: (choice? value) {
+                                                setState(() {
+                                                  _poolCH = value;
+                                                  if (_poolCH == choice.no)
+                                                    pool = false;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(10),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -682,50 +950,68 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     children: <Widget>[
                                       Text('يوجد قبو : ',
                                           style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-b",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
+                                            fontSize: 20.0,
+                                            fontFamily: "Tajawal-b",
+                                          ),
                                           textDirection: TextDirection.rtl),
-                                      RadioListTile(
-                                        title: const Text(
-                                          'نعم',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
-                                        value: choice.yes,
-                                        groupValue: _basementCH,
-                                        onChanged: (choice? value) {
-                                          setState(() {
-                                            _basementCH = value;
-                                            if (_basementCH == choice.yes)
-                                              basement = true;
-                                          });
-                                        },
-                                      ),
-                                      RadioListTile(
-                                        title: const Text(
-                                          'لا',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
-                                        value: choice.no,
-                                        groupValue: _basementCH,
-                                        onChanged: (choice? value) {
-                                          setState(() {
-                                            _basementCH = value;
-                                            if (_basementCH == choice.no)
-                                              basement = false;
-                                          });
-                                        },
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                            child: RadioListTile(
+                                              title: const Text(
+                                                'نعم',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              value: choice.yes,
+                                              groupValue: _basementCH,
+                                              onChanged: (choice? value) {
+                                                setState(() {
+                                                  _basementCH = value;
+                                                  if (_basementCH == choice.yes)
+                                                    basement = true;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.5,
+                                            child: RadioListTile(
+                                              title: const Text(
+                                                'لا',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              value: choice.no,
+                                              groupValue: _basementCH,
+                                              onChanged: (choice? value) {
+                                                setState(() {
+                                                  _basementCH = value;
+                                                  if (_basementCH == choice.no)
+                                                    basement = false;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(10),
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -733,50 +1019,68 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     children: <Widget>[
                                       Text('يوجد مصعد : ',
                                           style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-b",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
+                                            fontSize: 20.0,
+                                            fontFamily: "Tajawal-b",
+                                          ),
                                           textDirection: TextDirection.rtl),
-                                      RadioListTile(
-                                        title: const Text(
-                                          'نعم',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
-                                        value: choice.yes,
-                                        groupValue: _elevatorCH,
-                                        onChanged: (choice? value) {
-                                          setState(() {
-                                            _elevatorCH = value;
-                                            if (_elevatorCH == choice.yes)
-                                              elevator = true;
-                                          });
-                                        },
-                                      ),
-                                      RadioListTile(
-                                        title: const Text(
-                                          'لا',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 73, 75, 82)),
-                                        ),
-                                        value: choice.no,
-                                        groupValue: _elevatorCH,
-                                        onChanged: (choice? value) {
-                                          setState(() {
-                                            _elevatorCH = value;
-                                            if (_elevatorCH == choice.no)
-                                              elevator = false;
-                                          });
-                                        },
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                            child: RadioListTile(
+                                              title: const Text(
+                                                'نعم',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              value: choice.yes,
+                                              groupValue: _elevatorCH,
+                                              onChanged: (choice? value) {
+                                                setState(() {
+                                                  _elevatorCH = value;
+                                                  if (_elevatorCH == choice.yes)
+                                                    elevator = true;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.5,
+                                            child: RadioListTile(
+                                              title: const Text(
+                                                'لا',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              value: choice.no,
+                                              groupValue: _elevatorCH,
+                                              onChanged: (choice? value) {
+                                                setState(() {
+                                                  _elevatorCH = value;
+                                                  if (_elevatorCH == choice.no)
+                                                    elevator = false;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(10),
                                   ),
                                   Container(
                                     child: Padding(
@@ -785,10 +1089,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           children: [
                                             Text(' إرفع صورة: ',
                                                 style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontFamily: "Tajawal-b",
-                                                    color: Color.fromARGB(
-                                                        255, 73, 75, 82)),
+                                                  fontSize: 20.0,
+                                                  fontFamily: "Tajawal-b",
+                                                ),
                                                 textDirection:
                                                     TextDirection.rtl),
                                             IconButton(
@@ -846,44 +1149,51 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        getCities();
+                                  SizedBox(
+                                    width: 300.0,
+                                    height: 90.0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          getCities();
 
-                                        if (_formKey.currentState!.validate()) {
-                                          showAlertDialog(context);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                                content:
-                                                    Text('جاري اضافة العقار')),
-                                          );
-                                        }
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Color.fromARGB(
-                                                    255, 127, 166, 233)),
-                                        padding: MaterialStateProperty.all(
-                                            EdgeInsets.symmetric(
-                                                horizontal: 30, vertical: 10)),
-                                        shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(27))),
-                                      ),
-                                      child: const Text(
-                                        'إضافة',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: "Tajawal-m"),
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            showAlertDialog(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                  content: Text(
+                                                      'جاري اضافة العقار')),
+                                            );
+                                          }
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color.fromARGB(
+                                                      255, 127, 166, 233)),
+                                          padding: MaterialStateProperty.all(
+                                              EdgeInsets.symmetric(
+                                                  horizontal: 30,
+                                                  vertical: 10)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          27))),
+                                        ),
+                                        child: const Text(
+                                          'إضافة',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontFamily: "Tajawal-m"),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
