@@ -65,7 +65,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   choice? _elevatorCH = choice.no;
   int type = 1;
   String type1 = 'villa';
-  String age = '';
+  double age = 0.0;
   String city = '';
   String address1 = '';
   String location = '';
@@ -74,16 +74,14 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool pool = false;
   bool basement = false;
   bool elevator = false;
-  String imageUrl = '';
   String countryValue = "";
   String? stateValue = "";
   String? cityValue = "";
   String? address = "";
   int bathNo = 0;
   int roomNo = 0;
-  TextEditingController rentController = TextEditingController();
-  TextEditingController saleController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
+  List<XFile> selectedFiles = [];
 
   int rentDuration = 1;
   String rentDuration1 = "Per Year";
@@ -104,11 +102,10 @@ class MyCustomFormState extends State<MyCustomForm> {
       Widget continueButton = TextButton(
         child: Text("تأكيد"),
         onPressed: () async {
-          if (imageUrl.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Please upload an image')));
-
-            return;
+          List<String> arrImage = [];
+          for (int i = 0; i < selectedFiles.length; i++) {
+            var imageUrl = await uploadFile(selectedFiles[i], "1234");
+            arrImage.add(imageUrl.toString());
           }
           _formKey.currentState!.save();
           i++;
@@ -130,7 +127,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             'pool': pool,
             'basement': basement,
             'elevator': elevator,
-            'image': imageUrl
+            'images': arrImage
           });
           Navigator.of(context).pop();
         },
@@ -233,15 +230,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                           255, 73, 75, 82)),
                                                   textAlign: TextAlign.start,
                                                 ),
-                                                value: classification.sale,
+                                                value: classification.rent,
                                                 groupValue: _class,
                                                 onChanged:
                                                     (classification? value) {
                                                   setState(() {
                                                     _class = value;
                                                     if (_class ==
-                                                        classification.sale)
-                                                      classification1 = 'sale';
+                                                        classification.rent)
+                                                      classification1 = 'rent';
                                                   });
                                                 },
                                               ),
@@ -254,6 +251,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
+                                  //type
                                   Container(
                                     child: Padding(
                                         padding: const EdgeInsets.all(10.0),
@@ -261,14 +259,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           children: [
                                             Text('نوع عقارك: ',
                                                 style: TextStyle(
-                                                  fontSize: 18.0,
+                                                  fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
                                                 textDirection:
                                                     TextDirection.rtl),
                                             Padding(
                                                 padding:
-                                                    const EdgeInsets.all(20.0)),
+                                                    const EdgeInsets.all(10.0)),
                                             Container(
                                               padding:
                                                   EdgeInsets.only(right: 7),
@@ -290,7 +288,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "فيلا",
                                                         style: TextStyle(
-                                                            fontSize: 16.0,
+                                                            fontSize: 18.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -306,7 +304,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "شقة",
                                                         style: TextStyle(
-                                                            fontSize: 16.0,
+                                                            fontSize: 18.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -322,7 +320,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "ارض",
                                                         style: TextStyle(
-                                                            fontSize: 16.0,
+                                                            fontSize: 18.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -338,7 +336,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "عمارة",
                                                         style: TextStyle(
-                                                            fontSize: 16.0,
+                                                            fontSize: 18.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -455,59 +453,66 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         )),
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.all(10),
-                                  ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: 'سنة',
-                                      labelText: 'عمر العقار',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      age = val!;
-                                    },
-                                  ),
-                                  Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                      icon: const Icon(
-                                        Icons.square_foot,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                      ),
-                                      hintText: '500 م2',
-                                      labelText: 'المساحة',
-                                      labelStyle: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Tajawal-m",
-                                          color:
-                                              Color.fromARGB(255, 73, 75, 82)),
+                                  //space
+                                  Container(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(' المساحة: ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                        Container(
+                                          margin: const EdgeInsets.all(7),
+                                        ),
+                                        Padding(
+                                            padding:
+                                                const EdgeInsets.all(10.0)),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                padding:
+                                                    EdgeInsets.only(right: 9),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        width: 1)),
+                                                height: 40,
+                                                width: 150,
+                                                child: TextFormField(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText: 'متر ² '),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  onSaved: (val) {
+                                                    space = val!;
+                                                  },
+                                                ))
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      space = val!;
-                                    },
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(30),
                                   ),
+                                  //city
                                   Column(
                                     children: [
                                       CSCPicker(
@@ -553,6 +558,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
+                                  //location
                                   TextFormField(
                                     decoration: const InputDecoration(
                                         hintText: 'القيروان',
@@ -603,8 +609,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
+                                  //price
                                   Container(
-                                    child: Column(
+                                    child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
@@ -623,15 +630,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               padding:
                                                   EdgeInsets.only(right: 7),
                                               decoration: BoxDecoration(
+                                                  color: Colors.white,
                                                   borderRadius:
                                                       BorderRadius.circular(7),
                                                   border: Border.all(
-                                                      color: Colors.grey,
+                                                      color:
+                                                          Colors.grey.shade300,
                                                       width: 1)),
                                               height: 45,
-                                              width: 160,
+                                              width: 140,
                                               child: TextField(
-                                                controller: rentController,
                                                 decoration:
                                                     const InputDecoration(
                                                   hintText: 'ريال',
@@ -659,7 +667,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                           Colors.grey.shade300,
                                                       width: 1)),
                                               height: 45,
-                                              width: 160,
+                                              width: 155,
                                               child: DropdownButton(
                                                   value: type,
                                                   items: [
@@ -754,9 +762,76 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
+                                  //propertyAge
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "عمر عقارك:",
+                                        style: const TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
+                                        ),
+                                        textDirection: TextDirection.rtl,
+                                      ),
+                                      Text("(من شهر إلى 100+ سنة)",
+                                          style: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontFamily: "Tajawal-m",
+                                              color: Color.fromARGB(
+                                                  255, 120, 122, 129)),
+                                          textDirection: TextDirection.rtl),
+                                      Container(
+                                        height: 100,
+                                        width: 380,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            border: Border.all(
+                                                color: Colors.grey.shade300,
+                                                width: 1)),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.all(3),
+                                            ),
+                                            Slider(
+                                              label: "عمر عقارك:",
+                                              value: age.toDouble(),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  age = value.toDouble();
+                                                });
+                                              },
+                                              min: 0.0,
+                                              max: 100.0,
+                                            ),
+                                            Text(
+                                              " (شهر.سنة) " +
+                                                  age.toStringAsFixed(1),
+                                              style: const TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontFamily: "Tajawal-m",
+                                                  color: Color.fromARGB(
+                                                      255, 73, 75, 82)),
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.all(5),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(20),
+                                  ),
                                   Column(
                                     children: [
-                                      Text("عددالغرف",
+                                      Text("عدد الغرف",
                                           style: TextStyle(
                                               fontSize: 20.0,
                                               fontFamily: "Tajawal-b")),
@@ -766,11 +841,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       Container(
                                         height: 40,
                                         decoration: BoxDecoration(
+                                            color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                             border: Border.all(
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82),
+                                                color: Colors.grey.shade300,
                                                 width: 1)),
                                         child: Row(
                                           mainAxisAlignment:
@@ -827,11 +902,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       Container(
                                         height: 40,
                                         decoration: BoxDecoration(
+                                            color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                             border: Border.all(
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82),
+                                                color: Colors.grey.shade300,
                                                 width: 1)),
                                         child: Row(
                                           mainAxisAlignment:
@@ -1080,75 +1155,143 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ],
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.all(15),
                                   ),
+                                  //upload images
                                   Container(
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Row(
+                                    height: 190,
+                                    width: 350,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
+                                          color: Color.fromARGB(
+                                              255, 127, 126, 126),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: SizedBox(
+                                        height: 100,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const AlwaysScrollableScrollPhysics(),
                                           children: [
-                                            Text(' إرفع صورة: ',
-                                                style: TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontFamily: "Tajawal-b",
-                                                ),
-                                                textDirection:
-                                                    TextDirection.rtl),
-                                            IconButton(
-                                                onPressed: () async {
-                                                  ImagePicker imagePicker =
-                                                      ImagePicker();
-                                                  XFile? file =
-                                                      await imagePicker
-                                                          .pickImage(
-                                                              source:
-                                                                  ImageSource
-                                                                      .gallery);
-                                                  print('${file?.path}');
-
-                                                  if (file == null) return;
-                                                  //Import dart:core
-                                                  String uniqueFileName =
-                                                      DateTime.now()
-                                                          .millisecondsSinceEpoch
-                                                          .toString();
-
-                                                  /*Step 2: Upload to Firebase storage*/
-                                                  //Install firebase_storage
-                                                  //Import the library
-
-                                                  //Get a reference to storage root
-                                                  Reference referenceRoot =
-                                                      FirebaseStorage.instance
-                                                          .ref();
-                                                  Reference referenceDirImages =
-                                                      referenceRoot
-                                                          .child('images');
-
-                                                  //Create a reference for the image to be stored
-                                                  Reference
-                                                      referenceImageToUpload =
-                                                      referenceDirImages
-                                                          .child('name');
-
-                                                  //Handle errors/success
-                                                  try {
-                                                    //Store the file
-                                                    await referenceImageToUpload
-                                                        .putFile(
-                                                            File(file.path));
-                                                    //Success: get the download URL
-                                                    imageUrl =
-                                                        await referenceImageToUpload
-                                                            .getDownloadURL();
-                                                  } catch (error) {
-                                                    //Some error occurred
-                                                  }
-                                                },
-                                                icon: Icon(Icons.photo_camera)),
+                                            selectedFiles.isEmpty
+                                                ? Container(
+                                                    alignment: Alignment.center,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            1.1,
+                                                    child: TextButton(
+                                                      child: Text(
+                                                        '+إرفع صور للعقار',
+                                                        style: TextStyle(
+                                                            fontSize: 20.0,
+                                                            fontFamily:
+                                                                "Tajawal-m",
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    127,
+                                                                    166,
+                                                                    233)),
+                                                      ),
+                                                      onPressed: () {
+                                                        selectImage();
+                                                      },
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    margin: EdgeInsets.only(
+                                                      top:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              100,
+                                                      right:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              100,
+                                                      bottom:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              100,
+                                                    ),
+                                                    height: 100,
+                                                    child: ListView(
+                                                      shrinkWrap: true,
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      children: selectedFiles
+                                                          .map((e) => Stack(
+                                                                alignment:
+                                                                    AlignmentDirectional
+                                                                        .topEnd,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            3.0),
+                                                                    child:
+                                                                        Container(
+                                                                      color: Colors
+                                                                          .blue,
+                                                                      child: Image
+                                                                          .file(
+                                                                        File(e
+                                                                            .path),
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        height:
+                                                                            100,
+                                                                        width:
+                                                                            100,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          selectedFiles
+                                                                              .remove(e);
+                                                                        });
+                                                                      },
+                                                                      child:
+                                                                          const Padding(
+                                                                        padding:
+                                                                            EdgeInsets.all(.02),
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .cancel,
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ),
+                                                                      )),
+                                                                ],
+                                                              ))
+                                                          .toList(),
+                                                    ),
+                                                  ),
                                           ],
                                         )),
                                   ),
+                                  Container(
+                                    margin: const EdgeInsets.all(20),
+                                  ),
+                                  //submit button
                                   SizedBox(
                                     width: 300.0,
                                     height: 90.0,
@@ -1207,5 +1350,27 @@ class MyCustomFormState extends State<MyCustomForm> {
         ),
       ),
     );
+  }
+
+  Future<void> selectImage() async {
+    try {
+      final List<XFile>? imgs = await _picker.pickMultiImage();
+      if (imgs != null) {
+        selectedFiles.addAll(imgs);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    setState(() {});
+  }
+
+  Future<String> uploadFile(XFile _image, String userId) async {
+    FirebaseStorage imageRef = FirebaseStorage.instance;
+    Reference reference =
+        imageRef.ref().child("propertyImages/$userId/${_image.name}");
+    File file = File(_image.path);
+    await reference.putFile(file);
+    String downloadUrl = await reference.getDownloadURL();
+    return downloadUrl;
   }
 }
