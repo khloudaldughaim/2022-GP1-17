@@ -49,11 +49,11 @@ class _myPropertyState extends State<myProperty> {
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 final User? user = auth.currentUser;
-final uid = user!.uid;
+final nuid = user!.uid;
 
 Stream<List<Property>> readmyPropertys() => FirebaseFirestore.instance
     .collection('properties')
-    .where('user_id', isEqualTo: uid)
+    .where('user_id', isEqualTo: nuid)
     .snapshots()
     .map((snapshot) =>
         snapshot.docs.map((doc) => Property.fromJson(doc.data())).toList());
