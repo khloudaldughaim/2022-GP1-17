@@ -231,6 +231,12 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
           Navigator.of(context).pop();
+          ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                  content: Text(
+                                                      ' تمت إضافة العقار بنجاح!')),
+                                            );
         },
       );
       // set up the AlertDialog
@@ -1801,12 +1807,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             showAlertDialog(context);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      ' تمت إضافة العقار بنجاح!')),
-                                            );
+                                            
                                           }
                                         },
                                         style: ButtonStyle(
