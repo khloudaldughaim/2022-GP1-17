@@ -54,6 +54,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
     String? address = "";
     int number_of_floors = widget.building.number_of_floor;
     int number_of_apartments = widget.building.number_of_apartment;
+    String neighborhood = '${widget.building.properties.neighborhood}';
 
     final ImagePicker _picker = ImagePicker();
     List<XFile> selectedFiles = [];
@@ -340,6 +341,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                   height: 40,
                                                   width: 150,
                                                   child: TextFormField(
+                                                    controller: TextEditingController(text : price),
                                                     autovalidateMode:
                                                         AutovalidateMode
                                                             .onUserInteraction,
@@ -402,6 +404,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                   height: 40,
                                                   width: 150,
                                                   child: TextFormField(
+                                                    controller: TextEditingController(text : neighborhood),
                                                     decoration:
                                                         const InputDecoration(
                                                             hintText: 'القيروان'),
