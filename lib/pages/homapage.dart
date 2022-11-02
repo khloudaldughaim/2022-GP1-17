@@ -64,6 +64,15 @@ class _HomePageState extends State<HomePage> {
             forSale.add(Land.fromJson(element.data()));
           }
         }
+
+        if (element.data()["type"] == "شقة") {
+          allData.add(Apartment.fromMap(element.data()));
+          if (element.data()["classification"] == "للإيجار") {
+            forRent.add(Apartment.fromMap(element.data()));
+          } else {
+            forSale.add(Apartment.fromMap(element.data()));
+          }
+        }
       });
       Future.delayed(Duration(seconds: 1), () {
         setState(() {});
@@ -155,6 +164,7 @@ class _HomePageState extends State<HomePage> {
                     return _handleSnapshot(snapshot);
                   },
                 ),
+                _handleListItems(forSale),
                 _handleListItems(forRent),
                 _handleListItems(forSale),
                 // Center(child: Text("For sale")),

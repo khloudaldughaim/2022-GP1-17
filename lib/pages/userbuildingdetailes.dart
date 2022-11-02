@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/building.dart';
+import 'package:nozol_application/pages/updatebuilding.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -49,9 +50,14 @@ class BuildingDetailes extends StatelessWidget {
               tag: '${building.properties.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : building.properties.images[0], //'${building.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: BoxDecoration(
+                decoration: '${building.properties!.images.length}' == '0' ? BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage('${building.properties.images[0]}'), //'${building.images[0]}'
+                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                    fit: BoxFit.cover,
+                  ),
+                ) : BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('${building.properties!.images[0]}'), //'${villa.images[0]}'
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -91,10 +97,17 @@ class BuildingDetailes extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 28,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => UpdateBuilding(building: building)),);
+                              },
+                              child: Icon(
+                                            Icons.edit,
+                                            color: Colors.white,
+                                            size: 28,
+                                          ),
                             ),
                           ],
                         ),
