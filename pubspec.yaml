@@ -49,6 +49,7 @@ dependencies:
   geolocator: ^9.0.2
   search_map_place_updated: ^0.0.4
   location: ^4.4.0
+  photo_view: ^0.14.0
 
 
 dev_dependencies:
