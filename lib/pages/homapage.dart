@@ -20,53 +20,119 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> allData = [];
   List<dynamic> forRent = [];
   List<dynamic> forSale = [];
-
+TextEditingController controller = TextEditingController();
+var name;
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     try {
       allData.clear();
       forRent.clear();
       forSale.clear();
-
+if(name.isEmpty)
+{
       data.docs.forEach((element) {
-        if (element.data()["type"] == "فيلا") {
+       if (element.data()["type"] == "فيلا") {
           allData.add(Villa.fromMap(element.data()));
-          if (element.data()["classification"] == "للإيجار") {
-            forRent.add(Villa.fromMap(element.data()));
-          } else {
+          if (element.data()["classification"] == "rent") {
             forSale.add(Villa.fromMap(element.data()));
+          } else {
+            forRent.add(Villa.fromMap(element.data()));
+          }
+        }
+        if (element.data()["type"] == "شقة") {
+          allData.add(Apartment.fromMap(element.data()));
+          if (element.data()["classification"] == "rent") {
+            forSale.add(Apartment.fromMap(element.data()));
+          } else {
+            forRent.add(Apartment.fromMap(element.data()));
           }
         }
 
         if (element.data()["type"] == "عمارة") {
           allData.add(Building.fromMap(element.data()));
 
-          if (element.data()["classification"] == "للإيجار") {
-            forRent.add(Building.fromMap(element.data()));
-          } else {
+          if (element.data()["classification"] == "rent") {
             forSale.add(Building.fromMap(element.data()));
+          } else {
+            forRent.add(Building.fromMap(element.data()));
           }
         }
 
         if (element.data()["type"] == "ارض") {
           allData.add(Land.fromJson(element.data()));
 
-          if (element.data()["classification"] == "للإيجار") {
-            forRent.add(Land.fromJson(element.data()));
-          } else {
+          if (element.data()["classification"] == "rent") {
             forSale.add(Land.fromJson(element.data()));
-          }
-        }
-
-        if (element.data()["type"] == "شقة") {
-          allData.add(Apartment.fromMap(element.data()));
-          if (element.data()["classification"] == "للإيجار") {
-            forRent.add(Apartment.fromMap(element.data()));
           } else {
-            forSale.add(Apartment.fromMap(element.data()));
+            forRent.add(Land.fromJson(element.data()));
           }
         }
-
       });
+}
+else {
+data.docs.forEach((element) {
+ if (
+    (element.data()["type"] == "فيلا" && element.data()['city'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "فيلا" && element.data()['neighborhood'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "فيلا" && element.data()['type'].toString().toLowerCase().startsWith(name.toLowerCase()))
+     ) //if condition 
+     {
+          allData.add(Villa.fromMap(element.data()));
+          if (element.data()["classification"] == "rent") {
+            forSale.add(Villa.fromMap(element.data()));
+          } else {
+            forRent.add(Villa.fromMap(element.data()));
+          }
+        } //end of if statment 
+ if (
+    (element.data()["type"] == "شقة" && element.data()['city'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "شقة" && element.data()['neighborhood'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "شقة" && element.data()['type'].toString().toLowerCase().startsWith(name.toLowerCase()))
+     ) //if condition 
+     {
+          allData.add(Apartment.fromMap(element.data()));
+          if (element.data()["classification"] == "rent") {
+            forSale.add(Apartment.fromMap(element.data()));
+          } else {
+            forRent.add(Apartment.fromMap(element.data()));
+          }
+    }//end of if statment 
+ if (
+    (element.data()["type"] == "عمارة" && element.data()['city'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "عمارة" && element.data()['neighborhood'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "عمارة" && element.data()['type'].toString().toLowerCase().startsWith(name.toLowerCase()))
+     ) //if condition 
+     {
+     allData.add(Building.fromMap(element.data()));
+     if (element.data()["classification"] == "rent") {
+     forSale.add(Building.fromMap(element.data()));
+     } else {
+    forRent.add(Building.fromMap(element.data()));
+    }
+    }//end of if statment 
+  if (
+    (element.data()["type"] == "ارض" && element.data()['city'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "ارض" && element.data()['neighborhood'].toString().toLowerCase().startsWith(name.toLowerCase()))
+    ||
+    (element.data()["type"] == "ارض" && element.data()['type'].toString().toLowerCase().startsWith(name.toLowerCase()))
+     ) //if condition 
+     {
+     allData.add(Land.fromJson(element.data()));
+          if (element.data()["classification"] == "rent") {
+            forSale.add(Land.fromJson(element.data()));
+          } else {
+            forRent.add(Land.fromJson(element.data()));
+          }
+    }//end of if statment 
+
+ });
+}// end of else 
       Future.delayed(Duration(seconds: 1), () {
         setState(() {});
       });
@@ -99,8 +165,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _handleSnapshot(
-      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+  Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot ) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator());
     }
@@ -130,7 +195,24 @@ class _HomePageState extends State<HomePage> {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              title: const Text('نزل'),
+              title: TextField(
+                controller: controller,
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  hintText: 'search',
+                  hintStyle:
+                      TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
+                ),
+                cursorColor: Colors.white,
+              ),
               bottom: const TabBar(
                 tabs: [
                   Tab(
@@ -148,8 +230,7 @@ class _HomePageState extends State<HomePage> {
             body: TabBarView(
               children: [
                 FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  future:
-                      FirebaseFirestore.instance.collection('properties').get(),
+                  future: FirebaseFirestore.instance.collection('properties').get(),
                   builder: (
                     BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
@@ -157,9 +238,8 @@ class _HomePageState extends State<HomePage> {
                     return _handleSnapshot(snapshot);
                   },
                 ),
-                _handleListItems(forSale),
                 _handleListItems(forRent),
-
+                _handleListItems(forSale),
                 // Center(child: Text("For sale")),
                 // Center(child: Text("For rent")),
               ],
@@ -289,8 +369,7 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => ApartmentDetailes(apartment: apartment)),
+      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
     );
   }, rowItem, apartment);
 }
@@ -316,8 +395,7 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => BuildingDetailes(building: building)),
+      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
     );
   }, rowItem, building);
 }
@@ -360,18 +438,13 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
       )),
       child: Container(
         height: 210,
-        decoration: '${type.properties.images.length}' == '0'
-            ? BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
-                    fit: BoxFit.cover),
-              )
-            : BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage('${type.properties.images[0]}'),
-                    fit: BoxFit.cover),
-              ),
+        decoration: '${type.properties.images.length}' == '0' ? BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), fit: BoxFit.cover),
+        ) : BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
+        ),
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
