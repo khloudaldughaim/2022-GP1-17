@@ -37,18 +37,28 @@ LatLng mapLatLng = LatLng(23.88, 45.0792);
 class _UpdateBuildingState extends State<UpdateBuilding> {
   @override
   Widget build(BuildContext context) {
-
-    String type = '${widget.building.properties.type}' ;
+    String type = '${widget.building.properties.type}';
     final _formKey = GlobalKey<FormState>();
     String property_id = '${widget.building.properties.property_id}';
     classification? _class = classification.rent;
     String classification1 = '${widget.building.properties.classification}';
     String price = '${widget.building.properties.price}';
     String space = '${widget.building.properties.space}';
-    double property_age = 0.0;
-    choice? _poolCH = choice.no; 
-    choice? _elevatorCH = choice.no;
-    bool pool = widget.building.pool ;
+    num property_age = widget.building.property_age;
+    choice? _elevatorCH;
+    choice? _poolCH;
+    if (widget.building.pool == false) {
+      _poolCH = choice.no;
+    } else {
+      _poolCH = choice.yes;
+    }
+    if (widget.building.elevator == false) {
+      _elevatorCH = choice.no;
+    } else {
+      _elevatorCH = choice.yes;
+    }
+
+    bool pool = widget.building.pool;
     bool elevator = widget.building.elevator;
     String city = '${widget.building.properties.city}';
     String? address = "";
@@ -127,21 +137,21 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
 
     const appTitle = 'تحديث عقار';
 
-        return MaterialApp(
-          home: SafeArea(
-              child: Scaffold(
-                appBar: AppBar(
-          // bottom: const
-                title: Center(
-                  child: const Text(appTitle,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Tajawal-b",
-                      )),
-                ),
-                toolbarHeight: 60,
-                backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              ),
+    return MaterialApp(
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            // bottom: const
+            title: Center(
+              child: const Text(appTitle,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Tajawal-b",
+                  )),
+            ),
+            toolbarHeight: 60,
+            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          ),
           body: SizedBox(
             height: double.infinity,
             width: double.infinity,
@@ -200,7 +210,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                       _class = value;
                                                       if (_class ==
                                                           classification.sale)
-                                                        classification1 = 'للبيع';
+                                                        classification1 =
+                                                            'للبيع';
                                                     });
                                                   },
                                                 ),
@@ -242,7 +253,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                     Container(
                                       margin: const EdgeInsets.all(15),
                                     ),
-                                    
+
                                     //space
                                     Container(
                                       child: Row(
@@ -278,7 +289,9 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                   height: 40,
                                                   width: 150,
                                                   child: TextFormField(
-                                                    controller: TextEditingController(text : space),
+                                                    controller:
+                                                        TextEditingController(
+                                                            text: space),
                                                     autovalidateMode:
                                                         AutovalidateMode
                                                             .onUserInteraction,
@@ -341,7 +354,9 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                   height: 40,
                                                   width: 150,
                                                   child: TextFormField(
-                                                    controller: TextEditingController(text : price),
+                                                    controller:
+                                                        TextEditingController(
+                                                            text: price),
                                                     autovalidateMode:
                                                         AutovalidateMode
                                                             .onUserInteraction,
@@ -357,8 +372,10 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                         return 'الرجاء إدخال أرقام فقط';
                                                       }
                                                     },
-                                                    onSaved: (val) {
-                                                      price = val!;
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        price = value;
+                                                      });
                                                     },
                                                   ))
                                             ],
@@ -369,7 +386,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                     Container(
                                       margin: const EdgeInsets.all(25),
                                     ),
-                                    
+
                                     Container(
                                       child: Row(
                                         crossAxisAlignment:
@@ -404,10 +421,13 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                   height: 40,
                                                   width: 150,
                                                   child: TextFormField(
-                                                    controller: TextEditingController(text : neighborhood),
+                                                    controller:
+                                                        TextEditingController(
+                                                            text: neighborhood),
                                                     decoration:
                                                         const InputDecoration(
-                                                            hintText: 'القيروان'),
+                                                            hintText:
+                                                                'القيروان'),
                                                     validator: (value) {
                                                       if (value == null ||
                                                           value.isEmpty) {
@@ -451,8 +471,10 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                             },
                                             myLocationButtonEnabled: true,
                                             myLocationEnabled: true,
-                                            initialCameraPosition: CameraPosition(
-                                                target: mapLatLng, zoom: 14),
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                                    target: mapLatLng,
+                                                    zoom: 14),
                                           ),
                                           Container(
                                               alignment: Alignment.bottomRight,
@@ -467,14 +489,16 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                 onPressed: () async {
                                                   LocationData currentLocation;
                                                   var location = new Location();
-        
-                                                  currentLocation = await location
-                                                      .getLocation();
-        
+
+                                                  currentLocation =
+                                                      await location
+                                                          .getLocation();
+
                                                   LatLng latLng = LatLng(
                                                       currentLocation.latitude!,
-                                                      currentLocation.longitude!);
-        
+                                                      currentLocation
+                                                          .longitude!);
+
                                                   controller!.animateCamera(
                                                       CameraUpdate
                                                           .newCameraPosition(
@@ -488,7 +512,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                       zoom: 17.0,
                                                     ),
                                                   ));
-        
+
                                                   setState(() {
                                                     mapLatLng = latLng;
                                                   });
@@ -504,12 +528,13 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                 bgColor: Colors.white,
                                                 textColor: Colors.black,
                                                 hasClearButton: true,
-                                                placeholder: "إبحث عن مدينة، حي",
+                                                placeholder:
+                                                    "إبحث عن مدينة، حي",
                                                 placeType: PlaceType.address,
                                                 onSelected: (place) async {
                                                   Geolocation? geolocation =
                                                       await place.geolocation;
-        
+
                                                   controller!.animateCamera(
                                                       CameraUpdate.newLatLng(
                                                           geolocation!
@@ -517,7 +542,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                   controller!.animateCamera(
                                                       CameraUpdate
                                                           .newLatLngBounds(
-                                                              geolocation.bounds,
+                                                              geolocation
+                                                                  .bounds,
                                                               0));
                                                   setState(() {
                                                     mapLatLng =
@@ -529,374 +555,347 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                       ),
                                     ),
                                     Container(
-                                            margin: const EdgeInsets.all(25),
+                                      margin: const EdgeInsets.all(25),
+                                    ),
+                                    //propertyAge
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "عمر عقارك:",
+                                          style: const TextStyle(
+                                            fontSize: 20.0,
+                                            fontFamily: "Tajawal-b",
                                           ),
-                                        //propertyAge
-                                        Column(
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                        Text("(من شهر إلى 100+ سنة)",
+                                            style: const TextStyle(
+                                                fontSize: 15.0,
+                                                fontFamily: "Tajawal-m",
+                                                color: Color.fromARGB(
+                                                    255, 120, 122, 129)),
+                                            textDirection: TextDirection.rtl),
+                                        Container(
+                                          height: 100,
+                                          width: 380,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              border: Border.all(
+                                                  color: Colors.grey.shade300,
+                                                  width: 1)),
+                                          child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "عمر عقارك:",
-                                                style: const TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontFamily: "Tajawal-b",
-                                                ),
-                                                textDirection: TextDirection.rtl,
-                                              ),
-                                              Text("(من شهر إلى 100+ سنة)",
-                                                  style: const TextStyle(
-                                                      fontSize: 15.0,
-                                                      fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(
-                                                          255, 120, 122, 129)),
-                                                  textDirection:
-                                                      TextDirection.rtl),
                                               Container(
-                                                height: 100,
-                                                width: 380,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.grey.shade300,
-                                                        width: 1)),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      margin:
-                                                          const EdgeInsets.all(3),
-                                                    ),
-                                                    Slider(
-                                                      label: "عمر عقارك:",
-                                                      value:
-                                                          property_age.toDouble(),
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          property_age =
-                                                              value.toDouble();
-                                                        });
-                                                      },
-                                                      min: 0.0,
-                                                      max: 100.0,
-                                                    ),
-                                                    Text(
-                                                      " (شهر.سنة) " +
-                                                          property_age
-                                                              .toStringAsFixed(1),
-                                                      style: const TextStyle(
-                                                          fontSize: 16.0,
-                                                          fontFamily: "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                    ),
-                                                    Container(
-                                                      margin:
-                                                          const EdgeInsets.all(5),
-                                                    )
-                                                  ],
-                                                ),
+                                                margin: const EdgeInsets.all(3),
                                               ),
+                                              Slider(
+                                                label: "عمر عقارك:",
+                                                value: property_age.toDouble(),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    property_age =
+                                                        value.toDouble();
+                                                  });
+                                                },
+                                                min: 0.0,
+                                                max: 100.0,
+                                              ),
+                                              Text(
+                                                " (شهر.سنة) " +
+                                                    property_age
+                                                        .toStringAsFixed(1),
+                                                style: const TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.all(5),
+                                              )
                                             ],
                                           ),
+                                        ),
+                                      ],
+                                    ),
                                     Container(
                                       margin: const EdgeInsets.all(20),
                                     ),
-                                     Container(
-                                            margin: const EdgeInsets.all(20),
-                                          ),
-                                    Column(
-                                            children: [
-                                              Text("عدد الشقق:",
-                                                  style: TextStyle(
-                                                      fontSize: 20.0,
-                                                      fontFamily: "Tajawal-b")),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Container(
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.grey.shade300,
-                                                        width: 1)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          number_of_apartments++;
-        
-                                                          setState(() {});
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons
-                                                              .add_circle_outline,
-                                                          color: Color.fromARGB(
-                                                              255, 127, 166, 233),
-                                                        )),
-                                                    Text("$number_of_apartments",
-                                                        style: TextStyle(
-                                                            fontSize: 20.0,
-                                                            fontFamily:
-                                                                "Tajawal-b",
-                                                            color: Color.fromARGB(
-                                                                255, 73, 75, 82)),
-                                                        textDirection:
-                                                            TextDirection.rtl),
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          number_of_apartments ==
-                                                                  0
-                                                              ? null
-                                                              : number_of_apartments--;
-        
-                                                          setState(() {});
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons
-                                                              .remove_circle_outline,
-                                                          color: Color.fromARGB(
-                                                              255, 127, 166, 233),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        
-                                     Container(
-                                            margin: const EdgeInsets.all(20),
-                                          ),
-                                     Column(
-                                            children: [
-                                              Text("عدد الأدوار:",
-                                                  style: TextStyle(
-                                                      fontSize: 20.0,
-                                                      fontFamily: "Tajawal-b")),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Container(
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.grey.shade300,
-                                                        width: 1)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          number_of_floors++;
-        
-                                                          setState(() {});
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons
-                                                              .add_circle_outline,
-                                                          color: Color.fromARGB(
-                                                              255, 127, 166, 233),
-                                                        )),
-                                                    Text("$number_of_floors",
-                                                        style: TextStyle(
-                                                            fontSize: 20.0,
-                                                            fontFamily:
-                                                                "Tajawal-b",
-                                                            color: Color.fromARGB(
-                                                                255, 73, 75, 82)),
-                                                        textDirection:
-                                                            TextDirection.rtl),
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          number_of_floors == 0
-                                                              ? null
-                                                              : number_of_floors--;
-        
-                                                          setState(() {});
-                                                        },
-                                                        icon: const Icon(
-                                                          Icons
-                                                              .remove_circle_outline,
-                                                          color: Color.fromARGB(
-                                                              255, 127, 166, 233),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
                                     Container(
-                                            margin: const EdgeInsets.all(20),
-                                          ),
+                                      margin: const EdgeInsets.all(20),
+                                    ),
                                     Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text('يوجد مسبح : ',
+                                      children: [
+                                        Text("عدد الشقق:",
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontFamily: "Tajawal-b")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              border: Border.all(
+                                                  color: Colors.grey.shade300,
+                                                  width: 1)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () {
+                                                    number_of_apartments++;
+
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Color.fromARGB(
+                                                        255, 127, 166, 233),
+                                                  )),
+                                              Text("$number_of_apartments",
                                                   style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b",
-                                                  ),
+                                                      fontSize: 20.0,
+                                                      fontFamily: "Tajawal-b",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
                                                   textDirection:
                                                       TextDirection.rtl),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        2,
-                                                    child: RadioListTile(
-                                                      title: const Text(
-                                                        'نعم',
-                                                        style: TextStyle(
-                                                            fontSize: 18.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color: Color.fromARGB(
-                                                                255, 73, 75, 82)),
-                                                      ),
-                                                      value: choice.yes,
-                                                      groupValue: _poolCH,
-                                                      onChanged: (choice? value) {
-                                                        setState(() {
-                                                          _poolCH = value;
-                                                          if (_poolCH ==
-                                                              choice.yes)
-                                                            pool = true;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        2.5,
-                                                    child: RadioListTile(
-                                                      title: const Text(
-                                                        'لا',
-                                                        style: TextStyle(
-                                                            fontSize: 18.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color: Color.fromARGB(
-                                                                255, 73, 75, 82)),
-                                                      ),
-                                                      value: choice.no,
-                                                      groupValue: _poolCH,
-                                                      onChanged: (choice? value) {
-                                                        setState(() {
-                                                          _poolCH = value;
-                                                          if (_poolCH ==
-                                                              choice.no)
-                                                            pool = false;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    number_of_apartments == 0
+                                                        ? null
+                                                        : number_of_apartments--;
+
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.remove_circle_outline,
+                                                    color: Color.fromARGB(
+                                                        255, 127, 166, 233),
+                                                  ))
                                             ],
                                           ),
-                                     Container(
-                                            margin: const EdgeInsets.all(10),
-                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    Container(
+                                      margin: const EdgeInsets.all(20),
+                                    ),
                                     Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text('يوجد مصعد : ',
+                                      children: [
+                                        Text("عدد الأدوار:",
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontFamily: "Tajawal-b")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              border: Border.all(
+                                                  color: Colors.grey.shade300,
+                                                  width: 1)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () {
+                                                    number_of_floors++;
+
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Color.fromARGB(
+                                                        255, 127, 166, 233),
+                                                  )),
+                                              Text("$number_of_floors",
                                                   style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b",
-                                                  ),
+                                                      fontSize: 20.0,
+                                                      fontFamily: "Tajawal-b",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
                                                   textDirection:
                                                       TextDirection.rtl),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        2,
-                                                    child: RadioListTile(
-                                                      title: const Text(
-                                                        'نعم',
-                                                        style: TextStyle(
-                                                            fontSize: 18.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color: Color.fromARGB(
-                                                                255, 73, 75, 82)),
-                                                      ),
-                                                      value: choice.yes,
-                                                      groupValue: _elevatorCH,
-                                                      onChanged: (choice? value) {
-                                                        setState(() {
-                                                          _elevatorCH = value;
-                                                          if (_elevatorCH ==
-                                                              choice.yes)
-                                                            elevator = true;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        2.5,
-                                                    child: RadioListTile(
-                                                      title: const Text(
-                                                        'لا',
-                                                        style: TextStyle(
-                                                            fontSize: 18.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color: Color.fromARGB(
-                                                                255, 73, 75, 82)),
-                                                      ),
-                                                      value: choice.no,
-                                                      groupValue: _elevatorCH,
-                                                      onChanged: (choice? value) {
-                                                        setState(() {
-                                                          _elevatorCH = value;
-                                                          if (_elevatorCH ==
-                                                              choice.no)
-                                                            elevator = false;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    number_of_floors == 0
+                                                        ? null
+                                                        : number_of_floors--;
+
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.remove_circle_outline,
+                                                    color: Color.fromARGB(
+                                                        255, 127, 166, 233),
+                                                  ))
                                             ],
                                           ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.all(20),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('يوجد مسبح : ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                              child: RadioListTile(
+                                                title: const Text(
+                                                  'نعم',
+                                                  style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                ),
+                                                value: choice.yes,
+                                                groupValue: _poolCH,
+                                                onChanged: (choice? value) {
+                                                  setState(() {
+                                                    _poolCH = value;
+                                                    if (_poolCH == choice.yes)
+                                                      pool = true;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5,
+                                              child: RadioListTile(
+                                                title: const Text(
+                                                  'لا',
+                                                  style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                ),
+                                                value: choice.no,
+                                                groupValue: _poolCH,
+                                                onChanged: (choice? value) {
+                                                  setState(() {
+                                                    _poolCH = value;
+                                                    if (_poolCH == choice.no)
+                                                      pool = false;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.all(10),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('يوجد مصعد : ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                              child: RadioListTile(
+                                                title: const Text(
+                                                  'نعم',
+                                                  style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                ),
+                                                value: choice.yes,
+                                                groupValue: _elevatorCH,
+                                                onChanged: (choice? value) {
+                                                  setState(() {
+                                                    _elevatorCH = value;
+                                                    if (_elevatorCH ==
+                                                        choice.yes)
+                                                      elevator = true;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5,
+                                              child: RadioListTile(
+                                                title: const Text(
+                                                  'لا',
+                                                  style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                ),
+                                                value: choice.no,
+                                                groupValue: _elevatorCH,
+                                                onChanged: (choice? value) {
+                                                  setState(() {
+                                                    _elevatorCH = value;
+                                                    if (_elevatorCH ==
+                                                        choice.no)
+                                                      elevator = false;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                     Container(
                                       margin: const EdgeInsets.all(15),
                                     ),
-        
+
                                     //upload images
                                     Container(
                                       height: 190,
@@ -908,7 +907,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                 255, 127, 126, 126),
                                             width: 1,
                                           ),
-                                          borderRadius: BorderRadius.circular(5)),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
                                       child: SizedBox(
                                           height: 100,
                                           width:
@@ -920,7 +920,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                             children: [
                                               selectedFiles.isEmpty
                                                   ? Container(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       width:
                                                           MediaQuery.of(context)
                                                                   .size
@@ -933,8 +934,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                               fontSize: 20.0,
                                                               fontFamily:
                                                                   "Tajawal-m",
-                                                              color:
-                                                                  Color.fromARGB(
+                                                              color: Color
+                                                                  .fromARGB(
                                                                       255,
                                                                       127,
                                                                       166,
@@ -947,21 +948,21 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                     )
                                                   : Container(
                                                       margin: EdgeInsets.only(
-                                                        top:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .height /
-                                                                100,
-                                                        right:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .height /
-                                                                100,
-                                                        bottom:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .height /
-                                                                100,
+                                                        top: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            100,
+                                                        right: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            100,
+                                                        bottom: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            100,
                                                       ),
                                                       height: 100,
                                                       child: ListView(
@@ -1002,8 +1003,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                                             () {
                                                                           setState(
                                                                               () {
-                                                                            selectedFiles
-                                                                                .remove(e);
+                                                                            selectedFiles.remove(e);
                                                                           });
                                                                         },
                                                                         child:
@@ -1012,8 +1012,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                                               EdgeInsets.all(.02),
                                                                           child:
                                                                               Icon(
-                                                                            Icons
-                                                                                .cancel,
+                                                                            Icons.cancel,
                                                                             size:
                                                                                 15,
                                                                             color:
@@ -1080,31 +1079,30 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
               ),
             ),
           ),
-              ),
-            ),
-        );
+        ),
+      ),
+    );
 
-  Future<void> selectImage() async {
-    try {
-      final List<XFile>? imgs = await _picker.pickMultiImage();
-      if (imgs != null) {
-        selectedFiles.addAll(imgs);
+    Future<void> selectImage() async {
+      try {
+        final List<XFile>? imgs = await _picker.pickMultiImage();
+        if (imgs != null) {
+          selectedFiles.addAll(imgs);
+        }
+      } catch (e) {
+        rethrow;
       }
-    } catch (e) {
-      rethrow;
+      setState(() {});
     }
-    setState(() {});
-  }
 
-  Future<String> uploadFile(XFile _image, String userId) async {
-    FirebaseStorage imageRef = FirebaseStorage.instance;
-    Reference reference =
-        imageRef.ref().child("propertyImages/$userId/${_image.name}");
-    File file = File(_image.path);
-    await reference.putFile(file);
-    String downloadUrl = await reference.getDownloadURL();
-    return downloadUrl;
-  }
-
+    Future<String> uploadFile(XFile _image, String userId) async {
+      FirebaseStorage imageRef = FirebaseStorage.instance;
+      Reference reference =
+          imageRef.ref().child("propertyImages/$userId/${_image.name}");
+      File file = File(_image.path);
+      await reference.putFile(file);
+      String downloadUrl = await reference.getDownloadURL();
+      return downloadUrl;
+    }
   }
 }

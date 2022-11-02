@@ -3,11 +3,11 @@ import 'property.dart';
 class Building {
   final Property properties;
   final bool elevator;
-  final int property_age;
+  final num property_age;
   final int number_of_apartment;
   final int number_of_floor;
   final bool pool;
-  
+
   Building({
     required this.properties,
     required this.elevator,

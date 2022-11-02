@@ -8,9 +8,9 @@ class Villa {
   final bool elevator;
   final int number_of_floor;
   final int number_of_livingRooms;
-  final int property_age;
+  final num property_age;
   final Property properties;
-  
+
   Villa({
     required this.number_of_bathroom,
     required this.number_of_room,

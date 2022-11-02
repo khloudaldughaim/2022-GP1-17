@@ -64,15 +64,6 @@ class _HomePageState extends State<HomePage> {
             forSale.add(Land.fromJson(element.data()));
           }
         }
-
-        if (element.data()["type"] == "شقة") {
-          allData.add(Apartment.fromMap(element.data()));
-          if (element.data()["classification"] == "للإيجار") {
-            forRent.add(Apartment.fromMap(element.data()));
-          } else {
-            forSale.add(Apartment.fromMap(element.data()));
-          }
-        }
       });
       Future.delayed(Duration(seconds: 1), () {
         setState(() {});

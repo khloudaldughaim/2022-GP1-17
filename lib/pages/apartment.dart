@@ -8,7 +8,7 @@ class Apartment {
   final int number_of_floor; //CHECK
   final int number_of_livingRooms;
   final bool elevator;
-  final int property_age;
+  final num property_age;
 
   Apartment({
     required this.properties,
