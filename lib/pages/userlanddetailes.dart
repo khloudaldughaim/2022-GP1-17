@@ -31,9 +31,14 @@ class LandDetailes extends StatelessWidget {
               tag: '${land.properties!.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : land.properties!.images[0], //'${land.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: BoxDecoration(
+                decoration: '${land.properties!.images.length}' == '0' ? BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage('${land.properties!.images[0]}'), //'${land.images[0]}'
+                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                    fit: BoxFit.cover,
+                  ),
+                ) : BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('${land.properties!.images[0]}'), //'${villa.images[0]}'
                     fit: BoxFit.cover,
                   ),
                 ),

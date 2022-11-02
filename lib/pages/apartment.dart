@@ -4,7 +4,7 @@ class Apartment {
   final Property properties;
   final int number_of_bathroom;
   final int number_of_room;
-  final int in_floor;
+  final String in_floor;
   final int number_of_floor; //CHECK
   final int number_of_livingRooms;
   final bool elevator;
@@ -38,7 +38,7 @@ class Apartment {
       properties: Property.fromMap(map),
       number_of_bathroom: map['number_of_bathroom']?.toInt() ?? 0,
       number_of_room: map['number_of_room']?.toInt() ?? 0,
-      in_floor: map['in_floor']?.toInt() ?? 0,
+      in_floor: map['in_floor'] ?? '',
       number_of_floor: map['number_of_floors']?.toInt() ?? 0,
       number_of_livingRooms: map['number_of_livingRooms']?.toInt() ?? 0,
       elevator: map['elevator'] ?? false,

@@ -28,20 +28,13 @@ class _HomePageState extends State<HomePage> {
       forSale.clear();
 
       data.docs.forEach((element) {
+        print(element.data());
         if (element.data()["type"] == "فيلا") {
           allData.add(Villa.fromMap(element.data()));
           if (element.data()["classification"] == "للإيجار") {
             forRent.add(Villa.fromMap(element.data()));
           } else {
             forSale.add(Villa.fromMap(element.data()));
-          }
-        }
-        if (element.data()["type"] == "شقة") {
-          allData.add(Apartment.fromMap(element.data()));
-          if (element.data()["classification"] == "للإيجار") {
-            forRent.add(Apartment.fromMap(element.data()));
-          } else {
-            forSale.add(Apartment.fromMap(element.data()));
           }
         }
 
@@ -64,6 +57,16 @@ class _HomePageState extends State<HomePage> {
             forSale.add(Land.fromJson(element.data()));
           }
         }
+
+        if (element.data()["type"] == "شقة") {
+          allData.add(Apartment.fromMap(element.data()));
+          if (element.data()["classification"] == "للإيجار") {
+            forRent.add(Apartment.fromMap(element.data()));
+          } else {
+            forSale.add(Apartment.fromMap(element.data()));
+          }
+        }
+
       });
       Future.delayed(Duration(seconds: 1), () {
         setState(() {});

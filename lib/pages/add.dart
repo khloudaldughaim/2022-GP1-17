@@ -76,7 +76,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   static int i = 1;
   String property_id = '';
   classification? _class = classification.rent;
-  String classification1 = '';
+  String classification1 = 'للإيجار';
   int type = 1;
   String type1 = 'فيلا';
   propertyUse? _pUse = propertyUse.residental;
