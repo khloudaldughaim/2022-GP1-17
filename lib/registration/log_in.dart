@@ -118,8 +118,6 @@ class _LogInState extends State<LogIn> {
                                   child: TextFormField(
                                     obscureText: true,
                                     controller: password,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.lock,
@@ -130,8 +128,7 @@ class _LogInState extends State<LogIn> {
                                       labelText: "كلمة المرور:",
                                       labelStyle:
                                           TextStyle(fontFamily: "Tajawal-m"),
-                                      hintText:
-                                          "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ",
+                                      hintText: "أدخل كلمة مرور صالحة ",
                                       hintStyle: TextStyle(fontSize: 10),
                                       fillColor:
                                           Color.fromARGB(255, 225, 225, 228),
@@ -152,22 +149,22 @@ class _LogInState extends State<LogIn> {
                                       } else if (value.length < 8 &&
                                           !uper.hasMatch(value) &&
                                           !small.hasMatch(value)) {
-                                        return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ";
+                                        return "ادخل كلمة مرور صالحة ";
                                       } else if (value.length < 8 &&
                                           !uper.hasMatch(value)) {
-                                        return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة ";
+                                        return "ادخل كلمة مرور صالحة";
                                       } else if (value.length < 8 &&
                                           !small.hasMatch(value)) {
-                                        return "كلمة المرور يجب ان يكون من 8 خانات واحرف وصغيرة ";
+                                        return "ادخل كلمة مرور صالحة";
                                       } else if (!uper.hasMatch(value) &&
                                           !small.hasMatch(value)) {
-                                        return "كلمة المرور يجب ان تحتوي على احرف كبيرة و وصغيرة ";
+                                        return "ادخل كلمة مرور صالحة";
                                       } else if (value.length < 8) {
-                                        return "كلمة المرور يجب ان تكون من 8 خانات فأكثر";
+                                        return "ادخل كلمة مرور صالحة";
                                       } else if (!uper.hasMatch(value)) {
-                                        return "كلمة المرور يجب ان تحتوي على احرف كبيرة";
+                                        return "ادخل كلمة مرور صالحة";
                                       } else if (!small.hasMatch(value)) {
-                                        return "كلمة المرور يجب ان تحتوي على احرف صغيرة";
+                                        return "ادخل كلمة مرور صالحة";
                                       }
                                     },
                                   ),
