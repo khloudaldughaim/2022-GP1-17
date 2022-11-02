@@ -30,17 +30,25 @@ class _HomePageState extends State<HomePage> {
       data.docs.forEach((element) {
         if (element.data()["type"] == "فيلا") {
           allData.add(Villa.fromMap(element.data()));
-          if (element.data()["classification"] == "للإيجار") {
+          if (element.data()["classification"] == "rent") {
             forRent.add(Villa.fromMap(element.data()));
           } else {
             forSale.add(Villa.fromMap(element.data()));
+          }
+        }
+        if (element.data()["type"] == "شقة") {
+          allData.add(Apartment.fromMap(element.data()));
+          if (element.data()["classification"] == "rent") {
+            forRent.add(Apartment.fromMap(element.data()));
+          } else {
+            forSale.add(Apartment.fromMap(element.data()));
           }
         }
 
         if (element.data()["type"] == "عمارة") {
           allData.add(Building.fromMap(element.data()));
 
-          if (element.data()["classification"] == "للإيجار") {
+          if (element.data()["classification"] == "rent") {
             forRent.add(Building.fromMap(element.data()));
           } else {
             forSale.add(Building.fromMap(element.data()));
@@ -50,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         if (element.data()["type"] == "ارض") {
           allData.add(Land.fromJson(element.data()));
 
-          if (element.data()["classification"] == "للإيجار") {
+          if (element.data()["classification"] == "rent") {
             forRent.add(Land.fromJson(element.data()));
           } else {
             forSale.add(Land.fromJson(element.data()));
@@ -65,7 +73,6 @@ class _HomePageState extends State<HomePage> {
             forSale.add(Apartment.fromMap(element.data()));
           }
         }
-
       });
       Future.delayed(Duration(seconds: 1), () {
         setState(() {});
@@ -159,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 _handleListItems(forSale),
                 _handleListItems(forRent),
-
+                _handleListItems(forSale),
                 // Center(child: Text("For sale")),
                 // Center(child: Text("For rent")),
               ],
