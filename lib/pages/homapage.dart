@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> {
       forSale.clear();
 
       data.docs.forEach((element) {
-        print(element.data());
         if (element.data()["type"] == "فيلا") {
           allData.add(Villa.fromMap(element.data()));
           if (element.data()["classification"] == "للإيجار") {
