@@ -31,17 +31,17 @@ class _HomePageState extends State<HomePage> {
         if (element.data()["type"] == "فيلا") {
           allData.add(Villa.fromMap(element.data()));
           if (element.data()["classification"] == "rent") {
-            forSale.add(Villa.fromMap(element.data()));
-          } else {
             forRent.add(Villa.fromMap(element.data()));
+          } else {
+            forSale.add(Villa.fromMap(element.data()));
           }
         }
         if (element.data()["type"] == "شقة") {
           allData.add(Apartment.fromMap(element.data()));
           if (element.data()["classification"] == "rent") {
-            forSale.add(Apartment.fromMap(element.data()));
-          } else {
             forRent.add(Apartment.fromMap(element.data()));
+          } else {
+            forSale.add(Apartment.fromMap(element.data()));
           }
         }
 
@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
           allData.add(Building.fromMap(element.data()));
 
           if (element.data()["classification"] == "rent") {
-            forSale.add(Building.fromMap(element.data()));
-          } else {
             forRent.add(Building.fromMap(element.data()));
+          } else {
+            forSale.add(Building.fromMap(element.data()));
           }
         }
 
@@ -59,9 +59,9 @@ class _HomePageState extends State<HomePage> {
           allData.add(Land.fromJson(element.data()));
 
           if (element.data()["classification"] == "rent") {
-            forSale.add(Land.fromJson(element.data()));
-          } else {
             forRent.add(Land.fromJson(element.data()));
+          } else {
+            forSale.add(Land.fromJson(element.data()));
           }
         }
       });
@@ -97,7 +97,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+  Widget _handleSnapshot(
+      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator());
     }
@@ -145,7 +146,8 @@ class _HomePageState extends State<HomePage> {
             body: TabBarView(
               children: [
                 FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  future: FirebaseFirestore.instance.collection('properties').get(),
+                  future:
+                      FirebaseFirestore.instance.collection('properties').get(),
                   builder: (
                     BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
@@ -284,7 +286,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+      MaterialPageRoute(
+          builder: (context) => ApartmentDetailes(apartment: apartment)),
     );
   }, rowItem, apartment);
 }
@@ -310,7 +313,8 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+      MaterialPageRoute(
+          builder: (context) => BuildingDetailes(building: building)),
     );
   }, rowItem, building);
 }
@@ -353,13 +357,18 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
       )),
       child: Container(
         height: 210,
-        decoration: '${type.properties.images.length}' == '0' ? BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), fit: BoxFit.cover),
-        ) : BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
-        ),
+        decoration: '${type.properties.images.length}' == '0'
+            ? BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                    fit: BoxFit.cover),
+              )
+            : BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage('${type.properties.images[0]}'),
+                    fit: BoxFit.cover),
+              ),
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
