@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,6 +10,9 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
+
+import '../registration/log_in.dart';
+import '../registration/sign_up.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -42,6 +46,22 @@ class _AddPageState extends State<AddPage> {
   }
 }
 
+// get the id of the curent user
+Future getCurrentUser() async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final User? user = auth.currentUser;
+  final uid = user!.uid;
+  print(uid);
+
+  final docStanderUser = await FirebaseFirestore.instance
+      .collection('Standard_user')
+      .doc(uid)
+      .get();
+  if (docStanderUser.exists) {
+    return Suser.fromJson(docStanderUser.data()!);
+  }
+}
+
 enum classification { rent, sale }
 
 enum propertyUse { residental, commercial }
@@ -69,12 +89,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   String type1 = 'villa';
   propertyUse? _pUse = propertyUse.residental;
   String propertyUse1 = '';
-  String address1 = ''; ///////
   String price = '';
-  int rentDuration = 1;
-  String rentDuration1 = "Per Year";
+  String in_floor = '';
   String space = '';
-  double age = 0.0;
+  double property_age = 0.0;
   choice? _poolCH = choice.no;
   choice? _basementCH = choice.no;
   choice? _elevatorCH = choice.no;
@@ -84,10 +102,14 @@ class MyCustomFormState extends State<MyCustomForm> {
   String countryValue = "";
   String? stateValue = "";
   String? cityValue = "";
+  String? city = "Riyadh";
   String? address = "";
-  int bathNo = 0;
-  int roomNo = 0;
-  int livingRoomNo = 0;
+  int number_of_bathrooms = 0;
+  int number_of_rooms = 0;
+  int number_of_livingRooms = 0;
+  int number_of_floors = 0;
+  int number_of_apartments = 0;
+
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
 
@@ -109,35 +131,112 @@ class MyCustomFormState extends State<MyCustomForm> {
       Widget continueButton = TextButton(
         child: Text("تأكيد"),
         onPressed: () async {
+          final FirebaseAuth auth = FirebaseAuth.instance;
+          final User? user = auth.currentUser;
+          final User_id = user!.uid;
+          print(User_id);
+
           List<String> arrImage = [];
           for (int i = 0; i < selectedFiles.length; i++) {
-            var imageUrl = await uploadFile(selectedFiles[i], "1234");
+            var imageUrl = await uploadFile(selectedFiles[i], User_id);
             arrImage.add(imageUrl.toString());
           }
+
           _formKey.currentState!.save();
+
           i++;
           property_id = "p$i";
           print(
-              "property_id: $property_id , classification: $classification1 , type: $type1 , property_age: $age , city: $cityValue , neighborhood: $address , price: $price , space: $space , number_of_bathroom: $bathNo , number_of_room: $roomNo , pool: $pool , basement: $basement , elevator: $elevator  ");
-          FirebaseFirestore.instance.collection('properties').add({
-            'property_id': property_id,
-            'classification': classification1,
-            'type': type1,
-            'property_age': age,
-            'city': cityValue,
-            'neighborhood': address,
-            'lat': mapLatLng.latitude,
-            'lng': mapLatLng.longitude,
-            'price': price,
-            'space': space,
-            'number_of_bathroom': bathNo,
-            'number_of_room': roomNo,
-            'pool': pool,
-            'basement': basement,
-            'elevator': elevator,
-            'images': arrImage
-          });
+              "property_id: $property_id , user_id: $User_id , classification: $classification1 , type: $type1 ");
+
+          if (type1 == 'villa')
+            FirebaseFirestore.instance.collection('properties').add({
+              'property_id': property_id,
+              'User_id': User_id,
+              'classification': classification1,
+              'latitude': mapLatLng.latitude,
+              'longitude': mapLatLng.longitude,
+              'price': price,
+              'space': space,
+              'city': city,
+              'neighborhood': address,
+              'images': arrImage,
+              'type': type1, //
+              'property_age': property_age,
+              'number_of_floors': number_of_floors,
+              'elevator': elevator,
+              'number_of_bathrooms': number_of_bathrooms,
+              'number_of_rooms': number_of_rooms,
+              'pool': pool,
+              'basement': basement,
+              'number_of_livingRooms': number_of_livingRooms
+            });
+
+          if (type1 == 'apartment')
+            FirebaseFirestore.instance.collection('properties').add({
+              'property_id': property_id,
+              'user_id': '',
+              'classification': classification1,
+              'latitude': mapLatLng.latitude,
+              'longitude': mapLatLng.longitude,
+              'price': price,
+              'space': space,
+              'city': city,
+              'neighborhood': address,
+              'images': arrImage,
+              'type': type1,
+              'property_age': property_age,
+              'number_of_floors': number_of_floors,
+              'elevator': elevator,
+              'number_of_bathrooms': number_of_bathrooms,
+              'number_of_rooms': number_of_rooms,
+              'in_floor': in_floor,
+              'number_of_livingRooms': number_of_livingRooms
+            });
+
+          if (type1 == 'land')
+            FirebaseFirestore.instance.collection('properties').add({
+              'property_id': property_id,
+              'user_id': '',
+              'classification': classification1,
+              'latitude': mapLatLng.latitude,
+              'longitude': mapLatLng.longitude,
+              'price': price,
+              'space': space,
+              'city': city,
+              'neighborhood': address,
+              'images': arrImage,
+              'type': type1,
+              'propertyUse': propertyUse1
+            });
+
+          if (type1 == 'building')
+            FirebaseFirestore.instance.collection('properties').add({
+              'property_id': property_id,
+              'user_id': '',
+              'classification': classification1,
+              'latitude': mapLatLng.latitude,
+              'longitude': mapLatLng.longitude,
+              'price': price,
+              'space': space,
+              'city': city,
+              'neighborhood': address,
+              'images': arrImage,
+              'type': type1,
+              'property_age': property_age,
+              'number_of_floors': number_of_floors,
+              'elevator': elevator,
+              'pool': pool,
+              'number_of_apartments': number_of_apartments
+            });
+
           Navigator.of(context).pop();
+          ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                  content: Text(
+                                                      ' تمت إضافة العقار بنجاح!')),
+                                            );
         },
       );
       // set up the AlertDialog
@@ -477,20 +576,85 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
+                                  type == 2
+                                      ? Container(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(' رقم الدور: ',
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontFamily: "Tajawal-b",
+                                                  ),
+                                                  textDirection:
+                                                      TextDirection.rtl),
+                                              Container(
+                                                margin:
+                                                    const EdgeInsets.all(10),
+                                              ),
+                                              Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0)),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                      padding: EdgeInsets.only(
+                                                          top: 16, right: 9),
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(7),
+                                                          border: Border.all(
+                                                              color: Colors.grey
+                                                                  .shade300,
+                                                              width: 1)),
+                                                      height: 40,
+                                                      width: 150,
+                                                      child: TextFormField(
+                                                        autovalidateMode:
+                                                            AutovalidateMode
+                                                                .onUserInteraction,
+                                                        validator: (value) {
+                                                          if (value!.isEmpty) {
+                                                            return 'الرجاء عدم ترك الخانة فارغة!';
+                                                          }
+                                                          if (!RegExp(r'[0-9]')
+                                                              .hasMatch(
+                                                                  value)) {
+                                                            return 'الرجاء إدخال أرقام فقط';
+                                                          }
+                                                        },
+                                                        onSaved: (val) {
+                                                          in_floor = val!;
+                                                        },
+                                                      ))
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(),
+                                  type == 2
+                                      ? Container(
+                                          margin: const EdgeInsets.all(30),
+                                        )
+                                      : Container(),
                                   //space
                                   Container(
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(' المساحة: ',
+                                        Text(' *المساحة: ',
                                             style: TextStyle(
                                               fontSize: 20.0,
                                               fontFamily: "Tajawal-b",
                                             ),
                                             textDirection: TextDirection.rtl),
                                         Container(
-                                          margin: const EdgeInsets.all(7),
+                                          margin: const EdgeInsets.all(10),
                                         ),
                                         Padding(
                                             padding:
@@ -512,15 +676,20 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 height: 40,
                                                 width: 150,
                                                 child: TextFormField(
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
                                                   decoration:
                                                       const InputDecoration(
                                                           hintText: 'متر ² '),
                                                   validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
+                                                    if (value!.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
-                                                    return null;
+                                                    if (!RegExp(r'[0-9]')
+                                                        .hasMatch(value)) {
+                                                      return 'الرجاء إدخال أرقام فقط';
+                                                    }
                                                   },
                                                   onSaved: (val) {
                                                     space = val!;
@@ -534,6 +703,78 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(30),
                                   ),
+                                  //price
+                                  Container(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(' *السعر: ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                        Container(
+                                          margin: const EdgeInsets.all(19),
+                                        ),
+                                        Padding(
+                                            padding:
+                                                const EdgeInsets.all(10.0)),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 16, right: 9),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        width: 1)),
+                                                height: 40,
+                                                width: 150,
+                                                child: TextFormField(
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText: 'ريال '),
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                    if (!RegExp(r'[0-9]')
+                                                        .hasMatch(value)) {
+                                                      return 'الرجاء إدخال أرقام فقط';
+                                                    }
+                                                  },
+                                                  onSaved: (val) {
+                                                    price = val!;
+                                                  },
+                                                ))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(25),
+                                  ),
+                                  /*Container(
+                                    margin: const EdgeInsets.all(20),
+                                    child: Text(' : ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                  ),*/
+
                                   //city
                                   Column(
                                     children: [
@@ -572,6 +813,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         onCityChanged: (value) {
                                           setState(() {
                                             cityValue = value;
+                                            city = cityValue;
                                           });
                                         },
                                       )
@@ -580,29 +822,63 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
-                                  //location
-                                  TextFormField(
-                                    decoration: const InputDecoration(
-                                        hintText: 'القيروان',
-                                        labelText: 'الحي',
-                                        labelStyle: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (val) {
-                                      address = val!;
-                                    },
+                                  Container(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(' *الحي: ',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                            textDirection: TextDirection.rtl),
+                                        Container(
+                                          margin: const EdgeInsets.all(10),
+                                        ),
+                                        Padding(
+                                            padding:
+                                                const EdgeInsets.all(10.0)),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 16, right: 9),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7),
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        width: 1)),
+                                                height: 40,
+                                                width: 150,
+                                                child: TextFormField(
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText: 'القيروان'),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  onSaved: (val) {
+                                                    address = val!;
+                                                  },
+                                                ))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
+                                  //location
                                   Container(
                                       alignment: Alignment.topRight,
                                       child: Text(' الموقع: ',
@@ -649,6 +925,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 LatLng latLng = LatLng(
                                                     currentLocation.latitude!,
                                                     currentLocation.longitude!);
+
                                                 controller!.animateCamera(
                                                     CameraUpdate
                                                         .newCameraPosition(
@@ -683,6 +960,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               onSelected: (place) async {
                                                 Geolocation? geolocation =
                                                     await place.geolocation;
+
                                                 controller!.animateCamera(
                                                     CameraUpdate.newLatLng(
                                                         geolocation!
@@ -701,274 +979,91 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.all(25),
-                                  ),
-                                  //price
-                                  Container(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(' السعر: ',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: "Tajawal-b",
-                                            ),
-                                            textDirection: TextDirection.rtl),
-                                        Container(
-                                          margin: const EdgeInsets.all(5),
+                                  type == 3
+                                      ? Container()
+                                      : Container(
+                                          margin: const EdgeInsets.all(25),
                                         ),
-                                        _class == classification.rent
-                                            ? Row(
+                                  type == 3
+                                      ? Container()
+                                      :
+                                      //propertyAge
+                                      Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "عمر عقارك:",
+                                              style: const TextStyle(
+                                                fontSize: 20.0,
+                                                fontFamily: "Tajawal-b",
+                                              ),
+                                              textDirection: TextDirection.rtl,
+                                            ),
+                                            Text("(من شهر إلى 100+ سنة)",
+                                                style: const TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 120, 122, 129)),
+                                                textDirection:
+                                                    TextDirection.rtl),
+                                            Container(
+                                              height: 100,
+                                              width: 380,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1)),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: 7),
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7),
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .grey.shade300,
-                                                            width: 1)),
-                                                    height: 45,
-                                                    width: 140,
-                                                    child: TextField(
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        hintText: 'ريال',
-                                                        labelStyle: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                      ),
-                                                    ),
+                                                    margin:
+                                                        const EdgeInsets.all(3),
                                                   ),
-                                                  SizedBox(
-                                                    width: 5,
+                                                  Slider(
+                                                    label: "عمر عقارك:",
+                                                    value:
+                                                        property_age.toDouble(),
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        property_age =
+                                                            value.toDouble();
+                                                      });
+                                                    },
+                                                    min: 0.0,
+                                                    max: 100.0,
                                                   ),
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: 7),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10)),
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .grey.shade300,
-                                                            width: 1)),
-                                                    height: 45,
-                                                    width: 155,
-                                                    child: DropdownButton(
-                                                        value: type,
-                                                        items: [
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                              "سنوياً",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  fontFamily:
-                                                                      "Tajawal-m",
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          73,
-                                                                          75,
-                                                                          82)),
-                                                            ),
-                                                            value: 1,
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                              "شهرياً",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  fontFamily:
-                                                                      "Tajawal-m",
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          73,
-                                                                          75,
-                                                                          82)),
-                                                            ),
-                                                            value: 2,
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                              "أسبوعياً",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  fontFamily:
-                                                                      "Tajawal-m",
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          73,
-                                                                          75,
-                                                                          82)),
-                                                            ),
-                                                            value: 3,
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                              "يومياً",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  fontFamily:
-                                                                      "Tajawal-m",
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          73,
-                                                                          75,
-                                                                          82)),
-                                                            ),
-                                                            value: 4,
-                                                          )
-                                                        ],
-                                                        onChanged:
-                                                            (int? value) {
-                                                          setState(() {
-                                                            rentDuration =
-                                                                value!;
-                                                            if (rentDuration ==
-                                                                1)
-                                                              rentDuration1 =
-                                                                  'Per Year';
-                                                            if (rentDuration ==
-                                                                2)
-                                                              rentDuration1 =
-                                                                  'Per Month';
-                                                            if (rentDuration ==
-                                                                3)
-                                                              rentDuration1 =
-                                                                  'Per Week';
-                                                            if (rentDuration ==
-                                                                4)
-                                                              rentDuration1 =
-                                                                  'Per Night';
-                                                          });
-                                                        }),
-                                                  ),
-                                                ],
-                                              )
-                                            : Container(
-                                                padding:
-                                                    EdgeInsets.only(right: 7),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7),
-                                                    border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 1)),
-                                                height: 45,
-                                                width: 140,
-                                                child: TextField(
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    hintText: 'ريال',
-                                                    labelStyle: TextStyle(
+                                                  Text(
+                                                    " (شهر.سنة) " +
+                                                        property_age
+                                                            .toStringAsFixed(1),
+                                                    style: const TextStyle(
                                                         fontSize: 16.0,
                                                         fontFamily: "Tajawal-m",
                                                         color: Color.fromARGB(
                                                             255, 73, 75, 82)),
                                                   ),
-                                                ),
-                                              )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.all(20),
-                                  ),
-                                  //propertyAge
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "عمر عقارك:",
-                                        style: const TextStyle(
-                                          fontSize: 20.0,
-                                          fontFamily: "Tajawal-b",
-                                        ),
-                                        textDirection: TextDirection.rtl,
-                                      ),
-                                      Text("(من شهر إلى 100+ سنة)",
-                                          style: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(
-                                                  255, 120, 122, 129)),
-                                          textDirection: TextDirection.rtl),
-                                      Container(
-                                        height: 100,
-                                        width: 380,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            border: Border.all(
-                                                color: Colors.grey.shade300,
-                                                width: 1)),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(3),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.all(5),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                            Slider(
-                                              label: "عمر عقارك:",
-                                              value: age.toDouble(),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  age = value.toDouble();
-                                                });
-                                              },
-                                              min: 0.0,
-                                              max: 100.0,
-                                            ),
-                                            Text(
-                                              " (شهر.سنة) " +
-                                                  age.toStringAsFixed(1),
-                                              style: const TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontFamily: "Tajawal-m",
-                                                  color: Color.fromARGB(
-                                                      255, 73, 75, 82)),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.all(5),
-                                            )
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
                                   Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
-                                  type == 3
+                                  type == 3 || type == 4
                                       ? Container()
                                       : Column(
                                           children: [
@@ -997,7 +1092,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
-                                                        roomNo++;
+                                                        number_of_rooms++;
 
                                                         setState(() {});
                                                       },
@@ -1007,7 +1102,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         color: Color.fromARGB(
                                                             255, 127, 166, 233),
                                                       )),
-                                                  Text("$roomNo",
+                                                  Text("$number_of_rooms",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
                                                           fontFamily:
@@ -1018,9 +1113,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                           TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
-                                                        roomNo == 0
+                                                        number_of_rooms == 0
                                                             ? null
-                                                            : roomNo--;
+                                                            : number_of_rooms--;
 
                                                         setState(() {});
                                                       },
@@ -1035,10 +1130,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             ),
                                           ],
                                         ),
-                                  Container(
-                                    margin: const EdgeInsets.all(20),
-                                  ),
-                                  type == 3
+                                  type == 3 || type == 4
+                                      ? Container()
+                                      : Container(
+                                          margin: const EdgeInsets.all(20),
+                                        ),
+                                  type == 3 || type == 4
                                       ? Container()
                                       : Column(
                                           children: [
@@ -1068,7 +1165,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
-                                                        bathNo++;
+                                                        number_of_bathrooms++;
 
                                                         setState(() {});
                                                       },
@@ -1078,7 +1175,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         color: Color.fromARGB(
                                                             255, 127, 166, 233),
                                                       )),
-                                                  Text("$bathNo",
+                                                  Text("$number_of_bathrooms",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
                                                           fontFamily:
@@ -1089,9 +1186,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                           TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
-                                                        bathNo == 0
+                                                        number_of_bathrooms == 0
                                                             ? null
-                                                            : bathNo--;
+                                                            : number_of_bathrooms--;
 
                                                         setState(() {});
                                                       },
@@ -1106,12 +1203,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             ),
                                           ],
                                         ),
-                                  type == 3
+                                  type == 3 || type == 4
                                       ? Container()
                                       : Container(
                                           margin: const EdgeInsets.all(20),
                                         ),
-                                  type == 3
+                                  type == 3 || type == 4
                                       ? Container()
                                       : Column(
                                           children: [
@@ -1140,7 +1237,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
-                                                        livingRoomNo++;
+                                                        number_of_livingRooms++;
 
                                                         setState(() {});
                                                       },
@@ -1150,7 +1247,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         color: Color.fromARGB(
                                                             255, 127, 166, 233),
                                                       )),
-                                                  Text("$livingRoomNo",
+                                                  Text("$number_of_livingRooms",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
                                                           fontFamily:
@@ -1161,9 +1258,155 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                           TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
-                                                        livingRoomNo == 0
+                                                        number_of_livingRooms ==
+                                                                0
                                                             ? null
-                                                            : livingRoomNo--;
+                                                            : number_of_livingRooms--;
+
+                                                        setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .remove_circle_outline,
+                                                        color: Color.fromARGB(
+                                                            255, 127, 166, 233),
+                                                      ))
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                  type == 3 || type == 4
+                                      ? Container()
+                                      : Container(
+                                          margin: const EdgeInsets.all(20),
+                                        ),
+                                  type == 4
+                                      ? Column(
+                                          children: [
+                                            Text("عدد الشقق:",
+                                                style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontFamily: "Tajawal-b")),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        number_of_apartments++;
+
+                                                        setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .add_circle_outline,
+                                                        color: Color.fromARGB(
+                                                            255, 127, 166, 233),
+                                                      )),
+                                                  Text("$number_of_apartments",
+                                                      style: TextStyle(
+                                                          fontSize: 20.0,
+                                                          fontFamily:
+                                                              "Tajawal-b",
+                                                          color: Color.fromARGB(
+                                                              255, 73, 75, 82)),
+                                                      textDirection:
+                                                          TextDirection.rtl),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        number_of_apartments ==
+                                                                0
+                                                            ? null
+                                                            : number_of_apartments--;
+
+                                                        setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .remove_circle_outline,
+                                                        color: Color.fromARGB(
+                                                            255, 127, 166, 233),
+                                                      ))
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Container(),
+                                  type == 3
+                                      ? Container()
+                                      : Container(
+                                          margin: const EdgeInsets.all(20),
+                                        ),
+                                  type == 3
+                                      ? Container()
+                                      : Column(
+                                          children: [
+                                            Text("عدد الأدوار:",
+                                                style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontFamily: "Tajawal-b")),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        number_of_floors++;
+
+                                                        setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .add_circle_outline,
+                                                        color: Color.fromARGB(
+                                                            255, 127, 166, 233),
+                                                      )),
+                                                  Text("$number_of_floors",
+                                                      style: TextStyle(
+                                                          fontSize: 20.0,
+                                                          fontFamily:
+                                                              "Tajawal-b",
+                                                          color: Color.fromARGB(
+                                                              255, 73, 75, 82)),
+                                                      textDirection:
+                                                          TextDirection.rtl),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        number_of_floors == 0
+                                                            ? null
+                                                            : number_of_floors--;
 
                                                         setState(() {});
                                                       },
@@ -1183,7 +1426,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       : Container(
                                           margin: const EdgeInsets.all(20),
                                         ),
-                                  type == 3
+                                  type == 2 || type == 3
                                       ? Container()
                                       : Column(
                                           crossAxisAlignment:
@@ -1261,9 +1504,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       : Container(
                                           margin: const EdgeInsets.all(10),
                                         ),
-                                  type == 3
-                                      ? Container()
-                                      : Column(
+                                  type == 1
+                                      ? Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
@@ -1333,7 +1575,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               ],
                                             ),
                                           ],
-                                        ),
+                                        )
+                                      : Container(),
                                   type == 3
                                       ? Container()
                                       : Container(
@@ -1415,6 +1658,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
+
                                   //upload images
                                   Container(
                                     height: 190,
@@ -1563,12 +1807,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             showAlertDialog(context);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      'جاري اضافة العقار')),
-                                            );
+                                            
                                           }
                                         },
                                         style: ButtonStyle(
@@ -1609,7 +1848,6 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
-
 
   Future<void> selectImage() async {
     try {

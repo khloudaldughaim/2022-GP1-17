@@ -53,7 +53,8 @@ class HomePage extends StatefulWidget {
 // }
 
 class _HomePageState extends State<HomePage> {
-
+TextEditingController controller = TextEditingController();
+var name;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,7 +64,24 @@ class _HomePageState extends State<HomePage> {
             child: Scaffold(  
                appBar: AppBar(
                 backgroundColor:Color.fromARGB(255, 127, 166, 233),
-                title: const Text('نزل'),
+                title: TextField(
+                controller: controller,
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  hintText: 'search',
+                  hintStyle:
+                      TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
+                ),
+                cursorColor: Colors.white,
+              ),
             bottom: const TabBar(
               tabs: [
                 Tab(text: 'الكل',),
