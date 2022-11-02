@@ -50,16 +50,8 @@ class _AddPageState extends State<AddPage> {
 Future getCurrentUser() async {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final User? user = auth.currentUser;
-  final uid = user!.uid;
-  print(uid);
-
-  final docStanderUser = await FirebaseFirestore.instance
-      .collection('Standard_user')
-      .doc(uid)
-      .get();
-  if (docStanderUser.exists) {
-    return Suser.fromJson(docStanderUser.data()!);
-  }
+  final puid = user!.uid;
+  print(puid);
 }
 
 enum classification { rent, sale }
@@ -86,7 +78,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   classification? _class = classification.rent;
   String classification1 = '';
   int type = 1;
-  String type1 = 'villa';
+  String type1 = 'فيلا';
   propertyUse? _pUse = propertyUse.residental;
   String propertyUse1 = '';
   String price = '';
@@ -149,7 +141,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           print(
               "property_id: $property_id , user_id: $User_id , classification: $classification1 , type: $type1 ");
 
-          if (type1 == 'villa')
+          if (type1 == 'فيلا')
             FirebaseFirestore.instance.collection('properties').add({
               'property_id': property_id,
               'User_id': User_id,
@@ -172,10 +164,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'number_of_livingRooms': number_of_livingRooms
             });
 
-          if (type1 == 'apartment')
+          if (type1 == 'شقة')
             FirebaseFirestore.instance.collection('properties').add({
               'property_id': property_id,
-              'user_id': '',
+              'User_id': User_id,
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
@@ -194,10 +186,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'number_of_livingRooms': number_of_livingRooms
             });
 
-          if (type1 == 'land')
+          if (type1 == 'ارض')
             FirebaseFirestore.instance.collection('properties').add({
               'property_id': property_id,
-              'user_id': '',
+              'User_id': User_id,
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
@@ -210,10 +202,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'propertyUse': propertyUse1
             });
 
-          if (type1 == 'building')
+          if (type1 == 'عمارة')
             FirebaseFirestore.instance.collection('properties').add({
               'property_id': property_id,
-              'user_id': '',
+              'User_id': User_id,
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
@@ -231,12 +223,9 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
           Navigator.of(context).pop();
-          ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      ' تمت إضافة العقار بنجاح!')),
-                                            );
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(' تمت إضافة العقار بنجاح!')),
+          );
         },
       );
       // set up the AlertDialog
@@ -317,7 +306,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                     _class = value;
                                                     if (_class ==
                                                         classification.sale)
-                                                      classification1 = 'sale';
+                                                      classification1 = 'للبيع';
                                                   });
                                                 },
                                               ),
@@ -345,7 +334,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                     _class = value;
                                                     if (_class ==
                                                         classification.rent)
-                                                      classification1 = 'rent';
+                                                      classification1 =
+                                                          'للإيجار';
                                                   });
                                                 },
                                               ),
@@ -460,13 +450,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                     setState(() {
                                                       type = value!;
                                                       if (type == 1)
-                                                        type1 = 'villa';
+                                                        type1 = 'فيلا';
                                                       if (type == 2)
-                                                        type1 = 'apartment';
+                                                        type1 = 'شقة';
                                                       if (type == 3)
-                                                        type1 = 'land';
+                                                        type1 = 'ارض';
                                                       if (type == 4)
-                                                        type1 = 'building';
+                                                        type1 = 'عمارة';
                                                     });
                                                   }),
                                             ),
@@ -524,7 +514,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                               propertyUse
                                                                   .residental)
                                                             propertyUse1 =
-                                                                'residental';
+                                                                'سكني';
                                                         });
                                                       },
                                                     ),
@@ -562,7 +552,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                               propertyUse
                                                                   .commercial)
                                                             propertyUse1 =
-                                                                'commercial';
+                                                                'تجاري';
                                                         });
                                                       },
                                                     ),
@@ -1807,7 +1797,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             showAlertDialog(context);
-                                            
                                           }
                                         },
                                         style: ButtonStyle(
