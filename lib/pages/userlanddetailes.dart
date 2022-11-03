@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/land.dart';
+import 'package:nozol_application/pages/updateland.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -107,10 +108,20 @@ class LandDetailes extends StatelessWidget {
                             SizedBox(
                               width: 20,
                             ),
-                            Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 28,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateLand(land: land)),
+                                );
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                             ),
                           ],
                         ),
