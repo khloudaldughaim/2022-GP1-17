@@ -20,160 +20,169 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> allData = [];
   List<dynamic> forRent = [];
   List<dynamic> forSale = [];
-TextEditingController controller = TextEditingController();
-String name= '' ;
+  TextEditingController controller = TextEditingController();
+  String name = '';
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     setState(() {
-        try {
-      allData.clear();
-      forRent.clear();
-      forSale.clear();
-      data.docs.forEach((element) {
-       if (element.data()["type"] == "فيلا") {
-          allData.add(Villa.fromMap(element.data()));
-          if (element.data()["classification"] == "rent") {
-            forSale.add(Villa.fromMap(element.data()));
-          } else {
-            forRent.add(Villa.fromMap(element.data()));
+      try {
+        allData.clear();
+        forRent.clear();
+        forSale.clear();
+        data.docs.forEach((element) {
+          if (element.data()["type"] == "فيلا") {
+            allData.add(Villa.fromMap(element.data()));
+            if (element.data()["classification"] == "للإيجار") {
+              forSale.add(Villa.fromMap(element.data()));
+            } else {
+              forRent.add(Villa.fromMap(element.data()));
+            }
           }
-        }
-        if (element.data()["type"] == "شقة") {
-          allData.add(Apartment.fromMap(element.data()));
-          if (element.data()["classification"] == "rent") {
-            forSale.add(Apartment.fromMap(element.data()));
-          } else {
-            forRent.add(Apartment.fromMap(element.data()));
+          if (element.data()["type"] == "شقة") {
+            allData.add(Apartment.fromMap(element.data()));
+            if (element.data()["classification"] == "للإيجار") {
+              forSale.add(Apartment.fromMap(element.data()));
+            } else {
+              forRent.add(Apartment.fromMap(element.data()));
+            }
           }
-        }
 
-        if (element.data()["type"] == "عمارة") {
-          allData.add(Building.fromMap(element.data()));
+          if (element.data()["type"] == "عمارة") {
+            allData.add(Building.fromMap(element.data()));
 
-          if (element.data()["classification"] == "rent") {
-            forSale.add(Building.fromMap(element.data()));
-          } else {
-            forRent.add(Building.fromMap(element.data()));
+            if (element.data()["classification"] == "للإيجار") {
+              forSale.add(Building.fromMap(element.data()));
+            } else {
+              forRent.add(Building.fromMap(element.data()));
+            }
           }
-        }
 
-        if (element.data()["type"] == "ارض") {
-          allData.add(Land.fromJson(element.data()));
+          if (element.data()["type"] == "ارض") {
+            allData.add(Land.fromJson(element.data()));
 
-          if (element.data()["classification"] == "rent") {
-            forSale.add(Land.fromJson(element.data()));
-          } else {
-            forRent.add(Land.fromJson(element.data()));
+            if (element.data()["classification"] == "للإيجار") {
+              forSale.add(Land.fromJson(element.data()));
+            } else {
+              forRent.add(Land.fromJson(element.data()));
+            }
           }
-        }
-      });
-      Future.delayed(Duration(seconds: 1), () {
-        setState(() {});
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+        });
+        Future.delayed(Duration(seconds: 1), () {
+          setState(() {});
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     });
-   
-  
-   
   }
 
   Widget _handleListItems(List<dynamic> listItem) {
-
-if (name.isEmpty)
-{
-    return ListView.separated(
-      itemCount: listItem.length,
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: 10);
-      },
-      itemBuilder: (BuildContext context, int index) {
-        if (listItem[index] is Villa) {
-          return _buildVillaItem(listItem[index] as Villa, context);
-        }
-        if (listItem[index] is Apartment) {
-          return _buildApartmentItem(listItem[index] as Apartment, context);
-        }
-        if (listItem[index] is Building) {
-          return _buildBuildingItem(listItem[index] as Building, context);
-        }
-        if (listItem[index] is Land) {
-          return _buildLandItem(listItem[index] as Land, context);
-        }
-        return Container();
-      },
-    );
-}
-else
-{
- return ListView.separated(
-      itemCount: listItem.length,
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: 10);
-      },
-      itemBuilder: (BuildContext context, int index) {
-        if (listItem[index] is Villa ) {
-          final villa = listItem[index] as Villa;
-          if( 
-          villa.properties.city.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          villa.properties.type.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          villa.properties.neighborhood.toString().toLowerCase().startsWith(name.toLowerCase())
-          )
-          {
-          return _buildVillaItem(villa, context);
+    if (name.isEmpty) {
+      return ListView.separated(
+        itemCount: listItem.length,
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(height: 10);
+        },
+        itemBuilder: (BuildContext context, int index) {
+          if (listItem[index] is Villa) {
+            return _buildVillaItem(listItem[index] as Villa, context);
           }
-        }
-        if (listItem[index] is Apartment) {
-          final apartment = listItem[index] as Apartment;
-          if( 
-          apartment.properties.city.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          apartment.properties.type.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          apartment.properties.neighborhood.toString().toLowerCase().startsWith(name.toLowerCase())
-          )
-          {
-          return _buildApartmentItem(apartment, context);
+          if (listItem[index] is Apartment) {
+            return _buildApartmentItem(listItem[index] as Apartment, context);
           }
-        }
-        if (listItem[index] is Building) {
-         final building = listItem[index] as Building;
-          if( 
-          building.properties.city.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          building.properties.type.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          building.properties.neighborhood.toString().toLowerCase().startsWith(name.toLowerCase())
-          )
-          {
-          return _buildBuildingItem(building, context);
+          if (listItem[index] is Building) {
+            return _buildBuildingItem(listItem[index] as Building, context);
           }
-        }
-
-
-        if (listItem[index] is Land) {
-          final land = listItem[index] as Land;
-          if( 
-          land.properties!.city.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          land.properties!.type.toString().toLowerCase().startsWith(name.toLowerCase())
-          ||
-          land.properties!.neighborhood.toString().toLowerCase().startsWith(name.toLowerCase())
-          )
-          {
-          return _buildLandItem(land, context);
+          if (listItem[index] is Land) {
+            return _buildLandItem(listItem[index] as Land, context);
           }
-        }
-       return Container();
-      },
-    );}
+          return Container();
+        },
+      );
+    } else {
+      return ListView.separated(
+        itemCount: listItem.length,
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(height: 10);
+        },
+        itemBuilder: (BuildContext context, int index) {
+          if (listItem[index] is Villa) {
+            final villa = listItem[index] as Villa;
+            if (villa.properties.city
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                villa.properties.type
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                villa.properties.neighborhood
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase())) {
+              return _buildVillaItem(villa, context);
+            }
+          }
+          if (listItem[index] is Apartment) {
+            final apartment = listItem[index] as Apartment;
+            if (apartment.properties.city
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                apartment.properties.type
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                apartment.properties.neighborhood
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase())) {
+              return _buildApartmentItem(apartment, context);
+            }
+          }
+          if (listItem[index] is Building) {
+            final building = listItem[index] as Building;
+            if (building.properties.city
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                building.properties.type
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                building.properties.neighborhood
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase())) {
+              return _buildBuildingItem(building, context);
+            }
+          }
 
+          if (listItem[index] is Land) {
+            final land = listItem[index] as Land;
+            if (land.properties!.city
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                land.properties!.type
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase()) ||
+                land.properties!.neighborhood
+                    .toString()
+                    .toLowerCase()
+                    .startsWith(name.toLowerCase())) {
+              return _buildLandItem(land, context);
+            }
+          }
+          return Container();
+        },
+      );
+    }
   }
 
-  Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot ) {
+  Widget _handleSnapshot(
+      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator());
     }
@@ -238,7 +247,8 @@ else
             body: TabBarView(
               children: [
                 FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  future: FirebaseFirestore.instance.collection('properties').get(),
+                  future:
+                      FirebaseFirestore.instance.collection('properties').get(),
                   builder: (
                     BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
@@ -377,7 +387,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+      MaterialPageRoute(
+          builder: (context) => ApartmentDetailes(apartment: apartment)),
     );
   }, rowItem, apartment);
 }
@@ -403,7 +414,8 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+      MaterialPageRoute(
+          builder: (context) => BuildingDetailes(building: building)),
     );
   }, rowItem, building);
 }
@@ -446,13 +458,18 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
       )),
       child: Container(
         height: 210,
-        decoration: '${type.properties.images.length}' == '0' ? BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), fit: BoxFit.cover),
-        ) : BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
-        ),
+        decoration: '${type.properties.images.length}' == '0'
+            ? BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                    fit: BoxFit.cover),
+              )
+            : BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage('${type.properties.images[0]}'),
+                    fit: BoxFit.cover),
+              ),
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -483,7 +500,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                 width: 80,
                 padding: EdgeInsets.symmetric(vertical: 4),
                 child: Center(
-                    child: '${type.properties.classification}' == 'rent'
+                    child: '${type.properties.classification}' == 'للإيجار'
                         ? Text(
                             '${type.properties.type} للإيجار',
                             style: TextStyle(
