@@ -418,12 +418,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 ),
                                                 textDirection:
                                                     TextDirection.rtl),
-                                            Padding(
+                                             Padding(
                                                 padding:
                                                     const EdgeInsets.all(10.0)),
                                             Container(
                                               padding:
-                                                  EdgeInsets.only(right: 7),
+                                                  EdgeInsets.only(right: 8),
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
@@ -435,14 +435,20 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       width: 1)),
                                               height: 40,
                                               width: 150,
-                                              child: DropdownButton(
+                                              child: DropdownButtonFormField(
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: InputBorder.none,
+                                                  contentPadding:
+                                                      EdgeInsets.all(7),
+                                                ),
                                                   value: type,
                                                   items: [
                                                     DropdownMenuItem(
                                                       child: Text(
                                                         "فيلا",
                                                         style: TextStyle(
-                                                            fontSize: 18.0,
+                                                            fontSize: 17.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -458,7 +464,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "شقة",
                                                         style: TextStyle(
-                                                            fontSize: 18.0,
+                                                            fontSize: 17.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -474,7 +480,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "ارض",
                                                         style: TextStyle(
-                                                            fontSize: 18.0,
+                                                            fontSize: 17.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -490,7 +496,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       child: Text(
                                                         "عمارة",
                                                         style: TextStyle(
-                                                            fontSize: 18.0,
+                                                            fontSize: 17.0,
                                                             fontFamily:
                                                                 "Tajawal-m",
                                                             color:
@@ -701,7 +707,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             ),
                                             textDirection: TextDirection.rtl),
                                         Container(
-                                          margin: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(6),
                                         ),
                                         Padding(
                                             padding:
@@ -763,7 +769,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             ),
                                             textDirection: TextDirection.rtl),
                                         Container(
-                                          margin: const EdgeInsets.all(19),
+                                          margin: const EdgeInsets.all(15),
                                         ),
                                         Padding(
                                             padding:
@@ -825,6 +831,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 ),
                                                 textDirection:
                                                     TextDirection.rtl),
+                                                    Container(
+                                    margin: const EdgeInsets.all(8),
+                                  ),
                                             Padding(
                                                 padding:
                                                     const EdgeInsets.all(10.0)),
@@ -843,6 +852,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               width: 150,
                                               child: DropdownButtonFormField(
+                                                menuMaxHeight: 400,
                                                 value: city,
                                                 items: citiesList.map((value) {
                                                   return DropdownMenuItem(
@@ -856,6 +866,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         .toString();
                                                   });
                                                 },
+                                                style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontFamily:
+                                                                "Tajawal-m",
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    73,
+                                                                    75,
+                                                                    82)),
                                                 decoration: InputDecoration(
                                                   isDense: true,
                                                   border: InputBorder.none,
@@ -883,7 +903,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             ),
                                             textDirection: TextDirection.rtl),
                                         Container(
-                                          margin: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(20),
                                         ),
                                         Padding(
                                             padding:
