@@ -264,6 +264,71 @@ class _UpdateLandState extends State<UpdateLand> {
                         ],
                       ),
                       SizedBox(height: 20),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(' استخدام العقار: ',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: "Tajawal-b",
+                                ),
+                                textDirection: TextDirection.rtl),
+                            Row(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  child: RadioListTile(
+                                    title: const Text(
+                                      'سكني',
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontFamily: "Tajawal-m",
+                                          color:
+                                              Color.fromARGB(255, 73, 75, 82)),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    value: propertyUse.residental,
+                                    groupValue: _pUse,
+                                    onChanged: (propertyUse? value) {
+                                      setState(() {
+                                        _pUse = value;
+                                        if (_pUse == propertyUse.residental)
+                                          purpose = 'سكني';
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
+                                  child: RadioListTile(
+                                    title: const Text(
+                                      'تجاري',
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontFamily: "Tajawal-m",
+                                          color:
+                                              Color.fromARGB(255, 73, 75, 82)),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    value: propertyUse.commercial,
+                                    groupValue: _pUse,
+                                    onChanged: (propertyUse? value) {
+                                      setState(() {
+                                        _pUse = value;
+                                        if (_pUse == propertyUse.commercial)
+                                          purpose = 'تجاري';
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
                       // space
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
