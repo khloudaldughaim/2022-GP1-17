@@ -11,7 +11,6 @@ class LandDetailes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String Classification;
     String classification = land.properties?.classification ?? "";
 
@@ -19,41 +18,64 @@ class LandDetailes extends StatelessWidget {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';
-    }    
-  
+    }
+
     Size size = MediaQuery.of(context).size;
+
+    void deleteproperty(String pId) {
+      FirebaseFirestore.instance
+          .collection('properties')
+          .doc(pId)
+          .delete()
+          .then(
+            (doc) => ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text(' تم حذف العقار بنجاح!')),
+            ),
+            onError: (e) => print("Error updating document $e"),
+          );
+    }
 
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             Hero(
-              tag: '${land.properties!.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : land.properties!.images[0], //'${land.images[0]}'
+              tag: '${land.properties!.images.length}' == '0'
+                  ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
+                  : land.properties!.images[0], //'${land.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${land.properties!.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${land.properties!.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                decoration: '${land.properties!.images.length}' == '0'
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              '${land.properties!.images[0]}'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 child: Container(
-                  decoration: '${land.properties!.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${land.properties!.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                  decoration: '${land.properties!.images.length}' == '0'
+                      ? BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                '${land.properties!.images[0]}'), //'${villa.images[0]}'
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -70,10 +92,17 @@ class LandDetailes extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                              size: 28,
+                            //delete
+                            GestureDetector(
+                              onTap: () {
+                                deleteproperty(
+                                    '${land.properties!.property_id}');
+                              },
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                             ),
                             SizedBox(
                               width: 20,
@@ -149,7 +178,6 @@ class LandDetailes extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
                         Text(
                           'ريال ${land.properties!.price}',
                           style: TextStyle(
@@ -163,7 +191,8 @@ class LandDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(
+                        left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -236,13 +265,15 @@ class LandDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -254,13 +285,15 @@ class LandDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -270,12 +303,19 @@ class LandDetailes extends StatelessWidget {
                               Row(
                                 children: [
                                   FutureBuilder<DocumentSnapshot>(
-                                    future: FirebaseFirestore.instance.collection('Standard_user').doc('${land.properties!.User_id}').get(),
+                                    future: FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .doc('${land.properties!.User_id}')
+                                        .get(),
                                     builder: ((context, snapshot) {
-                                      if(snapshot.connectionState == ConnectionState.done){
-                                        Map<String, dynamic> user = snapshot.data!.data() as Map<String, dynamic> ;
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> user =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -295,7 +335,7 @@ class LandDetailes extends StatelessWidget {
                                               ),
                                             ),
                                           ],
-                                        ); 
+                                        );
                                       }
                                       return Center(child: Text(''));
                                     }),
@@ -321,11 +361,12 @@ class LandDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
-                          child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [],
-                                )),
+                            padding: EdgeInsets.only(
+                                right: 24, left: 24, bottom: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [],
+                            )),
                         // Padding(
                         //   padding: EdgeInsets.only(left: 315, bottom: 16),
                         //   child: Text(
@@ -359,7 +400,8 @@ class LandDetailes extends StatelessWidget {
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(
+                              right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -400,43 +442,46 @@ class LandDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${land.properties!.images.length}' == '0' ?
-                        Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child:  Directionality(
-                              textDirection: TextDirection.rtl, 
-                              child: Text('لا يوجد صور متاحة !',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey[500],
-                                ),
+                        '${land.properties!.images.length}' == '0'
+                            ? Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد صور متاحة !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                          ),
+                                        ))),
                               )
-                            )
-                          ),
-                        ) : 
-                        Container(
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(width: 20),
-                              itemCount: land.properties!.images.length,
-                              itemBuilder: (context, index) => InkWell(
-                                onTap: () => openGallery(land.properties!.images, context),
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  land.properties!.images[index],
+                            : Container(
+                                height: 200,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 24, right: 20),
+                                  child: ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    // shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 20),
+                                    itemCount: land.properties!.images.length,
+                                    itemBuilder: (context, index) => InkWell(
+                                      onTap: () => openGallery(
+                                          land.properties!.images, context),
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        land.properties!.images[index],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
                         Padding(
                           padding: EdgeInsets.only(left: 315, bottom: 16),
                           child: Text(
@@ -493,7 +538,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) =>
+    Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),
@@ -518,7 +564,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -538,14 +584,13 @@ class _GalleryWidgetState extends State<GalleryWidget> {
           itemCount: widget.images.length,
           builder: (context, index) {
             final image = widget.images[index];
-    
+
             return PhotoViewGalleryPageOptions(
               imageProvider: NetworkImage(image),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.contained * 4,
             );
           },
-          
         ),
       ),
     );

@@ -91,10 +91,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool pool = false;
   bool basement = false;
   bool elevator = false;
-  String countryValue = "";
-  String? stateValue = "";
-  String? cityValue = "";
-  String? city = "Riyadh";
+  String? city = "الرياض";
   String? address = "";
   int number_of_bathrooms = 0;
   int number_of_rooms = 0;
@@ -106,6 +103,54 @@ class MyCustomFormState extends State<MyCustomForm> {
   List<XFile> selectedFiles = [];
 
   GoogleMapController? controller;
+
+  var citiesList = [
+    "الرياض",
+    "جدة",
+    "مكة",
+    "المدينة",
+    "الدمام",
+    "الاحساء",
+    "الخبر",
+    "القطيف",
+    "الخفجي",
+    "الهفوف",
+    "الطائف",
+    "تبوك",
+    "بريدة",
+    "خميس مشيط",
+    "الجبيل",
+    "نجران",
+    "المبرز",
+    "حايل",
+    "ابها",
+    "ينبع",
+    "عرعر",
+    "عنيزة",
+    "سكاكا",
+    "جازان",
+    "القريات",
+    "الباحة",
+    "بيشة",
+    "الرس",
+    "البكيرية",
+    "الشفا",
+    "العلا",
+    "القنفذة",
+    "رنية",
+    "رابغ",
+    "النماص",
+    "سراة عبيدة",
+    "رجال المع",
+    "ضباء",
+    "املج",
+    "بقعاء",
+    "رفحاء",
+    "صبيا",
+    "شرورة",
+    "بلجرشي",
+    "دومة الجندل"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +187,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               "property_id: $property_id , user_id: $User_id , classification: $classification1 , type: $type1 ");
 
           if (type1 == 'فيلا')
-            FirebaseFirestore.instance.collection('properties').add({
+            FirebaseFirestore.instance
+                .collection('properties')
+                .doc(property_id)
+                .set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -165,7 +213,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
           if (type1 == 'شقة')
-            FirebaseFirestore.instance.collection('properties').add({
+            FirebaseFirestore.instance
+                .collection('properties')
+                .doc(property_id)
+                .set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -187,7 +238,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
           if (type1 == 'ارض')
-            FirebaseFirestore.instance.collection('properties').add({
+            FirebaseFirestore.instance
+                .collection('properties')
+                .doc(property_id)
+                .set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -203,7 +257,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
           if (type1 == 'عمارة')
-            FirebaseFirestore.instance.collection('properties').add({
+            FirebaseFirestore.instance
+                .collection('properties')
+                .doc(property_id)
+                .set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -755,59 +812,61 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(25),
                                   ),
-                                  /*Container(
-                                    margin: const EdgeInsets.all(20),
-                                    child: Text(' : ',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: "Tajawal-b",
-                                            ),
-                                            textDirection: TextDirection.rtl),
-                                  ),*/
-
                                   //city
-                                  Column(
-                                    children: [
-                                      CSCPicker(
-                                        showCities: true,
-                                        flagState: CountryFlag.DISABLE,
-                                        stateSearchPlaceholder: "المنطقة",
-                                        citySearchPlaceholder: "المدينة",
-                                        stateDropdownLabel: "*المنطقة",
-                                        cityDropdownLabel: "*المدينة",
-                                        defaultCountry:
-                                            DefaultCountry.Saudi_Arabia,
-                                        disableCountry: true,
-                                        dropdownDecoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            color: Colors.white,
-                                            border: Border.all(
-                                                color: Colors.grey.shade300,
-                                                width: 1)),
-                                        selectedItemStyle: TextStyle(
-                                            fontSize: 17.0,
-                                            fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 21, 21, 21)),
-                                        onCountryChanged: (value) {
-                                          setState(() {
-                                            countryValue = value;
-                                          });
-                                        },
-                                        onStateChanged: (value) {
-                                          setState(() {
-                                            stateValue = value;
-                                          });
-                                        },
-                                        onCityChanged: (value) {
-                                          setState(() {
-                                            cityValue = value;
-                                            city = cityValue;
-                                          });
-                                        },
-                                      )
-                                    ],
+                                  Container(
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          children: [
+                                            Text('المدينة : ',
+                                                style: TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontFamily: "Tajawal-b",
+                                                ),
+                                                textDirection:
+                                                    TextDirection.rtl),
+                                            Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0)),
+                                            Container(
+                                              padding:
+                                                  EdgeInsets.only(right: 7),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10)),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1)),
+                                              height: 40,
+                                              width: 150,
+                                              child: DropdownButtonFormField(
+                                                value: city,
+                                                items: citiesList.map((value) {
+                                                  return DropdownMenuItem(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (_selectedValue) {
+                                                  setState(() {
+                                                    city = _selectedValue
+                                                        .toString();
+                                                  });
+                                                },
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: InputBorder.none,
+                                                  contentPadding:
+                                                      EdgeInsets.all(7),
+                                                  hintText: 'الرياض',
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(15),

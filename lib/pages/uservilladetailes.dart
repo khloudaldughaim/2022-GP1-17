@@ -50,6 +50,19 @@ class VillaDetailes extends StatelessWidget {
   
     Size size = MediaQuery.of(context).size;
 
+void deleteproperty(String pId) {
+      FirebaseFirestore.instance
+          .collection('properties')
+          .doc(pId)
+          .delete()
+          .then(
+            (doc) => ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text(' تم حذف العقار بنجاح!')),
+          ),
+            onError: (e) => print("Error updating document $e"),
+          );
+    } 
+    
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -97,10 +110,17 @@ class VillaDetailes extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                              size: 28,
+                            //delete
+                            GestureDetector(
+                              onTap: () {
+                                deleteproperty(
+                                    '${villa.properties.property_id}');
+                              },
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                             ),
                             SizedBox(
                               width: 20,
