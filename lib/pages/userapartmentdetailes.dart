@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/apartment.dart';
+import 'package:nozol_application/pages/updateapartment.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -106,10 +107,20 @@ void deleteproperty(String pId) {
                             SizedBox(
                               width: 20,
                             ),
-                            Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 28,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateApartment(apartment: apartment)),
+                                );
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                             ),
                           ],
                         ),
