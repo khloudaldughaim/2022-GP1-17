@@ -2,6 +2,7 @@
 // import 'package:flutter/src/widgets/container.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:nozol_application/pages/my-property.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
 
 class UpdateBuilding extends StatefulWidget {
@@ -120,72 +122,72 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
 
   @override
   Widget build(BuildContext context) {
-    showAlertDialog(BuildContext context) {
-      // set up the buttons
-      Widget cancelButton = TextButton(
-        child: Text("إلغاء"),
-        onPressed: () async {
-          Navigator.of(context).pop();
-        },
-      );
-      Widget continueButton = TextButton(
-        child: Text("تأكيد"),
-        onPressed: () async {
-          final FirebaseAuth auth = FirebaseAuth.instance;
-          final User? user = auth.currentUser;
-          final User_id = user!.uid;
-          print(User_id);
+    // showAlertDialog(BuildContext context) {
+    //   // set up the buttons
+    //   Widget cancelButton = TextButton(
+    //     child: Text("إلغاء"),
+    //     onPressed: () async {
+    //       Navigator.of(context).pop();
+    //     },
+    //   );
+    //   Widget continueButton = TextButton(
+    //     child: Text("تأكيد"),
+    //     onPressed: () async {
+    //       final FirebaseAuth auth = FirebaseAuth.instance;
+    //       final User? user = auth.currentUser;
+    //       final User_id = user!.uid;
+    //       print(User_id);
 
-          List<String> arrImage = [];
-          for (int i = 0; i < selectedFiles.length; i++) {
-            var imageUrl = await uploadFile(selectedFiles[i], User_id);
-            arrImage.add(imageUrl.toString());
-          }
+    //       List<String> arrImage = [];
+    //       for (int i = 0; i < selectedFiles.length; i++) {
+    //         var imageUrl = await uploadFile(selectedFiles[i], User_id);
+    //         arrImage.add(imageUrl.toString());
+    //       }
 
-          _formKey.currentState!.save();
+    //       _formKey.currentState!.save();
 
-          FirebaseFirestore.instance
-              .collection('properties')
-              .doc(property_id)
-              .update({
-            'classification': classification1,
-            'latitude': mapLatLng.latitude,
-            'longitude': mapLatLng.longitude,
-            'price': priceController,
-            'space': spaceController,
-            'city': city,
-            'neighborhood': neighborhoodController,
-            'images': arrImage,
-            'property_age': property_age,
-            'number_of_floors': number_of_floors,
-            'elevator': elevator,
-            'pool': pool,
-            'number_of_apartments': number_of_apartments
-          });
+    //       FirebaseFirestore.instance
+    //           .collection('properties')
+    //           .doc(property_id)
+    //           .update({
+    //         'classification': classification1,
+    //         'latitude': mapLatLng.latitude,
+    //         'longitude': mapLatLng.longitude,
+    //         'price': priceController.text,
+    //         'space': spaceController.text,
+    //         'city': city,
+    //         'neighborhood': neighborhoodController.text,
+    //         'images': arrImage,
+    //         'property_age': property_age,
+    //         'number_of_floors': number_of_floors,
+    //         'elevator': elevator,
+    //         'pool': pool,
+    //         'number_of_apartments': number_of_apartments
+    //       });
 
-          Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(' تمت إضافة العقار بنجاح!')),
-          );
-        },
-      );
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Text("تأكيد"),
-        content: Text("هل أنت متأكد من أنك تريد إضافة هذا العقار؟"),
-        actions: [
-          cancelButton,
-          continueButton,
-        ],
-      );
-      // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    } //show
+    //       Navigator.of(context).pop();
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(content: Text(' تمت إضافة العقار بنجاح!')),
+    //       );
+    //     },
+    //   );
+    //   // set up the AlertDialog
+    //   AlertDialog alert = AlertDialog(
+    //     title: Text("تأكيد"),
+    //     content: Text("هل أنت متأكد من أنك تريد إضافة هذا العقار؟"),
+    //     actions: [
+    //       cancelButton,
+    //       continueButton,
+    //     ],
+    //   );
+    //   // show the dialog
+    //   showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return alert;
+    //     },
+    //   );
+    // } //show
 
     const appTitle = 'تحديث عقار';
 
@@ -928,37 +930,73 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                         margin: const EdgeInsets.all(20),
                       ),
                       //submit button
-                      SizedBox(
-                        width: double.infinity,
-                        height: 90.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              print("On add object");
-                              if (_formKey.currentState!.validate()) {
-                                //showAlertDialog(context);
-                              }
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  Color.fromARGB(255, 127, 166, 233)),
-                              padding: MaterialStateProperty.all(
-                                  EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 10)),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(27))),
-                            ),
-                            child: const Text(
-                              'إضافة',
-                              style: TextStyle(
-                                  fontSize: 20, fontFamily: "Tajawal-m"),
-                            ),
-                          ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              FirebaseFirestore.instance
+                                  .collection('properties')
+                                  .doc(property_id)
+                                  .update({
+                                'classification': classification1,
+                                'latitude': mapLatLng.latitude,
+                                'longitude': mapLatLng.longitude,
+                                'price': priceController.text,
+                                'space': spaceController.text,
+                                'city': city,
+                                'neighborhood': neighborhoodController.text,
+                                // 'images': arrImage,
+                                'property_age': property_age,
+                                'number_of_floors': number_of_floors,
+                                'elevator': elevator,
+                                'pool': pool,
+                                'number_of_apartments': number_of_apartments
+                              });
+
+                              Fluttertoast.showToast(
+                                msg: "تم التحديث بنجاح",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor:
+                                    Color.fromARGB(255, 127, 166, 233),
+                                textColor: Color.fromARGB(255, 248, 249, 250),
+                                fontSize: 18.0,
+                              );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => myProperty()));
+                            } catch (e, stack) {
+                              Fluttertoast.showToast(
+                                msg: "هناك خطأ ما",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 5,
+                                backgroundColor:
+                                    Color.fromARGB(255, 127, 166, 233),
+                                textColor: Color.fromARGB(255, 252, 253, 255),
+                                fontSize: 18.0,
+                              );
+                            }
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(255, 127, 166, 233)),
+                          padding: MaterialStateProperty.all(
+                              EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10)),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(27))),
                         ),
-                      )
+                        child: Text(
+                          "تحديث",
+                          style:
+                              TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                        ),
+                      ),
                     ],
                   ),
                 )),
