@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, curly_braces_in_flow_control_structures
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,11 +10,10 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
-import 'package:geocoding/geocoding.dart' as geo;
-
-import '../registration/log_in.dart';
-import '../registration/sign_up.dart';
 import 'package:uuid/uuid.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'my-property.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -27,33 +26,22 @@ class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'إضافة عقار';
-    return MaterialApp(
-      title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          // bottom: const
-          title: Center(
-            child: const Text(appTitle,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Tajawal-b",
-                )),
-          ),
-          toolbarHeight: 60,
-          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+    return Scaffold(
+      appBar: AppBar(
+        // bottom: const
+        title: Center(
+          child: const Text(appTitle,
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: "Tajawal-b",
+              )),
         ),
-        body: const MyCustomForm(),
+        toolbarHeight: 60,
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
       ),
+      body: const MyCustomForm(),
     );
   }
-}
-
-// get the id of the curent user
-Future getCurrentUser() async {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final User? user = auth.currentUser;
-  final puid = user!.uid;
-  print(puid);
 }
 
 enum classification { rent, sale }
@@ -75,7 +63,6 @@ class MyCustomForm extends StatefulWidget {
 
 class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
-  static int i = 1;
   String property_id = '';
   classification? _class = classification.rent;
   String classification1 = 'للإيجار';
@@ -83,9 +70,9 @@ class MyCustomFormState extends State<MyCustomForm> {
   String type1 = 'فيلا';
   propertyUse? _pUse = propertyUse.residental;
   String propertyUse1 = '';
-  String price = '';
-  String in_floor = '';
-  String space = '';
+  final price = TextEditingController();
+  final in_floor = TextEditingController();
+  final space = TextEditingController();
   double property_age = 0.0;
   choice? _poolCH = choice.no;
   choice? _basementCH = choice.no;
@@ -94,12 +81,25 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool basement = false;
   bool elevator = false;
   String? city = "الرياض";
-  String? address = "";
+  final address = TextEditingController();
+  final location = TextEditingController();
   int number_of_bathrooms = 0;
   int number_of_rooms = 0;
   int number_of_livingRooms = 0;
   int number_of_floors = 0;
   int number_of_apartments = 0;
+  final description = TextEditingController();
+
+  void dispose() {
+    price.dispose();
+    address.dispose();
+    in_floor.dispose();
+    space.dispose();
+    address.dispose();
+    location.dispose();
+    description.dispose();
+    super.dispose();
+  }
 
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
@@ -175,8 +175,6 @@ class MyCustomFormState extends State<MyCustomForm> {
           final FirebaseAuth auth = FirebaseAuth.instance;
           final User? user = auth.currentUser;
           final User_id = user!.uid;
-          print(User_id);
-
           List<String> arrImage = [];
           for (int i = 0; i < selectedFiles.length; i++) {
             var imageUrl = await uploadFile(selectedFiles[i], User_id);
@@ -184,11 +182,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           }
 
           _formKey.currentState!.save();
-
           property_id = Uuid().v4();
-          print(
-              "property_id: $property_id , user_id: $User_id , classification: $classification1 , type: $type1 ");
-
           if (type1 == 'فيلا')
             FirebaseFirestore.instance
                 .collection('properties')
@@ -199,10 +193,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
-              'price': price,
-              'space': space,
+              'price': price.text,
+              'space': space.text,
               'city': city,
-              'neighborhood': address,
+              'neighborhood': address.text,
               'images': arrImage,
               'type': type1, //
               'property_age': property_age,
@@ -212,7 +206,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               'number_of_rooms': number_of_rooms,
               'pool': pool,
               'basement': basement,
-              'number_of_livingRooms': number_of_livingRooms
+              'number_of_livingRooms': number_of_livingRooms,
+              'Location': location.text,
+              'description': description.text
             });
 
           if (type1 == 'شقة')
@@ -225,10 +221,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
-              'price': price,
-              'space': space,
+              'price': price.text,
+              'space': space.text,
               'city': city,
-              'neighborhood': address,
+              'neighborhood': address.text,
               'images': arrImage,
               'type': type1,
               'property_age': property_age,
@@ -236,8 +232,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'elevator': elevator,
               'number_of_bathrooms': number_of_bathrooms,
               'number_of_rooms': number_of_rooms,
-              'in_floor': in_floor,
-              'number_of_livingRooms': number_of_livingRooms
+              'in_floor': in_floor.text,
+              'number_of_livingRooms': number_of_livingRooms,
+              'Location': location.text,
+              'description': description.text
             });
 
           if (type1 == 'ارض')
@@ -250,13 +248,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
-              'price': price,
-              'space': space,
+              'price': price.text,
+              'space': space.text,
               'city': city,
-              'neighborhood': address,
+              'neighborhood': address.text,
               'images': arrImage,
               'type': type1,
-              'propertyUse': propertyUse1
+              'propertyUse': propertyUse1,
+              'Location': location.text,
+              'description': description.text
             });
 
           if (type1 == 'عمارة')
@@ -269,23 +269,33 @@ class MyCustomFormState extends State<MyCustomForm> {
               'classification': classification1,
               'latitude': mapLatLng.latitude,
               'longitude': mapLatLng.longitude,
-              'price': price,
-              'space': space,
+              'price': price.text,
+              'space': space.text,
               'city': city,
-              'neighborhood': address,
+              'neighborhood': address.text,
               'images': arrImage,
               'type': type1,
               'property_age': property_age,
               'number_of_floors': number_of_floors,
               'elevator': elevator,
               'pool': pool,
-              'number_of_apartments': number_of_apartments
+              'number_of_apartments': number_of_apartments,
+              'Location': location.text,
+              'description': description.text
             });
 
-          Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(' تمت إضافة العقار بنجاح!')),
+          Fluttertoast.showToast(
+            msg: "تم اضافة العقار بنجاح",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+            textColor: Color.fromARGB(255, 248, 249, 250),
+            fontSize: 18.0,
           );
+
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => myProperty()));
         },
       );
       // set up the AlertDialog
@@ -529,8 +539,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )),
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.all(20),
+                                  SizedBox(
+                                    height: 20,
                                   ),
                                   type == 3
                                       ? Container(
@@ -629,197 +639,196 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ),
                                         )
                                       : Container(),
-                                  Container(
-                                    margin: const EdgeInsets.all(15),
-                                  ),
                                   type == 2
                                       ? Container(
                                           child: Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.center,
                                             children: <Widget>[
-                                              Text(' رقم الدور: ',
-                                                  style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b",
-                                                  ),
-                                                  textDirection:
-                                                      TextDirection.rtl),
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.all(10),
+                                              Text(
+                                                ' *رقم الدور: ',
+                                                style: TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontFamily: "Tajawal-b",
+                                                ),
                                               ),
-                                              Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0)),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                      padding: EdgeInsets.only(
-                                                          top: 16, right: 9),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(7),
-                                                          border: Border.all(
-                                                              color: Colors.grey
-                                                                  .shade300,
-                                                              width: 1)),
-                                                      height: 40,
-                                                      width: 150,
-                                                      child: TextFormField(
-                                                        autovalidateMode:
-                                                            AutovalidateMode
-                                                                .onUserInteraction,
-                                                        validator: (value) {
-                                                          if (value!.isEmpty) {
-                                                            return 'الرجاء عدم ترك الخانة فارغة!';
-                                                          }
-                                                          if (!RegExp(r'[0-9]')
-                                                              .hasMatch(
-                                                                  value)) {
-                                                            return 'الرجاء إدخال أرقام فقط';
-                                                          }
-                                                        },
-                                                        onSaved: (val) {
-                                                          in_floor = val!;
-                                                        },
-                                                      ))
-                                                ],
-                                              ),
+                                              Expanded(
+                                                  child: Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 60),
+                                                      child: Directionality(
+                                                        textDirection:
+                                                            TextDirection.rtl,
+                                                        child: TextFormField(
+                                                          controller: in_floor,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
+                                                            contentPadding:
+                                                                EdgeInsets.all(
+                                                                    6),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color:
+                                                                    Colors.grey,
+                                                                width: 0.0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                value.isEmpty) {
+                                                              return 'الرجاء عدم ترك الخانة فارغة!';
+                                                            }
+                                                            if (!RegExp(
+                                                                    r'[0-9]')
+                                                                .hasMatch(
+                                                                    value)) {
+                                                              return 'الرجاء إدخال أرقام فقط';
+                                                            }
+                                                            return null;
+                                                          },
+                                                        ),
+                                                      ))),
                                             ],
                                           ),
                                         )
                                       : Container(),
+
                                   type == 2
                                       ? Container(
-                                          margin: const EdgeInsets.all(30),
+                                          margin: const EdgeInsets.all(10),
                                         )
                                       : Container(),
                                   //space
-                                  Container(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(' *المساحة: ',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: "Tajawal-b",
-                                            ),
-                                            textDirection: TextDirection.rtl),
-                                        Container(
-                                          margin: const EdgeInsets.all(6),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        ' *المساحة: ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
                                         ),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.all(10.0)),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 16, right: 9),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7),
-                                                    border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 1)),
-                                                height: 40,
-                                                width: 150,
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 60),
+                                              child: Directionality(
+                                                textDirection:
+                                                    TextDirection.rtl,
                                                 child: TextFormField(
+                                                  controller: space,
                                                   autovalidateMode:
                                                       AutovalidateMode
                                                           .onUserInteraction,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          hintText: 'متر ² '),
+                                                  decoration: InputDecoration(
+                                                    hintText: 'متر ² ',
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    contentPadding:
+                                                        EdgeInsets.all(6),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 0.0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   validator: (value) {
-                                                    if (value!.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
                                                     if (!RegExp(r'[0-9]')
                                                         .hasMatch(value)) {
                                                       return 'الرجاء إدخال أرقام فقط';
                                                     }
+                                                    return null;
                                                   },
-                                                  onSaved: (val) {
-                                                    space = val!;
-                                                  },
-                                                ))
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                                ),
+                                              ))),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.all(30),
-                                  ),
-                                  //price
-                                  Container(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(' *السعر: ',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: "Tajawal-b",
-                                            ),
-                                            textDirection: TextDirection.rtl),
-                                        Container(
-                                          margin: const EdgeInsets.all(15),
+                                  SizedBox(height: 25),
+                                  //  price
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        ' *السعر: ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
                                         ),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.all(10.0)),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 16, right: 9),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7),
-                                                    border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 1)),
-                                                height: 40,
-                                                width: 150,
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 70),
+                                              child: Directionality(
+                                                textDirection:
+                                                    TextDirection.rtl,
                                                 child: TextFormField(
+                                                  controller: price,
                                                   autovalidateMode:
                                                       AutovalidateMode
                                                           .onUserInteraction,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          hintText: 'ريال '),
+                                                  decoration: InputDecoration(
+                                                    hintText: 'ريال ',
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    contentPadding:
+                                                        EdgeInsets.all(6),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 0.0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   validator: (value) {
-                                                    if (value!.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
                                                     if (!RegExp(r'[0-9]')
                                                         .hasMatch(value)) {
                                                       return 'الرجاء إدخال أرقام فقط';
                                                     }
+                                                    return null;
                                                   },
-                                                  onSaved: (val) {
-                                                    price = val!;
-                                                  },
-                                                ))
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                                ),
+                                              ))),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.all(25),
+                                  SizedBox(
+                                    height: 20,
                                   ),
                                   //city
                                   Container(
@@ -886,77 +895,133 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )),
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.all(15),
+                                  SizedBox(
+                                    height: 20,
                                   ),
-                                  Container(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(' *الحي: ',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontFamily: "Tajawal-b",
-                                            ),
-                                            textDirection: TextDirection.rtl),
-                                        Container(
-                                          margin: const EdgeInsets.all(20),
+
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        ' *الحي: ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
                                         ),
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.all(10.0)),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                padding: EdgeInsets.only(
-                                                    top: 16, right: 9),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7),
-                                                    border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 1)),
-                                                height: 40,
-                                                width: 150,
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 70),
+                                              child: Directionality(
+                                                textDirection:
+                                                    TextDirection.rtl,
                                                 child: TextFormField(
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          hintText: 'القيروان'),
+                                                  controller: address,
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'القيروان ',
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    contentPadding:
+                                                        EdgeInsets.all(6),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 0.0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   validator: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
-                                                    return null;
                                                   },
-                                                  onSaved: (val) {
-                                                    address = val!;
-                                                  },
-                                                ))
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                                ),
+                                              ))),
+                                    ],
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
                                   //location
-                                  Container(
-                                      alignment: Alignment.topRight,
-                                      child: Text(' الموقع: ',
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontFamily: "Tajawal-b",
-                                          ),
-                                          textDirection: TextDirection.rtl)),
-                                  Container(
-                                    margin: const EdgeInsets.all(10),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        ' *الموقع: ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 60),
+                                              child: Directionality(
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                child: TextFormField(
+                                                  controller: location,
+                                                  autovalidateMode:
+                                                      AutovalidateMode
+                                                          .onUserInteraction,
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'شارع المذيب مقابل..',
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    contentPadding:
+                                                        EdgeInsets.all(6),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                            255, 167, 166, 166),
+                                                        width: 0.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                  },
+                                                ),
+                                              ))),
+                                    ],
                                   ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "الموقع على الخريطة",
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontFamily: "Tajawal-m",
+                                          ),
+                                        ),
+                                      ]),
                                   //map
                                   SizedBox(
                                     height: 400.0,
@@ -1877,6 +1942,49 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   Container(
                                     margin: const EdgeInsets.all(20),
+                                  ),
+                                  //space
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        ' معلومات اضافية: ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: TextFormField(
+                                              controller: description,
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
+                                              decoration: InputDecoration(
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                                contentPadding:
+                                                    EdgeInsets.all(6),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 0.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                    ],
                                   ),
                                   //submit button
                                   SizedBox(
