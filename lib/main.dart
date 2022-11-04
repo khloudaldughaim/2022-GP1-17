@@ -10,7 +10,6 @@ import 'package:nozol_application/registration/forgetPassword.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import 'package:nozol_application/registration/sign_up.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,23 +22,13 @@ class MyApp extends StatelessWidget {
   // of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          Locale('ar', 'AE'),
-        ],
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const Welcome(),
-          '/signup': (context) => const SignUp(),
-          '/login': (context) => const LogIn(),
-          '/homepage': (context) => const HomePage(),
-          '/NavigationBar': (context) => const NavigationBarPage(),
-          '/forgetPassword': (context) => const forgetPassword(),
-        });
+    return MaterialApp(initialRoute: '/', routes: {
+      '/': (context) => const Welcome(),
+      '/signup': (context) => const SignUp(),
+      '/login': (context) => const LogIn(),
+      '/homepage': (context) => const HomePage(),
+      '/NavigationBar': (context) => const NavigationBarPage(),
+      '/forgetPassword': (context) => const forgetPassword(),
+    });
   }
 }
