@@ -46,7 +46,6 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
   late String? address;
   late int number_of_floors;
   late int number_of_apartments;
-  
 
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
@@ -77,7 +76,6 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
     number_of_floors = widget.building.number_of_floor;
     number_of_apartments = widget.building.number_of_apartment;
     arrImage = widget.building.properties.images;
-
 
     if (widget.building.pool == false) {
       _poolCH = choice.no;
@@ -126,10 +124,10 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
 
   @override
   Widget build(BuildContext context) {
-
     updateData(List<XFile> fileImages) async {
       for (int i = 0; i < fileImages.length; i++) {
-        var imageUrl = await uploadFile(fileImages[i], widget.building.properties.User_id);
+        var imageUrl =
+            await uploadFile(fileImages[i], widget.building.properties.User_id);
         arrImage.add(imageUrl.toString());
       }
 
@@ -146,7 +144,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
             'space': spaceController.text,
             'city': city,
             'neighborhood': neighborhoodController.text,
-            // 'images': arrImage,
+            'images': arrImage,
             'property_age': property_age,
             'number_of_floors': number_of_floors,
             'elevator': elevator,
@@ -177,8 +175,6 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
           );
         }
       }
-
-      Navigator.pop(context);
     }
 
     const appTitle = 'تحديث عقار';

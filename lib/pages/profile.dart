@@ -276,11 +276,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Color.fromARGB(255, 248, 249, 250),
                                         fontSize: 18.0,
                                       );
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProfilePage()));
                                     } catch (e, stack) {
                                       Fluttertoast.showToast(
                                         msg: "هناك خطأ ما",
