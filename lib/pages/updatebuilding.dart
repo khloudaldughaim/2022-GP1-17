@@ -46,9 +46,11 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
   late String? address;
   late int number_of_floors;
   late int number_of_apartments;
+  
 
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
+  List<String> arrImage = [];
 
   GoogleMapController? googleMapController;
   late TextEditingController spaceController;
@@ -74,6 +76,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
     address = "";
     number_of_floors = widget.building.number_of_floor;
     number_of_apartments = widget.building.number_of_apartment;
+    arrImage = widget.building.properties.images;
+
 
     if (widget.building.pool == false) {
       _poolCH = choice.no;
@@ -122,72 +126,60 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
 
   @override
   Widget build(BuildContext context) {
-    // showAlertDialog(BuildContext context) {
-    //   // set up the buttons
-    //   Widget cancelButton = TextButton(
-    //     child: Text("إلغاء"),
-    //     onPressed: () async {
-    //       Navigator.of(context).pop();
-    //     },
-    //   );
-    //   Widget continueButton = TextButton(
-    //     child: Text("تأكيد"),
-    //     onPressed: () async {
-    //       final FirebaseAuth auth = FirebaseAuth.instance;
-    //       final User? user = auth.currentUser;
-    //       final User_id = user!.uid;
-    //       print(User_id);
 
-    //       List<String> arrImage = [];
-    //       for (int i = 0; i < selectedFiles.length; i++) {
-    //         var imageUrl = await uploadFile(selectedFiles[i], User_id);
-    //         arrImage.add(imageUrl.toString());
-    //       }
+    updateData(List<XFile> fileImages) async {
+      for (int i = 0; i < fileImages.length; i++) {
+        var imageUrl = await uploadFile(fileImages[i], widget.building.properties.User_id);
+        arrImage.add(imageUrl.toString());
+      }
 
-    //       _formKey.currentState!.save();
+      if (_formKey.currentState!.validate()) {
+        try {
+          FirebaseFirestore.instance
+              .collection('properties')
+              .doc(property_id)
+              .update({
+            'classification': classification1,
+            'latitude': mapLatLng.latitude,
+            'longitude': mapLatLng.longitude,
+            'price': priceController.text,
+            'space': spaceController.text,
+            'city': city,
+            'neighborhood': neighborhoodController.text,
+            // 'images': arrImage,
+            'property_age': property_age,
+            'number_of_floors': number_of_floors,
+            'elevator': elevator,
+            'pool': pool,
+            'number_of_apartments': number_of_apartments
+          });
 
-    //       FirebaseFirestore.instance
-    //           .collection('properties')
-    //           .doc(property_id)
-    //           .update({
-    //         'classification': classification1,
-    //         'latitude': mapLatLng.latitude,
-    //         'longitude': mapLatLng.longitude,
-    //         'price': priceController.text,
-    //         'space': spaceController.text,
-    //         'city': city,
-    //         'neighborhood': neighborhoodController.text,
-    //         'images': arrImage,
-    //         'property_age': property_age,
-    //         'number_of_floors': number_of_floors,
-    //         'elevator': elevator,
-    //         'pool': pool,
-    //         'number_of_apartments': number_of_apartments
-    //       });
+          Fluttertoast.showToast(
+            msg: "تم التحديث بنجاح",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+            textColor: Color.fromARGB(255, 248, 249, 250),
+            fontSize: 18.0,
+          );
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => myProperty()));
+        } catch (e, stack) {
+          Fluttertoast.showToast(
+            msg: "هناك خطأ ما",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+            textColor: Color.fromARGB(255, 252, 253, 255),
+            fontSize: 18.0,
+          );
+        }
+      }
 
-    //       Navigator.of(context).pop();
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         const SnackBar(content: Text(' تمت إضافة العقار بنجاح!')),
-    //       );
-    //     },
-    //   );
-    //   // set up the AlertDialog
-    //   AlertDialog alert = AlertDialog(
-    //     title: Text("تأكيد"),
-    //     content: Text("هل أنت متأكد من أنك تريد إضافة هذا العقار؟"),
-    //     actions: [
-    //       cancelButton,
-    //       continueButton,
-    //     ],
-    //   );
-    //   // show the dialog
-    //   showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return alert;
-    //     },
-    //   );
-    // } //show
+      Navigator.pop(context);
+    }
 
     const appTitle = 'تحديث عقار';
 
@@ -393,23 +385,12 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                   ),
                                 ),
                               ),
-
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'الرجاء عدم ترك الخانة فارغة!';
                                 }
                                 return null;
                               },
-
-                              // validator: (value) {
-                              //   if (value == null || value.isEmpty) {
-                              //     return 'الرجاء عدم ترك الخانة فارغة!';
-                              //   }
-                              //   if (!RegExp(r'[0-9]').hasMatch(value)) {
-                              //     return 'الرجاء إدخال أرقام فقط';
-                              //   }
-                              //   return null;
-                              // },
                             ),
                           ),
                         ],
@@ -820,6 +801,115 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                       Container(
                         margin: const EdgeInsets.all(15),
                       ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.width / 50,
+                          ),
+                          child: Text(
+                            ":الصور التي تم رفعها",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF374F67),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 190,
+                        width: 350,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Color.fromARGB(255, 127, 126, 126),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: SizedBox(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              children: [
+                                arrImage.isEmpty
+                                    ? Container(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.1,
+                                        child: Text(
+                                          "لم يتم رفع أي صور",
+                                        ),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              40,
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              70,
+                                        ),
+                                        height: 100,
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          children: arrImage
+                                              .map((e) => Stack(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .topEnd,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(4.0),
+                                                        child: Container(
+                                                          color: Colors.blue,
+                                                          child: Image.network(
+                                                            e,
+                                                            fit: BoxFit.cover,
+                                                            height: 100,
+                                                            width: 100,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              arrImage
+                                                                  .remove(e);
+                                                            });
+                                                          },
+                                                          child: const Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    .02),
+                                                            child: Icon(
+                                                              Icons.cancel,
+                                                              size: 15,
+                                                              color: Colors.red,
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ))
+                                              .toList(),
+                                        ),
+                                      ),
+                              ],
+                            )),
+                      ),
 
                       //upload images
                       Container(
@@ -856,7 +946,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                                                     255, 127, 166, 233)),
                                           ),
                                           onPressed: () {
-                                            //selectImage();
+                                            selectImage();
                                           },
                                         ),
                                       )
@@ -932,54 +1022,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                       //submit button
                       ElevatedButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            try {
-                              FirebaseFirestore.instance
-                                  .collection('properties')
-                                  .doc(property_id)
-                                  .update({
-                                'classification': classification1,
-                                'latitude': mapLatLng.latitude,
-                                'longitude': mapLatLng.longitude,
-                                'price': priceController.text,
-                                'space': spaceController.text,
-                                'city': city,
-                                'neighborhood': neighborhoodController.text,
-                                // 'images': arrImage,
-                                'property_age': property_age,
-                                'number_of_floors': number_of_floors,
-                                'elevator': elevator,
-                                'pool': pool,
-                                'number_of_apartments': number_of_apartments
-                              });
-
-                              Fluttertoast.showToast(
-                                msg: "تم التحديث بنجاح",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor:
-                                    Color.fromARGB(255, 127, 166, 233),
-                                textColor: Color.fromARGB(255, 248, 249, 250),
-                                fontSize: 18.0,
-                              );
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => myProperty()));
-                            } catch (e, stack) {
-                              Fluttertoast.showToast(
-                                msg: "هناك خطأ ما",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 5,
-                                backgroundColor:
-                                    Color.fromARGB(255, 127, 166, 233),
-                                textColor: Color.fromARGB(255, 252, 253, 255),
-                                fontSize: 18.0,
-                              );
-                            }
-                          }
+                          updateData(selectedFiles);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(

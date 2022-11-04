@@ -10,9 +10,11 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
+import 'package:geocoding/geocoding.dart' as geo;
 
 import '../registration/log_in.dart';
 import '../registration/sign_up.dart';
+import 'package:uuid/uuid.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -104,6 +106,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   GoogleMapController? controller;
 
+  //String _currentAddress = "";
+
   var citiesList = [
     "الرياض",
     "جدة",
@@ -181,8 +185,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
           _formKey.currentState!.save();
 
-          i++;
-          property_id = "p$i";
+          property_id = Uuid().v4();
           print(
               "property_id: $property_id , user_id: $User_id , classification: $classification1 , type: $type1 ");
 
@@ -418,7 +421,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 ),
                                                 textDirection:
                                                     TextDirection.rtl),
-                                             Padding(
+                                            Padding(
                                                 padding:
                                                     const EdgeInsets.all(10.0)),
                                             Container(
@@ -436,12 +439,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               width: 150,
                                               child: DropdownButtonFormField(
-                                                decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: InputBorder.none,
-                                                  contentPadding:
-                                                      EdgeInsets.all(7),
-                                                ),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    border: InputBorder.none,
+                                                    contentPadding:
+                                                        EdgeInsets.all(7),
+                                                  ),
                                                   value: type,
                                                   items: [
                                                     DropdownMenuItem(
@@ -831,9 +834,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 ),
                                                 textDirection:
                                                     TextDirection.rtl),
-                                                    Container(
-                                    margin: const EdgeInsets.all(8),
-                                  ),
+                                            Container(
+                                              margin: const EdgeInsets.all(8),
+                                            ),
                                             Padding(
                                                 padding:
                                                     const EdgeInsets.all(10.0)),
@@ -867,15 +870,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   });
                                                 },
                                                 style: TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
+                                                    fontSize: 16.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
                                                 decoration: InputDecoration(
                                                   isDense: true,
                                                   border: InputBorder.none,
@@ -1012,6 +1010,24 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 setState(() {
                                                   mapLatLng = latLng;
                                                 });
+/* 
+                                                List<geo.Placemark> places = await geo.placemarkFromCoordinates(
+        mapLatLng.latitude, mapLatLng.longitude);
+    _currentAddress =
+        places.first.name! +
+        "1-" +
+        places.first.subAdministrativeArea! +
+        "2-" +
+        places.first.subLocality! +
+        "3-" +
+        places.first.subThoroughfare! +
+        "4-" +
+        places.first.thoroughfare!;
+        
+        places.first.administrativeArea! +
+        "3-" +
+        places.first.postalCode! +
+        "4-" +*/
                                               },
                                             )),
                                         Container(
