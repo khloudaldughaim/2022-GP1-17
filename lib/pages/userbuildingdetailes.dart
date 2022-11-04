@@ -64,7 +64,7 @@ class BuildingDetailes extends StatelessWidget {
                   : building.properties.images[0], //'${building.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${building.properties!.images.length}' == '0'
+                decoration: '${building.properties.images.length}' == '0'
                     ? BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
@@ -75,7 +75,7 @@ class BuildingDetailes extends StatelessWidget {
                     : BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                              '${building.properties!.images[0]}'), //'${villa.images[0]}'
+                              '${building.properties.images[0]}'), //'${villa.images[0]}'
                           fit: BoxFit.cover,
                         ),
                       ),
