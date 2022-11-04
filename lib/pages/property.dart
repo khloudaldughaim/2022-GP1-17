@@ -9,7 +9,8 @@ class Property {
   String city;
   String neighborhood;
   List<String> images;
-  //String description;
+  String description;
+  String Location;
   String type;
   String purpose;
   
@@ -24,7 +25,8 @@ class Property {
     required this.city,
     required this.neighborhood,
     required this.images,
-    //required this.description,
+    required this.description,
+    required this.Location,
     required this.type,
     required this.purpose,
   });
@@ -41,7 +43,8 @@ class Property {
       'city': city,
       'neighborhood': neighborhood,
       'images': images,
-      //'description': description,
+      'Location': Location,
+      'description': description,
       'type': type,
       'purpose': purpose,
     };
@@ -59,7 +62,8 @@ class Property {
       city: map['city'] ?? '',
       neighborhood: map['neighborhood'] ?? '',
       images: List.from(map['images']),
-      //description: map['description'] ?? '',
+      Location: map['Location'] ?? '',
+      description: map['description'] ?? '',
       type: map['type'] ?? '',
       purpose: map['propertyUse'] ?? '',
     );

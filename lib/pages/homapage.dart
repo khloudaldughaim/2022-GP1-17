@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   String name = '';
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
-    setState(() {
       try {
         allData.clear();
         forRent.clear();
@@ -73,7 +72,6 @@ class _HomePageState extends State<HomePage> {
       } catch (e) {
         debugPrint(e.toString());
       }
-    });
   }
 
   Widget _handleListItems(List<dynamic> listItem) {
