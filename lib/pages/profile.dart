@@ -214,6 +214,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ))),
                                     child: Row(
                                       children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        myProperty()));
+                                          },
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_right),
+                                          color: Colors.grey,
+                                          iconSize: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 210,
+                                        ),
                                         TextButton(
                                             onPressed: () {
                                               Navigator.push(
@@ -231,22 +247,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 fontFamily: "Tajawal-b",
                                               ),
                                             )),
-                                        SizedBox(
-                                          width: 210,
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        myProperty()));
-                                          },
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_right),
-                                          color: Colors.grey,
-                                          iconSize: 30,
-                                        )
                                       ],
                                     )),
                               ),

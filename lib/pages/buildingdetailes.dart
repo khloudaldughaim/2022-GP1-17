@@ -347,27 +347,6 @@ class BuildingDetailes extends StatelessWidget {
                                     PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
                                   ],
                                 )),
-                        // Padding(
-                        //   padding: EdgeInsets.only(left: 315, bottom: 16),
-                        //   child: Text(
-                        //     "الوصف",
-                        //     style: TextStyle(
-                        //       fontSize: 20,
-                        //       fontWeight: FontWeight.bold,
-                        //     ),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(right: 24, left: 24, bottom: 16),
-                        //   child: Text(
-                        //     '${building.properties.description}',
-                        //     textAlign: TextAlign.right,
-                        //     style: TextStyle(
-                        //       fontSize: 16,
-                        //       color: Colors.grey[500],
-                        //     ),
-                        //   ),
-                        // ),
                         Padding(
                           padding: EdgeInsets.only(left: 275, bottom: 16),
                           child: Text(
@@ -459,6 +438,35 @@ class BuildingDetailes extends StatelessWidget {
                           ),
                         ),
 
+                        '${building.properties.description}' == '' ?
+                        Container() : 
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                          padding: EdgeInsets.only(left: 245, bottom: 16),
+                          child: Text(
+                            "معلومات إضافية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
+                          child: Text(
+                            '${building.properties.description}',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ),
+                          ],
+                        ),
+
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -506,15 +514,31 @@ class BuildingDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
                           padding: EdgeInsets.only(left: 315, bottom: 16),
                           child: Text(
-                            "الموقع",
+                            'الموقع',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
+                          child: Text(
+                            '${building.properties.Location}',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ),
+                          ],
                         ),
                       ],
                     ),
