@@ -1041,6 +1041,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                               ],
                             )),
                       ),
+
                       //upload images
                       Container(
                         height: 190,
@@ -1076,7 +1077,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                                     255, 127, 166, 233)),
                                           ),
                                           onPressed: () {
-                                            //selectImage();
+                                            selectImage();
                                           },
                                         ),
                                       )
