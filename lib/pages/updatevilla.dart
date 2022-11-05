@@ -1,6 +1,8 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/src/widgets/container.dart';
 // import 'package:flutter/src/widgets/framework.dart';
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/villa.dart';
@@ -41,7 +43,6 @@ class _UpdateVillaState extends State<UpdateVilla> {
   choice? _elevatorCH;
   choice? _poolCH;
   choice? _basementCH = choice.no;
-  late String in_floor;
   late bool pool;
   late bool basement;
   late bool elevator;
@@ -51,8 +52,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
   late int number_of_room;
   late int number_of_bathroom;
   late int number_of_livingRooms;
-  late double longitude ;
-  late double latitude ;
+  late double longitude;
+  late double latitude;
 
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
@@ -62,8 +63,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
   late TextEditingController spaceController;
   late TextEditingController priceController;
   late TextEditingController neighborhoodController;
-  late TextEditingController in_floorController;
-
+  late TextEditingController location;
+  late TextEditingController description;
 
   @override
   void initState() {
@@ -73,6 +74,9 @@ class _UpdateVillaState extends State<UpdateVilla> {
         TextEditingController(text: widget.villa.properties.price);
     neighborhoodController =
         TextEditingController(text: widget.villa.properties.neighborhood);
+    location = TextEditingController(text: widget.villa.properties.Location);
+    description =
+        TextEditingController(text: widget.villa.properties.description);
 
     type = '${widget.villa.properties.type}';
     property_id = '${widget.villa.properties.property_id}';
@@ -91,8 +95,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
     //longitude = widget.villa.properties.longitude;
     //latitude = widget.villa.properties.latitude;
 
-
-     if (widget.villa.pool == false) {
+    if (widget.villa.pool == false) {
       _poolCH = choice.no;
     } else {
       _poolCH = choice.yes;
@@ -101,7 +104,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
       _poolCH = choice.no;
     } else {
       _poolCH = choice.yes;
-    } 
+    }
     if (widget.villa.elevator == false) {
       _elevatorCH = choice.no;
     } else {
@@ -117,6 +120,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
     priceController.dispose();
     neighborhoodController.dispose();
     googleMapController?.dispose();
+    description.dispose();
+    location.dispose();
     super.dispose();
   }
 
@@ -164,7 +169,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
             'space': spaceController.text,
             'city': city,
             'neighborhood': neighborhoodController.text,
-            // 'images': arrImage,
+            'images': arrImage,
             'property_age': property_age,
             'number_of_floors': number_of_floors,
             'elevator': elevator,
@@ -173,6 +178,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
             'number_of_room': number_of_room,
             'number_of_livingRooms': number_of_livingRooms,
             'number_of_bathroom': number_of_bathroom,
+            'Location': location.text,
+            'description': description.text
           });
 
           Fluttertoast.showToast(
@@ -404,82 +411,75 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                   ),
                                 ),
                               ),
-
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'الرجاء عدم ترك الخانة فارغة!';
                                 }
-                                return null;
                               },
-
-                              // validator: (value) {
-                              //   if (value == null || value.isEmpty) {
-                              //     return 'الرجاء عدم ترك الخانة فارغة!';
-                              //   }
-                              //   if (!RegExp(r'[0-9]').hasMatch(value)) {
-                              //     return 'الرجاء إدخال أرقام فقط';
-                              //   }
-                              //   return null;
-                              // },
                             ),
                           ),
                         ],
                       ),
 
                       SizedBox(height: 30),
-
-                      // Container(
-                      //   child: Row(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Text(' *الحي: ',
-                      //           style: TextStyle(
-                      //             fontSize: 20.0,
-                      //             fontFamily: "Tajawal-b",
-                      //           ),
-                      //           textDirection: TextDirection.rtl),
-                      //       Container(
-                      //         margin: const EdgeInsets.all(10),
-                      //       ),
-                      //       Padding(padding: const EdgeInsets.all(10.0)),
-                      //       Row(
-                      //         children: [
-                      //           Container(
-                      //             padding: EdgeInsets.only(top: 16, right: 9),
-                      //             decoration: BoxDecoration(
-                      //                 color: Colors.white,
-                      //                 borderRadius: BorderRadius.circular(7),
-                      //                 border: Border.all(color: Colors.grey.shade300, width: 1)),
-                      //             height: 40,
-                      //             width: 150,
-                      //             child: TextFormField(
-                      //               controller: neighborhoodController,
-                      //               decoration: const InputDecoration(hintText: 'القيروان'),
-                      //               validator: (value) {
-                      //                 if (value == null || value.isEmpty) {
-                      //                   return 'الرجاء عدم ترك الخانة فارغة!';
-                      //                 }
-                      //                 return null;
-                      //               },
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.all(20),
-                      // ),
                       //location
-                      Text(
-                        ' الموقع: ',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Tajawal-b",
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            ' *الموقع: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 60),
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      controller: location,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        hintText: 'شارع المذيب مقابل..',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        contentPadding: EdgeInsets.all(6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 167, 166, 166),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'الرجاء عدم ترك الخانة فارغة!';
+                                        }
+                                      },
+                                    ),
+                                  ))),
+                        ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "الموقع على الخريطة",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          ]),
                       //map
                       SizedBox(
                         height: 400.0,
@@ -626,8 +626,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
                         children: [
                           Text("عدد الغرف",
                               style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b")),
+                                  fontSize: 20.0, fontFamily: "Tajawal-b")),
                           SizedBox(
                             height: 10,
                           ),
@@ -635,17 +634,11 @@ class _UpdateVillaState extends State<UpdateVilla> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                    color:
-                                        Colors.grey.shade300,
-                                    width: 1)),
+                                    color: Colors.grey.shade300, width: 1)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -654,20 +647,15 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .add_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.add_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     )),
                                 Text("$number_of_room",
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        fontFamily:
-                                            "Tajawal-b",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
-                                    textDirection:
-                                        TextDirection.rtl),
+                                        fontFamily: "Tajawal-b",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                    textDirection: TextDirection.rtl),
                                 IconButton(
                                     onPressed: () {
                                       number_of_room == 0
@@ -677,10 +665,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .remove_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.remove_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     ))
                               ],
                             ),
@@ -702,17 +688,11 @@ class _UpdateVillaState extends State<UpdateVilla> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                    color:
-                                        Colors.grey.shade300,
-                                    width: 1)),
+                                    color: Colors.grey.shade300, width: 1)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -721,20 +701,15 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .add_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.add_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     )),
                                 Text("$number_of_bathroom",
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        fontFamily:
-                                            "Tajawal-m",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
-                                    textDirection:
-                                        TextDirection.rtl),
+                                        fontFamily: "Tajawal-m",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                    textDirection: TextDirection.rtl),
                                 IconButton(
                                     onPressed: () {
                                       number_of_bathroom == 0
@@ -744,10 +719,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .remove_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.remove_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     ))
                               ],
                             ),
@@ -759,8 +732,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
                         children: [
                           Text("عدد الصالات",
                               style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b")),
+                                  fontSize: 20.0, fontFamily: "Tajawal-b")),
                           SizedBox(
                             height: 10,
                           ),
@@ -768,17 +740,11 @@ class _UpdateVillaState extends State<UpdateVilla> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                    color:
-                                        Colors.grey.shade300,
-                                    width: 1)),
+                                    color: Colors.grey.shade300, width: 1)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -787,34 +753,26 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .add_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.add_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     )),
                                 Text("$number_of_livingRooms",
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        fontFamily:
-                                            "Tajawal-b",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
-                                    textDirection:
-                                        TextDirection.rtl),
+                                        fontFamily: "Tajawal-b",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                    textDirection: TextDirection.rtl),
                                 IconButton(
                                     onPressed: () {
-                                      number_of_livingRooms ==
-                                              0
+                                      number_of_livingRooms == 0
                                           ? null
                                           : number_of_livingRooms--;
 
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .remove_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.remove_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     ))
                               ],
                             ),
@@ -875,68 +833,52 @@ class _UpdateVillaState extends State<UpdateVilla> {
                       ),
                       SizedBox(height: 30),
                       Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text('يوجد مسبح : ',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontFamily: "Tajawal-b",
                               ),
-                              textDirection:
-                                  TextDirection.rtl),
+                              textDirection: TextDirection.rtl),
                           Row(
                             children: [
                               Container(
-                                width: MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    2,
+                                width: MediaQuery.of(context).size.width / 2,
                                 child: RadioListTile(
                                   title: const Text(
                                     'نعم',
                                     style: TextStyle(
                                         fontSize: 18.0,
-                                        fontFamily:
-                                            "Tajawal-m",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
+                                        fontFamily: "Tajawal-m",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
                                   ),
                                   value: choice.yes,
                                   groupValue: _poolCH,
                                   onChanged: (choice? value) {
                                     setState(() {
                                       _poolCH = value;
-                                      if (_poolCH ==
-                                          choice.yes)
-                                        pool = true;
+                                      if (_poolCH == choice.yes) pool = true;
                                     });
                                   },
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    2.5,
+                                width: MediaQuery.of(context).size.width / 2.5,
                                 child: RadioListTile(
                                   title: const Text(
                                     'لا',
                                     style: TextStyle(
                                         fontSize: 18.0,
-                                        fontFamily:
-                                            "Tajawal-m",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
+                                        fontFamily: "Tajawal-m",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
                                   ),
                                   value: choice.no,
                                   groupValue: _poolCH,
                                   onChanged: (choice? value) {
                                     setState(() {
                                       _poolCH = value;
-                                      if (_poolCH ==
-                                          choice.no)
-                                        pool = false;
+                                      if (_poolCH == choice.no) pool = false;
                                     });
                                   },
                                 ),
@@ -947,67 +889,53 @@ class _UpdateVillaState extends State<UpdateVilla> {
                       ),
                       SizedBox(height: 30),
                       Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text('يوجد قبو : ',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontFamily: "Tajawal-b",
                               ),
-                              textDirection:
-                                  TextDirection.rtl),
+                              textDirection: TextDirection.rtl),
                           Row(
                             children: [
                               Container(
-                                width: MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    2,
+                                width: MediaQuery.of(context).size.width / 2,
                                 child: RadioListTile(
                                   title: const Text(
                                     'نعم',
                                     style: TextStyle(
                                         fontSize: 18.0,
-                                        fontFamily:
-                                            "Tajawal-m",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
+                                        fontFamily: "Tajawal-m",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
                                   ),
                                   value: choice.yes,
                                   groupValue: _basementCH,
                                   onChanged: (choice? value) {
                                     setState(() {
                                       _basementCH = value;
-                                      if (_basementCH ==
-                                          choice.yes)
+                                      if (_basementCH == choice.yes)
                                         basement = true;
                                     });
                                   },
                                 ),
                               ),
                               Container(
-                                width: MediaQuery.of(context)
-                                        .size
-                                        .width /
-                                    2.5,
+                                width: MediaQuery.of(context).size.width / 2.5,
                                 child: RadioListTile(
                                   title: const Text(
                                     'لا',
                                     style: TextStyle(
                                         fontSize: 18.0,
-                                        fontFamily:
-                                            "Tajawal-m",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
+                                        fontFamily: "Tajawal-m",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
                                   ),
                                   value: choice.no,
                                   groupValue: _basementCH,
                                   onChanged: (choice? value) {
                                     setState(() {
                                       _basementCH = value;
-                                      if (_basementCH ==
-                                          choice.no)
+                                      if (_basementCH == choice.no)
                                         basement = false;
                                     });
                                   },
@@ -1289,25 +1217,69 @@ class _UpdateVillaState extends State<UpdateVilla> {
                       Container(
                         margin: const EdgeInsets.all(20),
                       ),
+                      //description
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ' معلومات اضافية: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: description,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
                       //submit button
-                      ElevatedButton(
-                        onPressed: () async {
-                          updateData(selectedFiles);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Color.fromARGB(255, 127, 166, 233)),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(27))),
-                        ),
-                        child: Text(
-                          "تحديث",
-                          style:
-                              TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 90),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            updateData(selectedFiles);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromARGB(255, 127, 166, 233)),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 10)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
+                          ),
+                          child: Text(
+                            "تحديث",
+                            style: TextStyle(
+                                fontSize: 18, fontFamily: "Tajawal-m"),
+                          ),
                         ),
                       ),
                     ],

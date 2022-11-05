@@ -1,6 +1,8 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/src/widgets/container.dart';
 // import 'package:flutter/src/widgets/framework.dart';
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/building.dart';
@@ -55,6 +57,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
   late TextEditingController spaceController;
   late TextEditingController priceController;
   late TextEditingController neighborhoodController;
+  late TextEditingController location;
+  late TextEditingController description;
 
   @override
   void initState() {
@@ -64,6 +68,9 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
         TextEditingController(text: widget.building.properties.price);
     neighborhoodController =
         TextEditingController(text: widget.building.properties.neighborhood);
+    location = TextEditingController(text: widget.building.properties.Location);
+    description =
+        TextEditingController(text: widget.building.properties.description);
 
     type = '${widget.building.properties.type}';
     property_id = '${widget.building.properties.property_id}';
@@ -97,6 +104,8 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
     priceController.dispose();
     neighborhoodController.dispose();
     googleMapController?.dispose();
+    description.dispose();
+    location.dispose();
     super.dispose();
   }
 
@@ -149,7 +158,9 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
             'number_of_floors': number_of_floors,
             'elevator': elevator,
             'pool': pool,
-            'number_of_apartments': number_of_apartments
+            'number_of_apartments': number_of_apartments,
+            'Location': location.text,
+            'description': description.text
           });
 
           Fluttertoast.showToast(
@@ -391,61 +402,65 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: 30),
-
-                      // Container(
-                      //   child: Row(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Text(' *الحي: ',
-                      //           style: TextStyle(
-                      //             fontSize: 20.0,
-                      //             fontFamily: "Tajawal-b",
-                      //           ),
-                      //           textDirection: TextDirection.rtl),
-                      //       Container(
-                      //         margin: const EdgeInsets.all(10),
-                      //       ),
-                      //       Padding(padding: const EdgeInsets.all(10.0)),
-                      //       Row(
-                      //         children: [
-                      //           Container(
-                      //             padding: EdgeInsets.only(top: 16, right: 9),
-                      //             decoration: BoxDecoration(
-                      //                 color: Colors.white,
-                      //                 borderRadius: BorderRadius.circular(7),
-                      //                 border: Border.all(color: Colors.grey.shade300, width: 1)),
-                      //             height: 40,
-                      //             width: 150,
-                      //             child: TextFormField(
-                      //               controller: neighborhoodController,
-                      //               decoration: const InputDecoration(hintText: 'القيروان'),
-                      //               validator: (value) {
-                      //                 if (value == null || value.isEmpty) {
-                      //                   return 'الرجاء عدم ترك الخانة فارغة!';
-                      //                 }
-                      //                 return null;
-                      //               },
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.all(20),
-                      // ),
                       //location
-                      Text(
-                        ' الموقع: ',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Tajawal-b",
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            ' *الموقع: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 60),
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      controller: location,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        hintText: 'شارع المذيب مقابل..',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        contentPadding: EdgeInsets.all(6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 167, 166, 166),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'الرجاء عدم ترك الخانة فارغة!';
+                                        }
+                                      },
+                                    ),
+                                  ))),
+                        ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "الموقع على الخريطة",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          ]),
                       //map
                       SizedBox(
                         height: 400.0,
@@ -1015,25 +1030,69 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                       Container(
                         margin: const EdgeInsets.all(20),
                       ),
+                      //description
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ' معلومات اضافية: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: description,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
                       //submit button
-                      ElevatedButton(
-                        onPressed: () async {
-                          updateData(selectedFiles);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Color.fromARGB(255, 127, 166, 233)),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(27))),
-                        ),
-                        child: Text(
-                          "تحديث",
-                          style:
-                              TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 90),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            updateData(selectedFiles);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromARGB(255, 127, 166, 233)),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 15)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
+                          ),
+                          child: Text(
+                            "تحديث",
+                            style: TextStyle(
+                                fontSize: 18, fontFamily: "Tajawal-m"),
+                          ),
                         ),
                       ),
                     ],

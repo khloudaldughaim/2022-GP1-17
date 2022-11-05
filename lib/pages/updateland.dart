@@ -48,6 +48,8 @@ class _UpdateLandState extends State<UpdateLand> {
   late TextEditingController spaceController;
   late TextEditingController priceController;
   late TextEditingController neighborhoodController;
+  late TextEditingController location;
+  late TextEditingController description;
 
   @override
   void initState() {
@@ -57,6 +59,9 @@ class _UpdateLandState extends State<UpdateLand> {
         TextEditingController(text: widget.land.properties!.price);
     neighborhoodController =
         TextEditingController(text: widget.land.properties!.neighborhood);
+    location = TextEditingController(text: widget.land.properties!.Location);
+    description =
+        TextEditingController(text: widget.land.properties!.description);
 
     type = '${widget.land.properties!.type}';
     property_id = '${widget.land.properties!.property_id}';
@@ -74,6 +79,8 @@ class _UpdateLandState extends State<UpdateLand> {
     priceController.dispose();
     neighborhoodController.dispose();
     googleMapController?.dispose();
+    description.dispose();
+    location.dispose();
     super.dispose();
   }
 
@@ -122,6 +129,8 @@ class _UpdateLandState extends State<UpdateLand> {
             'city': city,
             'neighborhood': neighborhoodController.text,
             'images': arrImage,
+            'Location': location.text,
+            'description': description.text
           });
 
           Fluttertoast.showToast(
@@ -418,23 +427,11 @@ class _UpdateLandState extends State<UpdateLand> {
                                   ),
                                 ),
                               ),
-
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'الرجاء عدم ترك الخانة فارغة!';
                                 }
-                                return null;
                               },
-
-                              // validator: (value) {
-                              //   if (value == null || value.isEmpty) {
-                              //     return 'الرجاء عدم ترك الخانة فارغة!';
-                              //   }
-                              //   if (!RegExp(r'[0-9]').hasMatch(value)) {
-                              //     return 'الرجاء إدخال أرقام فقط';
-                              //   }
-                              //   return null;
-                              // },
                             ),
                           ),
                         ],
@@ -442,58 +439,64 @@ class _UpdateLandState extends State<UpdateLand> {
 
                       SizedBox(height: 30),
 
-                      // Container(
-                      //   child: Row(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Text(' *الحي: ',
-                      //           style: TextStyle(
-                      //             fontSize: 20.0,
-                      //             fontFamily: "Tajawal-b",
-                      //           ),
-                      //           textDirection: TextDirection.rtl),
-                      //       Container(
-                      //         margin: const EdgeInsets.all(10),
-                      //       ),
-                      //       Padding(padding: const EdgeInsets.all(10.0)),
-                      //       Row(
-                      //         children: [
-                      //           Container(
-                      //             padding: EdgeInsets.only(top: 16, right: 9),
-                      //             decoration: BoxDecoration(
-                      //                 color: Colors.white,
-                      //                 borderRadius: BorderRadius.circular(7),
-                      //                 border: Border.all(color: Colors.grey.shade300, width: 1)),
-                      //             height: 40,
-                      //             width: 150,
-                      //             child: TextFormField(
-                      //               controller: neighborhoodController,
-                      //               decoration: const InputDecoration(hintText: 'القيروان'),
-                      //               validator: (value) {
-                      //                 if (value == null || value.isEmpty) {
-                      //                   return 'الرجاء عدم ترك الخانة فارغة!';
-                      //                 }
-                      //                 return null;
-                      //               },
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.all(20),
-                      // ),
                       //location
-                      Text(
-                        ' الموقع: ',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Tajawal-b",
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            ' *الموقع: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 60),
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      controller: location,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        hintText: 'شارع المذيب مقابل..',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        contentPadding: EdgeInsets.all(6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 167, 166, 166),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'الرجاء عدم ترك الخانة فارغة!';
+                                        }
+                                      },
+                                    ),
+                                  ))),
+                        ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "الموقع على الخريطة",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          ]),
                       //map
                       SizedBox(
                         height: 400.0,
@@ -576,272 +579,6 @@ class _UpdateLandState extends State<UpdateLand> {
                         ),
                       ),
                       SizedBox(height: 25),
-                      // //propertyAge
-                      // Column(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     Text(
-                      //       "عمر عقارك:",
-                      //       style: const TextStyle(
-                      //         fontSize: 20.0,
-                      //         fontFamily: "Tajawal-b",
-                      //       ),
-                      //       textDirection: TextDirection.rtl,
-                      //     ),
-                      //     Text("(من شهر إلى 100+ سنة)",
-                      //         style: const TextStyle(
-                      //             fontSize: 15.0,
-                      //             fontFamily: "Tajawal-m",
-                      //             color: Color.fromARGB(255, 120, 122, 129)),
-                      //         textDirection: TextDirection.rtl),
-                      //     Container(
-                      //       height: 100,
-                      //       width: 380,
-                      //       decoration: BoxDecoration(
-                      //           color: Colors.white,
-                      //           borderRadius: BorderRadius.circular(8.0),
-                      //           border: Border.all(
-                      //               color: Colors.grey.shade300, width: 1)),
-                      //       child: Column(
-                      //         mainAxisAlignment: MainAxisAlignment.start,
-                      //         children: [
-                      //           Container(
-                      //             margin: const EdgeInsets.all(3),
-                      //           ),
-                      //           Slider(
-                      //             label: "عمر عقارك:",
-                      //             value: property_age.toDouble(),
-                      //             onChanged: (value) {
-                      //               setState(() {
-                      //                 property_age = value.toDouble();
-                      //               });
-                      //             },
-                      //             min: 0.0,
-                      //             max: 100.0,
-                      //           ),
-                      //           Text(
-                      //             " (شهر.سنة) " +
-                      //                 property_age.toStringAsFixed(1),
-                      //             style: const TextStyle(
-                      //                 fontSize: 16.0,
-                      //                 fontFamily: "Tajawal-m",
-                      //                 color: Color.fromARGB(255, 73, 75, 82)),
-                      //           ),
-                      //           Container(
-                      //             margin: const EdgeInsets.all(5),
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(height: 30),
-                      // Column(
-                      //   children: [
-                      //     Text("عدد الشقق:",
-                      //         style: TextStyle(
-                      //             fontSize: 20.0, fontFamily: "Tajawal-b")),
-                      //     SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //     Container(
-                      //       height: 40,
-                      //       decoration: BoxDecoration(
-                      //           color: Colors.white,
-                      //           borderRadius: BorderRadius.circular(8.0),
-                      //           border: Border.all(
-                      //               color: Colors.grey.shade300, width: 1)),
-                      //       child: Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           IconButton(
-                      //               onPressed: () {
-                      //                 number_of_apartments++;
-
-                      //                 setState(() {});
-                      //               },
-                      //               icon: const Icon(
-                      //                 Icons.add_circle_outline,
-                      //                 color: Color.fromARGB(255, 127, 166, 233),
-                      //               )),
-                      //           Text("$number_of_apartments",
-                      //               style: TextStyle(
-                      //                   fontSize: 20.0,
-                      //                   fontFamily: "Tajawal-b",
-                      //                   color: Color.fromARGB(255, 73, 75, 82)),
-                      //               textDirection: TextDirection.rtl),
-                      //           IconButton(
-                      //               onPressed: () {
-                      //                 number_of_apartments == 0
-                      //                     ? null
-                      //                     : number_of_apartments--;
-
-                      //                 setState(() {});
-                      //               },
-                      //               icon: const Icon(
-                      //                 Icons.remove_circle_outline,
-                      //                 color: Color.fromARGB(255, 127, 166, 233),
-                      //               ))
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-
-                      // SizedBox(height: 30),
-                      // Column(
-                      //   children: [
-                      //     Text("عدد الأدوار:",
-                      //         style: TextStyle(
-                      //             fontSize: 20.0, fontFamily: "Tajawal-b")),
-                      //     SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //     Container(
-                      //       height: 40,
-                      //       decoration: BoxDecoration(
-                      //           color: Colors.white,
-                      //           borderRadius: BorderRadius.circular(8.0),
-                      //           border: Border.all(
-                      //               color: Colors.grey.shade300, width: 1)),
-                      //       child: Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           IconButton(
-                      //               onPressed: () {
-                      //                 number_of_floors++;
-
-                      //                 setState(() {});
-                      //               },
-                      //               icon: const Icon(
-                      //                 Icons.add_circle_outline,
-                      //                 color: Color.fromARGB(255, 127, 166, 233),
-                      //               )),
-                      //           Text("$number_of_floors",
-                      //               style: TextStyle(
-                      //                   fontSize: 20.0,
-                      //                   fontFamily: "Tajawal-b",
-                      //                   color: Color.fromARGB(255, 73, 75, 82)),
-                      //               textDirection: TextDirection.rtl),
-                      //           IconButton(
-                      //               onPressed: () {
-                      //                 number_of_floors == 0
-                      //                     ? null
-                      //                     : number_of_floors--;
-
-                      //                 setState(() {});
-                      //               },
-                      //               icon: const Icon(
-                      //                 Icons.remove_circle_outline,
-                      //                 color: Color.fromARGB(255, 127, 166, 233),
-                      //               ))
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(height: 30),
-                      // Text(
-                      //   'يوجد مسبح : ',
-                      //   style: TextStyle(
-                      //     fontSize: 20.0,
-                      //     fontFamily: "Tajawal-b",
-                      //   ),
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: RadioListTile(
-                      //         title: const Text(
-                      //           'نعم',
-                      //           style: TextStyle(
-                      //               fontSize: 18.0,
-                      //               fontFamily: "Tajawal-m",
-                      //               color: Color.fromARGB(255, 73, 75, 82)),
-                      //         ),
-                      //         value: choice.yes,
-                      //         groupValue: _poolCH,
-                      //         onChanged: (choice? value) {
-                      //           setState(() {
-                      //             _poolCH = value;
-                      //             if (_poolCH == choice.yes) pool = true;
-                      //           });
-                      //         },
-                      //       ),
-                      //     ),
-                      //     Expanded(
-                      //       child: RadioListTile(
-                      //         title: const Text(
-                      //           'لا',
-                      //           style: TextStyle(
-                      //               fontSize: 18.0,
-                      //               fontFamily: "Tajawal-m",
-                      //               color: Color.fromARGB(255, 73, 75, 82)),
-                      //         ),
-                      //         value: choice.no,
-                      //         groupValue: _poolCH,
-                      //         onChanged: (choice? value) {
-                      //           setState(() {
-                      //             _poolCH = value;
-                      //             if (_poolCH == choice.no) pool = false;
-                      //           });
-                      //         },
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(height: 30),
-                      // Text(
-                      //   'يوجد مصعد : ',
-                      //   style: TextStyle(
-                      //     fontSize: 20.0,
-                      //     fontFamily: "Tajawal-b",
-                      //   ),
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: RadioListTile(
-                      //         title: const Text(
-                      //           'نعم',
-                      //           style: TextStyle(
-                      //               fontSize: 18.0,
-                      //               fontFamily: "Tajawal-m",
-                      //               color: Color.fromARGB(255, 73, 75, 82)),
-                      //         ),
-                      //         value: choice.yes,
-                      //         groupValue: _elevatorCH,
-                      //         onChanged: (choice? value) {
-                      //           setState(() {
-                      //             _elevatorCH = value;
-                      //             if (_elevatorCH == choice.yes)
-                      //               elevator = true;
-                      //           });
-                      //         },
-                      //       ),
-                      //     ),
-                      //     Expanded(
-                      //       child: RadioListTile(
-                      //         title: const Text(
-                      //           'لا',
-                      //           style: TextStyle(
-                      //               fontSize: 18.0,
-                      //               fontFamily: "Tajawal-m",
-                      //               color: Color.fromARGB(255, 73, 75, 82)),
-                      //         ),
-                      //         value: choice.no,
-                      //         groupValue: _elevatorCH,
-                      //         onChanged: (choice? value) {
-                      //           setState(() {
-                      //             _elevatorCH = value;
-                      //             if (_elevatorCH == choice.no)
-                      //               elevator = false;
-                      //           });
-                      //         },
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       Container(
                         margin: const EdgeInsets.all(15),
                       ),
@@ -1062,25 +799,69 @@ class _UpdateLandState extends State<UpdateLand> {
                       Container(
                         margin: const EdgeInsets.all(20),
                       ),
+                      //description
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ' معلومات اضافية: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: description,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
                       //submit button
-                      ElevatedButton(
-                        onPressed: () async {
-                          updateData(selectedFiles);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Color.fromARGB(255, 127, 166, 233)),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(27))),
-                        ),
-                        child: Text(
-                          "تحديث",
-                          style:
-                              TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 90),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            updateData(selectedFiles);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromARGB(255, 127, 166, 233)),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 10)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
+                          ),
+                          child: Text(
+                            "تحديث",
+                            style: TextStyle(
+                                fontSize: 18, fontFamily: "Tajawal-m"),
+                          ),
                         ),
                       ),
                     ],

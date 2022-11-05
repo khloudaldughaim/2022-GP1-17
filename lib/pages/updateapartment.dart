@@ -14,7 +14,6 @@ import 'package:location/location.dart';
 import 'package:nozol_application/pages/my-property.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
 
-
 class UpdateApartment extends StatefulWidget {
   final Apartment apartment;
 
@@ -49,8 +48,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
   late int number_of_room;
   late int number_of_bathroom;
   late int number_of_livingRooms;
-  late double longitude ;
-  late double latitude ;
+  late double longitude;
+  late double latitude;
 
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
@@ -61,7 +60,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
   late TextEditingController priceController;
   late TextEditingController neighborhoodController;
   late TextEditingController in_floorController;
-
+  late TextEditingController location;
+  late TextEditingController description;
 
   @override
   void initState() {
@@ -71,8 +71,11 @@ class _UpdateApartmentState extends State<UpdateApartment> {
         TextEditingController(text: widget.apartment.properties.price);
     neighborhoodController =
         TextEditingController(text: widget.apartment.properties.neighborhood);
-    in_floorController =
-        TextEditingController(text: widget.apartment.in_floor);
+    in_floorController = TextEditingController(text: widget.apartment.in_floor);
+    location =
+        TextEditingController(text: widget.apartment.properties.Location);
+    description =
+        TextEditingController(text: widget.apartment.properties.description);
 
     type = '${widget.apartment.properties.type}';
     property_id = '${widget.apartment.properties.property_id}';
@@ -104,6 +107,9 @@ class _UpdateApartmentState extends State<UpdateApartment> {
     priceController.dispose();
     neighborhoodController.dispose();
     googleMapController?.dispose();
+    in_floorController.dispose();
+    description.dispose();
+    location.dispose();
     super.dispose();
   }
 
@@ -131,11 +137,10 @@ class _UpdateApartmentState extends State<UpdateApartment> {
 
   @override
   Widget build(BuildContext context) {
-
     updateData(List<XFile> fileImages) async {
       for (int i = 0; i < fileImages.length; i++) {
-        var imageUrl =
-            await uploadFile(fileImages[i], widget.apartment.properties.User_id);
+        var imageUrl = await uploadFile(
+            fileImages[i], widget.apartment.properties.User_id);
         arrImage.add(imageUrl.toString());
       }
 
@@ -159,6 +164,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
             'number_of_room': number_of_room,
             'number_of_livingRooms': number_of_livingRooms,
             'number_of_bathroom': number_of_bathroom,
+            'Location': location.text,
+            'description': description.text
           });
 
           Fluttertoast.showToast(
@@ -185,7 +192,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
         }
       }
     }
-  
+
     const appTitle = 'تحديث عقار';
 
     return SafeArea(
@@ -267,50 +274,38 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                       ),
                       SizedBox(height: 20),
                       Row(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(' رقم الدور: ',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontFamily: "Tajawal-b",
                               ),
-                              textDirection:
-                                  TextDirection.rtl),
+                              textDirection: TextDirection.rtl),
                           Container(
-                            margin:
-                                const EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                           ),
-                          Padding(
-                              padding: const EdgeInsets.all(
-                                  10.0)),
+                          Padding(padding: const EdgeInsets.all(10.0)),
                           Row(
                             children: [
                               Container(
-                                  padding: EdgeInsets.only(
-                                      top: 16, right: 9),
+                                  padding: EdgeInsets.only(top: 16, right: 9),
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius
-                                              .circular(7),
+                                      borderRadius: BorderRadius.circular(7),
                                       border: Border.all(
-                                          color: Colors.grey
-                                              .shade300,
+                                          color: Colors.grey.shade300,
                                           width: 1)),
                                   height: 40,
                                   width: 150,
                                   child: TextFormField(
                                     autovalidateMode:
-                                        AutovalidateMode
-                                            .onUserInteraction,
+                                        AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'الرجاء عدم ترك الخانة فارغة!';
                                       }
-                                      if (!RegExp(r'[0-9]')
-                                          .hasMatch(
-                                              value)) {
+                                      if (!RegExp(r'[0-9]').hasMatch(value)) {
                                         return 'الرجاء إدخال أرقام فقط';
                                       }
                                     },
@@ -447,7 +442,6 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                   ),
                                 ),
                               ),
-
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'الرجاء عدم ترك الخانة فارغة!';
@@ -461,58 +455,64 @@ class _UpdateApartmentState extends State<UpdateApartment> {
 
                       SizedBox(height: 30),
 
-                      // Container(
-                      //   child: Row(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Text(' *الحي: ',
-                      //           style: TextStyle(
-                      //             fontSize: 20.0,
-                      //             fontFamily: "Tajawal-b",
-                      //           ),
-                      //           textDirection: TextDirection.rtl),
-                      //       Container(
-                      //         margin: const EdgeInsets.all(10),
-                      //       ),
-                      //       Padding(padding: const EdgeInsets.all(10.0)),
-                      //       Row(
-                      //         children: [
-                      //           Container(
-                      //             padding: EdgeInsets.only(top: 16, right: 9),
-                      //             decoration: BoxDecoration(
-                      //                 color: Colors.white,
-                      //                 borderRadius: BorderRadius.circular(7),
-                      //                 border: Border.all(color: Colors.grey.shade300, width: 1)),
-                      //             height: 40,
-                      //             width: 150,
-                      //             child: TextFormField(
-                      //               controller: neighborhoodController,
-                      //               decoration: const InputDecoration(hintText: 'القيروان'),
-                      //               validator: (value) {
-                      //                 if (value == null || value.isEmpty) {
-                      //                   return 'الرجاء عدم ترك الخانة فارغة!';
-                      //                 }
-                      //                 return null;
-                      //               },
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.all(20),
-                      // ),
                       //location
-                      Text(
-                        ' الموقع: ',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Tajawal-b",
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            ' *الموقع: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 60),
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      controller: location,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        hintText: 'شارع المذيب مقابل..',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        contentPadding: EdgeInsets.all(6),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 167, 166, 166),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'الرجاء عدم ترك الخانة فارغة!';
+                                        }
+                                      },
+                                    ),
+                                  ))),
+                        ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "الموقع على الخريطة",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          ]),
                       //map
                       SizedBox(
                         height: 400.0,
@@ -659,8 +659,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                         children: [
                           Text("عدد الغرف",
                               style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b")),
+                                  fontSize: 20.0, fontFamily: "Tajawal-b")),
                           SizedBox(
                             height: 10,
                           ),
@@ -668,17 +667,11 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                    color:
-                                        Colors.grey.shade300,
-                                    width: 1)),
+                                    color: Colors.grey.shade300, width: 1)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -687,20 +680,15 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .add_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.add_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     )),
                                 Text("$number_of_room",
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        fontFamily:
-                                            "Tajawal-b",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
-                                    textDirection:
-                                        TextDirection.rtl),
+                                        fontFamily: "Tajawal-b",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                    textDirection: TextDirection.rtl),
                                 IconButton(
                                     onPressed: () {
                                       number_of_room == 0
@@ -710,10 +698,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .remove_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.remove_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     ))
                               ],
                             ),
@@ -735,17 +721,11 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                    color:
-                                        Colors.grey.shade300,
-                                    width: 1)),
+                                    color: Colors.grey.shade300, width: 1)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -754,20 +734,15 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .add_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.add_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     )),
                                 Text("$number_of_bathroom",
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        fontFamily:
-                                            "Tajawal-m",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
-                                    textDirection:
-                                        TextDirection.rtl),
+                                        fontFamily: "Tajawal-m",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                    textDirection: TextDirection.rtl),
                                 IconButton(
                                     onPressed: () {
                                       number_of_bathroom == 0
@@ -777,10 +752,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .remove_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.remove_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     ))
                               ],
                             ),
@@ -792,8 +765,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                         children: [
                           Text("عدد الصالات",
                               style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b")),
+                                  fontSize: 20.0, fontFamily: "Tajawal-b")),
                           SizedBox(
                             height: 10,
                           ),
@@ -801,17 +773,11 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                    color:
-                                        Colors.grey.shade300,
-                                    width: 1)),
+                                    color: Colors.grey.shade300, width: 1)),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                     onPressed: () {
@@ -820,34 +786,26 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .add_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.add_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     )),
                                 Text("$number_of_livingRooms",
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        fontFamily:
-                                            "Tajawal-b",
-                                        color: Color.fromARGB(
-                                            255, 73, 75, 82)),
-                                    textDirection:
-                                        TextDirection.rtl),
+                                        fontFamily: "Tajawal-b",
+                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                    textDirection: TextDirection.rtl),
                                 IconButton(
                                     onPressed: () {
-                                      number_of_livingRooms ==
-                                              0
+                                      number_of_livingRooms == 0
                                           ? null
                                           : number_of_livingRooms--;
 
                                       setState(() {});
                                     },
                                     icon: const Icon(
-                                      Icons
-                                          .remove_circle_outline,
-                                      color: Color.fromARGB(
-                                          255, 127, 166, 233),
+                                      Icons.remove_circle_outline,
+                                      color: Color.fromARGB(255, 127, 166, 233),
                                     ))
                               ],
                             ),
@@ -1178,25 +1136,69 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                       Container(
                         margin: const EdgeInsets.all(20),
                       ),
+                      //description
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ' معلومات اضافية: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: description,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
                       //submit button
-                      ElevatedButton(
-                        onPressed: () async {
-                          updateData(selectedFiles);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Color.fromARGB(255, 127, 166, 233)),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(27))),
-                        ),
-                        child: Text(
-                          "تحديث",
-                          style:
-                              TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 90),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            updateData(selectedFiles);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromARGB(255, 127, 166, 233)),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 10)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
+                          ),
+                          child: Text(
+                            "تحديث",
+                            style: TextStyle(
+                                fontSize: 18, fontFamily: "Tajawal-m"),
+                          ),
                         ),
                       ),
                     ],
