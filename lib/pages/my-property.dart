@@ -133,7 +133,7 @@ class _myPropertyState extends State<myProperty> {
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
         future: FirebaseFirestore.instance
             .collection('properties')
-            .where('User_id', isEqualTo: nuid)
+            .where('User_id', isEqualTo: cpuid)
             .get(),
         builder: (
           BuildContext context,
@@ -462,7 +462,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 final User? user = auth.currentUser;
-final nuid = user!.uid;
+final cpuid = user!.uid;
 
 // Stream<List<Property>> readmyPropertys() => FirebaseFirestore.instance
 //     .collection('properties')
