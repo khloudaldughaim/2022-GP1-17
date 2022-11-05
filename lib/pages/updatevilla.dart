@@ -832,119 +832,110 @@ class _UpdateVillaState extends State<UpdateVilla> {
                         ],
                       ),
                       SizedBox(height: 30),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('يوجد مسبح : ',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Tajawal-b",
+                      Text('يوجد مسبح : ',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: "Tajawal-b",
+                          ),
+                          textDirection: TextDirection.rtl),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: RadioListTile(
+                              title: const Text(
+                                'نعم',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Tajawal-m",
+                                    color: Color.fromARGB(255, 73, 75, 82)),
                               ),
-                              textDirection: TextDirection.rtl),
-                          Row(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: RadioListTile(
-                                  title: const Text(
-                                    'نعم',
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontFamily: "Tajawal-m",
-                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                  ),
-                                  value: choice.yes,
-                                  groupValue: _poolCH,
-                                  onChanged: (choice? value) {
-                                    setState(() {
-                                      _poolCH = value;
-                                      if (_poolCH == choice.yes) pool = true;
-                                    });
-                                  },
-                                ),
+                              value: choice.yes,
+                              groupValue: _poolCH,
+                              onChanged: (choice? value) {
+                                setState(() {
+                                  _poolCH = value;
+                                  if (_poolCH == choice.yes) pool = true;
+                                });
+                              },
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: RadioListTile(
+                              title: const Text(
+                                'لا',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Tajawal-m",
+                                    color: Color.fromARGB(255, 73, 75, 82)),
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2.5,
-                                child: RadioListTile(
-                                  title: const Text(
-                                    'لا',
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontFamily: "Tajawal-m",
-                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                  ),
-                                  value: choice.no,
-                                  groupValue: _poolCH,
-                                  onChanged: (choice? value) {
-                                    setState(() {
-                                      _poolCH = value;
-                                      if (_poolCH == choice.no) pool = false;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
+                              value: choice.no,
+                              groupValue: _poolCH,
+                              onChanged: (choice? value) {
+                                setState(() {
+                                  _poolCH = value;
+                                  if (_poolCH == choice.no) pool = false;
+                                });
+                              },
+                            ),
                           ),
                         ],
                       ),
+
                       SizedBox(height: 30),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('يوجد قبو : ',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Tajawal-b",
+
+                      Text('يوجد قبو : ',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontFamily: "Tajawal-b",
+                          ),
+                          textDirection: TextDirection.rtl),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: RadioListTile(
+                              title: const Text(
+                                'نعم',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Tajawal-m",
+                                    color: Color.fromARGB(255, 73, 75, 82)),
                               ),
-                              textDirection: TextDirection.rtl),
-                          Row(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: RadioListTile(
-                                  title: const Text(
-                                    'نعم',
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontFamily: "Tajawal-m",
-                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                  ),
-                                  value: choice.yes,
-                                  groupValue: _basementCH,
-                                  onChanged: (choice? value) {
-                                    setState(() {
-                                      _basementCH = value;
-                                      if (_basementCH == choice.yes)
-                                        basement = true;
-                                    });
-                                  },
-                                ),
+                              value: choice.yes,
+                              groupValue: _basementCH,
+                              onChanged: (choice? value) {
+                                setState(() {
+                                  _basementCH = value;
+                                  if (_basementCH == choice.yes)
+                                    basement = true;
+                                });
+                              },
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: RadioListTile(
+                              title: const Text(
+                                'لا',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Tajawal-m",
+                                    color: Color.fromARGB(255, 73, 75, 82)),
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2.5,
-                                child: RadioListTile(
-                                  title: const Text(
-                                    'لا',
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontFamily: "Tajawal-m",
-                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                  ),
-                                  value: choice.no,
-                                  groupValue: _basementCH,
-                                  onChanged: (choice? value) {
-                                    setState(() {
-                                      _basementCH = value;
-                                      if (_basementCH == choice.no)
-                                        basement = false;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
+                              value: choice.no,
+                              groupValue: _basementCH,
+                              onChanged: (choice? value) {
+                                setState(() {
+                                  _basementCH = value;
+                                  if (_basementCH == choice.no)
+                                    basement = false;
+                                });
+                              },
+                            ),
                           ),
                         ],
                       ),
+
                       SizedBox(height: 30),
                       Text(
                         'يوجد مصعد : ',
@@ -1109,6 +1100,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
                               ],
                             )),
                       ),
+
                       //upload images
                       Container(
                         height: 190,
@@ -1144,7 +1136,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                                     255, 127, 166, 233)),
                                           ),
                                           onPressed: () {
-                                            //selectImage();
+                                            selectImage();
                                           },
                                         ),
                                       )
