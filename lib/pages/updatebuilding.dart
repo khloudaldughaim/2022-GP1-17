@@ -158,7 +158,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
             'number_of_floors': number_of_floors,
             'elevator': elevator,
             'pool': pool,
-            'number_of_apartments': number_of_apartments,
+            'number_of_apartment': number_of_apartments,
             'Location': location.text,
             'description': description.text
           });
@@ -196,12 +196,12 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
           title: Padding(
             padding: const EdgeInsets.only(left: 145),
             child: const Text('تحديث عقار',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: "Tajawal-b",
-              )),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Tajawal-b",
+                )),
           ),
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(

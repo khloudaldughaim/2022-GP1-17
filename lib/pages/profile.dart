@@ -16,9 +16,9 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-final FirebaseAuth auth = FirebaseAuth.instance;
-final User? user = auth.currentUser;
-final curentId = user!.uid;
+late FirebaseAuth auth = FirebaseAuth.instance;
+late User? user = auth.currentUser;
+late String curentId = user!.uid;
 
 class _ProfilePageState extends State<ProfilePage> {
   final profileformkey = GlobalKey<FormState>();
@@ -53,19 +53,19 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Padding(
             padding: const EdgeInsets.only(left: 155),
             child: Text("حسابي               ",
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: "Tajawal-m",
-              )),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: "Tajawal-m",
+                )),
           ),
-          actions:[
+          actions: [
             new IconButton(
-              icon: new Icon(Icons.logout),
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LogIn())));
-              })
+                icon: new Icon(Icons.logout),
+                onPressed: () {
+                  FirebaseAuth.instance.signOut().then((value) =>
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LogIn())));
+                })
           ],
           toolbarHeight: 60,
         ),
@@ -93,8 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               TextEditingController(text: cuuser.phoneNumber);
                           final emailcontrolar =
                               TextEditingController(text: cuuser.email);
-                          final userId = curentId;
-                          print(userId);
+
                           return Column(
                             children: [
                               SizedBox(
@@ -282,7 +281,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     try {
                                       FirebaseFirestore.instance
                                           .collection('Standard_user')
-                                          .doc(userId)
+                                          .doc(curentId)
                                           .update({
                                         'name': nameControlar.text,
                                         'phoneNumber': phoneControlar.text,
@@ -393,11 +392,11 @@ class _ProfilePageState extends State<ProfilePage> {
 Future getCurrentUser() async {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final User? user = auth.currentUser;
-  final uid = user!.uid;
+  final kuid = user!.uid;
 
   final docStanderUser = await FirebaseFirestore.instance
       .collection('Standard_user')
-      .doc(uid)
+      .doc(kuid)
       .get();
   if (docStanderUser.exists) {
     return Suser.fromJson(docStanderUser.data()!);

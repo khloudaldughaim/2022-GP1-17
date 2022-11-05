@@ -280,7 +280,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'number_of_floors': number_of_floors,
               'elevator': elevator,
               'pool': pool,
-              'number_of_apartments': number_of_apartments,
+              'number_of_apartment': number_of_apartments,
               'Location': location.text,
               'description': description.text
             });
