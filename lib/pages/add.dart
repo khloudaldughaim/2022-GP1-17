@@ -29,6 +29,7 @@ class _AddPageState extends State<AddPage> {
     return Scaffold(
       appBar: AppBar(
         // bottom: const
+        automaticallyImplyLeading: false,
         title: Center(
           child: const Text(appTitle,
               style: TextStyle(
@@ -2009,8 +2010,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                       255, 127, 166, 233)),
                                           padding: MaterialStateProperty.all(
                                               EdgeInsets.symmetric(
-                                                  horizontal: 30,
-                                                  vertical: 10)),
+                                                  horizontal: 40, vertical: 5)),
                                           shape: MaterialStateProperty.all(
                                               RoundedRectangleBorder(
                                                   borderRadius:

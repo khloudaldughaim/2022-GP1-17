@@ -12,6 +12,7 @@ import 'apartment.dart';
 import 'building.dart';
 import 'homapage.dart';
 import 'land.dart';
+import 'navigationbar.dart';
 
 class myProperty extends StatefulWidget {
   const myProperty({super.key});
@@ -21,10 +22,9 @@ class myProperty extends StatefulWidget {
 }
 
 class _myPropertyState extends State<myProperty> {
+  List<dynamic> userData = [];
 
-List<dynamic> userData = [];
-
-void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
+  void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     try {
       userData.clear();
 
@@ -53,7 +53,7 @@ void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     }
   }
 
-Widget _handleListItems(List<dynamic> listItem) {
+  Widget _handleListItems(List<dynamic> listItem) {
     return ListView.separated(
       itemCount: listItem.length,
       separatorBuilder: (BuildContext context, int index) {
@@ -77,7 +77,8 @@ Widget _handleListItems(List<dynamic> listItem) {
     );
   }
 
-Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+  Widget _handleSnapshot(
+      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator());
     }
@@ -94,47 +95,53 @@ Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapsh
       return _handleListItems(userData);
     }
     return Container();
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 127, 166, 233),
-          automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 155),
-            child: const Text('عقاراتي',
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 155),
+          child: const Text('عقاراتي',
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: "Tajawal-b",
               )),
-          ),
-          actions:[
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 28,
-                ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NavigationBarPage()));
+              },
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+                size: 28,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  future: FirebaseFirestore.instance.collection('properties').where('User_id', isEqualTo: nuid).get(),
-                  builder: (
-                    BuildContext context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
-                  ) {
-                    return _handleSnapshot(snapshot);
-                  },
-                ),
+        future: FirebaseFirestore.instance
+            .collection('properties')
+            .where('User_id', isEqualTo: nuid)
+            .get(),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+        ) {
+          return _handleSnapshot(snapshot);
+        },
+      ),
     );
   }
 }
@@ -257,7 +264,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+      MaterialPageRoute(
+          builder: (context) => ApartmentDetailes(apartment: apartment)),
     );
   }, rowItem, apartment);
 }
@@ -283,7 +291,8 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+      MaterialPageRoute(
+          builder: (context) => BuildingDetailes(building: building)),
     );
   }, rowItem, building);
 }
@@ -326,13 +335,18 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
       )),
       child: Container(
         height: 210,
-        decoration: '${type.properties.images.length}' == '0' ? BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), fit: BoxFit.cover),
-        ) : BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
-        ),
+        decoration: '${type.properties.images.length}' == '0'
+            ? BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                    fit: BoxFit.cover),
+              )
+            : BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage('${type.properties.images[0]}'),
+                    fit: BoxFit.cover),
+              ),
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(

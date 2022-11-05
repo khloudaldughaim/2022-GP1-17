@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/updatevilla.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+
+import 'my-property.dart';
 
 class VillaDetailes extends StatelessWidget {
   final Villa villa;
@@ -12,7 +15,6 @@ class VillaDetailes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String ThereIsPool;
     bool pool = villa.pool;
 
@@ -47,42 +49,88 @@ class VillaDetailes extends StatelessWidget {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';
-    }    
-  
+    }
+
     Size size = MediaQuery.of(context).size;
 
-void deleteproperty(String pId) {
-      FirebaseFirestore.instance
-          .collection('properties')
-          .doc(pId)
-          .delete()
-          .then(
-            (doc) => ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(' تم حذف العقار بنجاح!')),
-          ),
-            onError: (e) => print("Error updating document $e"),
-          );
-    } 
-    
+    void deleteproperty(String pId) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text("هل أنت متأكد من حذف العقار"),
+              actions: <Widget>[
+                TextButton(
+                  child: Text("لا"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text("نعم"),
+                  onPressed: () {
+                    try {
+                      FirebaseFirestore.instance
+                          .collection('properties')
+                          .doc(pId)
+                          .delete();
+                      Fluttertoast.showToast(
+                        msg: "تم الحذف بنجاح",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 2,
+                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                        textColor: Color.fromARGB(255, 248, 249, 250),
+                        fontSize: 18.0,
+                      );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => myProperty()));
+                    } catch (e, stack) {
+                      Fluttertoast.showToast(
+                        msg: "هناك خطأ ما",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 5,
+                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                        textColor: Color.fromARGB(255, 252, 253, 255),
+                        fontSize: 18.0,
+                      );
+                    }
+                    ;
+                  },
+                ),
+              ],
+            );
+          });
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             Hero(
-              tag: '${villa.properties.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : villa.properties.images[0], //'${villa.images[0]}'
+              tag: '${villa.properties.images.length}' == '0'
+                  ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
+                  : villa.properties.images[0], //'${villa.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${villa.properties.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${villa.properties.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                decoration: '${villa.properties.images.length}' == '0'
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              '${villa.properties.images[0]}'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -121,13 +169,16 @@ void deleteproperty(String pId) {
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.delete,
-                                    color: const Color.fromARGB(255, 127, 166, 233),
+                                    color: const Color.fromARGB(
+                                        255, 127, 166, 233),
                                     size: 28,
                                   ),
                                 ),
@@ -149,13 +200,16 @@ void deleteproperty(String pId) {
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.edit,
-                                    color: const Color.fromARGB(255, 127, 166, 233),
+                                    color: const Color.fromARGB(
+                                        255, 127, 166, 233),
                                     size: 28,
                                   ),
                                 ),
@@ -174,7 +228,8 @@ void deleteproperty(String pId) {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                              color: const Color.fromARGB(255, 127, 166, 233)
+                                  .withOpacity(0.1),
                               shape: BoxShape.circle,
                             ),
                             child: Center(
@@ -237,7 +292,6 @@ void deleteproperty(String pId) {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
                         Text(
                           'ريال ${villa.properties.price}',
                           style: TextStyle(
@@ -251,7 +305,8 @@ void deleteproperty(String pId) {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(
+                        left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -360,13 +415,15 @@ void deleteproperty(String pId) {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -378,13 +435,15 @@ void deleteproperty(String pId) {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -394,12 +453,19 @@ void deleteproperty(String pId) {
                               Row(
                                 children: [
                                   FutureBuilder<DocumentSnapshot>(
-                                    future: FirebaseFirestore.instance.collection('Standard_user').doc('${villa.properties.User_id}').get(),
+                                    future: FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .doc('${villa.properties.User_id}')
+                                        .get(),
                                     builder: ((context, snapshot) {
-                                      if(snapshot.connectionState == ConnectionState.done){
-                                        Map<String, dynamic> user = snapshot.data!.data() as Map<String, dynamic> ;
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> user =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -419,7 +485,7 @@ void deleteproperty(String pId) {
                                               ),
                                             ),
                                           ],
-                                        ); 
+                                        );
                                       }
                                       return Center(child: Text(''));
                                     }),
@@ -445,15 +511,18 @@ void deleteproperty(String pId) {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
-                          child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    PropInfo(Icons.chair, '${villa.number_of_livingRooms}', 'صالة'),
-                                    PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
-                                    PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
-                                  ],
-                                )),
+                            padding: EdgeInsets.only(
+                                right: 24, left: 24, bottom: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                PropInfo(Icons.chair,
+                                    '${villa.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}',
+                                    'مصعد'),
+                                PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
+                              ],
+                            )),
                         Padding(
                           padding: EdgeInsets.only(left: 275, bottom: 16),
                           child: Text(
@@ -464,9 +533,9 @@ void deleteproperty(String pId) {
                             ),
                           ),
                         ),
-
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(
+                              right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -544,36 +613,36 @@ void deleteproperty(String pId) {
                             ],
                           ),
                         ),
-
-                        '${villa.properties.description}' == '' ?
-                        Container() : 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 245, bottom: 16),
-                          child: Text(
-                            "معلومات إضافية",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${villa.properties.description}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                            ),
-                          ),
-                        ),
-                          ],
-                        ),
-
+                        '${villa.properties.description}' == ''
+                            ? Container()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 245, bottom: 16),
+                                    child: Text(
+                                      "معلومات إضافية",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 5, left: 5, bottom: 16),
+                                    child: Text(
+                                      '${villa.properties.description}',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[500],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -584,67 +653,71 @@ void deleteproperty(String pId) {
                             ),
                           ),
                         ),
-                        '${villa.properties.images.length}' == '0' ?
-                        Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child:  Directionality(
-                              textDirection: TextDirection.rtl, 
-                              child: Text('لا يوجد صور متاحة !',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey[500],
-                                ),
+                        '${villa.properties.images.length}' == '0'
+                            ? Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد صور متاحة !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                          ),
+                                        ))),
                               )
-                            )
-                          ),
-                        ) : 
-                        Container(
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(width: 20),
-                              itemCount: villa.properties.images.length,
-                              itemBuilder: (context, index) => InkWell(
-                                onTap: () => openGallery(villa.properties.images, context),
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  villa.properties.images[index],
+                            : Container(
+                                height: 200,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 24, right: 20),
+                                  child: ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    // shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 20),
+                                    itemCount: villa.properties.images.length,
+                                    itemBuilder: (context, index) => InkWell(
+                                      onTap: () => openGallery(
+                                          villa.properties.images, context),
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        villa.properties.images[index],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Padding(
-                          padding: EdgeInsets.only(left: 315, bottom: 16),
-                          child: Text(
-                            'الموقع',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              padding: EdgeInsets.only(left: 315, bottom: 16),
+                              child: Text(
+                                'الموقع',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${villa.properties.Location}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: 5, left: 5, bottom: 16),
+                              child: Text(
+                                '${villa.properties.Location}',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey[500],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                           ],
                         ),
                       ],
@@ -693,7 +766,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) =>
+    Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),
@@ -718,7 +792,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -738,14 +812,13 @@ class _GalleryWidgetState extends State<GalleryWidget> {
           itemCount: widget.images.length,
           builder: (context, index) {
             final image = widget.images[index];
-    
+
             return PhotoViewGalleryPageOptions(
               imageProvider: NetworkImage(image),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.contained * 4,
             );
           },
-          
         ),
       ),
     );
