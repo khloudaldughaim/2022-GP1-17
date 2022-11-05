@@ -211,6 +211,7 @@ class _HomePageState extends State<HomePage> {
             appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 127, 166, 233),
               title: TextField(
+                textAlign: TextAlign.right,
                 controller: controller,
                 onChanged: (value) {
                   setState(() {
@@ -218,16 +219,22 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  hintText: 'search',
+                  alignLabelWithHint: true,
+                  hintText: 'ابحث عن عقار',
                   hintStyle:
                       TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
                 ),
                 cursorColor: Colors.white,
               ),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
               bottom: const TabBar(
                 tabs: [
                   Tab(

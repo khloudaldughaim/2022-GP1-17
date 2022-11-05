@@ -98,11 +98,21 @@ void deleteproperty(String pId) {
                                 deleteproperty(
                                     '${apartment.properties.property_id}');
                               },
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                                size: 28,
+                              child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                shape: BoxShape.circle,
                               ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.delete,
+                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  size: 28,
+                                ),
+                              ),
+                            ),
                             ),
                             SizedBox(
                               width: 20,
@@ -116,11 +126,21 @@ void deleteproperty(String pId) {
                                           UpdateApartment(apartment: apartment)),
                                 );
                               },
-                              child: Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                                size: 28,
+                              child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                shape: BoxShape.circle,
                               ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.edit,
+                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  size: 28,
+                                ),
+                              ),
+                            ),
                             ),
                           ],
                         ),
@@ -131,10 +151,20 @@ void deleteproperty(String pId) {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.white,
-                            size: 24,
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: const Color.fromARGB(255, 127, 166, 233),
+                                size: 28,
+                              ),
+                            ),
                           ),
                         ),
                       ],

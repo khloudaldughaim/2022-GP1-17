@@ -25,26 +25,49 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // appBar: AppBar(
+        //   // bottom: const
+        //   title: Center(
+        //     child: Text("حسابي",
+        //         style: TextStyle(
+        //           fontSize: 17,
+        //           fontFamily: "Tajawal-m",
+        //         )),
+        //   ),
+        //   actions: [
+        //     new IconButton(
+        //         icon: new Icon(Icons.logout),
+        //         onPressed: () {
+        //           FirebaseAuth.instance.signOut().then((value) =>
+        //               Navigator.push(context,
+        //                   MaterialPageRoute(builder: (context) => LogIn())));
+        //         })
+        //   ],
+        //   toolbarHeight: 60,
+        //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
+        // ),
+
         appBar: AppBar(
-          // bottom: const
-          title: Center(
+          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 155),
             child: Text("حسابي               ",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: "Tajawal-m",
-                )),
+              style: TextStyle(
+                fontSize: 17,
+                fontFamily: "Tajawal-m",
+              )),
           ),
-          actions: [
+          actions:[
             new IconButton(
-                icon: new Icon(Icons.logout),
-                onPressed: () {
-                  FirebaseAuth.instance.signOut().then((value) =>
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LogIn())));
-                })
+              icon: new Icon(Icons.logout),
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) =>
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LogIn())));
+              })
           ],
           toolbarHeight: 60,
-          backgroundColor: Color.fromARGB(255, 127, 166, 233),
         ),
         body: SafeArea(
             child: SingleChildScrollView(

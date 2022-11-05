@@ -70,18 +70,38 @@ class LandDetailes extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.flag_outlined,
-                              color: Colors.white,
-                              size: 28,
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.flag_outlined,
+                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  size: 28,
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: 20,
                             ),
-                            Icon(
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Icon(
                               Icons.favorite_outline,
-                              color: Colors.white,
-                              size: 28,
+                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  size: 28,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -92,10 +112,20 @@ class LandDetailes extends StatelessWidget {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
                             Icons.arrow_forward_ios,
-                            color: Colors.white,
-                            size: 24,
+                                color: const Color.fromARGB(255, 127, 166, 233),
+                                size: 28,
+                              ),
+                            ),
                           ),
                         ),
                       ],

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/registration/welcom_page.dart';
 import '../pages/navigationbar.dart';
 
 class SignUp extends StatefulWidget {
@@ -49,12 +50,38 @@ class _SignUpState extends State<SignUp> {
                         SizedBox(
                           height: 50,
                         ),
-                        Text(
-                          "إنشاء حساب",
-                          style: TextStyle(
-                              fontSize: 26,
-                              fontFamily: "Tajawal-b",
-                              color: Color.fromARGB(255, 127, 166, 233)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "إنشاء حساب",
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  fontFamily: "Tajawal-b",
+                                  color: Color.fromARGB(255, 127, 166, 233)),
+                            ),
+                            SizedBox(
+                              width: 80,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 20.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Welcome()),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color.fromARGB(255, 127, 166, 233),
+                                  size: 28,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 8,

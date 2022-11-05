@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/registration/welcom_page.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -50,12 +51,38 @@ class _LogInState extends State<LogIn> {
                             SizedBox(
                               height: 70,
                             ),
-                            Text(
-                              "تسجيل الدخول ",
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontFamily: "Tajawal-b",
-                                  color: Color.fromARGB(255, 127, 166, 233)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "تسجيل الدخول ",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontFamily: "Tajawal-b",
+                                      color: Color.fromARGB(255, 127, 166, 233)),
+                                ),
+                                SizedBox(
+                                  width: 45,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 20.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Welcome()),
+                                      );
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                      size: 28,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 40,

@@ -28,9 +28,33 @@ class _forgetPasswordState extends State<forgetPassword> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 127, 166, 233),
-            elevation: 0,
+          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 115),
+            child: const Text('استعادة كلمة المرور',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: "Tajawal-b",
+              )),
           ),
+          actions:[
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+            ),
+          ],
+        ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

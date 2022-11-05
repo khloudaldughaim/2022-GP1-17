@@ -100,13 +100,32 @@ Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapsh
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 127, 166, 233),
-        title: const Text('عقارتي',
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: "Tajawal-b",
-            )),
-      ),
+          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 155),
+            child: const Text('عقاراتي',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: "Tajawal-b",
+              )),
+          ),
+          actions:[
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+            ),
+          ],
+        ),
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   future: FirebaseFirestore.instance.collection('properties').where('User_id', isEqualTo: nuid).get(),
                   builder: (
