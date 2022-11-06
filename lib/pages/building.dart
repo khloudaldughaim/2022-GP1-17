@@ -34,7 +34,7 @@ class Building {
       pool: map['pool'] ?? false,
       property_age: map['property_age']?.toInt() ?? 0,
       number_of_apartment: map['number_of_apartment']?.toInt() ?? 0,
-      number_of_floor: map['number_of_floors']?.toInt() ?? 0,
+      number_of_floor: map['number_of_floor']?.toInt() ?? 0,
     );
   }
 }

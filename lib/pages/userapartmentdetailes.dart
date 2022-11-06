@@ -254,6 +254,7 @@ class ApartmentDetailes extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                       ),
@@ -272,6 +273,7 @@ class ApartmentDetailes extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                         Text(
@@ -281,6 +283,7 @@ class ApartmentDetailes extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                       ],
@@ -306,7 +309,9 @@ class ApartmentDetailes extends StatelessWidget {
                               '${apartment.properties.neighborhood} ، ${apartment.properties.city}',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                           ],
@@ -325,7 +330,9 @@ class ApartmentDetailes extends StatelessWidget {
                               '${apartment.number_of_room}',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                             SizedBox(
@@ -343,7 +350,9 @@ class ApartmentDetailes extends StatelessWidget {
                               '${apartment.number_of_bathroom}',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                             SizedBox(
@@ -358,7 +367,9 @@ class ApartmentDetailes extends StatelessWidget {
                               '${apartment.properties.space} متر ² ',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                           ],
@@ -454,6 +465,7 @@ class ApartmentDetailes extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-m",
                                               ),
                                             ),
                                             SizedBox(
@@ -464,6 +476,8 @@ class ApartmentDetailes extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.grey[500],
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-m",
                                               ),
                                             ),
                                           ],
@@ -513,6 +527,7 @@ class ApartmentDetailes extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           ),
                         ),
@@ -529,7 +544,9 @@ class ApartmentDetailes extends StatelessWidget {
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey[500],
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -540,7 +557,9 @@ class ApartmentDetailes extends StatelessWidget {
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey[500],
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -553,7 +572,9 @@ class ApartmentDetailes extends StatelessWidget {
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey[500],
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -564,7 +585,9 @@ class ApartmentDetailes extends StatelessWidget {
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey[500],
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -577,7 +600,9 @@ class ApartmentDetailes extends StatelessWidget {
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey[500],
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -588,7 +613,9 @@ class ApartmentDetailes extends StatelessWidget {
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.grey[500],
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -603,12 +630,13 @@ class ApartmentDetailes extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding:
-                                        EdgeInsets.only(left: 245, bottom: 16),
+                                        EdgeInsets.only(left: 232, bottom: 16),
                                     child: Text(
                                       "معلومات إضافية",
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-m",
                                       ),
                                     ),
                                   ),
@@ -620,7 +648,9 @@ class ApartmentDetailes extends StatelessWidget {
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                         fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                         color: Colors.grey[500],
+                                        fontFamily: "Tajawal-l",
                                       ),
                                     ),
                                   ),
@@ -633,6 +663,7 @@ class ApartmentDetailes extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           ),
                         ),
@@ -649,7 +680,9 @@ class ApartmentDetailes extends StatelessWidget {
                                           'لا يوجد صور متاحة !',
                                           style: TextStyle(
                                             fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.grey[500],
+                                            fontFamily: "Tajawal-l",
                                           ),
                                         ))),
                               )
@@ -687,6 +720,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
                                 ),
                               ),
                             ),
@@ -698,7 +732,9 @@ class ApartmentDetailes extends StatelessWidget {
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.grey[500],
+                                  fontFamily: "Tajawal-l",
                                 ),
                               ),
                             ),
@@ -734,6 +770,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
           color: Color.fromARGB(255, 127, 166, 233),
           fontSize: 10,
           fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -743,7 +780,9 @@ Widget PropInfo(IconData iconData, String text, String label) {
         text,
         style: TextStyle(
           color: Colors.grey[500],
+          fontWeight: FontWeight.bold,
           fontSize: 14,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],

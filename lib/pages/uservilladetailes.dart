@@ -272,6 +272,7 @@ class VillaDetailes extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                       ),
@@ -290,6 +291,7 @@ class VillaDetailes extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                         Text(
@@ -299,6 +301,7 @@ class VillaDetailes extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                       ],
@@ -325,6 +328,8 @@ class VillaDetailes extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                           ],
@@ -344,6 +349,8 @@ class VillaDetailes extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                             SizedBox(
@@ -362,6 +369,8 @@ class VillaDetailes extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                             SizedBox(
@@ -377,6 +386,8 @@ class VillaDetailes extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                           ],
@@ -472,6 +483,7 @@ class VillaDetailes extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-m",
                                               ),
                                             ),
                                             SizedBox(
@@ -482,6 +494,8 @@ class VillaDetailes extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.grey[500],
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-m",
                                               ),
                                             ),
                                           ],
@@ -530,6 +544,7 @@ class VillaDetailes extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           ),
                         ),
@@ -547,6 +562,8 @@ class VillaDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -558,6 +575,8 @@ class VillaDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -571,6 +590,8 @@ class VillaDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -582,6 +603,8 @@ class VillaDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -595,6 +618,8 @@ class VillaDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -606,6 +631,8 @@ class VillaDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -620,12 +647,13 @@ class VillaDetailes extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding:
-                                        EdgeInsets.only(left: 245, bottom: 16),
+                                        EdgeInsets.only(left: 232, bottom: 16),
                                     child: Text(
                                       "معلومات إضافية",
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-m",
                                       ),
                                     ),
                                   ),
@@ -638,6 +666,8 @@ class VillaDetailes extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey[500],
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-l",
                                       ),
                                     ),
                                   ),
@@ -650,6 +680,7 @@ class VillaDetailes extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           ),
                         ),
@@ -667,6 +698,8 @@ class VillaDetailes extends StatelessWidget {
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
                                           ),
                                         ))),
                               )
@@ -703,6 +736,7 @@ class VillaDetailes extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
                                 ),
                               ),
                             ),
@@ -715,6 +749,8 @@ class VillaDetailes extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[500],
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-l",
                                 ),
                               ),
                             ),
@@ -750,6 +786,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
           color: Color.fromARGB(255, 127, 166, 233),
           fontSize: 10,
           fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -759,7 +796,9 @@ Widget PropInfo(IconData iconData, String text, String label) {
         text,
         style: TextStyle(
           color: Colors.grey[500],
+          fontWeight: FontWeight.bold,
           fontSize: 14,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],

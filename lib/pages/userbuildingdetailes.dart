@@ -138,6 +138,19 @@ class BuildingDetailes extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              stops: [0.4, 1.0],
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.7),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -267,6 +280,7 @@ class BuildingDetailes extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                       ),
@@ -285,6 +299,7 @@ class BuildingDetailes extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                         Text(
@@ -294,6 +309,7 @@ class BuildingDetailes extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
                           ),
                         ),
                       ],
@@ -320,6 +336,8 @@ class BuildingDetailes extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                           ],
@@ -336,6 +354,8 @@ class BuildingDetailes extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
                               ),
                             ),
                           ],
@@ -431,6 +451,7 @@ class BuildingDetailes extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-m",
                                               ),
                                             ),
                                             SizedBox(
@@ -441,6 +462,8 @@ class BuildingDetailes extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.grey[500],
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-m",
                                               ),
                                             ),
                                           ],
@@ -487,6 +510,7 @@ class BuildingDetailes extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           ),
                         ),
@@ -504,6 +528,8 @@ class BuildingDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -515,6 +541,8 @@ class BuildingDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -528,6 +556,8 @@ class BuildingDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -539,6 +569,8 @@ class BuildingDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -552,6 +584,8 @@ class BuildingDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                   SizedBox(
@@ -563,6 +597,8 @@ class BuildingDetailes extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
                                     ),
                                   ),
                                 ],
@@ -577,12 +613,13 @@ class BuildingDetailes extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding:
-                                        EdgeInsets.only(left: 245, bottom: 16),
+                                        EdgeInsets.only(left: 232, bottom: 16),
                                     child: Text(
                                       "معلومات إضافية",
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-m",
                                       ),
                                     ),
                                   ),
@@ -595,6 +632,8 @@ class BuildingDetailes extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey[500],
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-l",
                                       ),
                                     ),
                                   ),
@@ -607,6 +646,7 @@ class BuildingDetailes extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           ),
                         ),
@@ -624,6 +664,8 @@ class BuildingDetailes extends StatelessWidget {
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
                                           ),
                                         ))),
                               )
@@ -661,6 +703,7 @@ class BuildingDetailes extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
                                 ),
                               ),
                             ),
@@ -673,6 +716,8 @@ class BuildingDetailes extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[500],
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-l",
                                 ),
                               ),
                             ),
@@ -708,6 +753,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
           color: Color.fromARGB(255, 127, 166, 233),
           fontSize: 10,
           fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -718,6 +764,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
         style: TextStyle(
           color: Colors.grey[500],
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],
