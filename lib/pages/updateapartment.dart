@@ -201,12 +201,12 @@ class _UpdateApartmentState extends State<UpdateApartment> {
           title: Padding(
             padding: const EdgeInsets.only(left: 145),
             child: const Text('تحديث عقار',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: "Tajawal-b",
-              )),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Tajawal-b",
+                )),
           ),
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -939,11 +939,10 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             bottom: MediaQuery.of(context).size.width / 50,
                           ),
                           child: Text(
-                            ":الصور التي تم رفعها",
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF374F67),
+                            ' الصور التي تم رفعها: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
                             ),
                           ),
                         ),
@@ -1196,7 +1195,43 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                         padding: EdgeInsets.symmetric(horizontal: 90),
                         child: ElevatedButton(
                           onPressed: () async {
-                            updateData(selectedFiles);
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content:
+                                        Text("هل أنت متأكد من تحديث العقار؟"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text("لا"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("نعم"),
+                                        onPressed: () {
+                                          try {
+                                            updateData(selectedFiles);
+                                          } catch (e, stack) {
+                                            Fluttertoast.showToast(
+                                              msg: "هناك خطأ ما",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 127, 166, 233),
+                                              textColor: Color.fromARGB(
+                                                  255, 252, 253, 255),
+                                              fontSize: 18.0,
+                                            );
+                                          }
+                                          ;
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(

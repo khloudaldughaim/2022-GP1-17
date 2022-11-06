@@ -541,7 +541,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         )),
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 30,
                                   ),
                                   type == 3
                                       ? Container(
@@ -770,7 +770,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               ))),
                                     ],
                                   ),
-                                  SizedBox(height: 25),
+                                  SizedBox(height: 40),
                                   //  price
                                   Row(
                                     crossAxisAlignment:
@@ -830,6 +830,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   SizedBox(
                                     height: 20,
+                                  ),
+                                  Text(
+                                      ' *إذا كان العقار للإيجار الرجاء إدخال الإيجار الشهري',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontFamily: "Tajawal-b",
+                                          color: Colors.grey),
+                                      textDirection: TextDirection.rtl),
+                                  SizedBox(
+                                    height: 30,
                                   ),
                                   //city
                                   Container(
@@ -1009,7 +1019,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 20,
                                   ),
                                   Row(
                                       crossAxisAlignment:
