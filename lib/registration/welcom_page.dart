@@ -102,7 +102,7 @@ class Welcome extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/homepage");
+                          Navigator.pushNamed(context, "/NavigationBar");
                         },
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(

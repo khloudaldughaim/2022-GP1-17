@@ -13,6 +13,7 @@ import 'package:search_map_place_updated/search_map_place_updated.dart';
 import 'package:uuid/uuid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../registration/log_in.dart';
 import 'my-property.dart';
 
 class AddPage extends StatefulWidget {
@@ -40,7 +41,46 @@ class _AddPageState extends State<AddPage> {
         toolbarHeight: 60,
         backgroundColor: Color.fromARGB(255, 127, 166, 233),
       ),
-      body: const MyCustomForm(),
+      body: FirebaseAuth.instance.currentUser == null
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                SizedBox(height: 90),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 79),
+                    child: Text(
+                      "عذراً لابد من تسجيل الدخول ",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: "Tajawal-b",
+                          color: Color.fromARGB(255, 127, 166, 233)),
+                      textAlign: TextAlign.center,
+                    )),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LogIn()));
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 127, 166, 233)),
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(27))),
+                  ),
+                  child: Text(
+                    "تسجيل الدخول",
+                    style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+                  ),
+                )
+              ],
+            )
+          : const MyCustomForm(),
     );
   }
 }
@@ -181,10 +221,9 @@ class MyCustomFormState extends State<MyCustomForm> {
             var imageUrl = await uploadFile(selectedFiles[i], User_id);
             arrImage.add(imageUrl.toString());
           }
-
           _formKey.currentState!.save();
           property_id = Uuid().v4();
-          if (type1 == 'فيلا')
+          if (type1 == 'فيلا') {
             FirebaseFirestore.instance
                 .collection('properties')
                 .doc(property_id)
@@ -211,8 +250,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               'Location': location.text,
               'description': description.text
             });
+            FirebaseFirestore.instance
+                .collection('Standard_user')
+                .doc(User_id)
+                .update({
+              "ArrayOfProperty": FieldValue.arrayUnion([property_id])
+            });
+          }
 
-          if (type1 == 'شقة')
+          if (type1 == 'شقة') {
             FirebaseFirestore.instance
                 .collection('properties')
                 .doc(property_id)
@@ -238,8 +284,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               'Location': location.text,
               'description': description.text
             });
+            FirebaseFirestore.instance
+                .collection('Standard_user')
+                .doc(User_id)
+                .update({
+              "ArrayOfProperty": FieldValue.arrayUnion([property_id])
+            });
+          }
 
-          if (type1 == 'ارض')
+          if (type1 == 'ارض') {
             FirebaseFirestore.instance
                 .collection('properties')
                 .doc(property_id)
@@ -259,8 +312,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               'Location': location.text,
               'description': description.text
             });
+            FirebaseFirestore.instance
+                .collection('Standard_user')
+                .doc(User_id)
+                .update({
+              "ArrayOfProperty": FieldValue.arrayUnion([property_id])
+            });
+          }
 
-          if (type1 == 'عمارة')
+          if (type1 == 'عمارة') {
             FirebaseFirestore.instance
                 .collection('properties')
                 .doc(property_id)
@@ -284,6 +344,13 @@ class MyCustomFormState extends State<MyCustomForm> {
               'Location': location.text,
               'description': description.text
             });
+            FirebaseFirestore.instance
+                .collection('Standard_user')
+                .doc(User_id)
+                .update({
+              "ArrayOfProperty": FieldValue.arrayUnion([property_id])
+            });
+          }
 
           Fluttertoast.showToast(
             msg: "تم اضافة العقار بنجاح",
