@@ -70,8 +70,7 @@ class _SignUpState extends State<SignUp> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            Welcome()),
+                                        builder: (context) => Welcome()),
                                   );
                                 },
                                 child: Icon(
@@ -120,6 +119,9 @@ class _SignUpState extends State<SignUp> {
                                   if (value!.isEmpty ||
                                       _usernameController.text.trim() == "") {
                                     return "الأسم مطلوب ";
+                                  }
+                                  if (!RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                                    return 'الرجاء إدخال أحرف فقط';
                                   } else if (value.length < 2) {
                                     return "الأسم يجب ان يكون خانتين فأكثر ";
                                   }
@@ -161,7 +163,7 @@ class _SignUpState extends State<SignUp> {
                                   } else if (!RegExp(
                                           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                                       .hasMatch(value)) {
-                                    return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@gmail.com)';
+                                    return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@exampel.com)';
                                   }
                                 },
                               ),

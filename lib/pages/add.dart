@@ -759,6 +759,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                             if (value == null ||
                                                                 value.isEmpty) {
                                                               return 'الرجاء عدم ترك الخانة فارغة!';
+                                                            } else if (value
+                                                                    .length >
+                                                                3) {
+                                                              return 'الرقم يجب الا يزيد عن 3 خانات';
                                                             }
                                                             if (!RegExp(
                                                                     r'[0-9]')
@@ -826,6 +830,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                     if (value == null ||
                                                         value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    } else if (value.length >
+                                                        6) {
+                                                      return 'الرقم يجب الا يزيد عن 6 خانات';
                                                     }
                                                     if (!RegExp(r'[0-9]')
                                                         .hasMatch(value)) {
@@ -1022,6 +1029,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                     if (value == null ||
                                                         value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                    if (!RegExp(r'[a-zA-Z]')
+                                                        .hasMatch(value)) {
+                                                      return 'الرجاء إدخال أحرف فقط';
                                                     }
                                                   },
                                                 ),

@@ -59,7 +59,8 @@ class _LogInState extends State<LogIn> {
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontFamily: "Tajawal-b",
-                                      color: Color.fromARGB(255, 127, 166, 233)),
+                                      color:
+                                          Color.fromARGB(255, 127, 166, 233)),
                                 ),
                                 SizedBox(
                                   width: 45,
@@ -71,8 +72,7 @@ class _LogInState extends State<LogIn> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                Welcome()),
+                                            builder: (context) => Welcome()),
                                       );
                                     },
                                     child: Icon(
@@ -127,10 +127,6 @@ class _LogInState extends State<LogIn> {
                                       if (value!.isEmpty ||
                                           email.text.trim() == "") {
                                         return "البريد الألكتروني مطلوب ";
-                                      } else if (!RegExp(
-                                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                          .hasMatch(value)) {
-                                        return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@gmail.com)';
                                       }
                                     },
                                   ),
@@ -145,6 +141,8 @@ class _LogInState extends State<LogIn> {
                                   child: TextFormField(
                                     obscureText: true,
                                     controller: password,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.lock,
@@ -168,30 +166,9 @@ class _LogInState extends State<LogIn> {
                                               style: BorderStyle.none)),
                                     ),
                                     validator: (value) {
-                                      RegExp uper = RegExp(r"(?=.*[A-Z])");
-                                      RegExp small = RegExp(r"(?=.*[a-z])");
                                       if (value!.isEmpty ||
                                           password.text.trim() == "") {
-                                        return "كلمة السر مطلوبة";
-                                      } else if (value.length < 8 &&
-                                          !uper.hasMatch(value) &&
-                                          !small.hasMatch(value)) {
-                                        return "ادخل كلمة مرور صالحة ";
-                                      } else if (value.length < 8 &&
-                                          !uper.hasMatch(value)) {
-                                        return "ادخل كلمة مرور صالحة";
-                                      } else if (value.length < 8 &&
-                                          !small.hasMatch(value)) {
-                                        return "ادخل كلمة مرور صالحة";
-                                      } else if (!uper.hasMatch(value) &&
-                                          !small.hasMatch(value)) {
-                                        return "ادخل كلمة مرور صالحة";
-                                      } else if (value.length < 8) {
-                                        return "ادخل كلمة مرور صالحة";
-                                      } else if (!uper.hasMatch(value)) {
-                                        return "ادخل كلمة مرور صالحة";
-                                      } else if (!small.hasMatch(value)) {
-                                        return "ادخل كلمة مرور صالحة";
+                                        return "كلمة السر مطلوبة ";
                                       }
                                     },
                                   ),
