@@ -590,7 +590,7 @@ class VillaDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${villa.property_age}',
+                                    '${villa.number_of_floor}',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,

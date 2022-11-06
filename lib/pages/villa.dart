@@ -44,7 +44,7 @@ class Villa {
       pool: map['pool'] ?? false,
       basement: map['basement'] ?? false,
       elevator: map['elevator'] ?? false,
-      number_of_floor: map['number_of_floors']?.toInt() ?? 0,
+      number_of_floor: map['number_of_floor']?.toInt() ?? 0,
       number_of_livingRooms: map['number_of_livingRooms']?.toInt() ?? 0,
       property_age: map['property_age']?.toInt() ?? 0,
       properties: Property.fromMap(map),

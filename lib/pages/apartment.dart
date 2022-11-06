@@ -39,7 +39,7 @@ class Apartment {
       number_of_bathroom: map['number_of_bathroom']?.toInt() ?? 0,
       number_of_room: map['number_of_room']?.toInt() ?? 0,
       in_floor: map['in_floor'] ?? '',
-      number_of_floor: map['number_of_floors']?.toInt() ?? 0,
+      number_of_floor: map['number_of_floor']?.toInt() ?? 0,
       number_of_livingRooms: map['number_of_livingRooms']?.toInt() ?? 0,
       elevator: map['elevator'] ?? false,
       property_age: map['property_age']?.toInt() ?? 0,
