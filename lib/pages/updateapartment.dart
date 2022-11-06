@@ -159,7 +159,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
             'neighborhood': neighborhoodController.text,
             'images': arrImage,
             'property_age': property_age,
-            'number_of_floors': number_of_floors,
+            'number_of_floor': number_of_floors,
             'elevator': elevator,
             'number_of_room': number_of_room,
             'number_of_livingRooms': number_of_livingRooms,
@@ -287,46 +287,46 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                       ),
                       SizedBox(height: 20),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(' رقم الدور: ',
+                          Container(
+                            width: 100,
+                            child: Text(
+                              ' *رقم الدور: ',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontFamily: "Tajawal-b",
                               ),
-                              textDirection: TextDirection.rtl),
-                          Container(
-                            margin: const EdgeInsets.all(10),
+                            ),
                           ),
-                          Padding(padding: const EdgeInsets.all(10.0)),
-                          Row(
-                            children: [
-                              Container(
-                                  padding: EdgeInsets.only(top: 16, right: 9),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(7),
-                                      border: Border.all(
-                                          color: Colors.grey.shade300,
-                                          width: 1)),
-                                  height: 40,
-                                  width: 150,
-                                  child: TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'الرجاء عدم ترك الخانة فارغة!';
-                                      }
-                                      if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                        return 'الرجاء إدخال أرقام فقط';
-                                      }
-                                    },
-                                    onSaved: (val) {
-                                      in_floor = val!;
-                                    },
-                                  ))
-                            ],
+                          Expanded(
+                            child: TextFormField(
+                              controller: in_floorController,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              decoration: InputDecoration(
+                                hintText: '5',
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.all(6),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 0.0,
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'الرجاء عدم ترك الخانة فارغة!';
+                                }
+                                if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                  return 'الرجاء إدخال أرقام فقط';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ],
                       ),

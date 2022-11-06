@@ -1030,7 +1030,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
-                                                    if (!RegExp(r'[a-zA-Z]')
+                                                    if (RegExp(r'[0-9]')
                                                         .hasMatch(value)) {
                                                       return 'الرجاء إدخال أحرف فقط';
                                                     }

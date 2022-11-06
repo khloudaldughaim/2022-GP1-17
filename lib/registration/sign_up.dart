@@ -120,7 +120,7 @@ class _SignUpState extends State<SignUp> {
                                       _usernameController.text.trim() == "") {
                                     return "الأسم مطلوب ";
                                   }
-                                  if (!RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                                  if (RegExp(r'[0-9]').hasMatch(value)) {
                                     return 'الرجاء إدخال أحرف فقط';
                                   } else if (value.length < 2) {
                                     return "الأسم يجب ان يكون خانتين فأكثر ";
