@@ -390,7 +390,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                     color: Color.fromARGB(255, 127, 166, 233),
                   ),
                 ),
-                width: 80,
+                width: 85,
                 padding: EdgeInsets.symmetric(vertical: 4),
                 child: Center(
                     child: '${type.properties.classification}' == 'للإيجار'

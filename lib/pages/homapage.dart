@@ -290,6 +290,8 @@ Widget _buildVillaItem(Villa villa, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -308,6 +310,8 @@ Widget _buildVillaItem(Villa villa, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -323,6 +327,8 @@ Widget _buildVillaItem(Villa villa, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],
@@ -352,6 +358,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -370,6 +378,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
       SizedBox(
@@ -385,6 +395,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],
@@ -411,6 +423,8 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],
@@ -438,6 +452,8 @@ Widget _buildLandItem(Land land, BuildContext context) {
         style: TextStyle(
           color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
         ),
       ),
     ],
@@ -502,7 +518,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                     color: Color.fromARGB(255, 127, 166, 233),
                   ),
                 ),
-                width: 80,
+                width: 85,
                 padding: EdgeInsets.symmetric(vertical: 4),
                 child: Center(
                     child: '${type.properties.classification}' == 'للإيجار'
@@ -512,6 +528,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           )
                         : Text(
@@ -520,6 +537,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
                           )),
               ),
@@ -537,6 +555,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          fontFamily: "Tajawal-l",
                         ),
                       ),
                       Text(
@@ -546,6 +565,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
+                          fontFamily: "Tajawal-l",
                         ),
                       ),
                     ],
@@ -571,6 +591,8 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-l",
                             ),
                           ),
                         ],
