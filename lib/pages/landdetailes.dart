@@ -96,8 +96,7 @@ class LandDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233)
-                                    .withOpacity(0.1),
+                                color: Color.fromARGB(255, 226, 237, 255),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
@@ -116,8 +115,7 @@ class LandDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233)
-                                    .withOpacity(0.1),
+                                color: Color.fromARGB(255, 226, 237, 255),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
@@ -142,8 +140,7 @@ class LandDetailes extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 127, 166, 233)
-                                  .withOpacity(0.1),
+                              color: Color.fromARGB(255, 226, 237, 255),
                               shape: BoxShape.circle,
                             ),
                             child: Center(
