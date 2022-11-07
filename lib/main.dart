@@ -9,6 +9,7 @@ import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/registration/forgetPassword.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import 'package:nozol_application/registration/sign_up.dart';
+import 'package:nozol_application/registration/splash.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
 
 void main() async {
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(initialRoute: '/', routes: {
-      '/': (context) => const Welcome(),
+      '/': (context) => const Splash(),
+      '/welcome': (context) => const Welcome(),
       '/signup': (context) => const SignUp(),
       '/login': (context) => const LogIn(),
       '/homepage': (context) => const HomePage(),
