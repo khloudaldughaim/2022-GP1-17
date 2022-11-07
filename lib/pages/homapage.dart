@@ -325,10 +325,15 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color.fromARGB(255, 14, 41, 99))
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white)
+                  ),
                   alignLabelWithHint: true,
-                  hintText: 'ابحث عن عقار',
-                  hintStyle:
-                      TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
+                  hintText:'ابحث عن الحي أو المدينة أو نوع العقار',
+                  hintStyle: TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
                 ),
                 cursorColor: Colors.white,
               ),
@@ -342,6 +347,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
               bottom: const TabBar(
+                labelStyle: TextStyle( fontFamily: "Tajawal-b", fontWeight: FontWeight.w100,),
+                indicatorColor: Colors.white,
                 tabs: [
                   Tab(
                     text: 'الكل',
