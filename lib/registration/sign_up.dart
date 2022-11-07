@@ -242,12 +242,14 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 validator: (value) {
                                   RegExp uper = RegExp(r"(?=.*[A-Z])");
+                                  RegExp numb = RegExp(r"[0-9]");
                                   RegExp small = RegExp(r"(?=.*[a-z])");
                                   if (value!.isEmpty ||
                                       _passwordController.text.trim() == "") {
                                     return "كلمة السر مطلوبة";
                                   } else if (value.length < 8 &&
                                       !uper.hasMatch(value) &&
+                                      !numb.hasMatch(value) &&
                                       !small.hasMatch(value)) {
                                     return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ";
                                   } else if (value.length < 8 &&
@@ -265,6 +267,8 @@ class _SignUpState extends State<SignUp> {
                                     return "كلمة المرور يجب ان تحتوي على احرف كبيرة";
                                   } else if (!small.hasMatch(value)) {
                                     return "كلمة المرور يجب ان تحتوي على احرف صغيرة";
+                                  } else if (!numb.hasMatch(value)) {
+                                    return "كلمة المرور يجب ان تحتوي على أرقام ";
                                   }
                                 },
                               ),
