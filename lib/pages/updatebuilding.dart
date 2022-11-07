@@ -37,7 +37,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
   late String type;
   final _formKey = GlobalKey<FormState>();
   late String property_id;
-  classification? _class = classification.rent;
+  classification? _class;
   late String classification1;
   late num property_age;
   choice? _elevatorCH;
@@ -83,6 +83,12 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
     number_of_floors = widget.building.number_of_floor;
     number_of_apartments = widget.building.number_of_apartment;
     arrImage = widget.building.properties.images;
+
+    if (classification1 == 'للإيجار') {
+      _class = classification.rent;
+    } else {
+      _class = classification.sale;
+    }
 
     if (widget.building.pool == false) {
       _poolCH = choice.no;

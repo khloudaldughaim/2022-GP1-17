@@ -11,16 +11,15 @@ class LandDetailes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String Classification;
     String classification = land.properties?.classification ?? "";
 
-    if (classification == 'rent') {
+    if (classification == 'للإيجار') {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';
-    }    
-  
+    }
+
     Size size = MediaQuery.of(context).size;
 
     return SafeArea(
@@ -28,41 +27,51 @@ class LandDetailes extends StatelessWidget {
         body: Stack(
           children: [
             Hero(
-              tag: '${land.properties!.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : land.properties!.images[0], //'${land.images[0]}'
+              tag: '${land.properties!.images.length}' == '0'
+                  ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
+                  : land.properties!.images[0], //'${land.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${land.properties!.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${land.properties!.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                decoration: '${land.properties!.images.length}' == '0'
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              '${land.properties!.images[0]}'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 child: Container(
-                  decoration: '${land.properties!.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${land.properties!.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              stops: [0.4, 1.0],
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withOpacity(0.7),
+                  decoration: '${land.properties!.images.length}' == '0'
+                      ? BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                '${land.properties!.images[0]}'), //'${villa.images[0]}'
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: [0.4, 1.0],
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.7),
                         ],
                       ),
                     ),
@@ -87,13 +96,15 @@ class LandDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                color: const Color.fromARGB(255, 127, 166, 233)
+                                    .withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child: Icon(
                                   Icons.flag_outlined,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -105,13 +116,15 @@ class LandDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                color: const Color.fromARGB(255, 127, 166, 233)
+                                    .withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child: Icon(
-                              Icons.favorite_outline,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  Icons.favorite_outline,
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -129,12 +142,13 @@ class LandDetailes extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                              color: const Color.fromARGB(255, 127, 166, 233)
+                                  .withOpacity(0.1),
                               shape: BoxShape.circle,
                             ),
                             child: Center(
                               child: Icon(
-                            Icons.arrow_forward_ios,
+                                Icons.arrow_forward_ios,
                                 color: const Color.fromARGB(255, 127, 166, 233),
                                 size: 28,
                               ),
@@ -194,7 +208,6 @@ class LandDetailes extends StatelessWidget {
                             fontFamily: "Tajawal-m",
                           ),
                         ),
-
                         Text(
                           'ريال ${land.properties!.price}',
                           style: TextStyle(
@@ -209,7 +222,8 @@ class LandDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(
+                        left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -286,13 +300,15 @@ class LandDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -304,13 +320,15 @@ class LandDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -320,12 +338,19 @@ class LandDetailes extends StatelessWidget {
                               Row(
                                 children: [
                                   FutureBuilder<DocumentSnapshot>(
-                                    future: FirebaseFirestore.instance.collection('Standard_user').doc('${land.properties!.User_id}').get(),
+                                    future: FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .doc('${land.properties!.User_id}')
+                                        .get(),
                                     builder: ((context, snapshot) {
-                                      if(snapshot.connectionState == ConnectionState.done){
-                                        Map<String, dynamic> user = snapshot.data!.data() as Map<String, dynamic> ;
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> user =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -348,7 +373,7 @@ class LandDetailes extends StatelessWidget {
                                               ),
                                             ),
                                           ],
-                                        ); 
+                                        );
                                       }
                                       return Center(child: Text(''));
                                     }),
@@ -374,11 +399,12 @@ class LandDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
-                          child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [],
-                                )),
+                            padding: EdgeInsets.only(
+                                right: 24, left: 24, bottom: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [],
+                            )),
                         Padding(
                           padding: EdgeInsets.only(left: 275, bottom: 16),
                           child: Text(
@@ -390,9 +416,9 @@ class LandDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(
+                              right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -426,39 +452,39 @@ class LandDetailes extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                        '${land.properties!.description}' == '' ?
-                        Container() : 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 232, bottom: 16),
-                          child: Text(
-                            "معلومات إضافية",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${land.properties!.description}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ),
-                          ],
-                        ),
-
+                        '${land.properties!.description}' == ''
+                            ? Container()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 232, bottom: 16),
+                                    child: Text(
+                                      "معلومات إضافية",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-m",
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 5, left: 5, bottom: 16),
+                                    child: Text(
+                                      '${land.properties!.description}',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[500],
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-l",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -470,72 +496,76 @@ class LandDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${land.properties!.images.length}' == '0' ?
-                        Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child:  Directionality(
-                              textDirection: TextDirection.rtl, 
-                              child: Text('لا يوجد صور متاحة !',
+                        '${land.properties!.images.length}' == '0'
+                            ? Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد صور متاحة !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                              )
+                            : Container(
+                                height: 200,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 24, right: 20),
+                                  child: ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    // shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 20),
+                                    itemCount: land.properties!.images.length,
+                                    itemBuilder: (context, index) => InkWell(
+                                      onTap: () => openGallery(
+                                          land.properties!.images, context),
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        land.properties!.images[index],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 315, bottom: 16),
+                              child: Text(
+                                'الموقع',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: 5, left: 5, bottom: 16),
+                              child: Text(
+                                '${land.properties!.Location}',
+                                textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[500],
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Tajawal-l",
                                 ),
-                              )
-                            )
-                          ),
-                        ) : 
-                        Container(
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(width: 20),
-                              itemCount: land.properties!.images.length,
-                              itemBuilder: (context, index) => InkWell(
-                                onTap: () => openGallery(land.properties!.images, context),
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  land.properties!.images[index],
-                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 315, bottom: 16),
-                          child: Text(
-                            'الموقع',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${land.properties!.Location}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ),
                           ],
                         ),
                       ],
@@ -587,7 +617,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) =>
+    Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),
@@ -612,7 +643,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -632,14 +663,13 @@ class _GalleryWidgetState extends State<GalleryWidget> {
           itemCount: widget.images.length,
           builder: (context, index) {
             final image = widget.images[index];
-    
+
             return PhotoViewGalleryPageOptions(
               imageProvider: NetworkImage(image),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.contained * 4,
             );
           },
-          
         ),
       ),
     );

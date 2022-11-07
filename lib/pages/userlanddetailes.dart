@@ -18,7 +18,7 @@ class LandDetailes extends StatelessWidget {
     String Classification;
     String classification = land.properties?.classification ?? "";
 
-    if (classification == 'rent') {
+    if (classification == 'للإيجار') {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';
@@ -120,15 +120,15 @@ class LandDetailes extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              stops: [0.4, 1.0],
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withOpacity(0.7),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: [0.4, 1.0],
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.7),
                         ],
                       ),
                     ),

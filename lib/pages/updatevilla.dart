@@ -37,7 +37,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
   late String type;
   final _formKey = GlobalKey<FormState>();
   late String property_id;
-  classification? _class = classification.rent;
+  classification? _class;
   late String classification1;
   late num property_age;
   choice? _elevatorCH;
@@ -94,6 +94,12 @@ class _UpdateVillaState extends State<UpdateVilla> {
     arrImage = widget.villa.properties.images;
     //longitude = widget.villa.properties.longitude;
     //latitude = widget.villa.properties.latitude;
+
+    if (classification1 == 'للإيجار') {
+      _class = classification.rent;
+    } else {
+      _class = classification.sale;
+    }
 
     if (widget.villa.pool == false) {
       _poolCH = choice.no;
@@ -1271,7 +1277,8 @@ class _UpdateVillaState extends State<UpdateVilla> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    content: Text("هل أنت متأكد من تحديث العقار؟"),
+                                    content:
+                                        Text("هل أنت متأكد من تحديث العقار؟"),
                                     actions: <Widget>[
                                       TextButton(
                                         child: Text("لا"),

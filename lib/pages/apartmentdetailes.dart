@@ -11,7 +11,6 @@ class ApartmentDetailes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String ThereIsElevator;
     bool elevator = apartment.elevator;
 
@@ -24,12 +23,12 @@ class ApartmentDetailes extends StatelessWidget {
     String Classification;
     String classification = apartment.properties.classification;
 
-    if (classification == 'rent') {
+    if (classification == 'للإيجار') {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';
-    }    
-  
+    }
+
     Size size = MediaQuery.of(context).size;
 
     return SafeArea(
@@ -37,20 +36,26 @@ class ApartmentDetailes extends StatelessWidget {
         body: Stack(
           children: [
             Hero(
-              tag: '${apartment.properties.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : apartment.properties.images[0], //'${apartment.images[0]}'
+              tag: '${apartment.properties.images.length}' == '0'
+                  ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
+                  : apartment.properties.images[0], //'${apartment.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${apartment.properties.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${apartment.properties.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                decoration: '${apartment.properties.images.length}' == '0'
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              '${apartment.properties.images[0]}'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -83,13 +88,15 @@ class ApartmentDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                color: const Color.fromARGB(255, 127, 166, 233)
+                                    .withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child: Icon(
                                   Icons.flag_outlined,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -101,13 +108,15 @@ class ApartmentDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                color: const Color.fromARGB(255, 127, 166, 233)
+                                    .withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child: Icon(
-                              Icons.favorite_outline,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  Icons.favorite_outline,
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -125,12 +134,13 @@ class ApartmentDetailes extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                              color: const Color.fromARGB(255, 127, 166, 233)
+                                  .withOpacity(0.1),
                               shape: BoxShape.circle,
                             ),
                             child: Center(
                               child: Icon(
-                            Icons.arrow_forward_ios,
+                                Icons.arrow_forward_ios,
                                 color: const Color.fromARGB(255, 127, 166, 233),
                                 size: 28,
                               ),
@@ -190,7 +200,6 @@ class ApartmentDetailes extends StatelessWidget {
                             fontFamily: "Tajawal-m",
                           ),
                         ),
-
                         Text(
                           'ريال ${apartment.properties.price}',
                           style: TextStyle(
@@ -205,7 +214,8 @@ class ApartmentDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(
+                        left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -322,13 +332,15 @@ class ApartmentDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -340,13 +352,15 @@ class ApartmentDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -356,12 +370,19 @@ class ApartmentDetailes extends StatelessWidget {
                               Row(
                                 children: [
                                   FutureBuilder<DocumentSnapshot>(
-                                    future: FirebaseFirestore.instance.collection('Standard_user').doc('${apartment.properties.User_id}').get(),
+                                    future: FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .doc('${apartment.properties.User_id}')
+                                        .get(),
                                     builder: ((context, snapshot) {
-                                      if(snapshot.connectionState == ConnectionState.done){
-                                        Map<String, dynamic> user = snapshot.data!.data() as Map<String, dynamic> ;
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> user =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -384,7 +405,7 @@ class ApartmentDetailes extends StatelessWidget {
                                               ),
                                             ),
                                           ],
-                                        ); 
+                                        );
                                       }
                                       return Center(child: Text(''));
                                     }),
@@ -410,14 +431,19 @@ class ApartmentDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
-                          child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    PropInfo(Icons.chair, '${apartment.number_of_livingRooms}', 'صالة'),
-                                    PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
-                                  ],
-                                )),
+                            padding: EdgeInsets.only(
+                                right: 24, left: 24, bottom: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                PropInfo(
+                                    Icons.chair,
+                                    '${apartment.number_of_livingRooms}',
+                                    'صالة'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}',
+                                    'مصعد'),
+                              ],
+                            )),
                         Padding(
                           padding: EdgeInsets.only(left: 275, bottom: 16),
                           child: Text(
@@ -429,9 +455,9 @@ class ApartmentDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(
+                              right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -521,39 +547,39 @@ class ApartmentDetailes extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                        '${apartment.properties.description}' == '' ?
-                        Container() : 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 232, bottom: 16),
-                          child: Text(
-                            "معلومات إضافية",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${apartment.properties.description}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ),
-                          ],
-                        ),
-
+                        '${apartment.properties.description}' == ''
+                            ? Container()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 232, bottom: 16),
+                                    child: Text(
+                                      "معلومات إضافية",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-m",
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 5, left: 5, bottom: 16),
+                                    child: Text(
+                                      '${apartment.properties.description}',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[500],
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-l",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -565,72 +591,77 @@ class ApartmentDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${apartment.properties.images.length}' == '0' ?
-                        Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child:  Directionality(
-                              textDirection: TextDirection.rtl, 
-                              child: Text('لا يوجد صور متاحة !',
+                        '${apartment.properties.images.length}' == '0'
+                            ? Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد صور متاحة !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                              )
+                            : Container(
+                                height: 200,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 24, right: 20),
+                                  child: ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    // shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 20),
+                                    itemCount:
+                                        apartment.properties.images.length,
+                                    itemBuilder: (context, index) => InkWell(
+                                      onTap: () => openGallery(
+                                          apartment.properties.images, context),
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        apartment.properties.images[index],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 315, bottom: 16),
+                              child: Text(
+                                'الموقع',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: 5, left: 5, bottom: 16),
+                              child: Text(
+                                '${apartment.properties.Location}',
+                                textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[500],
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Tajawal-l",
                                 ),
-                              )
-                            )
-                          ),
-                        ) : 
-                        Container(
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(width: 20),
-                              itemCount: apartment.properties.images.length,
-                              itemBuilder: (context, index) => InkWell(
-                                onTap: () => openGallery(apartment.properties.images, context),
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  apartment.properties.images[index],
-                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 315, bottom: 16),
-                          child: Text(
-                            'الموقع',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${apartment.properties.Location}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ),
                           ],
                         ),
                       ],
@@ -682,7 +713,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) =>
+    Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),
@@ -707,7 +739,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -727,14 +759,13 @@ class _GalleryWidgetState extends State<GalleryWidget> {
           itemCount: widget.images.length,
           builder: (context, index) {
             final image = widget.images[index];
-    
+
             return PhotoViewGalleryPageOptions(
               imageProvider: NetworkImage(image),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.contained * 4,
             );
           },
-          
         ),
       ),
     );

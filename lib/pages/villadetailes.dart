@@ -11,7 +11,6 @@ class VillaDetailes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String ThereIsPool;
     bool pool = villa.pool;
 
@@ -42,12 +41,12 @@ class VillaDetailes extends StatelessWidget {
     String Classification;
     String classification = villa.properties.classification;
 
-    if (classification == 'rent') {
+    if (classification == 'للإيجار') {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';
-    }    
-  
+    }
+
     Size size = MediaQuery.of(context).size;
 
     return SafeArea(
@@ -55,20 +54,26 @@ class VillaDetailes extends StatelessWidget {
         body: Stack(
           children: [
             Hero(
-              tag: '${villa.properties.images.length}' == '0' ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg' : villa.properties.images[0], //'${villa.images[0]}'
+              tag: '${villa.properties.images.length}' == '0'
+                  ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
+                  : villa.properties.images[0], //'${villa.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${villa.properties.images.length}' == '0' ? BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ) : BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage('${villa.properties.images[0]}'), //'${villa.images[0]}'
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                decoration: '${villa.properties.images.length}' == '0'
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              '${villa.properties.images[0]}'), //'${villa.images[0]}'
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -101,13 +106,15 @@ class VillaDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                color: const Color.fromARGB(255, 127, 166, 233)
+                                    .withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child: Icon(
                                   Icons.flag_outlined,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -119,13 +126,15 @@ class VillaDetailes extends StatelessWidget {
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                color: const Color.fromARGB(255, 127, 166, 233)
+                                    .withOpacity(0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
                                 child: Icon(
-                              Icons.favorite_outline,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  Icons.favorite_outline,
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -143,12 +152,13 @@ class VillaDetailes extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                              color: const Color.fromARGB(255, 127, 166, 233)
+                                  .withOpacity(0.1),
                               shape: BoxShape.circle,
                             ),
                             child: Center(
                               child: Icon(
-                            Icons.arrow_forward_ios,
+                                Icons.arrow_forward_ios,
                                 color: const Color.fromARGB(255, 127, 166, 233),
                                 size: 28,
                               ),
@@ -208,7 +218,6 @@ class VillaDetailes extends StatelessWidget {
                             fontFamily: "Tajawal-m",
                           ),
                         ),
-
                         Text(
                           'ريال ${villa.properties.price}',
                           style: TextStyle(
@@ -223,7 +232,8 @@ class VillaDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(
+                        left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -340,13 +350,15 @@ class VillaDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -358,13 +370,15 @@ class VillaDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -374,12 +388,19 @@ class VillaDetailes extends StatelessWidget {
                               Row(
                                 children: [
                                   FutureBuilder<DocumentSnapshot>(
-                                    future: FirebaseFirestore.instance.collection('Standard_user').doc('${villa.properties.User_id}').get(),
+                                    future: FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .doc('${villa.properties.User_id}')
+                                        .get(),
                                     builder: ((context, snapshot) {
-                                      if(snapshot.connectionState == ConnectionState.done){
-                                        Map<String, dynamic> user = snapshot.data!.data() as Map<String, dynamic> ;
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        Map<String, dynamic> user =
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -402,7 +423,7 @@ class VillaDetailes extends StatelessWidget {
                                               ),
                                             ),
                                           ],
-                                        ); 
+                                        );
                                       }
                                       return Center(child: Text(''));
                                     }),
@@ -428,15 +449,18 @@ class VillaDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
-                          child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    PropInfo(Icons.chair, '${villa.number_of_livingRooms}', 'صالة'),
-                                    PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
-                                    PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
-                                  ],
-                                )),
+                            padding: EdgeInsets.only(
+                                right: 24, left: 24, bottom: 24),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                PropInfo(Icons.chair,
+                                    '${villa.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}',
+                                    'مصعد'),
+                                PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
+                              ],
+                            )),
                         Padding(
                           padding: EdgeInsets.only(left: 275, bottom: 16),
                           child: Text(
@@ -448,9 +472,9 @@ class VillaDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(
+                              right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -540,39 +564,39 @@ class VillaDetailes extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                        '${villa.properties.description}' == '' ?
-                        Container() : 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 232, bottom: 16),
-                          child: Text(
-                            "معلومات إضافية",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${villa.properties.description}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ),
-                          ],
-                        ),
-
+                        '${villa.properties.description}' == ''
+                            ? Container()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 232, bottom: 16),
+                                    child: Text(
+                                      "معلومات إضافية",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-m",
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 5, left: 5, bottom: 16),
+                                    child: Text(
+                                      '${villa.properties.description}',
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[500],
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "Tajawal-l",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -584,72 +608,76 @@ class VillaDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${villa.properties.images.length}' == '0' ?
-                        Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child:  Directionality(
-                              textDirection: TextDirection.rtl, 
-                              child: Text('لا يوجد صور متاحة !',
+                        '${villa.properties.images.length}' == '0'
+                            ? Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد صور متاحة !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                              )
+                            : Container(
+                                height: 200,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 24, right: 20),
+                                  child: ListView.separated(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    // shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 20),
+                                    itemCount: villa.properties.images.length,
+                                    itemBuilder: (context, index) => InkWell(
+                                      onTap: () => openGallery(
+                                          villa.properties.images, context),
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        villa.properties.images[index],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 315, bottom: 16),
+                              child: Text(
+                                'الموقع',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: 5, left: 5, bottom: 16),
+                              child: Text(
+                                '${villa.properties.Location}',
+                                textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[500],
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Tajawal-l",
                                 ),
-                              )
-                            )
-                          ),
-                        ) : 
-                        Container(
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(width: 20),
-                              itemCount: villa.properties.images.length,
-                              itemBuilder: (context, index) => InkWell(
-                                onTap: () => openGallery(villa.properties.images, context),
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  villa.properties.images[index],
-                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                          padding: EdgeInsets.only(left: 315, bottom: 16),
-                          child: Text(
-                            'الموقع',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                          child: Text(
-                            '${villa.properties.Location}',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[500],
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ),
                           ],
                         ),
                       ],
@@ -701,7 +729,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) =>
+    Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),
@@ -726,7 +755,7 @@ class _GalleryWidgetState extends State<GalleryWidget> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
-          actions:[
+          actions: [
             Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -746,14 +775,13 @@ class _GalleryWidgetState extends State<GalleryWidget> {
           itemCount: widget.images.length,
           builder: (context, index) {
             final image = widget.images[index];
-    
+
             return PhotoViewGalleryPageOptions(
               imageProvider: NetworkImage(image),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.contained * 4,
             );
           },
-          
         ),
       ),
     );

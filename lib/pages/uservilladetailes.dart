@@ -45,7 +45,7 @@ class VillaDetailes extends StatelessWidget {
     String Classification;
     String classification = villa.properties.classification;
 
-    if (classification == 'rent') {
+    if (classification == 'للإيجار') {
       Classification = 'للإيجار';
     } else {
       Classification = 'للبيع';

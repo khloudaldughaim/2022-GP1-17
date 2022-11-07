@@ -110,7 +110,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   int type = 1;
   String type1 = 'فيلا';
   propertyUse? _pUse = propertyUse.residental;
-  String propertyUse1 = '';
+  String propertyUse1 = 'سكني';
   final price = TextEditingController();
   final in_floor = TextEditingController();
   final space = TextEditingController();
@@ -238,7 +238,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'city': city,
               'neighborhood': address.text,
               'images': arrImage,
-              'type': type1, //
+              'type': type1,
               'property_age': property_age,
               'number_of_floor': number_of_floors,
               'elevator': elevator,
@@ -658,7 +658,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                               propertyUse
                                                                   .residental)
                                                             propertyUse1 =
-                                                                'سكني';
+                                                                "سكني";
                                                         });
                                                       },
                                                     ),

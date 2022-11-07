@@ -33,12 +33,12 @@ class _UpdateLandState extends State<UpdateLand> {
   late String type;
   final _formKey = GlobalKey<FormState>();
   late String property_id;
-  classification? _class = classification.rent;
+  classification? _class;
   late String classification1;
   late String city;
   late String? address;
-  late String purpose;
-  propertyUse? _pUse = propertyUse.residental;
+  late String propertyUse1;
+  propertyUse? _pUse;
 
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
@@ -68,8 +68,20 @@ class _UpdateLandState extends State<UpdateLand> {
     classification1 = '${widget.land.properties!.classification}';
     city = '${widget.land.properties!.city}';
     address = "";
-    purpose = '${widget.land.properties!.purpose}';
+    propertyUse1 = '${widget.land.properties!.purpose}';
     arrImage = widget.land.properties!.images;
+
+    if (propertyUse1 == 'سكني') {
+      _pUse = propertyUse.residental;
+    } else {
+      _pUse = propertyUse.commercial;
+    }
+
+    if (classification1 == 'للإيجار') {
+      _class = classification.rent;
+    } else {
+      _class = classification.sale;
+    }
 
     super.initState();
   }
@@ -129,6 +141,7 @@ class _UpdateLandState extends State<UpdateLand> {
             'city': city,
             'neighborhood': neighborhoodController.text,
             'images': arrImage,
+            'propertyUse': propertyUse1,
             'Location': location.text,
             'description': description.text
           });
@@ -159,42 +172,42 @@ class _UpdateLandState extends State<UpdateLand> {
     }
 
     return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 127, 166, 233),
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 145),
-          child: const Text('تحديث عقار',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: "Tajawal-b",
-              )),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
-                size: 28,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 145),
+            child: const Text('تحديث عقار',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Tajawal-b",
+                )),
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 28,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Form(
-                key: _formKey,
-                child: Column(
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -253,17 +266,17 @@ class _UpdateLandState extends State<UpdateLand> {
                       SizedBox(height: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ' استخدام العقار: ',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: "Tajawal-b",
-                            ),
-                          ),
+                        children: <Widget>[
+                          Text(' استخدام العقار: ',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Tajawal-b",
+                              ),
+                              textDirection: TextDirection.rtl),
                           Row(
                             children: [
-                              Expanded(
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.5,
                                 child: RadioListTile(
                                   title: const Text(
                                     'سكني',
@@ -279,12 +292,13 @@ class _UpdateLandState extends State<UpdateLand> {
                                     setState(() {
                                       _pUse = value;
                                       if (_pUse == propertyUse.residental)
-                                        purpose = 'سكني';
+                                        propertyUse1 = "سكني";
                                     });
                                   },
                                 ),
                               ),
-                              Expanded(
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.5,
                                 child: RadioListTile(
                                   title: const Text(
                                     'تجاري',
@@ -294,558 +308,179 @@ class _UpdateLandState extends State<UpdateLand> {
                                         color: Color.fromARGB(255, 73, 75, 82)),
                                     textAlign: TextAlign.start,
                                   ),
-                                  value: propertyUse.residental,
+                                  value: propertyUse.commercial,
                                   groupValue: _pUse,
                                   onChanged: (propertyUse? value) {
                                     setState(() {
                                       _pUse = value;
                                       if (_pUse == propertyUse.commercial)
-                                        purpose = 'تجاري';
+                                        propertyUse1 = 'تجاري';
                                     });
                                   },
                                 ),
                               ),
                             ],
                           ),
-                          // space
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: 100,
-                                child: Text(
-                                  ' *المساحة: ',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "Tajawal-b",
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: spaceController,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  decoration: InputDecoration(
-                                    hintText: 'متر ² ',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.all(6),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                        color: Colors.grey,
-                                        width: 0.0,
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'الرجاء عدم ترك الخانة فارغة!';
-                                    }
-                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                      return 'الرجاء إدخال أرقام فقط';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 30),
-                          //  price
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: 100,
-                                child: Text(
-                                  ' *السعر: ',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "Tajawal-b",
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: priceController,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  decoration: InputDecoration(
-                                    hintText: 'ريال ',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.all(6),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                        color: Colors.grey,
-                                        width: 0.0,
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'الرجاء عدم ترك الخانة فارغة!';
-                                    }
-                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                      return 'الرجاء إدخال أرقام فقط';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 30),
-
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: 100,
-                                child: Text(
-                                  ' *الحي: ',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "Tajawal-b",
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: neighborhoodController,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  decoration: InputDecoration(
-                                    hintText: 'القيروان',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.all(6),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                        color: Colors.grey,
-                                        width: 0.0,
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'الرجاء عدم ترك الخانة فارغة!';
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 30),
-
-                          //location
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                ' *الموقع: ',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b",
-                                ),
-                              ),
-                              Expanded(
-                                  child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 60),
-                                      child: Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: TextFormField(
-                                          controller: location,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          decoration: InputDecoration(
-                                            hintText: 'شارع المذيب مقابل..',
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            contentPadding: EdgeInsets.all(6),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              borderSide: const BorderSide(
-                                                color: Color.fromARGB(
-                                                    255, 167, 166, 166),
-                                                width: 0.0,
-                                              ),
-                                            ),
-                                          ),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'الرجاء عدم ترك الخانة فارغة!';
-                                            }
-                                          },
-                                        ),
-                                      ))),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "الموقع على الخريطة",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontFamily: "Tajawal-m",
-                                  ),
-                                ),
-                              ]),
-                          //map
-                          SizedBox(
-                            height: 400.0,
-                            width: MediaQuery.of(context).size.width,
-                            child: Stack(
-                              children: [
-                                GoogleMap(
-                                  onMapCreated: (mapController) {
-                                    googleMapController = mapController;
-                                  },
-                                  myLocationButtonEnabled: true,
-                                  myLocationEnabled: true,
-                                  initialCameraPosition: CameraPosition(
-                                      target: mapLatLng, zoom: 14),
-                                ),
-                                Container(
-                                    alignment: Alignment.bottomRight,
-                                    margin:
-                                        EdgeInsets.only(right: 6, bottom: 108),
-                                    child: FloatingActionButton(
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.blue,
-                                      ),
-                                      onPressed: () async {
-                                        LocationData currentLocation;
-                                        var location = new Location();
-
-                                        currentLocation =
-                                            await location.getLocation();
-
-                                        LatLng latLng = LatLng(
-                                            currentLocation.latitude!,
-                                            currentLocation.longitude!);
-
-                                        googleMapController!.animateCamera(
-                                            CameraUpdate.newCameraPosition(
-                                          CameraPosition(
-                                            bearing: 0,
-                                            target: LatLng(
-                                                currentLocation.latitude!,
-                                                currentLocation.longitude!),
-                                            zoom: 17.0,
-                                          ),
-                                        ));
-
-                                        setState(() {
-                                          mapLatLng = latLng;
-                                        });
-                                      },
-                                    )),
-                                Container(
-                                    alignment: Alignment.topCenter,
-                                    margin: EdgeInsets.only(top: 5),
-                                    child: SearchMapPlaceWidget(
-                                      strictBounds: true,
-                                      apiKey:
-                                          "AIzaSyDKNtlGQXbyJBJYvBx-OrWqMbjln4NxTxs",
-                                      bgColor: Colors.white,
-                                      textColor: Colors.black,
-                                      hasClearButton: true,
-                                      placeholder: "إبحث عن مدينة، حي",
-                                      placeType: PlaceType.address,
-                                      onSelected: (place) async {
-                                        Geolocation? geolocation =
-                                            await place.geolocation;
-
-                                        googleMapController!.animateCamera(
-                                            CameraUpdate.newLatLng(
-                                                geolocation!.coordinates));
-                                        googleMapController!.animateCamera(
-                                            CameraUpdate.newLatLngBounds(
-                                                geolocation.bounds, 0));
-                                        setState(() {
-                                          mapLatLng = geolocation.coordinates;
-                                        });
-                                      },
-                                    )),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 25),
+                        ],
+                      ),
+                      // space
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.all(15),
-                          ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                bottom: MediaQuery.of(context).size.width / 50,
-                              ),
-                              child: Text(
-                                ' الصور التي تم رفعها: ',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b",
-                                ),
+                            width: 100,
+                            child: Text(
+                              ' *المساحة: ',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Tajawal-b",
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            height: 190,
-                            width: 350,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Color.fromARGB(255, 127, 126, 126),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: SizedBox(
-                                height: 100,
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  children: [
-                                    arrImage.isEmpty
-                                        ? Container(
-                                            alignment: Alignment.center,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.1,
-                                            child: Text(
-                                              "لم يتم رفع أي صور",
-                                            ),
-                                          )
-                                        : Container(
-                                            margin: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  40,
-                                              bottom: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  70,
-                                            ),
-                                            height: 100,
-                                            child: ListView(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              scrollDirection: Axis.horizontal,
-                                              children: arrImage
-                                                  .map((e) => Stack(
-                                                        alignment:
-                                                            AlignmentDirectional
-                                                                .topEnd,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(4.0),
-                                                            child: Container(
-                                                              color:
-                                                                  Colors.blue,
-                                                              child:
-                                                                  Image.network(
-                                                                e,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                height: 100,
-                                                                width: 100,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          InkWell(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  arrImage
-                                                                      .remove(
-                                                                          e);
-                                                                });
-                                                              },
-                                                              child:
-                                                                  const Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            .02),
-                                                                child: Icon(
-                                                                  Icons.cancel,
-                                                                  size: 15,
-                                                                  color: Colors
-                                                                      .red,
-                                                                ),
-                                                              )),
-                                                        ],
-                                                      ))
-                                                  .toList(),
-                                            ),
-                                          ),
-                                  ],
-                                )),
-                          ),
-
-                          //upload images
-                          Container(
-                            height: 190,
-                            width: 350,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Color.fromARGB(255, 127, 126, 126),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: SizedBox(
-                                height: 100,
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  children: [
-                                    selectedFiles.isEmpty
-                                        ? Container(
-                                            alignment: Alignment.center,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.1,
-                                            child: TextButton(
-                                              child: Text(
-                                                '+إرفع صور للعقار',
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-m",
-                                                    color: Color.fromARGB(
-                                                        255, 127, 166, 233)),
-                                              ),
-                                              onPressed: () {
-                                                selectImage();
-                                              },
-                                            ),
-                                          )
-                                        : Container(
-                                            margin: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  100,
-                                              right: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  100,
-                                              bottom: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  100,
-                                            ),
-                                            height: 100,
-                                            child: ListView(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              scrollDirection: Axis.horizontal,
-                                              children: selectedFiles
-                                                  .map((e) => Stack(
-                                                        alignment:
-                                                            AlignmentDirectional
-                                                                .topEnd,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(3.0),
-                                                            child: Container(
-                                                              color:
-                                                                  Colors.blue,
-                                                              child: Image.file(
-                                                                File(e.path),
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                height: 100,
-                                                                width: 100,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          InkWell(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  selectedFiles
-                                                                      .remove(
-                                                                          e);
-                                                                });
-                                                              },
-                                                              child:
-                                                                  const Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            .02),
-                                                                child: Icon(
-                                                                  Icons.cancel,
-                                                                  size: 15,
-                                                                  color: Colors
-                                                                      .red,
-                                                                ),
-                                                              )),
-                                                        ],
-                                                      ))
-                                                  .toList(),
-                                            ),
-                                          ),
-                                  ],
-                                )),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.all(20),
-                          ),
-                          //description
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                ' معلومات اضافية: ',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Tajawal-b",
+                          Expanded(
+                            child: TextFormField(
+                              controller: spaceController,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              decoration: InputDecoration(
+                                hintText: 'متر ² ',
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.all(6),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 0.0,
+                                  ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 8,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'الرجاء عدم ترك الخانة فارغة!';
+                                }
+                                if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                  return 'الرجاء إدخال أرقام فقط';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30),
+                      //  price
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            child: Text(
+                              ' *السعر: ',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Tajawal-b",
                               ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              controller: priceController,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              decoration: InputDecoration(
+                                hintText: 'ريال ',
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.all(6),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 0.0,
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'الرجاء عدم ترك الخانة فارغة!';
+                                }
+                                if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                  return 'الرجاء إدخال أرقام فقط';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30),
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            child: Text(
+                              ' *الحي: ',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Tajawal-b",
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              controller: neighborhoodController,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              decoration: InputDecoration(
+                                hintText: 'القيروان',
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.all(6),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 0.0,
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'الرجاء عدم ترك الخانة فارغة!';
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 30),
+
+                      //location
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            ' *الموقع: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 60),
                                   child: Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: TextFormField(
-                                      controller: description,
+                                      controller: location,
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       decoration: InputDecoration(
+                                        hintText: 'شارع المذيب مقابل..',
                                         filled: true,
                                         fillColor: Colors.white,
                                         contentPadding: EdgeInsets.all(6),
@@ -853,87 +488,444 @@ class _UpdateLandState extends State<UpdateLand> {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                           borderSide: const BorderSide(
-                                            color: Colors.grey,
+                                            color: Color.fromARGB(
+                                                255, 167, 166, 166),
                                             width: 0.0,
                                           ),
                                         ),
                                       ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'الرجاء عدم ترك الخانة فارغة!';
+                                        }
+                                      },
                                     ),
-                                  )),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          //submit button
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 90),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: Text(
-                                            "هل أنت متأكد من تحديث العقار؟"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: Text("لا"),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          TextButton(
-                                            child: Text("نعم"),
-                                            onPressed: () {
-                                              try {
-                                                updateData(selectedFiles);
-                                              } catch (e, stack) {
-                                                Fluttertoast.showToast(
-                                                  msg: "هناك خطأ ما",
-                                                  toastLength:
-                                                      Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.CENTER,
-                                                  timeInSecForIosWeb: 5,
-                                                  backgroundColor:
-                                                      Color.fromARGB(
-                                                          255, 127, 166, 233),
-                                                  textColor: Color.fromARGB(
-                                                      255, 252, 253, 255),
-                                                  fontSize: 18.0,
-                                                );
-                                              }
-                                              ;
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              },
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Color.fromARGB(255, 127, 166, 233)),
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 10)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(27))),
-                              ),
-                              child: Text(
-                                "تحديث",
-                                style: TextStyle(
-                                    fontSize: 18, fontFamily: "Tajawal-m"),
-                              ),
-                            ),
-                          ),
+                                  ))),
                         ],
                       ),
-                    ])),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "الموقع على الخريطة",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          ]),
+                      //map
+                      SizedBox(
+                        height: 400.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: Stack(
+                          children: [
+                            GoogleMap(
+                              onMapCreated: (mapController) {
+                                googleMapController = mapController;
+                              },
+                              myLocationButtonEnabled: true,
+                              myLocationEnabled: true,
+                              initialCameraPosition:
+                                  CameraPosition(target: mapLatLng, zoom: 14),
+                            ),
+                            Container(
+                                alignment: Alignment.bottomRight,
+                                margin: EdgeInsets.only(right: 6, bottom: 108),
+                                child: FloatingActionButton(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () async {
+                                    LocationData currentLocation;
+                                    var location = new Location();
+
+                                    currentLocation =
+                                        await location.getLocation();
+
+                                    LatLng latLng = LatLng(
+                                        currentLocation.latitude!,
+                                        currentLocation.longitude!);
+
+                                    googleMapController!.animateCamera(
+                                        CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        bearing: 0,
+                                        target: LatLng(
+                                            currentLocation.latitude!,
+                                            currentLocation.longitude!),
+                                        zoom: 17.0,
+                                      ),
+                                    ));
+
+                                    setState(() {
+                                      mapLatLng = latLng;
+                                    });
+                                  },
+                                )),
+                            Container(
+                                alignment: Alignment.topCenter,
+                                margin: EdgeInsets.only(top: 5),
+                                child: SearchMapPlaceWidget(
+                                  strictBounds: true,
+                                  apiKey:
+                                      "AIzaSyDKNtlGQXbyJBJYvBx-OrWqMbjln4NxTxs",
+                                  bgColor: Colors.white,
+                                  textColor: Colors.black,
+                                  hasClearButton: true,
+                                  placeholder: "إبحث عن مدينة، حي",
+                                  placeType: PlaceType.address,
+                                  onSelected: (place) async {
+                                    Geolocation? geolocation =
+                                        await place.geolocation;
+
+                                    googleMapController!.animateCamera(
+                                        CameraUpdate.newLatLng(
+                                            geolocation!.coordinates));
+                                    googleMapController!.animateCamera(
+                                        CameraUpdate.newLatLngBounds(
+                                            geolocation.bounds, 0));
+                                    setState(() {
+                                      mapLatLng = geolocation.coordinates;
+                                    });
+                                  },
+                                )),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      Container(
+                        margin: const EdgeInsets.all(15),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.width / 50,
+                          ),
+                          child: Text(
+                            ' الصور التي تم رفعها: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 190,
+                        width: 350,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Color.fromARGB(255, 127, 126, 126),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: SizedBox(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              children: [
+                                arrImage.isEmpty
+                                    ? Container(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.1,
+                                        child: Text(
+                                          "لم يتم رفع أي صور",
+                                        ),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              40,
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              70,
+                                        ),
+                                        height: 100,
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          children: arrImage
+                                              .map((e) => Stack(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .topEnd,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(4.0),
+                                                        child: Container(
+                                                          color: Colors.blue,
+                                                          child: Image.network(
+                                                            e,
+                                                            fit: BoxFit.cover,
+                                                            height: 100,
+                                                            width: 100,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              arrImage
+                                                                  .remove(e);
+                                                            });
+                                                          },
+                                                          child: const Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    .02),
+                                                            child: Icon(
+                                                              Icons.cancel,
+                                                              size: 15,
+                                                              color: Colors.red,
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ))
+                                              .toList(),
+                                        ),
+                                      ),
+                              ],
+                            )),
+                      ),
+
+                      //upload images
+                      Container(
+                        height: 190,
+                        width: 350,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Color.fromARGB(255, 127, 126, 126),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: SizedBox(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              children: [
+                                selectedFiles.isEmpty
+                                    ? Container(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.1,
+                                        child: TextButton(
+                                          child: Text(
+                                            '+إرفع صور للعقار',
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontFamily: "Tajawal-m",
+                                                color: Color.fromARGB(
+                                                    255, 127, 166, 233)),
+                                          ),
+                                          onPressed: () {
+                                            selectImage();
+                                          },
+                                        ),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              100,
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              100,
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              100,
+                                        ),
+                                        height: 100,
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          children: selectedFiles
+                                              .map((e) => Stack(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .topEnd,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(3.0),
+                                                        child: Container(
+                                                          color: Colors.blue,
+                                                          child: Image.file(
+                                                            File(e.path),
+                                                            fit: BoxFit.cover,
+                                                            height: 100,
+                                                            width: 100,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              selectedFiles
+                                                                  .remove(e);
+                                                            });
+                                                          },
+                                                          child: const Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    .02),
+                                                            child: Icon(
+                                                              Icons.cancel,
+                                                              size: 15,
+                                                              color: Colors.red,
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ))
+                                              .toList(),
+                                        ),
+                                      ),
+                              ],
+                            )),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(20),
+                      ),
+                      //description
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ' معلومات اضافية: ',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: description,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      //submit button
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 90),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content:
+                                        Text("هل أنت متأكد من تحديث العقار؟"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text("لا"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("نعم"),
+                                        onPressed: () {
+                                          try {
+                                            updateData(selectedFiles);
+                                          } catch (e, stack) {
+                                            Fluttertoast.showToast(
+                                              msg: "هناك خطأ ما",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 127, 166, 233),
+                                              textColor: Color.fromARGB(
+                                                  255, 252, 253, 255),
+                                              fontSize: 18.0,
+                                            );
+                                          }
+                                          ;
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromARGB(255, 127, 166, 233)),
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 10)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
+                          ),
+                          child: Text(
+                            "تحديث",
+                            style: TextStyle(
+                                fontSize: 18, fontFamily: "Tajawal-m"),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
           ),
         ),
       ),
-    ));
+    );
   }
 }
