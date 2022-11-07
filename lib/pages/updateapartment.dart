@@ -154,6 +154,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
             'latitude': mapLatLng.latitude,
             'longitude': mapLatLng.longitude,
             'price': priceController.text,
+            "in_floor": in_floorController.text,
             'space': spaceController.text,
             'city': city,
             'neighborhood': neighborhoodController.text,

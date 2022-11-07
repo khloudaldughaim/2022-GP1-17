@@ -38,7 +38,6 @@ class _SignUpState extends State<SignUp> {
           height: double.infinity,
           width: double.infinity,
           child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
             child: Stack(
               children: [
                 SizedBox(

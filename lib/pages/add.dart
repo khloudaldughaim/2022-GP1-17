@@ -735,6 +735,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                                   .onUserInteraction,
                                                           decoration:
                                                               InputDecoration(
+                                                            hintText: '5 ',
                                                             filled: true,
                                                             fillColor:
                                                                 Colors.white,

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
 
@@ -16,13 +18,14 @@ class _SplashState extends State<Splash> {
   }
 
   _navigatetowelcom() async {
-    await Future.delayed(Duration(microseconds: 1700), () {});
-    Navigator.push(
+    await Future.delayed(Duration(microseconds: 2000), () {});
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => Welcome()),
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
