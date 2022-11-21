@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/pages/villa.dart';
+import '../registration/log_in.dart';
 import 'apartment.dart';
 import 'apartmentdetailes.dart';
 import 'building.dart';
@@ -8,6 +10,8 @@ import 'buildingdetailes.dart';
 import 'land.dart';
 import 'landdetailes.dart';
 import 'villadetailes.dart';
+import 'mapPage.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -107,77 +111,6 @@ class _HomePageState extends State<HomePage> {
         return Container();
       },
     );
-    // }
-    // else {
-    //   bool isContainCurrentName = false;
-    //   return ListView.separated(
-    //     itemCount: listItem.length,
-    //     separatorBuilder: (BuildContext context, int index) {
-    //       return SizedBox(height: 10);
-    //     },
-    //     itemBuilder: (BuildContext context, int index) {
-    //       if (listItem[index] is Villa) {
-    //         final villa = listItem[index] as Villa;
-    //         if (villa.properties.city.toString().toLowerCase().startsWith(name.toLowerCase()) ||
-    //             villa.properties.type.toString().toLowerCase().startsWith(name.toLowerCase()) ||
-    //             villa.properties.neighborhood
-    //                 .toString()
-    //                 .toLowerCase()
-    //                 .startsWith(name.toLowerCase())) {
-    //           isContainCurrentName = true;
-    //           return _buildVillaItem(villa, context);
-    //         }
-    //       }
-    //       if (listItem[index] is Apartment) {
-    //         final apartment = listItem[index] as Apartment;
-    //         if (apartment.properties.city.toLowerCase().startsWith(name.toLowerCase()) ||
-    //             apartment.properties.type.toLowerCase().startsWith(name.toLowerCase()) ||
-    //             apartment.properties.neighborhood
-    //                 .toString()
-    //                 .toLowerCase()
-    //                 .startsWith(name.toLowerCase())) {
-    //           isContainCurrentName = true;
-    //           return _buildApartmentItem(apartment, context);
-    //         }
-    //       }
-    //       if (listItem[index] is Building) {
-    //         final building = listItem[index] as Building;
-    //         if (building.properties.city.toLowerCase().startsWith(name.toLowerCase()) ||
-    //             building.properties.type.toLowerCase().startsWith(name.toLowerCase()) ||
-    //             building.properties.neighborhood
-    //                 .toString()
-    //                 .toLowerCase()
-    //                 .startsWith(name.toLowerCase())) {
-    //           isContainCurrentName = true;
-    //           return _buildBuildingItem(building, context);
-    //         }
-    //       }
-
-    //       if (listItem[index] is Land) {
-    //         final land = listItem[index] as Land;
-    //         if (land.properties!.city.toString().toLowerCase().startsWith(name.toLowerCase()) ||
-    //             land.properties!.type.toString().toLowerCase().startsWith(name.toLowerCase()) ||
-    //             land.properties!.neighborhood
-    //                 .toString()
-    //                 .toLowerCase()
-    //                 .startsWith(name.toLowerCase())) {
-    //           isContainCurrentName = true;
-    //           return _buildLandItem(land, context);
-    //         }
-    //       }
-    //       if (isContainCurrentName == false) {
-    //         isContainCurrentName = true;
-    //         return Container(
-    //           width: MediaQuery.of(context).size.width,
-    //           height: MediaQuery.of(context).size.height * 0.7,
-    //           alignment: Alignment.center,
-    //           child: Text("لا توجد بيانات"),
-    //         );
-    //       }
-    //       return Container();
-    //     },
-    //   );
-    // }
   }
 
   Widget _handleSnapshot(
@@ -314,28 +247,36 @@ class _HomePageState extends State<HomePage> {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              title: TextField(
-                textAlign: TextAlign.right,
-                controller: controller,
-                onChanged: (value) {
-                  setState(() {
-                    // searchItemsForSale.clear();
-                    // searchItemsForRent.clear();
-                    name = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Color.fromARGB(255, 14, 41, 99))
+              title: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      textAlign: TextAlign.right,
+                      controller: controller,
+                      onChanged: (value) {
+                        setState(() {
+                          // searchItemsForSale.clear();
+                          // searchItemsForRent.clear();
+                          name = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color.fromARGB(255, 14, 41, 99))
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)
+                        ),
+                        alignLabelWithHint: true,
+                        hintText:'ابحث عن الحي أو المدينة أو نوع العقار',
+                        hintStyle: TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
+                      ),
+                      cursorColor: Colors.white,
+                    ),
+                    
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white)
-                  ),
-                  alignLabelWithHint: true,
-                  hintText:'ابحث عن الحي أو المدينة أو نوع العقار',
-                  hintStyle: TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
-                ),
-                cursorColor: Colors.white,
+
+                ],
               ),
               actions: [
                 Padding(
@@ -362,36 +303,56 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            body: TabBarView(
-              children: [
-                name.isEmpty
-                    ? FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        future: FirebaseFirestore.instance
-                            .collection('properties')
-                            .get(),
-                        builder: (
-                          BuildContext context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot,
-                        ) {
-                          return _handleSnapshot(snapshot);
-                        },
-                      )
-                    : _buildSearchItems(),
-                name.isEmpty
-                    ? _handleListItems(forRent)
-                    : searchItemsForRent.isEmpty
-                        ? Center(child: Text("لم يتم العثور على نتائج"))
-                        : _handleListItems(searchItemsForRent),
-                name.isEmpty
-                    ? _handleListItems(forSale)
-                    : searchItemsForSale.isEmpty
-                        ? Center(child: Text("لم يتم العثور على نتائج"))
-                        : _handleListItems(searchItemsForSale),
-                // Center(child: Text("For sale")),
-                // Center(child: Text("For rent")),
-              ],
-            ),
+            body: 
+               TabBarView(
+                children: [
+      
+                  name.isEmpty
+                      ? FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          future: FirebaseFirestore.instance
+                              .collection('properties')
+                              .get(),
+                          builder: (
+                            BuildContext context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot,
+                          ) {
+                            return _handleSnapshot(snapshot);
+                          },
+                        )
+                      : _buildSearchItems(),
+                  name.isEmpty
+                      ? _handleListItems(forRent)
+                      : searchItemsForRent.isEmpty
+                          ? Center(child: Text("لم يتم العثور على نتائج"))
+                          : _handleListItems(searchItemsForRent),
+                  name.isEmpty
+                      ? _handleListItems(forSale)
+                      : searchItemsForSale.isEmpty
+                          ? Center(child: Text("لم يتم العثور على نتائج"))
+                          : _handleListItems(searchItemsForSale),
+                  // Center(child: Text("For sale")),
+                  // Center(child: Text("For rent")),
+                ],
+  
+              ),
+  floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+
+    floatingActionButton: SizedBox(
+       width: 75,
+        height: 75,
+      child: FloatingActionButton(  
+          child:  Icon(Icons.map, size: 35,),  //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),  
+          foregroundColor: Color.fromARGB(255, 93, 119, 185),  
+          onPressed: () => {
+           Navigator.push(
+           context,
+          MaterialPageRoute(
+          builder: (context) => mapPage()))
+          },  
+        ),
+    ),  
           ),
         ),
       ),
