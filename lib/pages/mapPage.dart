@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/homapage.dart';
@@ -22,6 +24,42 @@ class mapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<mapPage> {
+
+  Completer<GoogleMapController>  _controller = Completer();
+  List<Marker> markers = [];
+final CollectionReference prop = FirebaseFirestore.instance.collection('properties');
+
+                              
+void initState()
+{
+  intilize();
+  super.initState();
+}
+
+
+ intilize() 
+{
+try{
+
+ prop.get().then((querySnapshot) {
+querySnapshot.docs.forEach((element) {
+
+  markers.add( Marker(
+  markerId:MarkerId(element['property_id']),
+  position: LatLng( element['latitude'] ,element['longitude']),
+  ));
+
+ });
+});
+
+}
+catch(e){
+  print(e.toString());
+return null;  
+}
+
+}
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,13 +71,23 @@ home: SafeArea(
             
             ),
   
-  body: GoogleMap(
+  body:GoogleMap(
     initialCameraPosition:
      CameraPosition(
       target: LatLng(23.885942, 45.079162),
-      //zoom: 19,
-      )
+      zoom: 5,
+      ),
+
+onMapCreated: (GoogleController) {
+  _controller.complete(GoogleController);
+},
+   markers: markers.map((e) => e).toSet(),
+
      ),
+
+
+
+// this the button of swithing 
 floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
  floatingActionButton: SizedBox(
        width: 75,
