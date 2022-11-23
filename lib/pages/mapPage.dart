@@ -34,30 +34,32 @@ void initState()
 {
   intilize();
   super.initState();
+  print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
 }
 
 
- intilize() 
+ intilize() async
 {
-try{
-
+    try{
+     
  prop.get().then((querySnapshot) {
 querySnapshot.docs.forEach((element) {
-
+ setState(() {
   markers.add( Marker(
   markerId:MarkerId(element['property_id']),
   position: LatLng( element['latitude'] ,element['longitude']),
-  ));
+  ));  
+      });
+ 
 
  });
 });
 
 }
 catch(e){
-  print(e.toString());
+  print('ttttttttttttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
 return null;  
 }
-
 }
 
   @override
