@@ -20,95 +20,80 @@ class mapPage extends StatefulWidget {
 
   @override
   State<mapPage> createState() => _MapPageState();
-
 }
 
 class _MapPageState extends State<mapPage> {
-
-  Completer<GoogleMapController>  _controller = Completer();
+  Completer<GoogleMapController> _controller = Completer();
   List<Marker> markers = [];
-final CollectionReference prop = FirebaseFirestore.instance.collection('properties');
+  final CollectionReference prop =
+      FirebaseFirestore.instance.collection('properties');
 
-                              
-void initState()
-{
-  intilize();
-  super.initState();
-  print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-}
+  void initState() {
+    intilize();
+    super.initState();
+  }
 
-
- intilize() async
-{
-    try{
-     
- prop.get().then((querySnapshot) {
-querySnapshot.docs.forEach((element) {
- setState(() {
-  markers.add( Marker(
-  markerId:MarkerId(element['property_id']),
-  position: LatLng( element['latitude'] ,element['longitude']),
-  ));  
+  intilize() async {
+    try {
+      prop.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            markers.add(Marker(
+              markerId: MarkerId(element['property_id']),
+              position: LatLng(element['latitude'], element['longitude']),
+            ));
+          });
+        });
       });
- 
-
- });
-});
-
-}
-catch(e){
-  print('ttttttttttttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
-return null;  
-}
-}
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-home: SafeArea(
-  child:Scaffold(
-   appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              title: Text("MAP"),
-            
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+            title: Text("MAP"),
+          ),
+
+          body: GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(23.885942, 45.079162),
+              zoom: 5,
             ),
-  
-  body:GoogleMap(
-    initialCameraPosition:
-     CameraPosition(
-      target: LatLng(23.885942, 45.079162),
-      zoom: 5,
-      ),
+            onMapCreated: (GoogleController) {
+              _controller.complete(GoogleController);
+            },
+            markers: markers.map((e) => e).toSet(),
+          ),
 
-onMapCreated: (GoogleController) {
-  _controller.complete(GoogleController);
-},
-   markers: markers.map((e) => e).toSet(),
-
-     ),
-
-
-
-// this the button of swithing 
-floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
- floatingActionButton: SizedBox(
-       width: 75,
-        height: 75,
-      child: FloatingActionButton(  
-          child:  Icon(Icons.home, size: 35,),  //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),  
-          foregroundColor: Color.fromARGB(255, 93, 119, 185),  
-          onPressed: () => {
-           Navigator.push(
-           context,
-          MaterialPageRoute(
-          builder: (context) => NavigationBarPage()))
-          },  
+// this the button of swithing
+          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+          floatingActionButton: SizedBox(
+            width: 75,
+            height: 75,
+            child: FloatingActionButton(
+              child: Icon(
+                Icons.home,
+                size: 35,
+              ), //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              foregroundColor: Color.fromARGB(255, 93, 119, 185),
+              onPressed: () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NavigationBarPage()))
+              },
+            ),
+          ),
         ),
-    ),  
-
-  ),
-),
+      ),
     );
   }
 }
