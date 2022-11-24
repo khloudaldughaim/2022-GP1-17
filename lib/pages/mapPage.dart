@@ -28,10 +28,11 @@ class _MapPageState extends State<mapPage> {
   final CollectionReference prop =
       FirebaseFirestore.instance.collection('properties');
 
-  void initState() {
+  void initState()
+   {
     intilize();
     super.initState();
-  }
+   }
 
   intilize() async {
     try {
@@ -41,6 +42,8 @@ class _MapPageState extends State<mapPage> {
             markers.add(Marker(
               markerId: MarkerId(element['property_id']),
               position: LatLng(element['latitude'], element['longitude']),
+              onTap: () {
+              },
             ));
           });
         });
