@@ -7,6 +7,7 @@ import 'apartment.dart';
 import 'apartmentdetailes.dart';
 import 'building.dart';
 import 'buildingdetailes.dart';
+import 'filter.dart';
 import 'land.dart';
 import 'landdetailes.dart';
 import 'villadetailes.dart';
@@ -247,6 +248,16 @@ class _HomePageState extends State<HomePage> {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => FilterPage())
+                  ); 
+                },
+                icon: const Icon(Icons.filter_alt_outlined),
+              ),
               title: Row(
                 children: [
                   Expanded(
@@ -269,7 +280,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         alignLabelWithHint: true,
                         hintText:'ابحث عن الحي أو المدينة أو نوع العقار',
-                        hintStyle: TextStyle(color: Color.fromARGB(143, 255, 255, 255)),
+                        hintStyle: TextStyle(color: Color.fromARGB(143, 255, 255, 255), fontFamily: "Tajawal-m"),
                       ),
                       cursorColor: Colors.white,
                     ),
