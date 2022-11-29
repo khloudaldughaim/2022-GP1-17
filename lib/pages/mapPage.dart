@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/homapage.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/pages/villa.dart';
@@ -25,14 +26,14 @@ class mapPage extends StatefulWidget {
 class _MapPageState extends State<mapPage> {
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> markers = [];
+
   final CollectionReference prop =
       FirebaseFirestore.instance.collection('properties');
 
-  void initState()
-   {
+  void initState() {
     intilize();
     super.initState();
-   }
+  }
 
   intilize() async {
     try {
@@ -43,6 +44,14 @@ class _MapPageState extends State<mapPage> {
               markerId: MarkerId(element['property_id']),
               position: LatLng(element['latitude'], element['longitude']),
               onTap: () {
+                if (element["type"] == "فيلا") {
+                  Villa villa = Villa.fromMap(element);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VillaDetailes(villa: villa)),
+                  );
+                }
               },
             ));
           });
