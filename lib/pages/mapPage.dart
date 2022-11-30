@@ -27,9 +27,6 @@ class _MapPageState extends State<mapPage> {
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> markers = [];
 
-  final CollectionReference prop =
-      FirebaseFirestore.instance.collection('properties');
-
   void initState() {
     intilize();
     super.initState();
@@ -37,7 +34,10 @@ class _MapPageState extends State<mapPage> {
 
   intilize() async {
     try {
-      prop.get().then((querySnapshot) {
+      FirebaseFirestore.instance
+          .collection('properties')
+          .get()
+          .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           setState(() {
             markers.add(Marker(
@@ -45,11 +45,37 @@ class _MapPageState extends State<mapPage> {
               position: LatLng(element['latitude'], element['longitude']),
               onTap: () {
                 if (element["type"] == "فيلا") {
-                  Villa villa = Villa.fromMap(element);
+                  Villa villa = Villa.fromMap(element.data());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => VillaDetailes(villa: villa)),
+                  );
+                }
+                if (element.data()["type"] == "شقة") {
+                  Apartment apartment = Apartment.fromMap(element.data());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ApartmentDetailes(apartment: apartment)),
+                  );
+                }
+                if (element.data()["type"] == "عمارة") {
+                  Building building = Building.fromMap(element.data());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            BuildingDetailes(building: building)),
+                  );
+                }
+                if (element.data()["type"] == "ارض") {
+                  Land land = Land.fromJson(element.data());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LandDetailes(land: land)),
                   );
                 }
               },
