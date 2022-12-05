@@ -17,7 +17,7 @@ class NavigationBarPage extends StatefulWidget {
 class _NavigationBarPageState extends State<NavigationBarPage> {
   int currentIndex = 0;
 
-  List<Widget> widgetList = const [
+  List<Widget> widgetList = [
     HomePage(),
     ChatsPage(),
     AddPage(),

@@ -13,9 +13,48 @@ import 'landdetailes.dart';
 import 'villadetailes.dart';
 import 'mapPage.dart';
 
-
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final String? type1;
+  final String? propertyUse1;
+  final String? in_floor;
+  final String? city;
+  final String? address;
+  final int? number_of_bathrooms;
+  final int? number_of_rooms;
+  final int? number_of_livingRooms;
+  final int? number_of_floors;
+  final int? number_of_apartments;
+  final bool? pool;
+  final bool? basement;
+  final bool? elevator;
+  final double? ageRange_start;
+  final double? ageRange_end;
+  final String? MinSpace;
+  final String? MaxSpace;
+  final String? MinPrice;
+  final String? MaxPrice;
+
+  HomePage({
+    this.type1,
+    this.propertyUse1,
+    this.in_floor,
+    this.city,
+    this.address,
+    this.number_of_bathrooms,
+    this.number_of_floors,
+    this.number_of_livingRooms,
+    this.number_of_rooms,
+    this.number_of_apartments,
+    this.basement,
+    this.elevator,
+    this.pool,
+    this.ageRange_start,
+    this.ageRange_end,
+    this.MinPrice,
+    this.MaxPrice,
+    this.MinSpace,
+    this.MaxSpace,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,7 +69,8 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> forSale = [];
   TextEditingController controller = TextEditingController();
   String name = '';
-  bool FilterValue = false ;
+  bool FilterValue = false;
+  //'${widget.type1}'
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     try {
@@ -251,12 +291,31 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Color.fromARGB(255, 127, 166, 233),
               leading: IconButton(
                 onPressed: () {
-                  FilterValue = true ;
+            print('${widget.type1}');
+            print('${widget.propertyUse1}');
+            print('${widget.in_floor}');
+            print('${widget.city}');
+            print('${widget.address}');
+            print('${widget.number_of_bathrooms}');
+            print('${widget.number_of_rooms}');//
+            print('${widget.number_of_livingRooms}');
+            print('${widget.number_of_floors}');//
+            print('${widget.number_of_apartments}');//
+            print('${widget.pool}');
+            print('${widget.basement}');//
+            print('${widget.elevator}');
+            print('${widget.ageRange_start}');
+            print('${widget.ageRange_end}');
+            print('${widget.MinSpace}');
+            print('${widget.MaxSpace}');
+            print('${widget.MinPrice}');
+            print('${widget.MaxPrice}');
+                  FilterValue = true;
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => FilterPage(FilterValue : FilterValue))
-                  ); 
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FilterPage(FilterValue: FilterValue)));
                 },
                 icon: const Icon(Icons.filter_alt_outlined),
               ),
@@ -275,20 +334,19 @@ class _HomePageState extends State<HomePage> {
                       },
                       decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color.fromARGB(255, 14, 41, 99))
-                        ),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 14, 41, 99))),
                         enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white)
-                        ),
+                            borderSide: BorderSide(color: Colors.white)),
                         alignLabelWithHint: true,
-                        hintText:'ابحث عن الحي أو المدينة أو نوع العقار',
-                        hintStyle: TextStyle(color: Color.fromARGB(143, 255, 255, 255), fontFamily: "Tajawal-m"),
+                        hintText: 'ابحث عن الحي أو المدينة أو نوع العقار',
+                        hintStyle: TextStyle(
+                            color: Color.fromARGB(143, 255, 255, 255),
+                            fontFamily: "Tajawal-m"),
                       ),
                       cursorColor: Colors.white,
                     ),
-                    
                   ),
-
                 ],
               ),
               actions: [
@@ -301,7 +359,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
               bottom: const TabBar(
-                labelStyle: TextStyle( fontFamily: "Tajawal-b", fontWeight: FontWeight.w100,),
+                labelStyle: TextStyle(
+                  fontFamily: "Tajawal-b",
+                  fontWeight: FontWeight.w100,
+                ),
                 indicatorColor: Colors.white,
                 tabs: [
                   Tab(
@@ -316,56 +377,56 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            body: 
-               TabBarView(
-                children: [
-      
-                  name.isEmpty
-                      ? FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          future: FirebaseFirestore.instance
-                              .collection('properties')
-                              .get(),
-                          builder: (
-                            BuildContext context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot,
-                          ) {
-                            return _handleSnapshot(snapshot);
-                          },
-                        )
-                      : _buildSearchItems(),
-                  name.isEmpty
-                      ? _handleListItems(forRent)
-                      : searchItemsForRent.isEmpty
-                          ? Center(child: Text("لم يتم العثور على نتائج"))
-                          : _handleListItems(searchItemsForRent),
-                  name.isEmpty
-                      ? _handleListItems(forSale)
-                      : searchItemsForSale.isEmpty
-                          ? Center(child: Text("لم يتم العثور على نتائج"))
-                          : _handleListItems(searchItemsForSale),
-                  // Center(child: Text("For sale")),
-                  // Center(child: Text("For rent")),
-                ],
-  
-              ),
-  floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+            body: TabBarView(
+              children: [
+                name.isEmpty
+                    ? FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        future: FirebaseFirestore.instance
+                            .collection('properties')
+                            .get(),
+                        builder: (
+                          BuildContext context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot,
+                        ) {
+                          return _handleSnapshot(snapshot);
+                        },
+                      )
+                    : _buildSearchItems(),
+                name.isEmpty
+                    ? _handleListItems(forRent)
+                    : searchItemsForRent.isEmpty
+                        ? Center(child: Text("لم يتم العثور على نتائج"))
+                        : _handleListItems(searchItemsForRent),
+                name.isEmpty
+                    ? _handleListItems(forSale)
+                    : searchItemsForSale.isEmpty
+                        ? Center(child: Text("لم يتم العثور على نتائج"))
+                        : _handleListItems(searchItemsForSale),
+                // Center(child: Text("For sale")),
+                // Center(child: Text("For rent")),
+              ],
+            ),
 
-    floatingActionButton: SizedBox(
-       width: 75,
-        height: 75,
-      child: FloatingActionButton(  
-          child:  Icon(Icons.map, size: 35,),  //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),  
-          foregroundColor: Color.fromARGB(255, 93, 119, 185),  
-          onPressed: () => {
-           Navigator.push(
-           context,
-          MaterialPageRoute(
-          builder: (context) => mapPage()))
-          },  
-        ),
-    ),  
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.startFloat,
+
+            floatingActionButton: SizedBox(
+              width: 75,
+              height: 75,
+              child: FloatingActionButton(
+                child: Icon(
+                  Icons.map,
+                  size: 35,
+                ), //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                foregroundColor: Color.fromARGB(255, 93, 119, 185),
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => mapPage()))
+                },
+              ),
+            ),
           ),
         ),
       ),
