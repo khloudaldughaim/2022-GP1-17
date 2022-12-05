@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> forSale = [];
   TextEditingController controller = TextEditingController();
   String name = '';
+  bool FilterValue = false ;
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     try {
@@ -250,10 +251,11 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Color.fromARGB(255, 127, 166, 233),
               leading: IconButton(
                 onPressed: () {
+                  FilterValue = true ;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                    builder: (context) => FilterPage())
+                    builder: (context) => FilterPage(FilterValue : FilterValue))
                   ); 
                 },
                 icon: const Icon(Icons.filter_alt_outlined),

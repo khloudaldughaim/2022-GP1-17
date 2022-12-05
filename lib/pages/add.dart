@@ -707,82 +707,94 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ),
                                         )
                                       : Container(),
-                                  type == 2
+                                  type == 3
                                       ? Container(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text(
-                                                ' *رقم الدور: ',
-                                                style: TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontFamily: "Tajawal-b",
-                                                ),
-                                              ),
-                                              Expanded(
-                                                  child: Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 60),
-                                                      child: Directionality(
-                                                        textDirection:
-                                                            TextDirection.rtl,
-                                                        child: TextFormField(
-                                                          controller: in_floor,
-                                                          autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText: '5 ',
-                                                            filled: true,
-                                                            fillColor:
-                                                                Colors.white,
-                                                            contentPadding:
-                                                                EdgeInsets.all(
-                                                                    6),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color:
-                                                                    Colors.grey,
-                                                                width: 0.0,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          validator: (value) {
-                                                            if (value == null ||
-                                                                value.isEmpty) {
-                                                              return 'الرجاء عدم ترك الخانة فارغة!';
-                                                            } else if (value
-                                                                    .length >
-                                                                3) {
-                                                              return 'الرقم يجب الا يزيد عن 3 خانات';
-                                                            }
-                                                            if (!RegExp(
-                                                                    r'[0-9]')
-                                                                .hasMatch(
-                                                                    value)) {
-                                                              return 'الرجاء إدخال أرقام فقط';
-                                                            }
-                                                            return null;
-                                                          },
-                                                        ),
-                                                      ))),
-                                            ],
-                                          ),
+                                          margin: const EdgeInsets.all(15),
                                         )
-                                      : Container(),
+                                      : type == 2
+                                          ? Container(
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text(
+                                                    ' *رقم الدور: ',
+                                                    style: TextStyle(
+                                                      fontSize: 20.0,
+                                                      fontFamily: "Tajawal-b",
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                      child: Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      60),
+                                                          child: Directionality(
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            child:
+                                                                TextFormField(
+                                                              controller:
+                                                                  in_floor,
+                                                              autovalidateMode:
+                                                                  AutovalidateMode
+                                                                      .onUserInteraction,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                hintText: '5 ',
+                                                                filled: true,
+                                                                fillColor:
+                                                                    Colors
+                                                                        .white,
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .all(6),
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  borderSide:
+                                                                      const BorderSide(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    width: 0.0,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              validator:
+                                                                  (value) {
+                                                                if (value ==
+                                                                        null ||
+                                                                    value
+                                                                        .isEmpty) {
+                                                                  return 'الرجاء عدم ترك الخانة فارغة!';
+                                                                } else if (value
+                                                                        .length >
+                                                                    3) {
+                                                                  return 'الرقم يجب الا يزيد عن 3 خانات';
+                                                                }
+                                                                if (!RegExp(
+                                                                        r'[0-9]')
+                                                                    .hasMatch(
+                                                                        value)) {
+                                                                  return 'الرجاء إدخال أرقام فقط';
+                                                                }
+                                                                return null;
+                                                              },
+                                                            ),
+                                                          ))),
+                                                ],
+                                              ),
+                                            )
+                                          : Container(),
 
                                   type == 2
                                       ? Container(
-                                          margin: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(20),
                                         )
                                       : Container(),
                                   //space
@@ -858,10 +870,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           fontFamily: "Tajawal-b",
                                         ),
                                       ),
+                                      Container(
+                                        margin: const EdgeInsets.all(10),
+                                      ),
                                       Expanded(
                                           child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 70),
+                                                  horizontal: 60),
                                               child: Directionality(
                                                 textDirection:
                                                     TextDirection.rtl,
@@ -982,7 +997,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         )),
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 30,
                                   ),
 
                                   Row(
@@ -996,10 +1011,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           fontFamily: "Tajawal-b",
                                         ),
                                       ),
+                                      Container(
+                                        margin: const EdgeInsets.all(10),
+                                      ),
                                       Expanded(
                                           child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 70),
+                                                  horizontal: 60),
                                               child: Directionality(
                                                 textDirection:
                                                     TextDirection.rtl,
@@ -1098,7 +1116,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 30,
                                   ),
                                   Row(
                                       crossAxisAlignment:
@@ -1111,6 +1129,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             fontFamily: "Tajawal-m",
                                           ),
                                         ),
+                                        Container(
+                                          margin: const EdgeInsets.all(20),
+                                        )
                                       ]),
                                   //map
                                   SizedBox(
@@ -1589,11 +1610,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )
                                       : Container(),
-                                  type == 3
-                                      ? Container()
-                                      : Container(
-                                          margin: const EdgeInsets.all(20),
-                                        ),
+
                                   type == 3
                                       ? Container()
                                       : Column(
@@ -2076,10 +2093,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           )),
                                     ],
                                   ),
+                                  Container(
+                                    margin: const EdgeInsets.all(15),
+                                  ),
                                   //submit button
                                   SizedBox(
-                                    width: 300.0,
-                                    height: 90.0,
+                                    width: 205.0,
+                                    height: 70.0,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 10),
@@ -2101,10 +2121,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               EdgeInsets.symmetric(
                                                   horizontal: 40, vertical: 5)),
                                           shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          27))),
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(27),
+                                            ),
+                                          ),
                                         ),
                                         child: const Text(
                                           'إضافة',
