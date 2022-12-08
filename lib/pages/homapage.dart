@@ -67,6 +67,9 @@ class _HomePageState extends State<HomePage> {
   List<dynamic> searchItemsForSale = [];
   List<dynamic> forRent = [];
   List<dynamic> forSale = [];
+  List<dynamic> FilteredItems = [];
+  List<dynamic> FilterForRent = [];
+  List<dynamic> FilterForSale = [];
   TextEditingController controller = TextEditingController();
   String name = '';
   bool FilterValue = false;
@@ -184,7 +187,13 @@ class _HomePageState extends State<HomePage> {
       } else {
         forSale.add(item);
       }
-    } else {
+    } else if(FilterValue == true){
+      if (item.properties.classification != "للإيجار") {
+        FilterForRent.add(item);
+      } else {
+        FilterForSale.add(item);
+      }
+      } else {
       if (item.properties.classification != "للإيجار") {
         searchItemsForRent.add(item);
       } else {
@@ -276,6 +285,104 @@ class _HomePageState extends State<HomePage> {
     if (searchItems.isEmpty)
       return Center(child: Text("لم يتم العثور على نتائج"));
     return _handleListItems(searchItems);
+  }
+
+  _handleFilterItems(List<dynamic> listItem) {
+    FilteredItems.clear();
+    FilterForRent.clear();
+    FilterForSale.clear();
+
+    listItem.forEach((element) {
+      if (element is Villa) {
+        final villa = element;
+        if(double.parse(villa.properties.space) < double.parse('${widget.MaxSpace}') &&
+           double.parse(villa.properties.space) > double.parse('${widget.MinSpace}') &&
+           double.parse(villa.properties.price) < double.parse('${widget.MaxPrice}') &&
+           double.parse(villa.properties.price) > double.parse('${widget.MinPrice}') &&
+           villa.properties.city == '${widget.city}' &&
+           villa.properties.neighborhood == '${widget.address}' &&
+           villa.property_age <= widget.ageRange_end! &&
+           villa.property_age >= widget.ageRange_start! &&
+           villa.number_of_room == widget.number_of_rooms &&
+           villa.number_of_bathroom == widget.number_of_bathrooms &&
+           villa.number_of_livingRooms == widget.number_of_livingRooms &&
+           villa.number_of_floor == widget.number_of_floors &&
+           villa.pool == widget.pool &&
+           villa.basement == widget.basement &&
+           villa.elevator == widget.elevator
+           ){
+          FilteredItems.add(villa);
+          _handleRentAndSaleItems(villa);
+          print("فيلا مطابقه");
+        } 
+      }
+      if (element is Apartment) {
+        final apartment = element;
+        if(
+          apartment.in_floor == '${widget.in_floor}' &&
+           double.parse(apartment.properties.space) < double.parse('${widget.MaxSpace}') &&
+           double.parse(apartment.properties.space) > double.parse('${widget.MinSpace}') &&
+           double.parse(apartment.properties.price) < double.parse('${widget.MaxPrice}') &&
+           double.parse(apartment.properties.price) > double.parse('${widget.MinPrice}') &&
+           apartment.properties.city == '${widget.city}' &&
+           apartment.properties.neighborhood == '${widget.address}' &&
+           apartment.property_age <= widget.ageRange_end! &&
+           apartment.property_age >= widget.ageRange_start! &&
+           apartment.number_of_room == widget.number_of_rooms &&
+           apartment.number_of_bathroom == widget.number_of_bathrooms &&
+           apartment.number_of_livingRooms == widget.number_of_livingRooms &&
+           apartment.number_of_floor == widget.number_of_floors &&
+           apartment.elevator == widget.elevator
+           ){
+            FilteredItems.add(apartment);
+            _handleRentAndSaleItems(apartment);
+          print("شقه مطابقه");
+        }
+      }
+      if (element is Building) {
+        final building = element;
+        if(double.parse(building.properties.space) < double.parse('${widget.MaxSpace}') &&
+           double.parse(building.properties.space) > double.parse('${widget.MinSpace}') &&
+           double.parse(building.properties.price) < double.parse('${widget.MaxPrice}') &&
+           double.parse(building.properties.price) > double.parse('${widget.MinPrice}') &&
+           building.properties.city == '${widget.city}' &&
+           building.properties.neighborhood == '${widget.address}' &&
+           building.property_age <= widget.ageRange_end! &&
+           building.property_age >= widget.ageRange_start! &&
+           building.number_of_apartment == widget.number_of_apartments &&
+           building.number_of_floor == widget.number_of_floors &&
+           building.pool == widget.pool &&
+           building.elevator == widget.elevator
+           ){
+            FilteredItems.add(building);
+            _handleRentAndSaleItems(building);
+          print("عمارة مطابقه");
+        }
+      }
+
+      if (element is Land) {
+        final land = element;
+        if(land.properties!.purpose == '${widget.propertyUse1}' &&
+           double.parse(land.properties!.space) < double.parse('${widget.MaxSpace}') &&
+           double.parse(land.properties!.space) > double.parse('${widget.MinSpace}') &&
+           double.parse(land.properties!.price) < double.parse('${widget.MaxPrice}') &&
+           double.parse(land.properties!.price) > double.parse('${widget.MinPrice}') &&
+           land.properties!.city == '${widget.city}' &&
+           land.properties!.neighborhood == '${widget.address}'){
+            FilteredItems.add(land);
+            _handleRentAndSaleItems(land);
+          print("ارض  مطابقه");
+        }
+      }
+    });
+    
+  }
+
+  Widget _buildFilterItems() {
+    _handleFilterItems(allData);
+    if (FilteredItems.isEmpty)
+      return Center(child: Text("لم يتم العثور على نتائج"));
+    return _handleListItems(FilteredItems);
   }
 
   @override
@@ -392,7 +499,7 @@ class _HomePageState extends State<HomePage> {
                           return _handleSnapshot(snapshot);
                         },
                       )
-                    : _buildSearchItems(),
+                    : _buildFilterItems(), //_buildSearchItems(), 
                 name.isEmpty
                     ? _handleListItems(forRent)
                     : searchItemsForRent.isEmpty
@@ -405,6 +512,44 @@ class _HomePageState extends State<HomePage> {
                         : _handleListItems(searchItemsForSale),
                 // Center(child: Text("For sale")),
                 // Center(child: Text("For rent")),
+
+                //////////////////////////////////////////////////////////////////////
+                
+                // name.isEmpty && FilterValue == false
+                //     ? FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                //         future: FirebaseFirestore.instance
+                //             .collection('properties')
+                //             .get(),
+                //         builder: (
+                //           BuildContext context,
+                //           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                //               snapshot,
+                //         ) {
+                //           return _handleSnapshot(snapshot);
+                //         },
+                //       )
+                //     : name.isEmpty && FilterValue == true
+                //     ? _buildFilterItems()
+                //     :_buildSearchItems(), 
+                
+                // name.isEmpty && FilterValue == false
+                //     ? _handleListItems(forRent)
+                //     : name.isNotEmpty && FilterValue == false 
+                //     ? searchItemsForRent.isEmpty
+                //         ? Center(child: Text("لم يتم العثور على نتائج"))
+                //         : _handleListItems(searchItemsForRent),
+                //     name.isEmpty && FilterValue == true 
+                //     ? FilterForRent.isEmpty
+                //         ? Center(child: Text("لم يتم العثور على نتائج"))
+                //         : _handleListItems(FilterForRent),
+
+                // name.isEmpty
+                //     ? _handleListItems(forSale)
+                //     : searchItemsForSale.isEmpty
+                //         ? Center(child: Text("لم يتم العثور على نتائج"))
+                //         : _handleListItems(searchItemsForSale),
+                // // Center(child: Text("For sale")),
+                // // Center(child: Text("For rent")),
               ],
             ),
 
