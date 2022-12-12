@@ -422,7 +422,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Container(
-                      height: 150,
+                      height: 120,
                       width: MediaQuery.of(context).size.width,
                       child: AppBar(
                         backgroundColor: Color.fromARGB(255, 127, 166, 233),
@@ -562,11 +562,12 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             margin: EdgeInsets.all(24),
                             child: CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              radius: 28,
+                              backgroundColor:
+                                  Color.fromARGB(255, 225, 231, 255),
+                              radius: 30,
                               child: IconButton(
                                 icon: Icon(Icons.map,
-                                    color: Colors.white, size: 32),
+                                    color: Color.fromARGB(255, 127, 166, 233)),
                                 onPressed: () {
                                   changeHomeView();
                                 },

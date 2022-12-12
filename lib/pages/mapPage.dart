@@ -39,9 +39,9 @@ class _MapPageState extends State<mapPage> {
     super.initState();
   }
 
-  intilize() async {
+  Future<void> intilize() async {
     try {
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('properties')
           .get()
           .then((querySnapshot) {
@@ -1230,6 +1230,9 @@ class _MapPageState extends State<mapPage> {
             ));
           });
         });
+        Future.delayed(Duration(seconds: 2), () {
+          setState(() {});
+        });
       });
     } catch (e) {
       print(e.toString());
@@ -1255,10 +1258,10 @@ class _MapPageState extends State<mapPage> {
         Container(
           margin: EdgeInsets.all(24),
           child: CircleAvatar(
-            backgroundColor: Colors.blue,
-            radius: 28,
+            backgroundColor: Color.fromARGB(255, 225, 231, 255),
+            radius: 30,
             child: IconButton(
-              icon: Icon(Icons.home, color: Colors.white, size: 32),
+              icon: Icon(Icons.home, color: Color.fromARGB(255, 127, 166, 233)),
               onPressed: widget.onPressed,
             ),
           ),
