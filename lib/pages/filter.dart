@@ -1380,34 +1380,55 @@ class _FilterPageState extends State<FilterPage> {
                                     ),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => HomePage(
-                                                    type1: type1,
-                                                    propertyUse1: propertyUse1,
-                                                    in_floor: in_floor.text,
-                                                    city: city,
-                                                    address: address.text,
-                                                    number_of_bathrooms:
-                                                        number_of_bathrooms,
-                                                    number_of_rooms:
-                                                        number_of_rooms,
-                                                    number_of_livingRooms:
-                                                        number_of_livingRooms,
-                                                    number_of_floors:
-                                                        number_of_floors,
-                                                    number_of_apartments:
-                                                        number_of_apartments,
-                                                    pool: pool,
-                                                    basement: basement,
-                                                    elevator: elevator,
-                                                    ageRange_start : _ageRange.start,
-                                                    ageRange_end : _ageRange.end,
-                                                    MinSpace : MinSpace.text,
-                                                    MaxSpace : MaxSpace.text,
-                                                    MinPrice : MinPrice.text,
-                                                    MaxPrice : MaxPrice.text,)));
+                                        Navigator.pop(context, {
+                                          "type1": type1,
+                                          "propertyUse1": propertyUse1,
+                                          "in_floor": in_floor.text,
+                                          "city": city,
+                                          "address": address.text,
+                                          "number_of_bathrooms":number_of_bathrooms,
+                                          "number_of_rooms": number_of_rooms,
+                                          "number_of_livingRooms": number_of_livingRooms,
+                                          "number_of_floors": number_of_floors,
+                                          "number_of_apartments":number_of_apartments,
+                                          "pool": pool,
+                                          "basement": basement,
+                                          "elevator": elevator,
+                                          "ageRange_start": _ageRange.start,
+                                          "ageRange_end": _ageRange.end,
+                                          "MinSpace": MinSpace.text,
+                                          "MaxSpace": MaxSpace.text,
+                                          "MinPrice": MinPrice.text,
+                                          "MaxPrice": MaxPrice.text,
+                                        }
+
+                                            // MaterialPageRoute(
+                                            //     builder: (context) => HomePage(
+                                            //         type1: type1,
+                                            //         propertyUse1: propertyUse1,
+                                            //         in_floor: in_floor.text,
+                                            //         city: city,
+                                            //         address: address.text,
+                                            //         number_of_bathrooms:
+                                            //             number_of_bathrooms,
+                                            //         number_of_rooms:
+                                            //             number_of_rooms,
+                                            //         number_of_livingRooms:
+                                            //             number_of_livingRooms,
+                                            //         number_of_floors:
+                                            //             number_of_floors,
+                                            //         number_of_apartments:
+                                            //             number_of_apartments,
+                                            //         pool: pool,
+                                            //         basement: basement,
+                                            //         elevator: elevator,
+                                            //         ageRange_start : _ageRange.start,
+                                            //         ageRange_end : _ageRange.end,
+                                            //         MinSpace : MinSpace.text,
+                                            //         MaxSpace : MaxSpace.text,
+                                            //         MinPrice : MinPrice.text,
+                                            //         MaxPrice : MaxPrice.text,))
+                                            );
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:

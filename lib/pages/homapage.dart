@@ -14,47 +14,6 @@ import 'villadetailes.dart';
 import 'mapPage.dart';
 
 class HomePage extends StatefulWidget {
-  final String? type1;
-  final String? propertyUse1;
-  final String? in_floor;
-  final String? city;
-  final String? address;
-  final int? number_of_bathrooms;
-  final int? number_of_rooms;
-  final int? number_of_livingRooms;
-  final int? number_of_floors;
-  final int? number_of_apartments;
-  final bool? pool;
-  final bool? basement;
-  final bool? elevator;
-  final double? ageRange_start;
-  final double? ageRange_end;
-  final String? MinSpace;
-  final String? MaxSpace;
-  final String? MinPrice;
-  final String? MaxPrice;
-
-  HomePage({
-    this.type1,
-    this.propertyUse1,
-    this.in_floor,
-    this.city,
-    this.address,
-    this.number_of_bathrooms,
-    this.number_of_floors,
-    this.number_of_livingRooms,
-    this.number_of_rooms,
-    this.number_of_apartments,
-    this.basement,
-    this.elevator,
-    this.pool,
-    this.ageRange_start,
-    this.ageRange_end,
-    this.MinPrice,
-    this.MaxPrice,
-    this.MinSpace,
-    this.MaxSpace,
-  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -74,7 +33,25 @@ class _HomePageState extends State<HomePage> {
   String name = '';
   bool FilterValue = false;
   bool isMap = false;
-  //'${widget.type1}'
+  String? type1;
+  String? propertyUse1;
+  String? in_floor;
+  String? city;
+  String? address;
+  int? number_of_bathrooms;
+  int? number_of_rooms;
+  int? number_of_livingRooms;
+  int? number_of_floors;
+  int? number_of_apartments;
+  bool? pool;
+  bool? basement;
+  bool? elevator;
+  double? ageRange_start;
+  double? ageRange_end;
+  String? MinSpace;
+  String? MaxSpace;
+  String? MinPrice;
+  String? MaxPrice;
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     try {
@@ -304,98 +281,720 @@ class _HomePageState extends State<HomePage> {
     FilterForSale.clear();
 
     listItem.forEach((element) {
-      if (element is Villa) {
-        final villa = element;
-        if (double.parse(villa.properties.space) <
-                double.parse('${widget.MaxSpace}') &&
-            double.parse(villa.properties.space) >
-                double.parse('${widget.MinSpace}') &&
-            double.parse(villa.properties.price) <
-                double.parse('${widget.MaxPrice}') &&
-            double.parse(villa.properties.price) >
-                double.parse('${widget.MinPrice}') &&
-            villa.properties.city == '${widget.city}' &&
-            villa.properties.neighborhood == '${widget.address}' &&
-            villa.property_age <= widget.ageRange_end! &&
-            villa.property_age >= widget.ageRange_start! &&
-            villa.number_of_room == widget.number_of_rooms &&
-            villa.number_of_bathroom == widget.number_of_bathrooms &&
-            villa.number_of_livingRooms == widget.number_of_livingRooms &&
-            villa.number_of_floor == widget.number_of_floors &&
-            villa.pool == widget.pool &&
-            villa.basement == widget.basement &&
-            villa.elevator == widget.elevator) {
-          FilteredItems.add(villa);
-          _handleRentAndSaleItems(villa);
-          print("فيلا مطابقه");
-        }
-      }
-      if (element is Apartment) {
-        final apartment = element;
-        if (apartment.in_floor == '${widget.in_floor}' &&
-            double.parse(apartment.properties.space) <
-                double.parse('${widget.MaxSpace}') &&
-            double.parse(apartment.properties.space) >
-                double.parse('${widget.MinSpace}') &&
-            double.parse(apartment.properties.price) <
-                double.parse('${widget.MaxPrice}') &&
-            double.parse(apartment.properties.price) >
-                double.parse('${widget.MinPrice}') &&
-            apartment.properties.city == '${widget.city}' &&
-            apartment.properties.neighborhood == '${widget.address}' &&
-            apartment.property_age <= widget.ageRange_end! &&
-            apartment.property_age >= widget.ageRange_start! &&
-            apartment.number_of_room == widget.number_of_rooms &&
-            apartment.number_of_bathroom == widget.number_of_bathrooms &&
-            apartment.number_of_livingRooms == widget.number_of_livingRooms &&
-            apartment.number_of_floor == widget.number_of_floors &&
-            apartment.elevator == widget.elevator) {
-          FilteredItems.add(apartment);
-          _handleRentAndSaleItems(apartment);
-          print("شقه مطابقه");
-        }
-      }
-      if (element is Building) {
-        final building = element;
-        if (double.parse(building.properties.space) <
-                double.parse('${widget.MaxSpace}') &&
-            double.parse(building.properties.space) >
-                double.parse('${widget.MinSpace}') &&
-            double.parse(building.properties.price) <
-                double.parse('${widget.MaxPrice}') &&
-            double.parse(building.properties.price) >
-                double.parse('${widget.MinPrice}') &&
-            building.properties.city == '${widget.city}' &&
-            building.properties.neighborhood == '${widget.address}' &&
-            building.property_age <= widget.ageRange_end! &&
-            building.property_age >= widget.ageRange_start! &&
-            building.number_of_apartment == widget.number_of_apartments &&
-            building.number_of_floor == widget.number_of_floors &&
-            building.pool == widget.pool &&
-            building.elevator == widget.elevator) {
-          FilteredItems.add(building);
-          _handleRentAndSaleItems(building);
-          print("عمارة مطابقه");
-        }
-      }
+      // if (element is Villa) {
+      //   final villa = element;
+      //   if (double.parse(villa.properties.space) <
+      //           double.parse('${widget.MaxSpace}') &&
+      //       double.parse(villa.properties.space) >
+      //           double.parse('${widget.MinSpace}') &&
+      //       double.parse(villa.properties.price) <
+      //           double.parse('${widget.MaxPrice}') &&
+      //       double.parse(villa.properties.price) >
+      //           double.parse('${widget.MinPrice}') &&
+      //       villa.properties.city == '${widget.city}' &&
+      //       villa.properties.neighborhood == '${widget.address}' &&
+      //       villa.property_age <= widget.ageRange_end! &&
+      //       villa.property_age >= widget.ageRange_start! &&
+      //       villa.number_of_room == widget.number_of_rooms &&
+      //       villa.number_of_bathroom == widget.number_of_bathrooms &&
+      //       villa.number_of_livingRooms == widget.number_of_livingRooms &&
+      //       villa.number_of_floor == widget.number_of_floors &&
+      //       villa.pool == widget.pool &&
+      //       villa.basement == widget.basement &&
+      //       villa.elevator == widget.elevator) {
+      //     FilteredItems.add(villa);
+      //     _handleRentAndSaleItems(villa);
+      //     print("فيلا مطابقه");
+      //   }
+      // }
+      // if (element is Apartment) {
+      //   final apartment = element;
+      //   if (apartment.in_floor == '${widget.in_floor}' &&
+      //       double.parse(apartment.properties.space) <
+      //           double.parse('${widget.MaxSpace}') &&
+      //       double.parse(apartment.properties.space) >
+      //           double.parse('${widget.MinSpace}') &&
+      //       double.parse(apartment.properties.price) <
+      //           double.parse('${widget.MaxPrice}') &&
+      //       double.parse(apartment.properties.price) >
+      //           double.parse('${widget.MinPrice}') &&
+      //       apartment.properties.city == '${widget.city}' &&
+      //       apartment.properties.neighborhood == '${widget.address}' &&
+      //       apartment.property_age <= widget.ageRange_end! &&
+      //       apartment.property_age >= widget.ageRange_start! &&
+      //       apartment.number_of_room == widget.number_of_rooms &&
+      //       apartment.number_of_bathroom == widget.number_of_bathrooms &&
+      //       apartment.number_of_livingRooms == widget.number_of_livingRooms &&
+      //       apartment.number_of_floor == widget.number_of_floors &&
+      //       apartment.elevator == widget.elevator) {
+      //     FilteredItems.add(apartment);
+      //     _handleRentAndSaleItems(apartment);
+      //     print("شقه مطابقه");
+      //   }
+      // }
+      // if (element is Building) {
+      //   final building = element;
+      //   if (double.parse(building.properties.space) <
+      //           double.parse('${widget.MaxSpace}') &&
+      //       double.parse(building.properties.space) >
+      //           double.parse('${widget.MinSpace}') &&
+      //       double.parse(building.properties.price) <
+      //           double.parse('${widget.MaxPrice}') &&
+      //       double.parse(building.properties.price) >
+      //           double.parse('${widget.MinPrice}') &&
+      //       building.properties.city == '${widget.city}' &&
+      //       building.properties.neighborhood == '${widget.address}' &&
+      //       building.property_age <= widget.ageRange_end! &&
+      //       building.property_age >= widget.ageRange_start! &&
+      //       building.number_of_apartment == widget.number_of_apartments &&
+      //       building.number_of_floor == widget.number_of_floors &&
+      //       building.pool == widget.pool &&
+      //       building.elevator == widget.elevator) {
+      //     FilteredItems.add(building);
+      //     _handleRentAndSaleItems(building);
+      //     print("عمارة مطابقه");
+      //   }
+      // }
+
+      //((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))
 
       if (element is Land) {
         final land = element;
-        if (land.properties!.purpose == '${widget.propertyUse1}' &&
-            double.parse(land.properties!.space) <
-                double.parse('${widget.MaxSpace}') &&
-            double.parse(land.properties!.space) >
-                double.parse('${widget.MinSpace}') &&
-            double.parse(land.properties!.price) <
-                double.parse('${widget.MaxPrice}') &&
-            double.parse(land.properties!.price) >
-                double.parse('${widget.MinPrice}') &&
-            land.properties!.city == '${widget.city}' &&
-            land.properties!.neighborhood == '${widget.address}') {
-          FilteredItems.add(land);
-          _handleRentAndSaleItems(land);
-          print("ارض  مطابقه");
-        }
+        if(land.properties!.purpose == propertyUse1){
+          if((MaxSpace == null) && (double.parse(land.properties!.space) <= double.parse(MaxSpace!))){
+            if((MinSpace == null) && (double.parse(land.properties!.space) >= double.parse(MinSpace!))){
+              if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))){
+                if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.city == city){
+                  if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+              } else if(land.properties!.city == city){
+                if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(land.properties!.neighborhood == address){
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))) {
+              if (((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))) {
+                if (land.properties!.city == city) {
+                  if (land.properties!.neighborhood == address) {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.city == city) {
+                if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+              if(land.properties!.city == city){
+                if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(land.properties!.neighborhood == address){
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.city == city) {
+              if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print("ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if(land.properties!.neighborhood == address){
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print("ارض  مطابقه");
+            } else {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print("6 ارض  مطابقه");
+            }
+          } else if((MinSpace == null) && (double.parse(land.properties!.space) >= double.parse(MinSpace!))){
+            if ((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))) {
+              if (((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))) {
+                if (land.properties!.city == city) {
+                  if (land.properties!.neighborhood == address) {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.city == city) {
+                if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))) {
+              if (land.properties!.city == city) {
+                if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.city == city) {
+              if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print("ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.neighborhood == address) {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            } else {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            }
+          } else if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))){
+            if (((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))) {
+              if (land.properties!.city == city) {
+                if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.city == city) {
+              if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print("ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.neighborhood == address) {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            } else {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            }
+          } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+            if (land.properties!.city == city) {
+              if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print("ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.neighborhood == address) {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            } else {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            }
+          } else if(land.properties!.city == city){
+            if (land.properties!.neighborhood == address) {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print("ارض  مطابقه");
+            } else {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print(" ارض  مطابقه");
+            }
+          } else if(land.properties!.neighborhood == address){
+            FilteredItems.add(land);
+            _handleRentAndSaleItems(land);
+            print(" ارض  مطابقه");
+          }else {
+            FilteredItems.add(land);
+            _handleRentAndSaleItems(land);
+            print("1 ارض  مطابقه");
+          } /////////////////////////////////////////////////////////////////////////////////////END PROPERTY USE////////////////////////////////////////
+        } else if((MaxSpace == null) && (double.parse(land.properties!.space) <= double.parse(MaxSpace!))){
+            if((MinSpace == null) && (double.parse(land.properties!.space) >= double.parse(MinSpace!))){
+              if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))){
+                if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.city == city){
+                  if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+              } else if(land.properties!.city == city){
+                if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(land.properties!.neighborhood == address){
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))) {
+              if (((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))) {
+                if (land.properties!.city == city) {
+                  if (land.properties!.neighborhood == address) {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.city == city) {
+                if (land.properties!.neighborhood == address) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+              if(land.properties!.city == city){
+                if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(land.properties!.neighborhood == address){
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if (land.properties!.city == city) {
+              if (land.properties!.neighborhood == address) {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print("ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              }
+            } else if(land.properties!.neighborhood == address){
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print("ارض  مطابقه");
+            } else {
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print("6 ارض  مطابقه");
+            } ///////////////////////////////////////////////////////////////////END MAX SPACE////////////////////////////////////////////////////
+          } else if((MinSpace == null) && (double.parse(land.properties!.space) >= double.parse(MinSpace!))){
+              if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))){
+                if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.city == city){
+                  if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+              } else if(land.properties!.city == city){
+                if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                }
+              } else if(land.properties!.neighborhood == address){
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } else {
+                FilteredItems.add(land);
+                _handleRentAndSaleItems(land);
+                print(" ارض  مطابقه");
+              } //////////////////////////////////END MIN SPACE //////////////////////////////////////////////////////////
+            } else if((MinPrice == null) && (double.parse(land.properties!.price) >= double.parse(MinPrice!))){
+                if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.city == city){
+                  if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print("ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  }
+                } else if(land.properties!.neighborhood == address){
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } else {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print(" ارض  مطابقه");
+                } ////////////////////////////END MIN PRICE //////////////////////////////////////////
+              } else if(((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))){
+                  if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    }
+                  } else if(land.properties!.neighborhood == address){
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } else {
+                    FilteredItems.add(land);
+                    _handleRentAndSaleItems(land);
+                    print(" ارض  مطابقه");
+                  } ////////////////////////////////////END MAX PRICE//////////////////////////////////////////////
+                } else if(land.properties!.city == city){
+                    if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } else {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" ارض  مطابقه");
+                    } //////////////////////////////// END CITY ///////////////////////////////////////
+                  } else if(land.properties!.neighborhood == address){
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("ارض  مطابقه");
+                    } /////////////////////////////////// END ADDRESS ///////////////////////////
       }
     });
   }
@@ -427,32 +1026,61 @@ class _HomePageState extends State<HomePage> {
                       child: AppBar(
                         backgroundColor: Color.fromARGB(255, 127, 166, 233),
                         leading: IconButton(
-                          onPressed: () {
-                            print('${widget.type1}');
-                            print('${widget.propertyUse1}');
-                            print('${widget.in_floor}');
-                            print('${widget.city}');
-                            print('${widget.address}');
-                            print('${widget.number_of_bathrooms}');
-                            print('${widget.number_of_rooms}'); //
-                            print('${widget.number_of_livingRooms}');
-                            print('${widget.number_of_floors}'); //
-                            print('${widget.number_of_apartments}'); //
-                            print('${widget.pool}');
-                            print('${widget.basement}'); //
-                            print('${widget.elevator}');
-                            print('${widget.ageRange_start}');
-                            print('${widget.ageRange_end}');
-                            print('${widget.MinSpace}');
-                            print('${widget.MaxSpace}');
-                            print('${widget.MinPrice}');
-                            print('${widget.MaxPrice}');
-                            FilterValue = true;
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        FilterPage(FilterValue: FilterValue)));
+                          onPressed: () async {
+                            print("a $type1");
+                            print("b $propertyUse1");
+                            print("c $in_floor");
+                            print("d $city");
+                            print("e $address");
+                            print("f $number_of_bathrooms");
+                            print("g $number_of_rooms");//
+                            print("h $number_of_livingRooms");
+                            print("i $number_of_floors");//
+                            print("j $number_of_apartments");//
+                            print("k $pool");
+                            print("l $basement");//
+                            print("m $elevator");
+                            print("n $ageRange_start");
+                            print("o $ageRange_end");
+                            if(MinSpace == null){
+                              print('MinSpace empty');
+                            }
+                            if(MaxSpace == null){
+                              print('MaxSpace empty');
+                            }
+                            if(MinPrice == null){
+                              print('MinPrice empty');
+                            }
+                            if(MaxPrice == null){
+                              print('MaxPrice empty');
+                            }
+                                  FilterValue = true;
+                                  final FilterResult = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              FilterPage(FilterValue: FilterValue)));
+                                      setState(() {
+                                        type1 = FilterResult["type1"];
+                                        propertyUse1 = FilterResult["propertyUse1"];
+                                        in_floor = FilterResult["in_floor"];
+                                        city = FilterResult["city"];
+                                        address = FilterResult["address"];
+                                        number_of_bathrooms = FilterResult["number_of_bathrooms"];
+                                        number_of_floors = FilterResult["number_of_floors"];
+                                        number_of_livingRooms = FilterResult["number_of_livingRooms"];
+                                        number_of_rooms = FilterResult["number_of_rooms"];
+                                        number_of_apartments = FilterResult["number_of_apartments"];
+                                        basement = FilterResult["basement"];
+                                        elevator = FilterResult["elevator"];
+                                        pool = FilterResult["pool"];
+                                        ageRange_start = FilterResult["ageRange_start"];
+                                        ageRange_end = FilterResult["ageRange_end"];
+                                        MinPrice = FilterResult["MinPrice"];
+                                        MaxPrice = FilterResult["MaxPrice"];
+                                        MinSpace = FilterResult["MinSpace"];
+                                        MaxSpace = FilterResult["MaxSpace"];
+                                      });
                           },
                           icon: const Icon(Icons.filter_alt_outlined),
                         ),
@@ -540,7 +1168,7 @@ class _HomePageState extends State<HomePage> {
                                         return _handleSnapshot(snapshot);
                                       },
                                     )
-                                  : _buildSearchItems(),
+                                  : _buildFilterItems(), //_buildSearchItems(),
                               name.isEmpty
                                   ? _handleListItems(forRent)
                                   : searchItemsForRent.isEmpty
