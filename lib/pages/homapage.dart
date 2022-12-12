@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController controller = TextEditingController();
   String name = '';
   bool FilterValue = false;
+  bool isMap = false;
   //'${widget.type1}'
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
@@ -177,6 +178,16 @@ class _HomePageState extends State<HomePage> {
 
   //! NEW FUNCTIONS
 
+  void changeHomeView() {
+    setState(() {
+      if (isMap) {
+        isMap = false;
+      } else {
+        isMap = true;
+      }
+    });
+  }
+
   _handleRentAndSaleItems(dynamic item) {
     if (name.isEmpty) {
       if (item.properties.classification != "للإيجار") {
@@ -280,157 +291,176 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        top: true,
-        child: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              leading: IconButton(
-                onPressed: () {
-            print('${widget.type1}');
-            print('${widget.propertyUse1}');
-            print('${widget.in_floor}');
-            print('${widget.city}');
-            print('${widget.address}');
-            print('${widget.number_of_bathrooms}');
-            print('${widget.number_of_rooms}');//
-            print('${widget.number_of_livingRooms}');
-            print('${widget.number_of_floors}');//
-            print('${widget.number_of_apartments}');//
-            print('${widget.pool}');
-            print('${widget.basement}');//
-            print('${widget.elevator}');
-            print('${widget.ageRange_start}');
-            print('${widget.ageRange_end}');
-            print('${widget.MinSpace}');
-            print('${widget.MaxSpace}');
-            print('${widget.MinPrice}');
-            print('${widget.MaxPrice}');
-                  FilterValue = true;
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              FilterPage(FilterValue: FilterValue)));
-                },
-                icon: const Icon(Icons.filter_alt_outlined),
-              ),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      textAlign: TextAlign.right,
-                      controller: controller,
-                      onChanged: (value) {
-                        setState(() {
-                          // searchItemsForSale.clear();
-                          // searchItemsForRent.clear();
-                          name = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 14, 41, 99))),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)),
-                        alignLabelWithHint: true,
-                        hintText: 'ابحث عن الحي أو المدينة أو نوع العقار',
-                        hintStyle: TextStyle(
-                            color: Color.fromARGB(143, 255, 255, 255),
-                            fontFamily: "Tajawal-m"),
+    return isMap
+        ? mapPage(
+            onPressed: () {
+              changeHomeView();
+            },
+          )
+        : SafeArea(
+            top: true,
+            child: DefaultTabController(
+                length: 3,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 150,
+                      width: MediaQuery.of(context).size.width,
+                      child: AppBar(
+                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                        leading: IconButton(
+                          onPressed: () {
+                            print('${widget.type1}');
+                            print('${widget.propertyUse1}');
+                            print('${widget.in_floor}');
+                            print('${widget.city}');
+                            print('${widget.address}');
+                            print('${widget.number_of_bathrooms}');
+                            print('${widget.number_of_rooms}'); //
+                            print('${widget.number_of_livingRooms}');
+                            print('${widget.number_of_floors}'); //
+                            print('${widget.number_of_apartments}'); //
+                            print('${widget.pool}');
+                            print('${widget.basement}'); //
+                            print('${widget.elevator}');
+                            print('${widget.ageRange_start}');
+                            print('${widget.ageRange_end}');
+                            print('${widget.MinSpace}');
+                            print('${widget.MaxSpace}');
+                            print('${widget.MinPrice}');
+                            print('${widget.MaxPrice}');
+                            FilterValue = true;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        FilterPage(FilterValue: FilterValue)));
+                          },
+                          icon: const Icon(Icons.filter_alt_outlined),
+                        ),
+                        title: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                textAlign: TextAlign.right,
+                                controller: controller,
+                                onChanged: (value) {
+                                  setState(() {
+                                    // searchItemsForSale.clear();
+                                    // searchItemsForRent.clear();
+                                    name = value;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 14, 41, 99))),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white)),
+                                  alignLabelWithHint: true,
+                                  hintText:
+                                      'ابحث عن الحي أو المدينة أو نوع العقار',
+                                  hintStyle: TextStyle(
+                                      color: Color.fromARGB(143, 255, 255, 255),
+                                      fontFamily: "Tajawal-m"),
+                                ),
+                                cursorColor: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                        bottom: const TabBar(
+                          labelStyle: TextStyle(
+                            fontFamily: "Tajawal-b",
+                            fontWeight: FontWeight.w100,
+                          ),
+                          indicatorColor: Colors.white,
+                          tabs: [
+                            Tab(
+                              text: 'الكل',
+                            ),
+                            Tab(
+                              text: 'للبيع',
+                            ),
+                            Tab(
+                              text: 'للإيجار',
+                            ),
+                          ],
+                        ),
                       ),
-                      cursorColor: Colors.white,
                     ),
-                  ),
-                ],
-              ),
-              actions: [
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-              bottom: const TabBar(
-                labelStyle: TextStyle(
-                  fontFamily: "Tajawal-b",
-                  fontWeight: FontWeight.w100,
-                ),
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(
-                    text: 'الكل',
-                  ),
-                  Tab(
-                    text: 'للبيع',
-                  ),
-                  Tab(
-                    text: 'للإيجار',
-                  ),
-                ],
-              ),
-            ),
-            body: TabBarView(
-              children: [
-                name.isEmpty
-                    ? FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        future: FirebaseFirestore.instance
-                            .collection('properties')
-                            .get(),
-                        builder: (
-                          BuildContext context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot,
-                        ) {
-                          return _handleSnapshot(snapshot);
-                        },
-                      )
-                    : _buildSearchItems(),
-                name.isEmpty
-                    ? _handleListItems(forRent)
-                    : searchItemsForRent.isEmpty
-                        ? Center(child: Text("لم يتم العثور على نتائج"))
-                        : _handleListItems(searchItemsForRent),
-                name.isEmpty
-                    ? _handleListItems(forSale)
-                    : searchItemsForSale.isEmpty
-                        ? Center(child: Text("لم يتم العثور على نتائج"))
-                        : _handleListItems(searchItemsForSale),
-                // Center(child: Text("For sale")),
-                // Center(child: Text("For rent")),
-              ],
-            ),
-
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.startFloat,
-
-            floatingActionButton: SizedBox(
-              width: 75,
-              height: 75,
-              child: FloatingActionButton(
-                child: Icon(
-                  Icons.map,
-                  size: 35,
-                ), //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
-                backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                foregroundColor: Color.fromARGB(255, 93, 119, 185),
-                onPressed: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => mapPage()))
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+                    Expanded(
+                      child: Stack(
+                        alignment: Alignment.bottomLeft,
+                        children: [
+                          TabBarView(
+                            children: [
+                              name.isEmpty
+                                  ? FutureBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
+                                      future: FirebaseFirestore.instance
+                                          .collection('properties')
+                                          .get(),
+                                      builder: (
+                                        BuildContext context,
+                                        AsyncSnapshot<
+                                                QuerySnapshot<
+                                                    Map<String, dynamic>>>
+                                            snapshot,
+                                      ) {
+                                        return _handleSnapshot(snapshot);
+                                      },
+                                    )
+                                  : _buildSearchItems(),
+                              name.isEmpty
+                                  ? _handleListItems(forRent)
+                                  : searchItemsForRent.isEmpty
+                                      ? Center(
+                                          child:
+                                              Text("لم يتم العثور على نتائج"))
+                                      : _handleListItems(searchItemsForRent),
+                              name.isEmpty
+                                  ? _handleListItems(forSale)
+                                  : searchItemsForSale.isEmpty
+                                      ? Center(
+                                          child:
+                                              Text("لم يتم العثور على نتائج"))
+                                      : _handleListItems(searchItemsForSale),
+                              // Center(child: Text("For sale")),
+                              // Center(child: Text("For rent")),
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(24),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              radius: 28,
+                              child: IconButton(
+                                icon: Icon(Icons.map,
+                                    color: Colors.white, size: 32),
+                                onPressed: () {
+                                  changeHomeView();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+          );
   }
 }
 

@@ -1,14 +1,10 @@
 // ignore_for_file: dead_code, prefer_const_constructors
-
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nozol_application/pages/homapage.dart';
-import 'package:nozol_application/pages/navigationbar.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nozol_application/pages/villa.dart';
-import 'package:nozol_application/registration/log_in.dart';
 import 'apartment.dart';
 import 'apartmentdetailes.dart';
 import 'building.dart';
@@ -16,18 +12,27 @@ import 'buildingdetailes.dart';
 import 'land.dart';
 import 'landdetailes.dart';
 import 'villadetailes.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:label_marker/label_marker.dart';
 
 class mapPage extends StatefulWidget {
-  const mapPage({Key? key}) : super(key: key);
+  const mapPage({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final void Function()? onPressed;
 
   @override
   State<mapPage> createState() => _MapPageState();
 }
 
 class _MapPageState extends State<mapPage> {
-  Completer<GoogleMapController> _controller = Completer();
-  List<Marker> markers = [];
+  int currentIndex = 0;
+
+  final PageStorageBucket bucket = PageStorageBucket();
+
+  GoogleMapController? controller;
+  Set<Marker> markers = {};
 
   void initState() {
     intilize();
@@ -42,7 +47,9 @@ class _MapPageState extends State<mapPage> {
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           setState(() {
-            markers.add(Marker(
+            var titel = element['price'];
+            markers.addLabelMarker(LabelMarker(
+              label: titel,
               markerId: MarkerId(element['property_id']),
               position: LatLng(element['latitude'], element['longitude']),
               onTap: () {
@@ -1232,47 +1239,31 @@ class _MapPageState extends State<mapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 127, 166, 233),
-            title: Text("MAP"),
+    return Stack(
+      alignment: Alignment.bottomLeft,
+      children: [
+        GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: LatLng(23.885942, 45.079162),
+            zoom: 5,
           ),
-
-          body: GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(23.885942, 45.079162),
-              zoom: 5,
-            ),
-            onMapCreated: (GoogleController) {
-              _controller.complete(GoogleController);
-            },
-            markers: markers.map((e) => e).toSet(),
-          ),
-
-// this the button of swithing
-          floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-          floatingActionButton: SizedBox(
-            width: 75,
-            height: 75,
-            child: FloatingActionButton(
-              child: Icon(
-                Icons.home,
-                size: 35,
-              ), //Text("View map", style: TextStyle(fontSize: 15, fontFamily: "Tajawal-b", ), textAlign: TextAlign.center, ),
-              backgroundColor: Color.fromARGB(255, 255, 255, 255),
-              foregroundColor: Color.fromARGB(255, 93, 119, 185),
-              onPressed: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NavigationBarPage()))
-              },
+          onMapCreated: (mapController) {
+            controller = mapController;
+          },
+          markers: markers.map((e) => e).toSet(),
+        ),
+        Container(
+          margin: EdgeInsets.all(24),
+          child: CircleAvatar(
+            backgroundColor: Colors.blue,
+            radius: 28,
+            child: IconButton(
+              icon: Icon(Icons.home, color: Colors.white, size: 32),
+              onPressed: widget.onPressed,
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
