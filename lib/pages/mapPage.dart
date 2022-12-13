@@ -47,7 +47,24 @@ class _MapPageState extends State<mapPage> {
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           setState(() {
-            var titel = element['price'];
+            String titel = element['price'];
+
+            var num = int.parse(titel);
+            if (titel.length <= 6) {
+              var x = num / 1000;
+              titel = x.toString() + "K";
+            }
+            ;
+            if (titel.length > 6 && titel.length <= 9) {
+              var x = num / 1000000;
+              titel = x.toString() + "M";
+            }
+            ;
+            if (titel.length > 9 && titel.length <= 12) {
+              var x = num / 1000000000;
+              titel = x.toString() + "B";
+            }
+            ;
             markers.addLabelMarker(LabelMarker(
               label: titel,
               markerId: MarkerId(element['property_id']),
@@ -153,7 +170,7 @@ class _MapPageState extends State<mapPage> {
                                         ),
                                         child: Center(
                                           child: Icon(
-                                            Icons.arrow_forward_ios,
+                                            Icons.close,
                                             color: const Color.fromARGB(
                                                 255, 127, 166, 233),
                                             size: 28,
@@ -467,7 +484,7 @@ class _MapPageState extends State<mapPage> {
                                         ),
                                         child: Center(
                                           child: Icon(
-                                            Icons.arrow_forward_ios,
+                                            Icons.close,
                                             color: const Color.fromARGB(
                                                 255, 127, 166, 233),
                                             size: 28,
@@ -740,7 +757,7 @@ class _MapPageState extends State<mapPage> {
                                         ),
                                         child: Center(
                                           child: Icon(
-                                            Icons.arrow_forward_ios,
+                                            Icons.close,
                                             color: const Color.fromARGB(
                                                 255, 127, 166, 233),
                                             size: 28,
@@ -1014,7 +1031,7 @@ class _MapPageState extends State<mapPage> {
                                         ),
                                         child: Center(
                                           child: Icon(
-                                            Icons.arrow_forward_ios,
+                                            Icons.close,
                                             color: const Color.fromARGB(
                                                 255, 127, 166, 233),
                                             size: 28,
