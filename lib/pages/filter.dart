@@ -714,12 +714,8 @@ class _FilterPageState extends State<FilterPage> {
                                                   ),
                                                 ),
                                                 validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'الرجاء عدم ترك الخانة فارغة!';
-                                                  }
                                                   if (RegExp(r'[0-9]')
-                                                      .hasMatch(value)) {
+                                                      .hasMatch(value!)) {
                                                     return 'الرجاء إدخال أحرف فقط';
                                                   }
                                                 },
