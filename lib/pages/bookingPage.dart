@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,7 +41,7 @@ class _BookingPagestate extends State<boookingPage> {
 late FirebaseAuth auth = FirebaseAuth.instance;
 late User? user = auth.currentUser;
 late String curentId = user!.uid;
-
+var test ;
   final now = DateTime.now();
   DateTime Reseve = DateTime.now();
 
@@ -75,6 +77,8 @@ initialTime: TimeOfDay(hour: now.hour, minute: now.minute),
  if(ReservedTime == null)
  return;
 
+//AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> test ; 
+                                            
 
 final NewReseration = DateTime(
 ReservedDate.year,
@@ -85,14 +89,33 @@ ReservedTime.minute,
 ); 
 
 FirebaseFirestore.instance.collection('properties').doc('${widget.property_id}')
-        .collection('bookings')
-        .add({
+.collection('bookings').where( 'Date' , isEqualTo: NewReseration ).get().then(
+(element){
+if(element.docs.isEmpty)
+{
+
+  FirebaseFirestore.instance.collection('properties').doc('${widget.property_id}')
+.collection('bookings')
+.add({
 "Date" : NewReseration,
 "property_id" : '${widget.property_id}', 
 "buyer_id" : curentId,
-        })
-        .then((value) => print("Booking Added"))
-        .catchError((error) => print("Failed to add booking: $error"));
+    })
+.then((value) => print("Booking Added"))
+.catchError((error) => print("Failed to add booking: $error"));
+print("NOOOOOO SAME BOOKING");
+}
+else
+{
+  print("THERE ARE SAME BOOKING :)))))))");
+}
+
+} );
+
+
+
+
+
 
   } ,
 
