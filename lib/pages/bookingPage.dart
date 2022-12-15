@@ -32,6 +32,8 @@ class boookingPage extends StatefulWidget {
   State<boookingPage> createState() => _BookingPagestate();
 }
 
+enum booktype { inperson, online }
+
 class _BookingPagestate extends State<boookingPage> {
 //'${widget.User_id}' to call User_id from up
 
@@ -45,6 +47,8 @@ class _BookingPagestate extends State<boookingPage> {
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
   String _valueSaved1 = '';
+  booktype? _class = booktype.inperson;
+  String Booktype = 'حضوري';
 
 //  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
   final datecontrolar = TextEditingController(
@@ -101,10 +105,6 @@ class _BookingPagestate extends State<boookingPage> {
                     FutureBuilder(
                       future: getCurrentUser(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
                         if (snapshot.hasData) {
                           final cuuser = snapshot.data!;
                           final nameB =
@@ -166,10 +166,6 @@ class _BookingPagestate extends State<boookingPage> {
                                     //initialValue: _initialValue,
                                     firstDate: DateTime.now(),
                                     lastDate: DateTime(2024),
-                                    icon: Icon(
-                                      Icons.calendar_month,
-                                      color: Color.fromARGB(255, 127, 166, 233),
-                                    ),
 
                                     decoration: InputDecoration(
                                       labelText: "التاريخ  :",
@@ -287,6 +283,73 @@ class _BookingPagestate extends State<boookingPage> {
                                     },
                                   ),
                                 )),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(' تفضل ان تكون الجولة : ',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontFamily: "Tajawal-b",
+                                      ),
+                                      textDirection: TextDirection.rtl),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.5,
+                                        child: RadioListTile(
+                                          title: const Text(
+                                            'حضورية',
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontFamily: "Tajawal-m",
+                                                color: Color.fromARGB(
+                                                    255, 73, 75, 82)),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          value: booktype.inperson,
+                                          groupValue: _class,
+                                          onChanged: (booktype? value) {
+                                            setState(() {
+                                              _class = value;
+                                              if (_class == booktype.inperson)
+                                                Booktype = 'حضورية';
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              child: RadioListTile(
+                                title: const Text(
+                                  'افتراضية',
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "Tajawal-m",
+                                      color: Color.fromARGB(255, 73, 75, 82)),
+                                  textAlign: TextAlign.start,
+                                ),
+                                value: booktype.online,
+                                groupValue: _class,
+                                onChanged: (booktype? value) {
+                                  setState(() {
+                                    _class = value;
+                                    if (_class == booktype.online)
+                                      Booktype = 'افتراضية';
+                                  });
+                                },
+                              ),
+                            ),
                             SizedBox(
                               height: 50,
                             ),
