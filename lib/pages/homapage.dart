@@ -281,32 +281,381 @@ class _HomePageState extends State<HomePage> {
     FilterForSale.clear();
 
     listItem.forEach((element) {
-      // if (element is Villa) {
-      //   final villa = element;
-      //   if (double.parse(villa.properties.space) <
-      //           double.parse('${widget.MaxSpace}') &&
-      //       double.parse(villa.properties.space) >
-      //           double.parse('${widget.MinSpace}') &&
-      //       double.parse(villa.properties.price) <
-      //           double.parse('${widget.MaxPrice}') &&
-      //       double.parse(villa.properties.price) >
-      //           double.parse('${widget.MinPrice}') &&
-      //       villa.properties.city == '${widget.city}' &&
-      //       villa.properties.neighborhood == '${widget.address}' &&
-      //       villa.property_age <= widget.ageRange_end! &&
-      //       villa.property_age >= widget.ageRange_start! &&
-      //       villa.number_of_room == widget.number_of_rooms &&
-      //       villa.number_of_bathroom == widget.number_of_bathrooms &&
-      //       villa.number_of_livingRooms == widget.number_of_livingRooms &&
-      //       villa.number_of_floor == widget.number_of_floors &&
-      //       villa.pool == widget.pool &&
-      //       villa.basement == widget.basement &&
-      //       villa.elevator == widget.elevator) {
-      //     FilteredItems.add(villa);
-      //     _handleRentAndSaleItems(villa);
-      //     print("فيلا مطابقه");
-      //   }
+
+      if (element is Villa) {
+         final villa = element;
+
+      //   bool flag = true;
+      //   do {
+      //     if (villa.properties.city == city) {
+      //       if (villa.pool == pool) {
+      //         if (villa.basement == basement) {
+      //           if (villa.elevator == elevator) {
+      //             if (villa.number_of_room == number_of_rooms) {
+      //               if (villa.number_of_bathroom == number_of_bathrooms) {
+      //                 if (villa.number_of_livingRooms == number_of_livingRooms) {
+      //                   if (villa.number_of_floor == number_of_floors) {
+      //                     if (villa.property_age <= ageRange_end! && villa.property_age >= ageRange_start!) {
+      //                       if ((MaxSpace!.isNotEmpty)) {
+      //                         if ((int.parse(villa.properties.space) <= int.parse(MaxSpace!))) {
+      //                           if ((MinSpace!.isNotEmpty)) {
+      //                             if ((int.parse(villa.properties.space) >=int.parse(MinSpace!)) && (int.parse(villa.properties.space) <= int.parse(MaxSpace!))) {
+      //                               if ((MinPrice!.isNotEmpty)) {
+      //                                 if ((int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+      //                                   if (((MaxPrice!.isNotEmpty))) {
+      //                                     if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+      //                                       if (address!.isNotEmpty) {
+      //                                         if (villa.properties.neighborhood == address) {
+      //                                           FilteredItems.add(villa);
+      //                                           _handleRentAndSaleItems(villa);
+      //                                           print("1ارض  مطابقه");
+      //                                         }
+      //                                         break;
+      //                                       }
+      //                                       break;
+      //                                     }
+      //                                     break;
+      //                                   } else if (address!.isNotEmpty) {
+      //                                     if (villa.properties.neighborhood ==
+      //                                         address) {
+      //                                       FilteredItems.add(villa);
+      //                                       _handleRentAndSaleItems(villa);
+      //                                       print("1ارض  مطابقه");
+      //                                     }
+      //                                     break;
+      //                                   } 
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (((MaxPrice!.isNotEmpty))) {
+      //                                 if ((int.parse(land.properties!.price) <=
+      //                                     int.parse(MaxPrice!))) {
+      //                                   if (address!.isNotEmpty) {
+      //                                     if (land.properties!.neighborhood ==
+      //                                         address) {
+      //                                       if (land.properties!.city == city) {
+      //                                         FilteredItems.add(land);
+      //                                         _handleRentAndSaleItems(land);
+      //                                         print("5 ارض  مطابقه");
+      //                                       }
+      //                                       break;
+      //                                     }
+      //                                     break;
+      //                                   } else if (land.properties!.city ==
+      //                                       city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("6 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (address!.isNotEmpty) {
+      //                                 if (land.properties!.neighborhood ==
+      //                                     address) {
+      //                                   if (land.properties!.city == city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("7 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("8 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if ((MinPrice!.isNotEmpty)) {
+      //                             if ((int.parse(land.properties!.price) >=
+      //                                 int.parse(MinPrice!))) {
+      //                               if (((MaxPrice!.isNotEmpty))) {
+      //                                 if ((int.parse(land.properties!.price) <=
+      //                                         int.parse(MaxPrice!)) &&
+      //                                     (int.parse(land.properties!.price) >=
+      //                                         int.parse(MinPrice!))) {
+      //                                   if (address!.isNotEmpty) {
+      //                                     if (land.properties!.neighborhood ==
+      //                                         address) {
+      //                                       if (land.properties!.city == city) {
+      //                                         FilteredItems.add(land);
+      //                                         _handleRentAndSaleItems(land);
+      //                                         print("9 ارض  مطابقه");
+      //                                       }
+      //                                       break;
+      //                                     }
+      //                                     break;
+      //                                   } else if (land.properties!.city ==
+      //                                       city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("10 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (address!.isNotEmpty) {
+      //                                 if (land.properties!.neighborhood ==
+      //                                     address) {
+      //                                   if (land.properties!.city == city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("11 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("12 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (((MaxPrice!.isNotEmpty))) {
+      //                             if ((int.parse(land.properties!.price) <=
+      //                                 int.parse(MaxPrice!))) {
+      //                               if (address!.isNotEmpty) {
+      //                                 if (land.properties!.neighborhood ==
+      //                                     address) {
+      //                                   if (land.properties!.city == city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("13 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("14 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (address!.isNotEmpty) {
+      //                             if (land.properties!.neighborhood ==
+      //                                 address) {
+      //                               if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("15 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (land.properties!.city == city) {
+      //                             FilteredItems.add(land);
+      //                             _handleRentAndSaleItems(land);
+      //                             print("16 ارض  مطابقه");
+      //                           }
+      //                           break;
+      //                         }
+      //                         break;
+      //                       } else if ((MinSpace!.isNotEmpty)) {
+      //                         if ((int.parse(villa.properties.space) >=
+      //                             int.parse(MinSpace!))) {
+      //                           if ((MinPrice!.isNotEmpty)) {
+      //                             if ((int.parse(land.properties!.price) >=
+      //                                 int.parse(MinPrice!))) {
+      //                               if (((MaxPrice!.isNotEmpty))) {
+      //                                 if ((int.parse(land.properties!.price) <=
+      //                                         int.parse(MaxPrice!)) &&
+      //                                     (int.parse(land.properties!.price) >=
+      //                                         int.parse(MinPrice!))) {
+      //                                   if (address!.isNotEmpty) {
+      //                                     if (land.properties!.neighborhood ==
+      //                                         address) {
+      //                                       if (land.properties!.city == city) {
+      //                                         FilteredItems.add(land);
+      //                                         _handleRentAndSaleItems(land);
+      //                                         print("17 ارض  مطابقه");
+      //                                       }
+      //                                       break;
+      //                                     }
+      //                                     break;
+      //                                   } else if (land.properties!.city ==
+      //                                       city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("18 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (address!.isNotEmpty) {
+      //                                 if (land.properties!.neighborhood ==
+      //                                     address) {
+      //                                   if (land.properties!.city == city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("19 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("20 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (((MaxPrice!.isNotEmpty))) {
+      //                             if ((int.parse(land.properties!.price) <=
+      //                                 int.parse(MaxPrice!))) {
+      //                               if (address!.isNotEmpty) {
+      //                                 if (land.properties!.neighborhood ==
+      //                                     address) {
+      //                                   if (land.properties!.city == city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("21 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("22 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (address!.isNotEmpty) {
+      //                             if (land.properties!.neighborhood ==
+      //                                 address) {
+      //                               if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("23 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (land.properties!.city == city) {
+      //                             FilteredItems.add(land);
+      //                             _handleRentAndSaleItems(land);
+      //                             print("24 ارض  مطابقه");
+      //                           }
+      //                           break;
+      //                         }
+      //                         break;
+      //                       } else if ((MinPrice!.isNotEmpty)) {
+      //                         if ((int.parse(land.properties!.price) >=
+      //                             int.parse(MinPrice!))) {
+      //                           if (((MaxPrice!.isNotEmpty))) {
+      //                             if ((int.parse(land.properties!.price) <=
+      //                                     int.parse(MaxPrice!)) &&
+      //                                 (int.parse(land.properties!.price) >=
+      //                                     int.parse(MinPrice!))) {
+      //                               if (address!.isNotEmpty) {
+      //                                 if (land.properties!.neighborhood ==
+      //                                     address) {
+      //                                   if (land.properties!.city == city) {
+      //                                     FilteredItems.add(land);
+      //                                     _handleRentAndSaleItems(land);
+      //                                     print("25 ارض  مطابقه");
+      //                                   }
+      //                                   break;
+      //                                 }
+      //                                 break;
+      //                               } else if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print(" 26 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (address!.isNotEmpty) {
+      //                             if (land.properties!.neighborhood ==
+      //                                 address) {
+      //                               if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("27 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (land.properties!.city == city) {
+      //                             FilteredItems.add(land);
+      //                             _handleRentAndSaleItems(land);
+      //                             print("28 ارض  مطابقه");
+      //                           }
+      //                           break;
+      //                         }
+      //                         break;
+      //                       } else if (((MaxPrice!.isNotEmpty))) {
+      //                         if ((int.parse(land.properties!.price) <=
+      //                             int.parse(MaxPrice!))) {
+      //                           if (address!.isNotEmpty) {
+      //                             if (land.properties!.neighborhood ==
+      //                                 address) {
+      //                               if (land.properties!.city == city) {
+      //                                 FilteredItems.add(land);
+      //                                 _handleRentAndSaleItems(land);
+      //                                 print("29 ارض  مطابقه");
+      //                               }
+      //                               break;
+      //                             }
+      //                             break;
+      //                           } else if (land.properties!.city == city) {
+      //                             FilteredItems.add(land);
+      //                             _handleRentAndSaleItems(land);
+      //                             print("30 ارض  مطابقه");
+      //                           }
+      //                           break;
+      //                         }
+      //                         break;
+      //                       } else if (address!.isNotEmpty) {
+      //                         if (land.properties!.neighborhood == address) {
+      //                           if (land.properties!.city == city) {
+      //                             FilteredItems.add(land);
+      //                             _handleRentAndSaleItems(land);
+      //                             print("31 ارض  مطابقه");
+      //                           }
+      //                           break;
+      //                         }
+      //                         break;
+      //                       } else if (land.properties!.city == city) {
+      //                         FilteredItems.add(land);
+      //                         _handleRentAndSaleItems(land);
+      //                         print("32 ارض  مطابقه");
+      //                       }
+      //                     }
+      //                     break;
+      //                   }
+      //                   break;
+      //                 }
+      //                 break;
+      //               }
+      //               break;
+      //             }
+      //             break;
+      //           }
+      //           break;
+      //         }
+      //         break;
+      //       }
+      //       break;
+      //     }
+      //     break;
+      //   } while (flag);
       // }
+       
+       
+      } 
+
+
       // if (element is Apartment) {
       //   final apartment = element;
       //   if (apartment.in_floor == '${widget.in_floor}' &&
@@ -356,17 +705,10 @@ class _HomePageState extends State<HomePage> {
       //   }
       // }
 
-      //((MaxPrice == null)) && (double.parse(land.properties!.price) <= double.parse(MaxPrice!))
+    
 
       if (element is Land) {
         final land = element;
-        print("================= Min Space =================");
-        print(MinSpace == null);
-        print(MinSpace?.isEmpty);
-        print(MinSpace.runtimeType);
-        print("================= Space of building =================");
-        print(land.properties?.space);
-        print(land.properties?.space.runtimeType);
         bool flag = true ;
         do {
           if (land.properties!.purpose == propertyUse1) {
@@ -386,13 +728,13 @@ class _HomePageState extends State<HomePage> {
                                   print("1ارض  مطابقه");
                                 }
                                 break;
-                              }
+                              } 
                               break;
                             } else if (land.properties!.city == city) {
-                                FilteredItems.add(land);
-                                _handleRentAndSaleItems(land);
-                                print("1ارض  مطابقه");
-                              }
+                              FilteredItems.add(land);
+                              _handleRentAndSaleItems(land);
+                              print("2 ارض  مطابقه");
+                            }
                             break;
                           }
                           break;
@@ -401,27 +743,35 @@ class _HomePageState extends State<HomePage> {
                             if (land.properties!.city == city) {
                               FilteredItems.add(land);
                               _handleRentAndSaleItems(land);
-                              print("1ارض  مطابقه");
+                              print("3 ارض  مطابقه");
                             }
                             break;
                           }
                           break;
+                        } else if (land.properties!.city == city) {
+                          FilteredItems.add(land);
+                          _handleRentAndSaleItems(land);
+                          print("4 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
                     } else if (((MaxPrice!.isNotEmpty))) {
-                      if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!)) && (int.parse(land.properties!.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (land.properties!.neighborhood == address) {
                             if (land.properties!.city == city) {
                               FilteredItems.add(land);
                               _handleRentAndSaleItems(land);
-                              print("1ارض  مطابقه");
+                              print("5 ارض  مطابقه");
                             }
                             break;
                           }
                           break;
+                        } else if (land.properties!.city == city) {
+                          FilteredItems.add(land);
+                          _handleRentAndSaleItems(land);
+                          print("6 ارض  مطابقه");
                         }
                         break;
                       }
@@ -431,11 +781,15 @@ class _HomePageState extends State<HomePage> {
                         if (land.properties!.city == city) {
                           FilteredItems.add(land);
                           _handleRentAndSaleItems(land);
-                          print("1ارض  مطابقه");
+                          print("7 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
+                    } else if (land.properties!.city == city) {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("8 ارض  مطابقه");
                     }
                     break;
                   }
@@ -449,11 +803,15 @@ class _HomePageState extends State<HomePage> {
                             if (land.properties!.city == city) {
                               FilteredItems.add(land);
                               _handleRentAndSaleItems(land);
-                              print("1ارض  مطابقه");
+                              print("9 ارض  مطابقه");
                             }
                             break;
                           }
                           break;
+                        } else if (land.properties!.city == city) {
+                          FilteredItems.add(land);
+                          _handleRentAndSaleItems(land);
+                          print("10 ارض  مطابقه");
                         }
                         break;
                       }
@@ -463,27 +821,35 @@ class _HomePageState extends State<HomePage> {
                         if (land.properties!.city == city) {
                           FilteredItems.add(land);
                           _handleRentAndSaleItems(land);
-                          print("1ارض  مطابقه");
+                          print("11 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
+                    } else if (land.properties!.city == city) {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("12 ارض  مطابقه");
                     }
                     break;
                   }
                   break;
                 } else if (((MaxPrice!.isNotEmpty))) {
-                  if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!)) && (int.parse(land.properties!.price) >= int.parse(MinPrice!))) {
+                  if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!))) {
                     if (address!.isNotEmpty) {
                       if (land.properties!.neighborhood == address) {
                         if (land.properties!.city == city) {
                           FilteredItems.add(land);
                           _handleRentAndSaleItems(land);
-                          print("1ارض  مطابقه");
+                          print("13 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
+                    } else if (land.properties!.city == city) {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("14 ارض  مطابقه");
                     }
                     break;
                   }
@@ -493,17 +859,21 @@ class _HomePageState extends State<HomePage> {
                     if (land.properties!.city == city) {
                       FilteredItems.add(land);
                       _handleRentAndSaleItems(land);
-                      print("1ارض  مطابقه");
+                      print("15 ارض  مطابقه");
                     }
                     break;
                   }
                   break;
+                } else if (land.properties!.city == city) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("16 ارض  مطابقه");
                 }
                 break;
               }
               break;
             } else if ((MinSpace!.isNotEmpty)) {
-              if ((int.parse(land.properties!.space) >= int.parse(MinSpace!)) && (int.parse(land.properties!.space) <= int.parse(MaxSpace!))) {
+              if ((int.parse(land.properties!.space) >= int.parse(MinSpace!))) {
                 if ((MinPrice!.isNotEmpty)) {
                   if ((int.parse(land.properties!.price) >= int.parse(MinPrice!))) {
                     if (((MaxPrice!.isNotEmpty))) {
@@ -513,11 +883,15 @@ class _HomePageState extends State<HomePage> {
                             if (land.properties!.city == city) {
                               FilteredItems.add(land);
                               _handleRentAndSaleItems(land);
-                              print("1ارض  مطابقه");
+                              print("17 ارض  مطابقه");
                             }
                             break;
                           }
                           break;
+                        } else if (land.properties!.city == city) {
+                          FilteredItems.add(land);
+                          _handleRentAndSaleItems(land);
+                          print("18 ارض  مطابقه");
                         }
                         break;
                       }
@@ -527,27 +901,35 @@ class _HomePageState extends State<HomePage> {
                         if (land.properties!.city == city) {
                           FilteredItems.add(land);
                           _handleRentAndSaleItems(land);
-                          print("1ارض  مطابقه");
+                          print("19 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
+                    } else if (land.properties!.city == city) {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("20 ارض  مطابقه");
                     }
                     break;
                   }
                   break;
                 } else if (((MaxPrice!.isNotEmpty))) {
-                  if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!)) && (int.parse(land.properties!.price) >= int.parse(MinPrice!))) {
+                  if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!))) {
                     if (address!.isNotEmpty) {
                       if (land.properties!.neighborhood == address) {
                         if (land.properties!.city == city) {
                           FilteredItems.add(land);
                           _handleRentAndSaleItems(land);
-                          print("1ارض  مطابقه");
+                          print("21 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
+                    } else if (land.properties!.city == city) {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print("22 ارض  مطابقه");
                     }
                     break;
                   }
@@ -557,11 +939,15 @@ class _HomePageState extends State<HomePage> {
                     if (land.properties!.city == city) {
                       FilteredItems.add(land);
                       _handleRentAndSaleItems(land);
-                      print("1ارض  مطابقه");
+                      print("23 ارض  مطابقه");
                     }
                     break;
                   }
                   break;
+                } else if (land.properties!.city == city) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("24 ارض  مطابقه");
                 }
                 break;
               }
@@ -575,11 +961,15 @@ class _HomePageState extends State<HomePage> {
                         if (land.properties!.city == city) {
                           FilteredItems.add(land);
                           _handleRentAndSaleItems(land);
-                          print("1ارض  مطابقه");
+                          print("25 ارض  مطابقه");
                         }
                         break;
                       }
                       break;
+                    } else if (land.properties!.city == city) {
+                      FilteredItems.add(land);
+                      _handleRentAndSaleItems(land);
+                      print(" 26 ارض  مطابقه");
                     }
                     break;
                   }
@@ -589,27 +979,35 @@ class _HomePageState extends State<HomePage> {
                     if (land.properties!.city == city) {
                       FilteredItems.add(land);
                       _handleRentAndSaleItems(land);
-                      print("1ارض  مطابقه");
+                      print("27 ارض  مطابقه");
                     }
                     break;
                   }
                   break;
+                } else if (land.properties!.city == city) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("28 ارض  مطابقه");
                 }
                 break;
               }
               break;
             } else if (((MaxPrice!.isNotEmpty))) {
-              if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!)) && (int.parse(land.properties!.price) >= int.parse(MinPrice!))) {
+              if ((int.parse(land.properties!.price) <= int.parse(MaxPrice!))) {
                 if (address!.isNotEmpty) {
                   if (land.properties!.neighborhood == address) {
                     if (land.properties!.city == city) {
                       FilteredItems.add(land);
                       _handleRentAndSaleItems(land);
-                      print("1ارض  مطابقه");
+                      print("29 ارض  مطابقه");
                     }
                     break;
                   }
                   break;
+                } else if (land.properties!.city == city) {
+                  FilteredItems.add(land);
+                  _handleRentAndSaleItems(land);
+                  print("30 ارض  مطابقه");
                 }
                 break;
               }
@@ -619,20 +1017,20 @@ class _HomePageState extends State<HomePage> {
                 if (land.properties!.city == city) {
                   FilteredItems.add(land);
                   _handleRentAndSaleItems(land);
-                  print("1ارض  مطابقه");
+                  print("31 ارض  مطابقه");
                 }
                 break;
               }
               break;
             } else if (land.properties!.city == city) {
-                FilteredItems.add(land);
-                _handleRentAndSaleItems(land);
-                print("1ارض  مطابقه");
+              FilteredItems.add(land);
+              _handleRentAndSaleItems(land);
+              print("32 ارض  مطابقه");
             }
             break; /////////////////////////////////////////////////////////////////////////////////////END PROPERTY USE////////////////////////////////////////
           }
           flag = false;
-        } while(flag) ;
+        } while (flag);
       }
     });
   }
