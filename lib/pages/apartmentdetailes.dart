@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/apartment.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-
+import 'bookingPage.dart' ; 
 class ApartmentDetailes extends StatelessWidget {
   final Apartment apartment;
 
@@ -659,6 +659,24 @@ class ApartmentDetailes extends StatelessWidget {
                                 ),
                               ),
                             ),
+
+              ElevatedButton(
+                 child: Center(child: Text("حجز جولة عقارية")),
+              
+              style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 99, 162, 215),
+              elevation: 20,
+              minimumSize: Size(150,50),  
+                  ),
+              onPressed:() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+
+                        builder: (context) => boookingPage( property_id: '${apartment.properties.property_id}',)));        
+                           },
+                      ),
+SizedBox(height: 30,),
                           ],
                         ),
                       ],
