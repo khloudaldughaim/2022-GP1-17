@@ -1,11 +1,12 @@
-
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
+import 'package:nozol_application/pages/profile.dart';
 import 'package:nozol_application/pages/villa.dart';
 import '../registration/log_in.dart';
 import 'apartment.dart';
@@ -21,10 +22,7 @@ import 'package:booking_calendar/booking_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
-
-
 class boookingPage extends StatefulWidget {
-
   final String property_id;
 
   boookingPage({required this.property_id});
@@ -32,251 +30,470 @@ class boookingPage extends StatefulWidget {
   //const boookingPage({Key? key, required Apartment Apartment}) : super(key: key);
   @override
   State<boookingPage> createState() => _BookingPagestate();
-
 }
 
 class _BookingPagestate extends State<boookingPage> {
-//'${widget.User_id}' to call User_id from up 
+//'${widget.User_id}' to call User_id from up
 
-late FirebaseAuth auth = FirebaseAuth.instance;
-late User? user = auth.currentUser;
-late String curentId = user!.uid;
-var test ;
+  late FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user = auth.currentUser;
+  late String curentId = user!.uid;
+  var test;
   final now = DateTime.now();
   DateTime Reseve = DateTime.now();
+  final bookformkey = GlobalKey<FormState>();
+  String _valueChanged1 = '';
+  String _valueToValidate1 = '';
+  String _valueSaved1 = '';
 
+//  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
+  final datecontrolar = TextEditingController(
+      text: DateTime.now().day.toString() +
+          " -" +
+          DateTime.now().month.toString() +
+          "-" +
+          DateTime.now().year.toString() +
+          "     " +
+          DateTime.now().hour.toString() +
+          ":" +
+          DateTime.now().minute.toString());
+  // text controllers
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Center(child: Column(
-                children: [
-                      Text(
-                        '${now.day} / ${now.month}'
-                      ),
-  ElevatedButton(onPressed: () async {
-DateTime? ReservedDate= await showDatePicker(context: context, 
-initialDate: now, 
-firstDate: now, 
-lastDate: DateTime(2024));
- 
- if(ReservedDate == null)
- return;
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 130),
+            child: const Text('حجز جولة عقارية ',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Tajawal-b",
+                )),
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+              child: Stack(children: [
+            SizedBox(
+                width: double.infinity,
+                child: Form(
+                  key: bookformkey,
+                  child: Column(children: [
+                    FutureBuilder(
+                      future: getCurrentUser(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasData) {
+                          final cuuser = snapshot.data!;
+                          final nameB =
+                              TextEditingController(text: cuuser.name);
+                          final phoneB =
+                              TextEditingController(text: cuuser.phoneNumber);
+                          final emailB =
+                              TextEditingController(text: cuuser.email);
 
-// setState(() {
-//   Reseve = ReservedDate ; 
-// });
+                          return Column(children: [
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextFormField(
+                                    controller: nameB,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    decoration: InputDecoration(
+                                      labelText: "الأسم :",
+                                      labelStyle:
+                                          TextStyle(fontFamily: "Tajawal-b"),
+                                      prefixIcon: Icon(
+                                        Icons.person,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                      ),
+                                      fillColor:
+                                          Color.fromARGB(255, 225, 225, 228),
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(66.0),
+                                          borderSide: const BorderSide(
+                                              width: 0,
+                                              style: BorderStyle.none)),
+                                    ),
+                                    validator: (value) {
+                                      if (value!.length < 2) {
+                                        return "الأسم يجب ان يكون خانتين فأكثر ";
+                                      }
+                                    },
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: DateTimePicker(
+                                    type: DateTimePickerType.dateTime,
+                                    dateMask: 'hh:mma -  d MMM, yyyy ',
+                                    controller: datecontrolar,
+                                    //initialValue: _initialValue,
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2024),
+                                    icon: Icon(
+                                      Icons.calendar_month,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                    ),
 
-TimeOfDay? ReservedTime = await showTimePicker(
-context: context, 
-initialTime: TimeOfDay(hour: now.hour, minute: now.minute),
-);
+                                    decoration: InputDecoration(
+                                      labelText: "التاريخ  :",
+                                      labelStyle:
+                                          TextStyle(fontFamily: "Tajawal-b"),
+                                      prefixIcon: Icon(
+                                        Icons.calendar_month,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                      ),
+                                      fillColor:
+                                          Color.fromARGB(255, 225, 225, 228),
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(66.0),
+                                          borderSide: const BorderSide(
+                                              width: 0,
+                                              style: BorderStyle.none)),
+                                    ),
 
- if(ReservedTime == null)
- return;
+                                    onChanged: (val) {
+                                      setState(() => _valueChanged1 = val);
 
-//AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> test ; 
-                                            
+                                      print(_valueChanged1);
+                                    },
 
-final NewReseration = DateTime(
-ReservedDate.year,
-ReservedDate.month,
-ReservedDate.day,
-ReservedTime.hour,
-ReservedTime.minute,
-); 
+                                    validator: (val) {
+                                      setState(
+                                          () => _valueToValidate1 = val ?? '');
+                                      return null;
+                                    },
+                                    onSaved: (val) => setState(
+                                        () => _valueSaved1 = val ?? ''),
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextFormField(
+                                    controller: emailB,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    decoration: InputDecoration(
+                                      labelText: "الإيميل  :",
+                                      labelStyle:
+                                          TextStyle(fontFamily: "Tajawal-b"),
+                                      prefixIcon: Icon(
+                                        Icons.email,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                      ),
+                                      fillColor:
+                                          Color.fromARGB(255, 225, 225, 228),
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(66.0),
+                                          borderSide: const BorderSide(
+                                              width: 0,
+                                              style: BorderStyle.none)),
+                                    ),
+                                    validator: (value) {
+                                      if (value!.isEmpty ||
+                                          emailB.text.trim() == "") {
+                                        return "البريد الألكتروني مطلوب ";
+                                      } else if (!RegExp(
+                                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                          .hasMatch(value)) {
+                                        return '  أدخل البريد الأكلتروني بالشكل الصحيح \n(exampel@exampel.com)';
+                                      }
+                                    },
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextFormField(
+                                    controller: phoneB,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    decoration: InputDecoration(
+                                      labelText: "رقم الجوال  :",
+                                      labelStyle:
+                                          TextStyle(fontFamily: "Tajawal-b"),
+                                      prefixIcon: Icon(
+                                        Icons.phone_android,
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                      ),
+                                      fillColor:
+                                          Color.fromARGB(255, 225, 225, 228),
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(66.0),
+                                          borderSide: const BorderSide(
+                                              width: 0,
+                                              style: BorderStyle.none)),
+                                    ),
+                                    validator: (value) {
+                                      if (!RegExp(
+                                              r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
+                                          .hasMatch(value!)) {
+                                        return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
+                                      }
+                                    },
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                if (bookformkey.currentState!.validate()) {
+                                  DateTime dt =
+                                      DateTime.parse(datecontrolar.text);
+                                  FirebaseFirestore.instance
+                                      .collection('properties')
+                                      .doc('${widget.property_id}')
+                                      .collection('bookings')
+                                      .where('Date', isEqualTo: dt)
+                                      .get()
+                                      .then((element) {
+                                    if (element.docs.isEmpty) {
+                                      try {
+                                        FirebaseFirestore.instance
+                                            .collection('properties')
+                                            .doc('${widget.property_id}')
+                                            .collection('bookings')
+                                            .add({
+                                          "Date": dt,
+                                          "property_id":
+                                              '${widget.property_id}',
+                                          "buyer_id": curentId,
+                                          "buyer_name": nameB.text,
+                                          "buyer_email": emailB.text,
+                                        });
 
-FirebaseFirestore.instance.collection('properties').doc('${widget.property_id}')
-.collection('bookings').where( 'Date' , isEqualTo: NewReseration ).get().then(
-(element){
-if(element.docs.isEmpty)
-{
-
-  FirebaseFirestore.instance.collection('properties').doc('${widget.property_id}')
-.collection('bookings')
-.add({
-"Date" : NewReseration,
-"property_id" : '${widget.property_id}', 
-"buyer_id" : curentId,
-    })
-.then((value) => print("Booking Added"))
-.catchError((error) => print("Failed to add booking: $error"));
-print("NOOOOOO SAME BOOKING");
-}
-else
-{
-  print("THERE ARE SAME BOOKING :)))))))");
-}
-
-} );
-
-
-
-
-
-
-  } ,
-
-child: Text("")),
-
-// Text( '${Reseve.day} / ${Reseve.month}')
-
-                ],
-
-
-        )),
-      
-               
-          
-      )
-    );
-      
+                                        Fluttertoast.showToast(
+                                          msg: "تم الحجز بنجاح",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 2,
+                                          backgroundColor: Color.fromARGB(
+                                              255, 127, 166, 233),
+                                          textColor: Color.fromARGB(
+                                              255, 248, 249, 250),
+                                          fontSize: 18.0,
+                                        );
+                                      } catch (e, stack) {
+                                        Fluttertoast.showToast(
+                                          msg: "هناك خطأ ما",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 5,
+                                          backgroundColor: Color.fromARGB(
+                                              255, 127, 166, 233),
+                                          textColor: Color.fromARGB(
+                                              255, 252, 253, 255),
+                                          fontSize: 18.0,
+                                        );
+                                      }
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: "التاريخ محجوز مسبقاً",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      );
+                                    }
+                                  });
+                                }
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color.fromARGB(255, 127, 166, 233)),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 10)),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(27))),
+                              ),
+                              child: Text(
+                                "حجز",
+                                style: TextStyle(
+                                    fontSize: 18, fontFamily: "Tajawal-m"),
+                              ),
+                            ),
+                          ]);
+                        } else {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              SizedBox(height: 290),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 79),
+                                  child: Text(
+                                    " هناك خطأ ما  ",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: "Tajawal-b",
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233)),
+                                    textAlign: TextAlign.center,
+                                  )),
+                            ],
+                          );
+                        }
+                      },
+                    ),
+                  ]),
+                ))
+          ])),
+        )));
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// OLD CODE 
-late BookingService mockBookingService;
-
-//   @override
-//   void initState() {
-//    initializeDateFormatting();
-
-//     super.initState();
-//     // DateTime.now().startOfDay
-//     // DateTime.now().endOfDay
-//     mockBookingService = BookingService(
-//         serviceName: 'Mock Service',
-//         serviceDuration: 30,
-//         bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
-//         bookingStart: DateTime(now.year, now.month, now.day, 8, 0));
-//   }
-
-//   Stream<dynamic>? getBookingStreamMock(
-//       {required DateTime end, required DateTime start}) {
-//     return Stream.value([]);
-//   }
-
-
-//   Future<dynamic> uploadBookingMock( // here when user click on book button 
-//       {required BookingService newBooking}) async {
-//     Timestamp.fromDate(newBooking.bookingStart ?? DateTime.now());
-//     Timestamp.fromDate(newBooking.bookingEnd ?? DateTime.now());
-
-//     await FirebaseFirestore.instance.collection('properties').doc('${widget.User_id}')
-//         .collection('bookings')
-//         .add(newBooking.toJson())
-//         .then((value) => print("Booking Added"))
-//         .catchError((error) => print("Failed to add booking: $error"));
-
-//   }
-
- 
   
+    // return Scaffold(
+    //     appBar: AppBar(
+    //       backgroundColor: Color.fromARGB(255, 127, 166, 233),
+    //       automaticallyImplyLeading: false,
+    //       title: Padding(
+    //         padding: const EdgeInsets.only(left: 130),
+    //         child: const Text('حجز جولة عقارية ',
+    //             style: TextStyle(
+    //               fontSize: 16,
+    //               fontFamily: "Tajawal-b",
+    //             )),
+    //       ),
+    //       actions: [
+    //         Padding(
+    //           padding: EdgeInsets.only(right: 20.0),
+    //           child: GestureDetector(
+    //             onTap: () {
+    //               Navigator.pop(context);
+    //             },
+    //             child: Icon(
+    //               Icons.arrow_forward_ios,
+    //               color: Colors.white,
+    //               size: 28,
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    
 
-//  static Timestamp dateTimeToTimeStamp(DateTime? dateTime) {
-//       return Timestamp.fromDate(dateTime ?? DateTime.now()); //To TimeStamp
+// SafeArea(
+//           child: Center(
+//               child: Column(
+//             children: [
+//               Text('${now.day} / ${now.month}'),
+//               ElevatedButton(
+//                   onPressed: () async {
+//                     DateTime? ReservedDate = await showDatePicker(
+//                         context: context,
+//                         initialDate: now,
+//                         firstDate: now,
+//                         lastDate: DateTime(2024));
+
+//                     if (ReservedDate == null) return;
+
+//                     TimeOfDay? ReservedTime = await showTimePicker(
+//                       context: context,
+//                       initialTime:
+//                           TimeOfDay(hour: now.hour, minute: now.minute),
+//                     );
+
+//                     if (ReservedTime == null) return;
+
+//                     final NewReseration = DateTime(
+//                       ReservedDate.year,
+//                       ReservedDate.month,
+//                       ReservedDate.day,
+//                       ReservedTime.hour,
+//                       ReservedTime.minute,
+//                     );
+
+//                     FirebaseFirestore.instance
+//                         .collection('properties')
+//                         .doc('${widget.property_id}')
+//                         .collection('bookings')
+//                         .where('Date', isEqualTo: NewReseration)
+//                         .get()
+//                         .then((element) {
+//                       if (element.docs.isEmpty) {
+//                         FirebaseFirestore.instance
+//                             .collection('properties')
+//                             .doc('${widget.property_id}')
+//                             .collection('bookings')
+//                             .add({
+//                               "Date": NewReseration,
+//                               "property_id": '${widget.property_id}',
+//                               "buyer_id": curentId,
+//                             })
+//                             .then((value) => print("Booking Added"))
+//                             .catchError((error) =>
+//                                 print("Failed to add booking: $error"));
+//                         print("NOOOOOO SAME BOOKING");
+//                       } else {
+//                         print("THERE ARE SAME BOOKING :)))))))");
+//                       }
+//                     });
+//                   },
+//                   child: Text("")),
+//             ],
+//           )),
+//         ));
 //   }
-
-
-//   List<DateTimeRange> converted = [];
-
-//   List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
-//     // /here you can parse the streamresult and convert to [List<DateTimeRange>]
-//     // /take care this is only mock, so if you add today as disabledDays it will still be visible on the first load
-//     // /disabledDays will properly work with real data
-//     DateTime first = now;
-//     DateTime second = now.add(const Duration(minutes: 55));
-//     DateTime third = now.subtract(const Duration(minutes: 240));
-//     DateTime fourth = now.subtract(const Duration(minutes: 500));
-//     converted.add(
-//         DateTimeRange(start: first, end: now.add(const Duration(minutes: 30))));
-//     converted.add(DateTimeRange(
-//         start: second, end: second.add(const Duration(minutes: 23))));
-//     converted.add(DateTimeRange(
-//         start: third, end: third.add(const Duration(minutes: 15))));
-//     converted.add(DateTimeRange(
-//         start: fourth, end: fourth.add(const Duration(minutes: 50))));
-//     return converted;
-//   }
-
-//   List<DateTimeRange> generatePauseSlots() {
-//     return [
-//       DateTimeRange(
-//           start: DateTime(now.year, now.month, now.day, 12, 0),
-//           end: DateTime(now.year, now.month, now.day, 13, 0))
-//     ];
-//   }
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: SafeArea(
-//         child: 
-      
-//                 Column(
-//                   children: [
-//                     Expanded(
-//                       child: BookingCalendar(
-//                        bookingService: mockBookingService,
-//                        convertStreamResultToDateTimeRanges: convertStreamResultMock,
-//                        getBookingStream: getBookingStreamMock,
-//                        uploadBooking: uploadBookingMock,
-//                         pauseSlots: generatePauseSlots(),
-//                         pauseSlotText: 'LUNCH',
-//                         hideBreakTime: false,
-//                         loadingWidget: const Text('Fetching data...'),
-//                         uploadingWidget: const CircularProgressIndicator(),
-//                         locale: 'hu_HU',
-//                         startingDayOfWeek: StartingDayOfWeek.tuesday,
-//                         disabledDays: const [6, 7], 
-//                     bookingButtonColor: Color.fromARGB(255, 140, 179, 211),
-//                             bookingButtonText: "حجز",
-//                       ),
-//                     ),
-                     
-//                   ],
-//                 ),
-          
-            
-          
-//       ),
-//     );
-//   }
+// }
