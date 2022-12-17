@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/apartment.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'bookingPage.dart' ; 
+import 'bookingPage.dart';
+
 class ApartmentDetailes extends StatelessWidget {
   final Apartment apartment;
 
@@ -659,24 +662,50 @@ class ApartmentDetailes extends StatelessWidget {
                                 ),
                               ),
                             ),
-
-              ElevatedButton(
-                 child: Center(child: Text("حجز جولة عقارية")),
-              
-              style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 99, 162, 215),
-              elevation: 20,
-              minimumSize: Size(150,50),  
-                  ),
-              onPressed:() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-
-                        builder: (context) => boookingPage( property_id: '${apartment.properties.property_id}',)));        
-                           },
-                      ),
-SizedBox(height: 30,),
+                            ElevatedButton(
+                              child: Center(
+                                  child: Text(
+                                "حجز جولة عقارية",
+                                style: TextStyle(
+                                    fontSize: 18, fontFamily: "Tajawal-m"),
+                              )),
+                              onPressed: () {
+                                FirebaseAuth.instance.currentUser == null
+                                    ? Fluttertoast.showToast(
+                                        msg: "عذرا لابد من تسجيل الدخول",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      )
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => boookingPage(
+                                                property_id:
+                                                    '${apartment.properties.property_id}',
+                                                user_id:
+                                                    '${apartment.properties.User_id}')));
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color.fromARGB(255, 127, 166, 233)),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 10)),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(27))),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
                           ],
                         ),
                       ],
