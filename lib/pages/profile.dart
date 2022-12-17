@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/pages/ownerBooking.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import '../registration/sign_up.dart';
 import 'my-property.dart';
@@ -269,9 +270,66 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 fontFamily: "Tajawal-b",
                                               ),
                                             )),
+                                            
                                       ],
                                     )),
                               ),
+                //this for booking page [start]
+                              SizedBox(
+                                height: 25,
+                              ),
+                                Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Container(
+                                    width: 350,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                      color: Colors.grey,
+                                      width: 1,
+                                    ))),
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ownerBooking()));
+                                          },
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_right),
+                                          color: Colors.grey,
+                                          iconSize: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 210,
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ownerBooking()));
+                                            },
+                                            child: Text(
+                                              "حجوزاتي",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color.fromARGB(
+                                                    255, 127, 166, 233),
+                                                fontFamily: "Tajawal-b",
+                                              ),
+                                            )),
+                                            
+                                      ],
+                                    )),
+                              ),
+                            //this for booking page [End]
+
                               SizedBox(
                                 height: 150,
                               ),
