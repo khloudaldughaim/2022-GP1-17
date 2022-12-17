@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +36,8 @@ class boookingPage extends StatefulWidget {
 
 enum booktype { inperson, online }
 
+enum videoChat { zoom, skype, googelduo }
+
 class _BookingPagestate extends State<boookingPage> {
 //'${widget.User_id}' to call User_id from up
 
@@ -47,9 +51,10 @@ class _BookingPagestate extends State<boookingPage> {
   String _valueChanged1 = '';
   String _valueToValidate1 = '';
   String _valueSaved1 = '';
-  booktype? _class = booktype.inperson;
+  booktype? _book = booktype.inperson;
   String Booktype = 'حضوري';
-
+  videoChat? video = videoChat.zoom;
+  String videochat = 'Zoom';
 //  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
   final datecontrolar = TextEditingController(
       text: DateTime.now().day.toString() +
@@ -284,24 +289,24 @@ class _BookingPagestate extends State<boookingPage> {
                                   ),
                                 )),
                             SizedBox(
-                              height: 50,
+                              height: 30,
                             ),
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(' تفضل ان تكون الجولة : ',
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontFamily: "Tajawal-b",
-                                      ),
-                                      textDirection: TextDirection.rtl),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2.5,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text('   تفضل ان تكون الجولة   : ',
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontFamily: "Tajawal-b",
+                                    ),
+                                    textDirection: TextDirection.rtl),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Directionality(
+                                        textDirection: TextDirection.rtl,
                                         child: RadioListTile(
                                           title: const Text(
                                             'حضورية',
@@ -313,45 +318,135 @@ class _BookingPagestate extends State<boookingPage> {
                                             textAlign: TextAlign.start,
                                           ),
                                           value: booktype.inperson,
-                                          groupValue: _class,
+                                          groupValue: _book,
                                           onChanged: (booktype? value) {
                                             setState(() {
-                                              _class = value;
-                                              if (_class == booktype.inperson)
+                                              _book = value;
+                                              if (_book == booktype.inperson)
                                                 Booktype = 'حضورية';
                                             });
                                           },
                                         ),
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2.5,
-                              child: RadioListTile(
-                                title: const Text(
-                                  'افتراضية',
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontFamily: "Tajawal-m",
-                                      color: Color.fromARGB(255, 73, 75, 82)),
-                                  textAlign: TextAlign.start,
-                                ),
-                                value: booktype.online,
-                                groupValue: _class,
-                                onChanged: (booktype? value) {
-                                  setState(() {
-                                    _class = value;
-                                    if (_class == booktype.online)
-                                      Booktype = 'افتراضية';
-                                  });
-                                },
-                              ),
+                                    ),
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: RadioListTile(
+                                          title: const Text(
+                                            'افتراضية',
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontFamily: "Tajawal-m",
+                                                color: Color.fromARGB(
+                                                    255, 73, 75, 82)),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          value: booktype.online,
+                                          groupValue: _book,
+                                          onChanged: (booktype? value) {
+                                            setState(() {
+                                              _book = value;
+                                              if (_book == booktype.online)
+                                                Booktype = 'افتراضية';
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                             SizedBox(
-                              height: 50,
+                              height: 30,
+                            ),
+                            Booktype == 'افتراضية'
+                                ? Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '   تفضل ان تكون الجولة على ؟  ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
+                                        ),
+                                      ),
+                                      Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Column(
+                                          children: [
+                                            RadioListTile(
+                                              title: Text(
+                                                'Zoom',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              value: videoChat.zoom,
+                                              groupValue: video,
+                                              onChanged: (videoChat? value) {
+                                                setState(() {
+                                                  video = value;
+                                                  if (video == videoChat.zoom)
+                                                    videochat = 'Zoom';
+                                                });
+                                              },
+                                            ),
+                                            RadioListTile(
+                                              title: const Text(
+                                                'Skype',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              value: videoChat.skype,
+                                              groupValue: video,
+                                              onChanged: (videoChat? value) {
+                                                setState(() {
+                                                  video = value;
+                                                  if (video == videoChat.skype)
+                                                    videochat = 'Skype';
+                                                });
+                                              },
+                                            ),
+                                            RadioListTile(
+                                              title: const Text(
+                                                'Google Duo',
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Tajawal-m",
+                                                    color: Color.fromARGB(
+                                                        255, 73, 75, 82)),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              value: videoChat.googelduo,
+                                              groupValue: video,
+                                              onChanged: (videoChat? value) {
+                                                setState(() {
+                                                  video = value;
+                                                  if (video ==
+                                                      videoChat.googelduo)
+                                                    videochat = 'Google Duo';
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                : Container(),
+                            SizedBox(
+                              height: 30,
                             ),
                             ElevatedButton(
                               onPressed: () async {
@@ -378,6 +473,9 @@ class _BookingPagestate extends State<boookingPage> {
                                           "buyer_id": curentId,
                                           "buyer_name": nameB.text,
                                           "buyer_email": emailB.text,
+                                          "book_type": Booktype,
+                                          "videochat": videochat,
+                                          "status": "pending",
                                         });
 
                                         Fluttertoast.showToast(
@@ -447,13 +545,7 @@ class _BookingPagestate extends State<boookingPage> {
                               Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 79),
                                   child: Text(
-                                    " هناك خطأ ما  ",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: "Tajawal-b",
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233)),
-                                    textAlign: TextAlign.center,
+                                    " ",
                                   )),
                             ],
                           );
