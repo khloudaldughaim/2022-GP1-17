@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+
+import 'bookingPage.dart';
 
 class VillaDetailes extends StatelessWidget {
   final Villa villa;
@@ -673,6 +677,47 @@ class VillaDetailes extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "Tajawal-l",
                                 ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              child: Center(
+                                  child: Text(
+                                "حجز جولة عقارية",
+                                style: TextStyle(
+                                    fontSize: 18, fontFamily: "Tajawal-m"),
+                              )),
+                              onPressed: () {
+                                FirebaseAuth.instance.currentUser == null
+                                    ? Fluttertoast.showToast(
+                                        msg: "عذرا لابد من تسجيل الدخول",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      )
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => boookingPage(
+                                                property_id:
+                                                    '${villa.properties.property_id}',
+                                                user_id:
+                                                    '${villa.properties.User_id}')));
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color.fromARGB(255, 127, 166, 233)),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 10)),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(27))),
                               ),
                             ),
                           ],
