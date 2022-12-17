@@ -4,10 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:nozol_application/pages/homapage.dart';
 
 class FilterPage extends StatefulWidget {
-  final bool FilterValue;
-
-  FilterPage({required this.FilterValue});
-
   @override
   State<FilterPage> createState() => _FilterPageState();
 }
@@ -89,6 +85,7 @@ class _FilterPageState extends State<FilterPage> {
   bool basement = false;
   bool elevator = false;
   RangeValues _ageRange = const RangeValues(0, 100);
+  bool? FilterValue ;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +107,28 @@ class _FilterPageState extends State<FilterPage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context, {
+                    "type1": type1,
+                    "propertyUse1": propertyUse1,
+                    "in_floor": in_floor.text,
+                    "city": city,
+                    "address": address.text,
+                    "number_of_bathrooms":number_of_bathrooms,
+                    "number_of_rooms": number_of_rooms,
+                    "number_of_livingRooms": number_of_livingRooms,
+                    "number_of_floors": number_of_floors,
+                    "number_of_apartments":number_of_apartments,
+                    "pool": pool,
+                    "basement": basement,
+                    "elevator": elevator,
+                    "ageRange_start": _ageRange.start,
+                    "ageRange_end": _ageRange.end,
+                    "MinSpace": MinSpace.text,
+                    "MaxSpace": MaxSpace.text,
+                    "MinPrice": MinPrice.text,
+                    "MaxPrice": MaxPrice.text,
+                    "FilterValue" : FilterValue,
+                  });
                 },
                 child: Icon(
                   Icons.arrow_forward_ios,
@@ -148,7 +166,7 @@ class _FilterPageState extends State<FilterPage> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '${widget.FilterValue}', ///////////////////////////////Filter Value/////////////////////////////////////
+                                          'نوع العقار :',
                                           style: TextStyle(
                                             fontSize: 20.0,
                                             fontFamily: "Tajawal-b",
@@ -342,7 +360,7 @@ class _FilterPageState extends State<FilterPage> {
                                                   CrossAxisAlignment.center,
                                               children: <Widget>[
                                                 Text(
-                                                  ' *رقم الدور: ',
+                                                  ' رقم الدور: ',
                                                   style: TextStyle(
                                                     fontSize: 20.0,
                                                     fontFamily: "Tajawal-b",
@@ -386,17 +404,10 @@ class _FilterPageState extends State<FilterPage> {
                                                               ),
                                                             ),
                                                             validator: (value) {
-                                                              if (value ==
-                                                                      null ||
-                                                                  value
-                                                                      .isEmpty) {
-                                                                return 'الرجاء عدم ترك الخانة فارغة!';
-                                                              } else if (value
-                                                                      .length >
-                                                                  3) {
+                                                              if (value!.length >3) {
                                                                 return 'الرقم يجب الا يزيد عن 3 خانات';
                                                               }
-                                                              if (!RegExp(
+                                                              if (value.isNotEmpty && !RegExp(
                                                                       r'[0-9]')
                                                                   .hasMatch(
                                                                       value)) {
@@ -421,7 +432,7 @@ class _FilterPageState extends State<FilterPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      ' *المساحة: ',
+                                      ' المساحة: ',
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontFamily: "Tajawal-b",
@@ -457,13 +468,10 @@ class _FilterPageState extends State<FilterPage> {
                                                   ),
                                                 ),
                                                 validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'الرجاء عدم ترك الخانة فارغة!';
-                                                  } else if (value.length > 6) {
+                                                  if (value!.length > 6) {
                                                     return 'الرقم يجب الا يزيد عن 6 خانات';
                                                   }
-                                                  if (!RegExp(r'[0-9]')
+                                                  if (value.isNotEmpty && !RegExp(r'[0-9]')
                                                       .hasMatch(value)) {
                                                     return 'الرجاء إدخال أرقام فقط';
                                                   }
@@ -502,8 +510,8 @@ class _FilterPageState extends State<FilterPage> {
                                                   ),
                                                 ),
                                                 validator: (value) {
-                                                  if (!RegExp(r'[0-9]')
-                                                      .hasMatch(value!)) {
+                                                  if (value!.isNotEmpty && !RegExp(r'[0-9]')
+                                                      .hasMatch(value)) {
                                                     return 'الرجاء إدخال أرقام فقط';
                                                   }
                                                   return null;
@@ -518,7 +526,7 @@ class _FilterPageState extends State<FilterPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      ' *السعر: ',
+                                      ' السعر: ',
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontFamily: "Tajawal-b",
@@ -557,8 +565,8 @@ class _FilterPageState extends State<FilterPage> {
                                                   ),
                                                 ),
                                                 validator: (value) {
-                                                  if (!RegExp(r'[0-9]')
-                                                      .hasMatch(value!)) {
+                                                  if (value!.isNotEmpty && !RegExp(r'[0-9]')
+                                                      .hasMatch(value)) {
                                                     return 'الرجاء إدخال أرقام فقط';
                                                   }
                                                   return null;
@@ -596,8 +604,8 @@ class _FilterPageState extends State<FilterPage> {
                                                   ),
                                                 ),
                                                 validator: (value) {
-                                                  if (!RegExp(r'[0-9]')
-                                                      .hasMatch(value!)) {
+                                                  if (value!.isNotEmpty && !RegExp(r'[0-9]')
+                                                      .hasMatch(value)) {
                                                     return 'الرجاء إدخال أرقام فقط';
                                                   }
                                                   return null;
@@ -678,7 +686,7 @@ class _FilterPageState extends State<FilterPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      ' *الحي: ',
+                                      ' الحي: ',
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontFamily: "Tajawal-b",
@@ -714,8 +722,8 @@ class _FilterPageState extends State<FilterPage> {
                                                   ),
                                                 ),
                                                 validator: (value) {
-                                                  if (RegExp(r'[0-9]')
-                                                      .hasMatch(value!)) {
+                                                  if (value!.isNotEmpty && RegExp(r'[0-9]')
+                                                      .hasMatch(value)) {
                                                     return 'الرجاء إدخال أحرف فقط';
                                                   }
                                                 },
@@ -742,15 +750,8 @@ class _FilterPageState extends State<FilterPage> {
                                             ),
                                             textDirection: TextDirection.rtl,
                                           ),
-                                          Text("(من شهر إلى 100+ سنة)",
-                                              style: const TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontFamily: "Tajawal-m",
-                                                  color: Color.fromARGB(
-                                                      255, 120, 122, 129)),
-                                              textDirection: TextDirection.rtl),
                                           Container(
-                                            height: 100,
+                                            height: 70,
                                             width: 380,
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
@@ -785,16 +786,6 @@ class _FilterPageState extends State<FilterPage> {
                                                       _ageRange = values;
                                                     });
                                                   },
-                                                ),
-                                                Text(
-                                                  " (شهر.سنة) " +
-                                                      property_age
-                                                          .toStringAsFixed(1),
-                                                  style: const TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(
-                                                          255, 73, 75, 82)),
                                                 ),
                                                 Container(
                                                   margin:
@@ -1396,35 +1387,8 @@ class _FilterPageState extends State<FilterPage> {
                                           "MaxSpace": MaxSpace.text,
                                           "MinPrice": MinPrice.text,
                                           "MaxPrice": MaxPrice.text,
-                                        }
-
-                                            // MaterialPageRoute(
-                                            //     builder: (context) => HomePage(
-                                            //         type1: type1,
-                                            //         propertyUse1: propertyUse1,
-                                            //         in_floor: in_floor.text,
-                                            //         city: city,
-                                            //         address: address.text,
-                                            //         number_of_bathrooms:
-                                            //             number_of_bathrooms,
-                                            //         number_of_rooms:
-                                            //             number_of_rooms,
-                                            //         number_of_livingRooms:
-                                            //             number_of_livingRooms,
-                                            //         number_of_floors:
-                                            //             number_of_floors,
-                                            //         number_of_apartments:
-                                            //             number_of_apartments,
-                                            //         pool: pool,
-                                            //         basement: basement,
-                                            //         elevator: elevator,
-                                            //         ageRange_start : _ageRange.start,
-                                            //         ageRange_end : _ageRange.end,
-                                            //         MinSpace : MinSpace.text,
-                                            //         MaxSpace : MaxSpace.text,
-                                            //         MinPrice : MinPrice.text,
-                                            //         MaxPrice : MaxPrice.text,))
-                                            );
+                                          "FilterValue" : true,
+                                        });
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
@@ -1446,6 +1410,87 @@ class _FilterPageState extends State<FilterPage> {
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontFamily: "Tajawal-m"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 205.0,
+                                  height: 70.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 10,
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        print(FilterValue);
+                                        
+                                        if(MinSpace != null){
+                                          MinSpace.clear();
+                                        }
+
+                                        if(MaxSpace != null){
+                                          MaxSpace.clear();
+                                        }
+
+                                        if(MinPrice != null){
+                                          MinPrice.clear();
+                                        }
+
+                                        if(MaxPrice != null){
+                                          MaxPrice.clear();
+                                        }
+                                        
+                                        if(address != null){
+                                          address.clear();
+                                        }
+
+                                        if(in_floor != null){
+                                          in_floor.clear();
+                                        }
+                                        
+                                        setState(() {
+                                          type = 1 ;
+                                          city = 'الرياض' ;
+                                          _ageRange = RangeValues(0, 100);
+                                          number_of_bathrooms = 0 ;
+                                          number_of_apartments = 0 ;
+                                          number_of_rooms = 0 ;
+                                          number_of_livingRooms = 0 ;
+                                          number_of_floors = 0 ;
+                                          _poolCH = choice.no;
+                                          _basementCH = choice.no;
+                                          _elevatorCH = choice.no;
+                                        });
+
+                                        FilterValue = false ;
+                                        print(FilterValue);
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(255, 255, 255, 255)),
+                                        padding: MaterialStateProperty.all(
+                                            EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 5)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                              BorderRadius.circular(27),
+                                          ),
+                                        ),
+                                        side: MaterialStateProperty.all(BorderSide(
+                                          color: Colors.blue,
+                                          width: 1.0,
+                                          style: BorderStyle.solid)),
+                                        ),
+                                      child: const Text(
+                                        'إعادة تعيين',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(255, 127, 166, 233),
+                                            fontSize: 20,
+                                            fontFamily: "Tajawal-m"),
+                                            
                                       ),
                                     ),
                                   ),
