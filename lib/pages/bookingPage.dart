@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/pages/profile.dart';
 import 'package:nozol_application/pages/villa.dart';
+import 'package:uuid/uuid.dart';
 import '../registration/log_in.dart';
 import 'apartment.dart';
 import 'apartmentdetailes.dart';
@@ -26,8 +27,8 @@ import 'package:date_time_picker/date_time_picker.dart';
 
 class boookingPage extends StatefulWidget {
   final String property_id;
-
-  boookingPage({required this.property_id});
+  final String user_id;
+  boookingPage({required this.property_id, required this.user_id});
 
   //const boookingPage({Key? key, required Apartment Apartment}) : super(key: key);
   @override
@@ -44,7 +45,8 @@ class _BookingPagestate extends State<boookingPage> {
   late FirebaseAuth auth = FirebaseAuth.instance;
   late User? user = auth.currentUser;
   late String curentId = user!.uid;
-  var test;
+  List book = [];
+  String book_id = '';
   final now = DateTime.now();
   DateTime Reseve = DateTime.now();
   final bookformkey = GlobalKey<FormState>();
@@ -55,6 +57,7 @@ class _BookingPagestate extends State<boookingPage> {
   String Booktype = 'حضوري';
   videoChat? video = videoChat.zoom;
   String videochat = 'Zoom';
+
 //  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
   final datecontrolar = TextEditingController(
       text: DateTime.now().day.toString() +
@@ -193,18 +196,14 @@ class _BookingPagestate extends State<boookingPage> {
                                     ),
 
                                     onChanged: (val) {
-                                      setState(() => _valueChanged1 = val);
-
-                                      print(_valueChanged1);
+                                      _valueChanged1 = val;
                                     },
-
                                     validator: (val) {
-                                      setState(
-                                          () => _valueToValidate1 = val ?? '');
+                                      _valueToValidate1 = val ?? '';
                                       return null;
                                     },
-                                    onSaved: (val) => setState(
-                                        () => _valueSaved1 = val ?? ''),
+                                    onSaved: (val) =>
+                                        () => _valueSaved1 = val ?? '',
                                   ),
                                 )),
                             SizedBox(
@@ -453,9 +452,8 @@ class _BookingPagestate extends State<boookingPage> {
                                 if (bookformkey.currentState!.validate()) {
                                   DateTime dt =
                                       DateTime.parse(datecontrolar.text);
+                                  book_id = Uuid().v4();
                                   FirebaseFirestore.instance
-                                      .collection('properties')
-                                      .doc('${widget.property_id}')
                                       .collection('bookings')
                                       .where('Date', isEqualTo: dt)
                                       .get()
@@ -463,21 +461,33 @@ class _BookingPagestate extends State<boookingPage> {
                                     if (element.docs.isEmpty) {
                                       try {
                                         FirebaseFirestore.instance
-                                            .collection('properties')
-                                            .doc('${widget.property_id}')
                                             .collection('bookings')
-                                            .add({
+                                            .doc(book_id)
+                                            .set({
                                           "Date": dt,
                                           "property_id":
                                               '${widget.property_id}',
                                           "buyer_id": curentId,
                                           "buyer_name": nameB.text,
                                           "buyer_email": emailB.text,
+                                          "buyer_phone": phoneB.text,
                                           "book_type": Booktype,
                                           "videochat": videochat,
                                           "status": "pending",
+                                          "owner_id": '${widget.user_id}'
                                         });
+                                        final ref = FirebaseFirestore.instance
+                                            .collection('bookings')
+                                            .doc(book_id);
 
+                                        book.add(ref);
+                                        print(book);
+                                        FirebaseFirestore.instance
+                                            .collection('properties')
+                                            .doc('${widget.property_id}')
+                                            .update({
+                                          "ArrayOfbooking": book,
+                                        });
                                         Fluttertoast.showToast(
                                           msg: "تم الحجز بنجاح",
                                           toastLength: Toast.LENGTH_SHORT,
