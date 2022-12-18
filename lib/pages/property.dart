@@ -2,8 +2,8 @@ class Property {
   String property_id;
   String User_id;
   String classification;
-  num latitude;
-  num longitude;
+  double latitude;
+  double longitude;
   String price;
   String space;
   String city;
