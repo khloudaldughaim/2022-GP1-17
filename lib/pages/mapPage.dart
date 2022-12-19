@@ -1341,186 +1341,186 @@ class _MapPageState extends State<mapPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: true,
-      child: DefaultTabController(
-        length: 3,
-        child: Column(
-          children: [
-            Container(
-              height: 120,
-              width: MediaQuery.of(context).size.width,
-              child: AppBar(
-                backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                leading: IconButton(
-                  onPressed: () async {
-                    final FilterResult = await Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => FilterPage()));
-                    setState(() {
-                      // type1 = FilterResult["type1"];
-                      // propertyUse1 = FilterResult["propertyUse1"];
-                      // in_floor = FilterResult["in_floor"];
-                      // city = FilterResult["city"];
-                      // address = FilterResult["address"];
-                      // number_of_bathrooms = FilterResult["number_of_bathrooms"];
-                      // number_of_floors = FilterResult["number_of_floors"];
-                      // number_of_livingRooms =
-                      //     FilterResult["number_of_livingRooms"];
-                      // number_of_rooms = FilterResult["number_of_rooms"];
-                      // number_of_apartments =
-                      //     FilterResult["number_of_apartments"];
-                      // basement = FilterResult["basement"];
-                      // elevator = FilterResult["elevator"];
-                      // pool = FilterResult["pool"];
-                      // ageRange_start = FilterResult["ageRange_start"];
-                      // ageRange_end = FilterResult["ageRange_end"];
-                      // MinPrice = FilterResult["MinPrice"];
-                      // MaxPrice = FilterResult["MaxPrice"];
-                      // MinSpace = FilterResult["MinSpace"];
-                      // MaxSpace = FilterResult["MaxSpace"];
-                      // FilterValue = FilterResult["FilterValue"];
-                      // print(FilterResult);
-                    });
-                  },
-                  icon: const Icon(Icons.filter_alt_outlined),
-                ),
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.right,
-                        controller: SearchController,
-                        onChanged: (value) {
-                          setState(() {
-                            name = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 14, 41, 99))),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          alignLabelWithHint: true,
-                          hintText: 'ابحث عن الحي أو المدينة أو نوع العقار',
-                          hintStyle: TextStyle(
-                              color: Color.fromARGB(143, 255, 255, 255),
-                              fontFamily: "Tajawal-m"),
-                        ),
-                        cursorColor: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                actions: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-                bottom: const TabBar(
-                  labelStyle: TextStyle(
-                    fontFamily: "Tajawal-b",
-                    fontWeight: FontWeight.w100,
-                  ),
-                  indicatorColor: Colors.white,
-                  tabs: [
-                    Tab(
-                      text: 'الكل',
-                    ),
-                    Tab(
-                      text: 'للبيع',
-                    ),
-                    Tab(
-                      text: 'للإيجار',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.bottomLeft,
-                children: [
-                  TabBarView(
-                    children: [
-                      GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(23.885942, 45.079162),
-                          zoom: 5,
-                        ),
-                        onMapCreated: (mapController) {
-                          controller = mapController;
-                        },
-                        markers: markers.map((e) => e).toSet(),
-                      ),
-                      GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(23.885942, 45.079162),
-                          zoom: 5,
-                        ),
-                        onMapCreated: (mapController) {
-                          controller = mapController;
-                        },
-                        markers: markers.map((e) => e).toSet(),
-                      ),
-                      GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(23.885942, 45.079162),
-                          zoom: 5,
-                        ),
-                        onMapCreated: (mapController) {
-                          controller = mapController;
-                        },
-                        markers: markers.map((e) => e).toSet(),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(24),
-                    child: CircleAvatar(
-                      backgroundColor: Color.fromARGB(255, 225, 231, 255),
-                      radius: 30,
-                      child: IconButton(
-                        icon: Icon(Icons.home,
-                            color: Color.fromARGB(255, 127, 166, 233)),
-                        onPressed: widget.onPressed,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      // child: Stack(
-      //   alignment: Alignment.bottomLeft,
-      //   children: [
-      //     GoogleMap(
-      //       initialCameraPosition: CameraPosition(
-      //         target: LatLng(23.885942, 45.079162),
-      //         zoom: 5,
-      //       ),
-      //       onMapCreated: (mapController) {
-      //         controller = mapController;
-      //       },
-      //       markers: markers.map((e) => e).toSet(),
-      //     ),
-      //     Container(
-      //       margin: EdgeInsets.all(24),
-      //       child: CircleAvatar(
-      //         backgroundColor: Color.fromARGB(255, 225, 231, 255),
-      //         radius: 30,
-      //         child: IconButton(
-      //           icon: Icon(Icons.home, color: Color.fromARGB(255, 127, 166, 233)),
-      //           onPressed: widget.onPressed,
+      // child: DefaultTabController(
+      //   length: 3,
+      //   child: Column(
+      //     children: [
+      //       Container(
+      //         height: 120,
+      //         width: MediaQuery.of(context).size.width,
+      //         child: AppBar(
+      //           backgroundColor: Color.fromARGB(255, 127, 166, 233),
+      //           leading: IconButton(
+      //             onPressed: () async {
+      //               final FilterResult = await Navigator.push(context,
+      //                   MaterialPageRoute(builder: (context) => FilterPage()));
+      //               setState(() {
+      //                 // type1 = FilterResult["type1"];
+      //                 // propertyUse1 = FilterResult["propertyUse1"];
+      //                 // in_floor = FilterResult["in_floor"];
+      //                 // city = FilterResult["city"];
+      //                 // address = FilterResult["address"];
+      //                 // number_of_bathrooms = FilterResult["number_of_bathrooms"];
+      //                 // number_of_floors = FilterResult["number_of_floors"];
+      //                 // number_of_livingRooms =
+      //                 //     FilterResult["number_of_livingRooms"];
+      //                 // number_of_rooms = FilterResult["number_of_rooms"];
+      //                 // number_of_apartments =
+      //                 //     FilterResult["number_of_apartments"];
+      //                 // basement = FilterResult["basement"];
+      //                 // elevator = FilterResult["elevator"];
+      //                 // pool = FilterResult["pool"];
+      //                 // ageRange_start = FilterResult["ageRange_start"];
+      //                 // ageRange_end = FilterResult["ageRange_end"];
+      //                 // MinPrice = FilterResult["MinPrice"];
+      //                 // MaxPrice = FilterResult["MaxPrice"];
+      //                 // MinSpace = FilterResult["MinSpace"];
+      //                 // MaxSpace = FilterResult["MaxSpace"];
+      //                 // FilterValue = FilterResult["FilterValue"];
+      //                 // print(FilterResult);
+      //               });
+      //             },
+      //             icon: const Icon(Icons.filter_alt_outlined),
+      //           ),
+      //           title: Row(
+      //             children: [
+      //               Expanded(
+      //                 child: TextField(
+      //                   textAlign: TextAlign.right,
+      //                   controller: SearchController,
+      //                   onChanged: (value) {
+      //                     setState(() {
+      //                       name = value;
+      //                     });
+      //                   },
+      //                   decoration: InputDecoration(
+      //                     focusedBorder: UnderlineInputBorder(
+      //                         borderSide: BorderSide(
+      //                             color: Color.fromARGB(255, 14, 41, 99))),
+      //                     enabledBorder: UnderlineInputBorder(
+      //                         borderSide: BorderSide(color: Colors.white)),
+      //                     alignLabelWithHint: true,
+      //                     hintText: 'ابحث عن الحي أو المدينة أو نوع العقار',
+      //                     hintStyle: TextStyle(
+      //                         color: Color.fromARGB(143, 255, 255, 255),
+      //                         fontFamily: "Tajawal-m"),
+      //                   ),
+      //                   cursorColor: Colors.white,
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //           actions: [
+      //             Padding(
+      //               padding: EdgeInsets.only(right: 20.0),
+      //               child: Icon(
+      //                 Icons.search,
+      //                 color: Colors.white,
+      //               ),
+      //             ),
+      //           ],
+      //           bottom: const TabBar(
+      //             labelStyle: TextStyle(
+      //               fontFamily: "Tajawal-b",
+      //               fontWeight: FontWeight.w100,
+      //             ),
+      //             indicatorColor: Colors.white,
+      //             tabs: [
+      //               Tab(
+      //                 text: 'الكل',
+      //               ),
+      //               Tab(
+      //                 text: 'للبيع',
+      //               ),
+      //               Tab(
+      //                 text: 'للإيجار',
+      //               ),
+      //             ],
+      //           ),
       //         ),
       //       ),
-      //     ),
-      //   ],
+      //       Expanded(
+      //         child: Stack(
+      //           alignment: Alignment.bottomLeft,
+      //           children: [
+      //             TabBarView(
+      //               children: [
+      //                 GoogleMap(
+      //                   initialCameraPosition: CameraPosition(
+      //                     target: LatLng(23.885942, 45.079162),
+      //                     zoom: 5,
+      //                   ),
+      //                   onMapCreated: (mapController) {
+      //                     controller = mapController;
+      //                   },
+      //                   markers: markers.map((e) => e).toSet(),
+      //                 ),
+      //                 GoogleMap(
+      //                   initialCameraPosition: CameraPosition(
+      //                     target: LatLng(23.885942, 45.079162),
+      //                     zoom: 5,
+      //                   ),
+      //                   onMapCreated: (mapController) {
+      //                     controller = mapController;
+      //                   },
+      //                   markers: markers.map((e) => e).toSet(),
+      //                 ),
+      //                 GoogleMap(
+      //                   initialCameraPosition: CameraPosition(
+      //                     target: LatLng(23.885942, 45.079162),
+      //                     zoom: 5,
+      //                   ),
+      //                   onMapCreated: (mapController) {
+      //                     controller = mapController;
+      //                   },
+      //                   markers: markers.map((e) => e).toSet(),
+      //                 ),
+      //               ],
+      //             ),
+      //             Container(
+      //               margin: EdgeInsets.all(24),
+      //               child: CircleAvatar(
+      //                 backgroundColor: Color.fromARGB(255, 225, 231, 255),
+      //                 radius: 30,
+      //                 child: IconButton(
+      //                   icon: Icon(Icons.home,
+      //                       color: Color.fromARGB(255, 127, 166, 233)),
+      //                   onPressed: widget.onPressed,
+      //                 ),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ],
+      //   ),
       // ),
+      child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(23.885942, 45.079162),
+              zoom: 5,
+            ),
+            onMapCreated: (mapController) {
+              controller = mapController;
+            },
+            markers: markers.map((e) => e).toSet(),
+          ),
+          Container(
+            margin: EdgeInsets.all(24),
+            child: CircleAvatar(
+              backgroundColor: Color.fromARGB(255, 225, 231, 255),
+              radius: 30,
+              child: IconButton(
+                icon: Icon(Icons.home, color: Color.fromARGB(255, 127, 166, 233)),
+                onPressed: widget.onPressed,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
