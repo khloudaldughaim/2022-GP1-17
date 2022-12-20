@@ -10,7 +10,7 @@ class FilterPage extends StatefulWidget {
 
 enum propertyUse { residental, commercial }
 
-enum choice { yes, no }
+enum choice { yes, no , all }
 
 class _FilterPageState extends State<FilterPage> {
   final _formKey = GlobalKey<FormState>();
@@ -78,12 +78,15 @@ class _FilterPageState extends State<FilterPage> {
   int number_of_livingRooms = 0;
   int number_of_floors = 0;
   int number_of_apartments = 0;
-  choice? _poolCH = choice.no;
-  choice? _basementCH = choice.no;
-  choice? _elevatorCH = choice.no;
+  choice? _poolCH = choice.all;
+  choice? _basementCH = choice.all;
+  choice? _elevatorCH = choice.all;
   bool pool = false;
+  bool poolAll = false ;
   bool basement = false;
+  bool basementAll = false ;
   bool elevator = false;
+  bool elevatorAll = false ;
   RangeValues _ageRange = const RangeValues(0, 100);
   bool? FilterValue ;
 
@@ -835,6 +838,15 @@ class _FilterPageState extends State<FilterPage> {
                                                       color: Color.fromARGB(
                                                           255, 127, 166, 233),
                                                     )),
+                                                number_of_rooms == 0 ?
+                                                Text("الكل",
+                                                    style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontFamily: "Tajawal-b",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                    textDirection:
+                                                        TextDirection.rtl) :
                                                 Text("$number_of_rooms",
                                                     style: TextStyle(
                                                         fontSize: 20.0,
@@ -904,6 +916,15 @@ class _FilterPageState extends State<FilterPage> {
                                                       color: Color.fromARGB(
                                                           255, 127, 166, 233),
                                                     )),
+                                                number_of_bathrooms == 0 ?
+                                                Text("الكل",
+                                                    style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontFamily: "Tajawal-b",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                    textDirection:
+                                                        TextDirection.rtl) :
                                                 Text("$number_of_bathrooms",
                                                     style: TextStyle(
                                                         fontSize: 20.0,
@@ -972,6 +993,15 @@ class _FilterPageState extends State<FilterPage> {
                                                       color: Color.fromARGB(
                                                           255, 127, 166, 233),
                                                     )),
+                                                number_of_livingRooms == 0 ?
+                                                Text("الكل",
+                                                    style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontFamily: "Tajawal-b",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                    textDirection:
+                                                        TextDirection.rtl) :
                                                 Text("$number_of_livingRooms",
                                                     style: TextStyle(
                                                         fontSize: 20.0,
@@ -1039,6 +1069,15 @@ class _FilterPageState extends State<FilterPage> {
                                                       color: Color.fromARGB(
                                                           255, 127, 166, 233),
                                                     )),
+                                                number_of_apartments == 0 ?
+                                                Text("الكل",
+                                                    style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontFamily: "Tajawal-b",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                    textDirection:
+                                                        TextDirection.rtl) :
                                                 Text("$number_of_apartments",
                                                     style: TextStyle(
                                                         fontSize: 20.0,
@@ -1104,6 +1143,15 @@ class _FilterPageState extends State<FilterPage> {
                                                       color: Color.fromARGB(
                                                           255, 127, 166, 233),
                                                     )),
+                                                number_of_floors == 0 ?
+                                                Text("الكل",
+                                                    style: TextStyle(
+                                                        fontSize: 20.0,
+                                                        fontFamily: "Tajawal-b",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                    textDirection:
+                                                        TextDirection.rtl) :
                                                 Text("$number_of_floors",
                                                     style: TextStyle(
                                                         fontSize: 20.0,
@@ -1154,7 +1202,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    2,
+                                                    3,
                                                 child: RadioListTile(
                                                   title: const Text(
                                                     'نعم',
@@ -1179,7 +1227,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    2.5,
+                                                    4,
                                                 child: RadioListTile(
                                                   title: const Text(
                                                     'لا',
@@ -1196,6 +1244,31 @@ class _FilterPageState extends State<FilterPage> {
                                                       _poolCH = value;
                                                       if (_poolCH == choice.no)
                                                         pool = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    3,
+                                                child: RadioListTile(
+                                                  title: const Text(
+                                                    'الكل',
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontFamily: "Tajawal-m",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                  ),
+                                                  value: choice.all,
+                                                  groupValue: _poolCH,
+                                                  onChanged: (choice? value) {
+                                                    setState(() {
+                                                      _poolCH = value;
+                                                      if (_poolCH == choice.all)
+                                                        poolAll = true;
                                                     });
                                                   },
                                                 ),
@@ -1226,7 +1299,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    2,
+                                                    3,
                                                 child: RadioListTile(
                                                   title: const Text(
                                                     'نعم',
@@ -1252,7 +1325,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    2.5,
+                                                    4,
                                                 child: RadioListTile(
                                                   title: const Text(
                                                     'لا',
@@ -1270,6 +1343,32 @@ class _FilterPageState extends State<FilterPage> {
                                                       if (_basementCH ==
                                                           choice.no)
                                                         basement = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    3,
+                                                child: RadioListTile(
+                                                  title: const Text(
+                                                    'الكل',
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontFamily: "Tajawal-m",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                  ),
+                                                  value: choice.all,
+                                                  groupValue: _basementCH,
+                                                  onChanged: (choice? value) {
+                                                    setState(() {
+                                                      _basementCH = value;
+                                                      if (_basementCH ==
+                                                          choice.all)
+                                                        basementAll = true;
                                                     });
                                                   },
                                                 ),
@@ -1302,7 +1401,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    2,
+                                                    3,
                                                 child: RadioListTile(
                                                   title: const Text(
                                                     'نعم',
@@ -1328,7 +1427,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    2.5,
+                                                    4,
                                                 child: RadioListTile(
                                                   title: const Text(
                                                     'لا',
@@ -1346,6 +1445,32 @@ class _FilterPageState extends State<FilterPage> {
                                                       if (_elevatorCH ==
                                                           choice.no)
                                                         elevator = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    3,
+                                                child: RadioListTile(
+                                                  title: const Text(
+                                                    'الكل',
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontFamily: "Tajawal-m",
+                                                        color: Color.fromARGB(
+                                                            255, 73, 75, 82)),
+                                                  ),
+                                                  value: choice.all,
+                                                  groupValue: _elevatorCH,
+                                                  onChanged: (choice? value) {
+                                                    setState(() {
+                                                      _elevatorCH = value;
+                                                      if (_elevatorCH ==
+                                                          choice.all)
+                                                        elevatorAll = true;
                                                     });
                                                   },
                                                 ),
@@ -1379,8 +1504,11 @@ class _FilterPageState extends State<FilterPage> {
                                           "number_of_floors": number_of_floors,
                                           "number_of_apartments":number_of_apartments,
                                           "pool": pool,
+                                          "poolAll" : poolAll,
                                           "basement": basement,
+                                          "basementAll" : basementAll,
                                           "elevator": elevator,
+                                          "elevatorAll" : elevatorAll,
                                           "ageRange_start": _ageRange.start,
                                           "ageRange_end": _ageRange.end,
                                           "MinSpace": MinSpace.text,
