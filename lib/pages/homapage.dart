@@ -16,22 +16,23 @@ import 'mapPage.dart';
 class HomePage extends StatefulWidget {
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List<dynamic> allData = [];
+class HomePageState extends State<HomePage> {
+  static List<dynamic> allData = [];
   List<dynamic> searchItems = [];
   List<dynamic> searchItemsForRent = [];
   List<dynamic> searchItemsForSale = [];
   List<dynamic> forRent = [];
   List<dynamic> forSale = [];
-  List<dynamic> FilteredItems = [];
-  List<dynamic> FilterForRent = [];
-  List<dynamic> FilterForSale = [];
+  static List<dynamic> FilteredItems = [];
+  static List<dynamic> FilterForRent = [];
+  static List<dynamic> FilterForSale = [];
   TextEditingController controller = TextEditingController();
   String name = '';
-  bool FilterValue = false ;
+  static bool FilterValue = false ;
+  static bool ForRentValue = false ;
   bool isMap = false;
   String? type1;
   String? propertyUse1;
@@ -1544,6 +1545,7 @@ class _HomePageState extends State<HomePage> {
                         backgroundColor: Color.fromARGB(255, 127, 166, 233),
                         leading: IconButton(
                           onPressed: () async {
+                            print(allData);
                             print("a $type1");
                             print("b $propertyUse1");
                             print("c $in_floor");
