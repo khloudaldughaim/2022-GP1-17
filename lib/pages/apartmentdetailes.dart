@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -689,7 +691,15 @@ class ApartmentDetailes extends StatelessWidget {
                                                 property_id:
                                                     '${apartment.properties.property_id}',
                                                 user_id:
-                                                    '${apartment.properties.User_id}')));
+                                                    '${apartment.properties.User_id}',
+                                                Ptype:
+                                                    '${apartment.properties.type}',
+                                                Pcity:
+                                                    '${apartment.properties.city}',
+                                                Pnip:
+                                                    '${apartment.properties.neighborhood}',
+                                                Pimge:
+                                                    '${apartment.properties.images[0]}')));
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(

@@ -673,7 +673,15 @@ class BuildingDetailes extends StatelessWidget {
                                                 property_id:
                                                     '${building.properties.property_id}',
                                                 user_id:
-                                                    '${building.properties.User_id}')));
+                                                    '${building.properties.User_id}',
+                                                Ptype:
+                                                    '${building.properties.type}',
+                                                Pcity:
+                                                    '${building.properties.city}',
+                                                Pnip:
+                                                    '${building.properties.neighborhood}',
+                                                Pimge:
+                                                    '${building.properties.images[0]}')));
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(

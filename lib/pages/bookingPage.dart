@@ -28,7 +28,17 @@ import 'package:date_time_picker/date_time_picker.dart';
 class boookingPage extends StatefulWidget {
   final String property_id;
   final String user_id;
-  boookingPage({required this.property_id, required this.user_id});
+  final String Ptype;
+  final String Pcity;
+  final String Pnip;
+  final String Pimge;
+  boookingPage(
+      {required this.property_id,
+      required this.user_id,
+      required this.Ptype,
+      required this.Pcity,
+      required this.Pnip,
+      required this.Pimge});
 
   //const boookingPage({Key? key, required Apartment Apartment}) : super(key: key);
   @override
@@ -450,12 +460,13 @@ class _BookingPagestate extends State<boookingPage> {
                             ElevatedButton(
                               onPressed: () async {
                                 if (bookformkey.currentState!.validate()) {
-                                  DateTime dt =
-                                      DateTime.parse(datecontrolar.text);
+                                  // DateTime dt =
+                                  //     DateTime.parse(datecontrolar.text);
                                   book_id = Uuid().v4();
                                   FirebaseFirestore.instance
                                       .collection('bookings')
-                                      .where('Date', isEqualTo: dt)
+                                      .where('Date',
+                                          isEqualTo: datecontrolar.text)
                                       .get()
                                       .then((element) {
                                     if (element.docs.isEmpty) {
@@ -464,7 +475,7 @@ class _BookingPagestate extends State<boookingPage> {
                                             .collection('bookings')
                                             .doc(book_id)
                                             .set({
-                                          "Date": dt,
+                                          "Date": datecontrolar.text,
                                           "property_id":
                                               '${widget.property_id}',
                                           "buyer_id": curentId,
@@ -474,7 +485,12 @@ class _BookingPagestate extends State<boookingPage> {
                                           "book_type": Booktype,
                                           "videochat": videochat,
                                           "status": "pending",
-                                          "owner_id": '${widget.user_id}'
+                                          "owner_id": '${widget.user_id}',
+                                          "Ptype": '${widget.Ptype}',
+                                          "Pcity": '${widget.Pcity}',
+                                          "Pnip": '${widget.Pnip}',
+                                          "Pimage": '${widget.Pimge}',
+                                          "book_id": book_id,
                                         });
                                         final ref = FirebaseFirestore.instance
                                             .collection('bookings')
