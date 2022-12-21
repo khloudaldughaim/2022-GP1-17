@@ -263,6 +263,12 @@ class _myBookingsState extends State<ownerBooking> {
                                                             Text(" نوع الجولة :   " +
                                                                 snapshot.data!.docs[index]
                                                                     .data()['book_type']),
+                                                            if (snapshot.data!.docs[index]
+                                                                    .data()['book_type'] ==
+                                                                'افتراضية')
+                                                              Text(" التطبيق :   " +
+                                                                  snapshot.data!.docs[index]
+                                                                      .data()['videochat']),
                                                             SizedBox(
                                                               height: 5,
                                                             ),
@@ -530,6 +536,12 @@ class _myBookingsState extends State<ownerBooking> {
                                                             Text(" نوع الجولة :   " +
                                                                 snapshot.data!.docs[index]
                                                                     .data()['book_type']),
+                                                            if (snapshot.data!.docs[index]
+                                                                    .data()['book_type'] ==
+                                                                'افتراضية')
+                                                              Text(" التطبيق :   " +
+                                                                  snapshot.data!.docs[index]
+                                                                      .data()['videochat']),
                                                             SizedBox(
                                                               height: 5,
                                                             ),
@@ -737,6 +749,12 @@ class _myBookingsState extends State<ownerBooking> {
                                                             Text(" نوع الجولة :   " +
                                                                 snapshot.data!.docs[index]
                                                                     .data()['book_type']),
+                                                            if (snapshot.data!.docs[index]
+                                                                    .data()['book_type'] ==
+                                                                'افتراضية')
+                                                              Text(" التطبيق :   " +
+                                                                  snapshot.data!.docs[index]
+                                                                      .data()['videochat']),
                                                             SizedBox(
                                                               height: 5,
                                                             ),
@@ -944,6 +962,12 @@ class _myBookingsState extends State<ownerBooking> {
                                                             Text(" نوع الجولة : " +
                                                                 snapshot.data!.docs[index]
                                                                     .data()['book_type']),
+                                                            if (snapshot.data!.docs[index]
+                                                                    .data()['book_type'] ==
+                                                                'افتراضية')
+                                                              Text(" التطبيق :   " +
+                                                                  snapshot.data!.docs[index]
+                                                                      .data()['videochat']),
                                                             SizedBox(
                                                               height: 5,
                                                             ),
@@ -1139,6 +1163,10 @@ class _myBookingsState extends State<ownerBooking> {
                                             ),
                                             Text(" نوع الجولة :   " +
                                                 snapshot.data!.docs[index].data()['book_type']),
+                                            if (snapshot.data!.docs[index].data()['book_type'] ==
+                                                'افتراضية')
+                                              Text(" التطبيق :   " +
+                                                  snapshot.data!.docs[index].data()['videochat']),
                                             SizedBox(
                                               height: 5,
                                             ),

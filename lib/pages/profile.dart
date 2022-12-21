@@ -65,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 icon: new Icon(Icons.logout),
                 onPressed: () {
                   FirebaseAuth.instance.signOut().then((value) =>
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn())));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LogIn())));
                 })
           ],
           toolbarHeight: 60,
@@ -82,14 +83,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     FutureBuilder(
                       future: getCurrentUser(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasData) {
                           final cuuser = snapshot.data!;
-                          final nameControlar = TextEditingController(text: cuuser.name);
-                          final phoneControlar = TextEditingController(text: cuuser.phoneNumber);
-                          final emailcontrolar = TextEditingController(text: cuuser.email);
+                          final nameControlar =
+                              TextEditingController(text: cuuser.name);
+                          final phoneControlar =
+                              TextEditingController(text: cuuser.phoneNumber);
+                          final emailcontrolar =
+                              TextEditingController(text: cuuser.email);
 
                           return Column(
                             children: [
@@ -116,22 +121,28 @@ class _ProfilePageState extends State<ProfilePage> {
                                     textDirection: TextDirection.rtl,
                                     child: TextFormField(
                                       controller: nameControlar,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.person,
-                                          color: Color.fromARGB(255, 127, 166, 233),
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
                                         ),
                                         suffixIcon: Icon(
                                           Icons.edit,
-                                          color: Color.fromARGB(255, 127, 166, 233),
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
                                         ),
-                                        fillColor: Color.fromARGB(255, 225, 225, 228),
+                                        fillColor:
+                                            Color.fromARGB(255, 225, 225, 228),
                                         filled: true,
                                         border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(66.0),
+                                            borderRadius:
+                                                BorderRadius.circular(66.0),
                                             borderSide: const BorderSide(
-                                                width: 0, style: BorderStyle.none)),
+                                                width: 0,
+                                                style: BorderStyle.none)),
                                       ),
                                       validator: (value) {
                                         if (value!.length < 2) {
@@ -150,18 +161,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: TextFormField(
                                       readOnly: true,
                                       controller: emailcontrolar,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.email,
-                                          color: Color.fromARGB(255, 127, 166, 233),
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
                                         ),
-                                        fillColor: Color.fromARGB(255, 225, 225, 228),
+                                        fillColor:
+                                            Color.fromARGB(255, 225, 225, 228),
                                         filled: true,
                                         border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(66.0),
+                                            borderRadius:
+                                                BorderRadius.circular(66.0),
                                             borderSide: const BorderSide(
-                                                width: 0, style: BorderStyle.none)),
+                                                width: 0,
+                                                style: BorderStyle.none)),
                                       ),
                                     ),
                                   )),
@@ -174,25 +190,32 @@ class _ProfilePageState extends State<ProfilePage> {
                                     textDirection: TextDirection.rtl,
                                     child: TextFormField(
                                       controller: phoneControlar,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.phone_android,
-                                          color: Color.fromARGB(255, 127, 166, 233),
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
                                         ),
                                         suffixIcon: Icon(
                                           Icons.edit,
-                                          color: Color.fromARGB(255, 127, 166, 233),
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
                                         ),
-                                        fillColor: Color.fromARGB(255, 225, 225, 228),
+                                        fillColor:
+                                            Color.fromARGB(255, 225, 225, 228),
                                         filled: true,
                                         border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(66.0),
+                                            borderRadius:
+                                                BorderRadius.circular(66.0),
                                             borderSide: const BorderSide(
-                                                width: 0, style: BorderStyle.none)),
+                                                width: 0,
+                                                style: BorderStyle.none)),
                                       ),
                                       validator: (value) {
-                                        if (!RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
+                                        if (!RegExp(
+                                                r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
                                             .hasMatch(value!)) {
                                           return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
                                         }
@@ -220,9 +243,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => myProperty()));
+                                                    builder: (context) =>
+                                                        myProperty()));
                                           },
-                                          icon: const Icon(Icons.keyboard_arrow_right),
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_right),
                                           color: Colors.grey,
                                           iconSize: 30,
                                         ),
@@ -234,13 +259,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) => myProperty()));
+                                                      builder: (context) =>
+                                                          myProperty()));
                                             },
                                             child: Text(
                                               "عقاراتي",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color.fromARGB(255, 127, 166, 233),
+                                                color: Color.fromARGB(
+                                                    255, 127, 166, 233),
                                                 fontFamily: "Tajawal-b",
                                               ),
                                             )),
@@ -268,16 +295,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                           onPressed: () {
                                             FirebaseFirestore.instance
                                                 .collection('bookings')
+                                                .where('owner_id',
+                                                    isEqualTo: curentId)
                                                 .get()
                                                 .then((querySnapshot) {
-                                              querySnapshot.docs.forEach((element) {
-                                                DateTime d = DateTime.parse(element["Date"]);
+                                              querySnapshot.docs
+                                                  .forEach((element) {
+                                                DateTime d = DateTime.parse(
+                                                    element["Date"]);
                                                 DateTime t = DateTime.now();
                                                 print(d);
                                                 bool s = d.isBefore(t);
                                                 print(s);
                                                 if (d.isBefore(t)) {
-                                                  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                                                  print(
+                                                      "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                                                   FirebaseFirestore.instance
                                                       .collection('bookings')
                                                       .doc(element["book_id"])
@@ -290,9 +322,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => ownerBooking()));
+                                                    builder: (context) =>
+                                                        ownerBooking()));
                                           },
-                                          icon: const Icon(Icons.keyboard_arrow_right),
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_right),
                                           color: Colors.grey,
                                           iconSize: 30,
                                         ),
@@ -303,13 +337,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                             onPressed: () {
                                               FirebaseFirestore.instance
                                                   .collection('bookings')
+                                                  .where('owner_id',
+                                                      isEqualTo: curentId)
                                                   .get()
                                                   .then((querySnapshot) {
-                                                querySnapshot.docs.forEach((element) {
-                                                  DateTime d = DateTime.parse(element["Date"]);
+                                                querySnapshot.docs
+                                                    .forEach((element) {
+                                                  DateTime d = DateTime.parse(
+                                                      element["Date"]);
                                                   DateTime t = DateTime.now();
                                                   print(d);
                                                   if (d.isBefore(t)) {
+                                                    print(
+                                                        "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                                                     FirebaseFirestore.instance
                                                         .collection('bookings')
                                                         .doc(element["book_id"])
@@ -322,13 +362,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) => ownerBooking()));
+                                                      builder: (context) =>
+                                                          ownerBooking()));
                                             },
                                             child: Text(
                                               "طلبات الجولة العقارية",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color.fromARGB(255, 127, 166, 233),
+                                                color: Color.fromARGB(
+                                                    255, 127, 166, 233),
                                                 fontFamily: "Tajawal-b",
                                               ),
                                             )),
@@ -356,16 +398,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                           onPressed: () {
                                             FirebaseFirestore.instance
                                                 .collection('bookings')
+                                                .where('buyer_id',
+                                                    isEqualTo: curentId)
                                                 .get()
                                                 .then((querySnapshot) {
-                                              querySnapshot.docs.forEach((element) {
-                                                DateTime d = DateTime.parse(element["Date"]);
+                                              querySnapshot.docs
+                                                  .forEach((element) {
+                                                DateTime d = DateTime.parse(
+                                                    element["Date"]);
                                                 DateTime t = DateTime.now();
                                                 print(d);
                                                 bool s = d.isBefore(t);
                                                 print(s);
                                                 if (d.isBefore(t)) {
-                                                  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                                                  print(
+                                                      "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                                                   FirebaseFirestore.instance
                                                       .collection('bookings')
                                                       .doc(element["book_id"])
@@ -378,9 +425,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => BuyerBooking()));
+                                                    builder: (context) =>
+                                                        BuyerBooking()));
                                           },
-                                          icon: const Icon(Icons.keyboard_arrow_right),
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_right),
                                           color: Colors.grey,
                                           iconSize: 30,
                                         ),
@@ -391,13 +440,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                             onPressed: () {
                                               FirebaseFirestore.instance
                                                   .collection('bookings')
+                                                  .where('buyer_id',
+                                                      isEqualTo: curentId)
                                                   .get()
                                                   .then((querySnapshot) {
-                                                querySnapshot.docs.forEach((element) {
-                                                  DateTime d = DateTime.parse(element["Date"]);
+                                                querySnapshot.docs
+                                                    .forEach((element) {
+                                                  DateTime d = DateTime.parse(
+                                                      element["Date"]);
                                                   DateTime t = DateTime.now();
                                                   print(d);
                                                   if (d.isBefore(t)) {
+                                                    print(
+                                                        "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                                                     FirebaseFirestore.instance
                                                         .collection('bookings')
                                                         .doc(element["book_id"])
@@ -410,13 +465,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) => BuyerBooking()));
+                                                      builder: (context) =>
+                                                          BuyerBooking()));
                                             },
                                             child: Text(
                                               "حجوزاتي",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color.fromARGB(255, 127, 166, 233),
+                                                color: Color.fromARGB(
+                                                    255, 127, 166, 233),
                                                 fontFamily: "Tajawal-b",
                                               ),
                                             )),
@@ -444,8 +501,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 2,
-                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                        textColor: Color.fromARGB(255, 248, 249, 250),
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 248, 249, 250),
                                         fontSize: 18.0,
                                       );
                                     } catch (e, stack) {
@@ -454,24 +513,30 @@ class _ProfilePageState extends State<ProfilePage> {
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 5,
-                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                        textColor: Color.fromARGB(255, 252, 253, 255),
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 252, 253, 255),
                                         fontSize: 18.0,
                                       );
                                     }
                                   }
                                 },
                                 style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 127, 166, 233)),
                                   padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(27))),
+                                      EdgeInsets.symmetric(
+                                          horizontal: 40, vertical: 10)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(27))),
                                 ),
                                 child: Text(
                                   "حفظ التغيرات",
-                                  style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                  style: TextStyle(
+                                      fontSize: 18, fontFamily: "Tajawal-m"),
                                 ),
                               ),
                             ],
@@ -489,7 +554,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontFamily: "Tajawal-b",
-                                        color: Color.fromARGB(255, 127, 166, 233)),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233)),
                                     textAlign: TextAlign.center,
                                   )),
                               SizedBox(
@@ -498,19 +564,25 @@ class _ProfilePageState extends State<ProfilePage> {
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.push(
-                                      context, MaterialPageRoute(builder: (context) => LogIn()));
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LogIn()));
                                 },
                                 style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 127, 166, 233)),
                                   padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(27))),
+                                      EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(27))),
                                 ),
                                 child: Text(
                                   "تسجيل الدخول",
-                                  style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+                                  style: TextStyle(
+                                      fontSize: 20, fontFamily: "Tajawal-m"),
                                 ),
                               )
                             ],
@@ -531,8 +603,10 @@ Future getCurrentUser() async {
   final User? user = auth.currentUser;
   final kuid = user!.uid;
 
-  final docStanderUser =
-      await FirebaseFirestore.instance.collection('Standard_user').doc(kuid).get();
+  final docStanderUser = await FirebaseFirestore.instance
+      .collection('Standard_user')
+      .doc(kuid)
+      .get();
   if (docStanderUser.exists) {
     return Suser.fromJson(docStanderUser.data()!);
   }
