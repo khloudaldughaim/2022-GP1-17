@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:nozol_application/pages/property.dart';
 
-import 'OwnerBookingDetails.dart';
+//import 'OwnerBookingDetails.dart';
 
 class ownerBooking extends StatefulWidget {
   // const myBookings({super.key});
