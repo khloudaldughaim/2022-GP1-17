@@ -692,12 +692,6 @@ class ApartmentDetailes extends StatelessWidget {
                                                     '${apartment.properties.property_id}',
                                                 user_id:
                                                     '${apartment.properties.User_id}',
-                                                Ptype:
-                                                    '${apartment.properties.type}',
-                                                Pcity:
-                                                    '${apartment.properties.city}',
-                                                Pnip:
-                                                    '${apartment.properties.neighborhood}',
                                                 Pimge:
                                                     '${apartment.properties.images[0]}')));
                               },

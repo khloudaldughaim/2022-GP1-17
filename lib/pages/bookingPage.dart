@@ -28,17 +28,10 @@ import 'package:date_time_picker/date_time_picker.dart';
 class boookingPage extends StatefulWidget {
   final String property_id;
   final String user_id;
-  final String Ptype;
-  final String Pcity;
-  final String Pnip;
+
   final String Pimge;
   boookingPage(
-      {required this.property_id,
-      required this.user_id,
-      required this.Ptype,
-      required this.Pcity,
-      required this.Pnip,
-      required this.Pimge});
+      {required this.property_id, required this.user_id, required this.Pimge});
 
   //const boookingPage({Key? key, required Apartment Apartment}) : super(key: key);
   @override
@@ -70,12 +63,12 @@ class _BookingPagestate extends State<boookingPage> {
 
 //  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
   final datecontrolar = TextEditingController(
-      text: DateTime.now().day.toString() +
-          " -" +
+      text: DateTime.now().year.toString() +
+          "-" +
           DateTime.now().month.toString() +
           "-" +
-          DateTime.now().year.toString() +
-          "     " +
+          DateTime.now().day.toString() +
+          " " +
           DateTime.now().hour.toString() +
           ":" +
           DateTime.now().minute.toString());
@@ -486,11 +479,9 @@ class _BookingPagestate extends State<boookingPage> {
                                           "videochat": videochat,
                                           "status": "pending",
                                           "owner_id": '${widget.user_id}',
-                                          "Ptype": '${widget.Ptype}',
-                                          "Pcity": '${widget.Pcity}',
-                                          "Pnip": '${widget.Pnip}',
                                           "Pimage": '${widget.Pimge}',
                                           "book_id": book_id,
+                                          "isExpired": false,
                                         });
                                         final ref = FirebaseFirestore.instance
                                             .collection('bookings')

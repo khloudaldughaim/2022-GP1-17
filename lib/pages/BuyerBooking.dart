@@ -22,21 +22,21 @@ import 'package:label_marker/label_marker.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:nozol_application/pages/property.dart';
 
-class ownerBooking extends StatefulWidget {
+class BuyerBooking extends StatefulWidget {
   // const myBookings({super.key});
   // final String property_id;
   //myBookings({required this.property_id});
 
-  const ownerBooking({Key? key}) : super(key: key);
+  const BuyerBooking({Key? key}) : super(key: key);
   @override
-  State<ownerBooking> createState() => _myBookingsState();
+  State<BuyerBooking> createState() => _BuyerBookingsState();
 }
 
-class _myBookingsState extends State<ownerBooking> {
+class _BuyerBookingsState extends State<BuyerBooking> {
   // tthis is the toogle button lable
   List<String> lables = ['مرفوضة', 'مقبولة', 'منتهية', 'ملغاة'];
   List<bool> isSelected = [true, false, false, false];
-  var tt = Text("hello");
+
   var property;
 
   late FutureBuilder<QuerySnapshot<Map<String, dynamic>>> prviosBookings =
@@ -106,10 +106,10 @@ class _myBookingsState extends State<ownerBooking> {
                       indicatorColor: Colors.white,
                       tabs: [
                         Tab(
-                          text: 'السابقة',
+                          text: 'جميع الحجوزات',
                         ),
                         Tab(
-                          text: 'الجديدة',
+                          text: 'قيد المعالجة',
                         ),
                       ],
                     ),
@@ -170,7 +170,7 @@ class _myBookingsState extends State<ownerBooking> {
                                             QuerySnapshot<Map<String, dynamic>>>(
                                         future: FirebaseFirestore.instance
                                             .collection('bookings')
-                                            .where('owner_id', isEqualTo: curentId)
+                                            .where('buyer_id', isEqualTo: curentId)
                                             .where('status', isEqualTo: 'cansled')
                                             .where("isExpired", isEqualTo: false)
                                             .get(),
@@ -377,7 +377,7 @@ class _myBookingsState extends State<ownerBooking> {
                                             QuerySnapshot<Map<String, dynamic>>>(
                                         future: FirebaseFirestore.instance
                                             .collection('bookings')
-                                            .where('owner_id', isEqualTo: curentId)
+                                            .where('buyer_id', isEqualTo: curentId)
                                             .where("isExpired", isEqualTo: true)
                                             .get(),
                                         builder: (
@@ -644,7 +644,7 @@ class _myBookingsState extends State<ownerBooking> {
                                             QuerySnapshot<Map<String, dynamic>>>(
                                         future: FirebaseFirestore.instance
                                             .collection('bookings')
-                                            .where('owner_id', isEqualTo: curentId)
+                                            .where('buyer_id', isEqualTo: curentId)
                                             .where('status', isEqualTo: 'dicline')
                                             .where("isExpired", isEqualTo: false)
                                             .get(),
@@ -851,7 +851,7 @@ class _myBookingsState extends State<ownerBooking> {
                                             QuerySnapshot<Map<String, dynamic>>>(
                                         future: FirebaseFirestore.instance
                                             .collection('bookings')
-                                            .where('owner_id', isEqualTo: curentId)
+                                            .where('buyer_id', isEqualTo: curentId)
                                             .where('status', isEqualTo: 'aproved')
                                             .where("isExpired", isEqualTo: false)
                                             .get(),
@@ -1067,7 +1067,7 @@ class _myBookingsState extends State<ownerBooking> {
                     FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         future: FirebaseFirestore.instance
                             .collection('bookings')
-                            .where('owner_id', isEqualTo: curentId)
+                            .where('buyer_id', isEqualTo: curentId)
                             .where('status', isEqualTo: 'pending')
                             .where("isExpired", isEqualTo: false)
                             .get(),
@@ -1121,7 +1121,7 @@ class _myBookingsState extends State<ownerBooking> {
                                               height: 9,
                                             ),
                                             Text(
-                                              'حجز جديد',
+                                              'حجز قيد المعالجة',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
@@ -1152,30 +1152,6 @@ class _myBookingsState extends State<ownerBooking> {
                                             Row(
                                               children: [
                                                 ElevatedButton(
-                                                  onPressed: () async {
-                                                    await FirebaseFirestore.instance
-                                                        .collection('bookings')
-                                                        .doc(snapshot.data!.docs[index]
-                                                            .data()['book_id'])
-                                                        .update({
-                                                      "status": "aproved",
-                                                    });
-                                                    setState(() {});
-                                                  },
-                                                  child: Text('قبول'),
-                                                  style: ButtonStyle(
-                                                    backgroundColor: MaterialStateProperty.all(
-                                                        Color.fromARGB(255, 72, 169, 138)),
-                                                    shape: MaterialStateProperty.all(
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(27))),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                ElevatedButton(
                                                   onPressed: () {
                                                     setState(() {
                                                       FirebaseFirestore.instance
@@ -1183,11 +1159,11 @@ class _myBookingsState extends State<ownerBooking> {
                                                           .doc(snapshot.data!.docs[index]
                                                               .data()['book_id'])
                                                           .update({
-                                                        "status": "dicline",
+                                                        "status": "cansled",
                                                       });
                                                     });
                                                   },
-                                                  child: Text('رفض'),
+                                                  child: Text('إلغاء الحجز'),
                                                   style: ButtonStyle(
                                                     backgroundColor: MaterialStateProperty.all(
                                                         Color.fromARGB(255, 245, 68, 82)),

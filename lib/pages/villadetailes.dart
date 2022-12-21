@@ -707,12 +707,6 @@ class VillaDetailes extends StatelessWidget {
                                                     '${villa.properties.property_id}',
                                                 user_id:
                                                     '${villa.properties.User_id}',
-                                                Ptype:
-                                                    '${villa.properties.type}',
-                                                Pcity:
-                                                    '${villa.properties.city}',
-                                                Pnip:
-                                                    '${villa.properties.neighborhood}',
                                                 Pimge:
                                                     '${villa.properties.images[0]}')));
                               },

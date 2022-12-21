@@ -595,12 +595,6 @@ class LandDetailes extends StatelessWidget {
                                                     '${land.properties!.property_id}',
                                                 user_id:
                                                     '${land.properties!.User_id}',
-                                                Ptype:
-                                                    '${land.properties!.type}',
-                                                Pcity:
-                                                    '${land.properties!.city}',
-                                                Pnip:
-                                                    '${land.properties!.neighborhood}',
                                                 Pimge:
                                                     '${land.properties!.images[0]}')));
                               },
