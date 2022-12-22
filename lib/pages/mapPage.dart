@@ -41,12 +41,49 @@ class _MapPageState extends State<mapPage> {
   String name = '';
 
   void initState() {
-    if(HomePageState.FilterValue == true){
-      print(HomePageState.FilterValue) ;
-      intilize(HomePageState.FilteredItems);
-    }else{
-      print(HomePageState.FilterValue) ;
+    // if(HomePageState.FilterValue == true){
+    //   print(HomePageState.FilterValue) ;
+    //   intilize(HomePageState.FilteredItems);
+    // }else{
+    //   print(HomePageState.FilterValue) ;
+    //   intilize(HomePageState.allData);
+    // }
+    if(HomePageState.indexOfTap == 0 && HomePageState.FilterValue == false && HomePageState.name.isEmpty){
+      print("length : ${HomePageState.allData.length}") ;
       intilize(HomePageState.allData);
+    }else if(HomePageState.indexOfTap == 1 && HomePageState.FilterValue == false && HomePageState.name.isEmpty){
+      print("length : ${HomePageState.forRent.length}") ;
+      intilize(HomePageState.forRent);    
+    }else if(HomePageState.indexOfTap == 2 && HomePageState.FilterValue == false && HomePageState.name.isEmpty){
+      print("length : ${HomePageState.forSale.length}") ;
+      intilize(HomePageState.forSale);    
+    }else if(HomePageState.indexOfTap == 0 && HomePageState.FilterValue == true && HomePageState.name.isEmpty){
+      print("length : ${HomePageState.FilteredItems.length}") ;
+      intilize(HomePageState.FilteredItems); 
+    }else if(HomePageState.indexOfTap == 1 && HomePageState.FilterValue == true && HomePageState.name.isEmpty){
+      print("length : ${HomePageState.FilterForRent.length}") ;
+      intilize(HomePageState.FilterForRent);       
+    }else if(HomePageState.indexOfTap == 2 && HomePageState.FilterValue == true && HomePageState.name.isEmpty){
+      print("length : ${HomePageState.FilterForSale.length}") ;
+      intilize(HomePageState.FilterForSale);
+    }else if(HomePageState.indexOfTap == 0 && HomePageState.FilterValue == false && HomePageState.name.isNotEmpty){
+      print("length : ${HomePageState.searchItems.length}") ;
+      intilize(HomePageState.searchItems);
+    }else if(HomePageState.indexOfTap == 1 && HomePageState.FilterValue == false && HomePageState.name.isNotEmpty){
+      print("length : ${HomePageState.searchItemsForRent.length}") ;
+      intilize(HomePageState.searchItemsForRent);
+    }else if(HomePageState.indexOfTap == 2 && HomePageState.FilterValue == false && HomePageState.name.isNotEmpty){
+      print("length : ${HomePageState.searchItemsForSale.length}") ;
+      intilize(HomePageState.searchItemsForSale);
+    }else if(HomePageState.indexOfTap == 0 && HomePageState.FilterValue == true && HomePageState.name.isNotEmpty){
+      print("length : ${HomePageState.FilteredItems.length}") ;
+      intilize(HomePageState.FilteredItems); 
+    }else if(HomePageState.indexOfTap == 1 && HomePageState.FilterValue == true && HomePageState.name.isNotEmpty){
+      print("length : ${HomePageState.FilterForRent.length}") ;
+      intilize(HomePageState.FilterForRent); 
+    }else if(HomePageState.indexOfTap == 2 && HomePageState.FilterValue == true && HomePageState.name.isNotEmpty){
+      print("length : ${HomePageState.FilterForSale.length}") ;
+      intilize(HomePageState.FilterForSale);
     }
     super.initState();
   }

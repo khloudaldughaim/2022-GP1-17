@@ -727,9 +727,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   Expanded(
                                                       child: Padding(
                                                           padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      60),
+                                                              .only(
+                                                                  left:93, right:33),
                                                           child: Directionality(
                                                             textDirection:
                                                                 TextDirection
@@ -811,8 +810,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 60),
+                                              padding: EdgeInsets.only(
+                                                  left: 90, right: 35),
                                               child: Directionality(
                                                 textDirection:
                                                     TextDirection.rtl,
@@ -875,8 +874,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 60),
+                                              padding: EdgeInsets.only(
+                                                  left: 60, right: 35),
                                               child: Directionality(
                                                 textDirection:
                                                     TextDirection.rtl,
@@ -945,7 +944,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 textDirection:
                                                     TextDirection.rtl),
                                             Container(
-                                              margin: const EdgeInsets.all(8),
+                                              margin: const EdgeInsets.all(13),
                                             ),
                                             Padding(
                                                 padding:
@@ -1012,7 +1011,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         ),
                                       ),
                                       Container(
-                                        margin: const EdgeInsets.all(10),
+                                        margin: const EdgeInsets.all(7),
                                       ),
                                       Expanded(
                                           child: Padding(
@@ -1075,8 +1074,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 60),
+                                              padding: EdgeInsets.only(
+                                                  left: 20, right: 20),
                                               child: Directionality(
                                                 textDirection:
                                                     TextDirection.rtl,
@@ -1545,7 +1544,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   type == 4
                                       ? Column(
                                           children: [
-                                            Text("عدد الشقق:",
+                                            Text("عدد الشقق",
                                                 style: TextStyle(
                                                     fontSize: 20.0,
                                                     fontFamily: "Tajawal-b")),
@@ -1615,7 +1614,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ? Container()
                                       : Column(
                                           children: [
-                                            Text("عدد الأدوار:",
+                                            Text("عدد الأدوار",
                                                 style: TextStyle(
                                                     fontSize: 20.0,
                                                     fontFamily: "Tajawal-b")),

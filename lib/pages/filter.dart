@@ -14,16 +14,16 @@ enum choice { yes, no , all }
 
 class _FilterPageState extends State<FilterPage> {
   final _formKey = GlobalKey<FormState>();
-  int type = 1;
-  String type1 = "";
-  propertyUse? _pUse = propertyUse.residental;
-  String propertyUse1 = 'سكني';
-  final in_floor = TextEditingController();
-  final MinSpace = TextEditingController();
-  final MaxSpace = TextEditingController();
-  final MinPrice = TextEditingController();
-  final MaxPrice = TextEditingController();
-  String? city = "الرياض";
+  static int type = 1;
+  static String type1 = "فيلا";
+  static propertyUse? _pUse = propertyUse.residental;
+  static String propertyUse1 = 'سكني';
+  static final in_floor = TextEditingController();
+  static final MinSpace = TextEditingController();
+  static final MaxSpace = TextEditingController();
+  static final MinPrice = TextEditingController();
+  static final MaxPrice = TextEditingController();
+  static String? city = "الرياض";
   var citiesList = [
     "الرياض",
     "جدة",
@@ -71,24 +71,24 @@ class _FilterPageState extends State<FilterPage> {
     "بلجرشي",
     "دومة الجندل"
   ];
-  final address = TextEditingController();
+  static final address = TextEditingController();
   double property_age = 0.0;
-  int number_of_bathrooms = 0;
-  int number_of_rooms = 0;
-  int number_of_livingRooms = 0;
-  int number_of_floors = 0;
-  int number_of_apartments = 0;
-  choice? _poolCH = choice.all;
-  choice? _basementCH = choice.all;
-  choice? _elevatorCH = choice.all;
-  bool pool = false;
-  bool poolAll = false ;
-  bool basement = false;
-  bool basementAll = false ;
-  bool elevator = false;
-  bool elevatorAll = false ;
-  RangeValues _ageRange = const RangeValues(0, 100);
-  bool? FilterValue ;
+  static int number_of_bathrooms = 0;
+  static int number_of_rooms = 0;
+  static int number_of_livingRooms = 0;
+  static int number_of_floors = 0;
+  static int number_of_apartments = 0;
+  static choice? _poolCH = choice.no;
+  static choice? _basementCH = choice.no;
+  static choice? _elevatorCH = choice.no;
+  static bool pool = false;
+  static bool poolAll = false ;
+  static bool basement = false;
+  static bool basementAll = false ;
+  static bool elevator = false;
+  static bool elevatorAll = false ;
+  static RangeValues _ageRange = const RangeValues(0, 100);
+  static bool? FilterValue ;
 
   @override
   Widget build(BuildContext context) {
@@ -372,8 +372,8 @@ class _FilterPageState extends State<FilterPage> {
                                                 Expanded(
                                                     child: Padding(
                                                         padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 60),
+                                                            .only(
+                                                                left: 165, right:20,),
                                                         child: Directionality(
                                                           textDirection:
                                                               TextDirection.rtl,
@@ -633,7 +633,7 @@ class _FilterPageState extends State<FilterPage> {
                                               ),
                                               textDirection: TextDirection.rtl),
                                           Container(
-                                            margin: const EdgeInsets.all(8),
+                                            margin: const EdgeInsets.all(2),
                                           ),
                                           Padding(
                                               padding:
@@ -697,8 +697,8 @@ class _FilterPageState extends State<FilterPage> {
                                     ),
                                     Expanded(
                                         child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 70),
+                                            padding: EdgeInsets.only(
+                                                left: 55, right: 55,),
                                             child: Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: TextFormField(
@@ -734,6 +734,8 @@ class _FilterPageState extends State<FilterPage> {
                                             ))),
                                   ],
                                 ),
+                                type == 3 ?
+                                Container():
                                 Container(
                                   margin: const EdgeInsets.all(25),
                                 ),
@@ -752,6 +754,9 @@ class _FilterPageState extends State<FilterPage> {
                                               fontFamily: "Tajawal-b",
                                             ),
                                             textDirection: TextDirection.rtl,
+                                          ),
+                                          Container(
+                                            margin: const EdgeInsets.all(5),
                                           ),
                                           Container(
                                             height: 70,
@@ -843,8 +848,7 @@ class _FilterPageState extends State<FilterPage> {
                                                     style: TextStyle(
                                                         fontSize: 20.0,
                                                         fontFamily: "Tajawal-b",
-                                                        color: Color.fromARGB(
-                                                            255, 73, 75, 82)),
+                                                        color: Color.fromARGB(255, 157, 157, 157)),
                                                     textDirection:
                                                         TextDirection.rtl) :
                                                 Text("$number_of_rooms",
@@ -921,8 +925,7 @@ class _FilterPageState extends State<FilterPage> {
                                                     style: TextStyle(
                                                         fontSize: 20.0,
                                                         fontFamily: "Tajawal-b",
-                                                        color: Color.fromARGB(
-                                                            255, 73, 75, 82)),
+                                                        color: Color.fromARGB(255, 157, 157, 157)),
                                                     textDirection:
                                                         TextDirection.rtl) :
                                                 Text("$number_of_bathrooms",
@@ -998,8 +1001,7 @@ class _FilterPageState extends State<FilterPage> {
                                                     style: TextStyle(
                                                         fontSize: 20.0,
                                                         fontFamily: "Tajawal-b",
-                                                        color: Color.fromARGB(
-                                                            255, 73, 75, 82)),
+                                                        color: Color.fromARGB(255, 157, 157, 157)),
                                                     textDirection:
                                                         TextDirection.rtl) :
                                                 Text("$number_of_livingRooms",
@@ -1037,7 +1039,7 @@ class _FilterPageState extends State<FilterPage> {
                                 type == 4
                                     ? Column(
                                         children: [
-                                          Text("عدد الشقق:",
+                                          Text("عدد الشقق",
                                               style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b")),
@@ -1074,8 +1076,7 @@ class _FilterPageState extends State<FilterPage> {
                                                     style: TextStyle(
                                                         fontSize: 20.0,
                                                         fontFamily: "Tajawal-b",
-                                                        color: Color.fromARGB(
-                                                            255, 73, 75, 82)),
+                                                        color: Color.fromARGB(255, 157, 157, 157)),
                                                     textDirection:
                                                         TextDirection.rtl) :
                                                 Text("$number_of_apartments",
@@ -1106,12 +1107,18 @@ class _FilterPageState extends State<FilterPage> {
                                         ],
                                       )
                                     : Container(),
-
+                                    type == 4 ?
+                                    Container(
+                                      margin: const EdgeInsets.all(10),
+                                    ):
+                                    Container(
+                                      margin: const EdgeInsets.all(5),
+                                    ),
                                 type == 3
                                     ? Container()
                                     : Column(
                                         children: [
-                                          Text("عدد الأدوار:",
+                                          Text("عدد الأدوار",
                                               style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b")),
@@ -1148,8 +1155,7 @@ class _FilterPageState extends State<FilterPage> {
                                                     style: TextStyle(
                                                         fontSize: 20.0,
                                                         fontFamily: "Tajawal-b",
-                                                        color: Color.fromARGB(
-                                                            255, 73, 75, 82)),
+                                                        color: Color.fromARGB(255, 157, 157, 157)),
                                                     textDirection:
                                                         TextDirection.rtl) :
                                                 Text("$number_of_floors",
@@ -1479,7 +1485,9 @@ class _FilterPageState extends State<FilterPage> {
                                           ),
                                         ],
                                       ),
-                                Container(
+                                type == 3 ?
+                                Container()
+                                : Container(
                                   margin: const EdgeInsets.all(15),
                                 ),
                                 SizedBox(
@@ -1580,6 +1588,7 @@ class _FilterPageState extends State<FilterPage> {
                                         
                                         setState(() {
                                           type = 1 ;
+                                          type1 = 'فيلا';
                                           city = 'الرياض' ;
                                           _ageRange = RangeValues(0, 100);
                                           number_of_bathrooms = 0 ;
