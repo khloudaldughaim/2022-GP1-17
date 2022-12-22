@@ -99,25 +99,22 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                             color: Color.fromARGB(255, 231, 232, 233),
                           )),
                     ),
-                     actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                          builder: (context) =>
-                NavigationBarPage()));
-              },
-              child: Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white,
-                size: 28,
-              ),
-            ),
-          ),
-        ],
+                    actions: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 20.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => NavigationBarPage()));
+                          },
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ),
+                      ),
+                    ],
                     bottom: const TabBar(
                       labelStyle: TextStyle(
                         fontFamily: "Tajawal-b",
@@ -126,13 +123,13 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       indicatorColor: Colors.white,
                       tabs: [
                         Tab(
-                            child: Text('الحجوزات الماضية',style: TextStyle(fontSize: 12 )),
+                          child: Text('الحجوزات الماضية', style: TextStyle(fontSize: 12)),
                         ),
                         Tab(
-                            child: Text('الحجوزات القادمة',style: TextStyle(fontSize: 12 )),
+                          child: Text('الحجوزات القادمة', style: TextStyle(fontSize: 12)),
                         ),
                         Tab(
-                            child: Text('قيد المعالجة',style: TextStyle(fontSize: 12 )),
+                          child: Text('قيد المعالجة', style: TextStyle(fontSize: 12)),
                         ),
                       ],
                     ),
@@ -144,279 +141,242 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                 ),
                 Expanded(
                   child: TabBarView(children: [
+                    FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        future: FirebaseFirestore.instance
+                            .collection('bookings')
+                            .where('buyer_id', isEqualTo: curentId)
+                            .where("isExpired", isEqualTo: true)
+                            .get(),
+                        builder: (
+                          BuildContext context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                        ) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: Text("no data"),
+                            );
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) => Card(
+                                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                )),
+                                child: Container(
+                                  height: 250,
 
-                   FutureBuilder<
-                                            QuerySnapshot<Map<String, dynamic>>>(
-                                        future: FirebaseFirestore.instance
-                                            .collection('bookings')
-                                            .where('buyer_id', isEqualTo: curentId)
-                                            .where("isExpired", isEqualTo: true)
-                                            .get(),
-                                        builder: (
-                                          BuildContext context,
-                                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                              snapshot,
-                                        ) {
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: Text("no data"),
-                                            );
-                                          } else {
-                                            return ListView.builder(
-                                              itemCount: snapshot.data!.docs.length,
-                                              itemBuilder: (context, index) => Card(
-                                                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                                                clipBehavior: Clip.antiAlias,
-                                                shape: RoundedRectangleBorder(
+                                  // ignore: prefer_const_constructors
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                                        child: Container(
+                                          height: 140,
+                                          width: 160,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  snapshot.data!.docs[index].data()['Pimage']),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 3),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 9,
+                                            ),
+                                            if (snapshot.data!.docs[index].data()['status'] ==
+                                                'aproved')
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
                                                     borderRadius: BorderRadius.all(
-                                                  Radius.circular(15),
-                                                )),
-                                                child: Container(
-                                                  height: 250,
-
-                                                  // ignore: prefer_const_constructors
-                                                  child: Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                                                        child: Container(
-                                                          height: 140,
-                                                          width: 160,
-                                                          decoration: BoxDecoration(
-                                                            image: DecorationImage(
-                                                              image: NetworkImage(snapshot
-                                                                  .data!.docs[index]
-                                                                  .data()['Pimage']),
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(bottom: 3),
-                                                        child: Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 9,
-                                                            ),
-                                                            if (snapshot.data!.docs[index]
-                                                                    .data()['status'] ==
-                                                                'aproved')
-                                                              Container(
-                                                                  decoration: BoxDecoration(
-                                                                    color: Colors.white,
-                                                                    borderRadius: BorderRadius.all(
-                                                                      Radius.circular(5),
-                                                                    ),
-                                                                    border: Border.all(
-                                                                      width: 1.5,
-                                                                      color: Color.fromARGB(
-                                                                          255, 19, 238, 30),
-                                                                    ),
-                                                                  ),
-                                                                  width: 85,
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      vertical: 4),
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                      'حجز مقبول',
-                                                                      style: TextStyle(
-                                                                        color: Colors.black,
-                                                                        fontSize: 14,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontFamily: "Tajawal-m",
-                                                                      ),
-                                                                    ),
-                                                                  )),
-                                                            if (snapshot.data!.docs[index]
-                                                                    .data()['status'] ==
-                                                                'cansled')
-                                                              Container(
-                                                                  decoration: BoxDecoration(
-                                                                    color: Colors.white,
-                                                                    borderRadius: BorderRadius.all(
-                                                                      Radius.circular(5),
-                                                                    ),
-                                                                    border: Border.all(
-                                                                      width: 1.5,
-                                                                      color: Color.fromARGB(
-                                                                          255, 238, 103, 19),
-                                                                    ),
-                                                                  ),
-                                                                  width: 85,
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      vertical: 4),
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                      'حجز ملغي',
-                                                                      style: TextStyle(
-                                                                        color: Colors.black,
-                                                                        fontSize: 14,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontFamily: "Tajawal-m",
-                                                                      ),
-                                                                    ),
-                                                                  )),
-                                                            if (snapshot.data!.docs[index]
-                                                                    .data()['status'] ==
-                                                                'dicline')
-                                                              Container(
-                                                                  decoration: BoxDecoration(
-                                                                    color: Colors.white,
-                                                                    borderRadius: BorderRadius.all(
-                                                                      Radius.circular(5),
-                                                                    ),
-                                                                    border: Border.all(
-                                                                      width: 1.5,
-                                                                      color: Color.fromARGB(
-                                                                          255, 245, 11, 11),
-                                                                    ),
-                                                                  ),
-                                                                  width: 85,
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      vertical: 4),
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                      'حجز مرفوض',
-                                                                      style: TextStyle(
-                                                                        color: Colors.black,
-                                                                        fontSize: 14,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        fontFamily: "Tajawal-m",
-                                                                      ),
-                                                                    ),
-                                                                  )),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(" صاحب الحجز :   " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['buyer_name']),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(" نوع الجولة :   " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['book_type']),
-                                                                     if (snapshot.data!.docs[index]
-                                                                    .data()['book_type'] ==
-                                                                'افتراضية')
-                                                              Text(" التطبيق :   " +
-                                                                  snapshot.data!.docs[index]
-                                                                      .data()['videochat']),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(" رقم الحاجز :   " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['buyer_phone']),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(" التاريخ :   " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['Date']),
-                                                            ElevatedButton(
-                                                              onPressed: () {
-                                                                FirebaseFirestore.instance
-                                                                    .collection('properties')
-                                                                    .where('property_id',
-                                                                        isEqualTo: snapshot
-                                                                            .data!.docs[index]
-                                                                            .data()['property_id'])
-                                                                    .get()
-                                                                    .then((querySnapshot) {
-                                                                  querySnapshot.docs
-                                                                      .forEach((element) {
-                                                                    setState(() {
-                                                                      if (element["type"] ==
-                                                                          "فيلا") {
-                                                                        Villa villa = Villa.fromMap(
-                                                                            element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  VillaDetailes(
-                                                                                      villa:
-                                                                                          villa)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                      if (element.data()["type"] ==
-                                                                          "شقة") {
-                                                                        Apartment apartment =
-                                                                            Apartment.fromMap(
-                                                                                element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  ApartmentDetailes(
-                                                                                      apartment:
-                                                                                          apartment)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                      if (element.data()["type"] ==
-                                                                          "عمارة") {
-                                                                        Building building =
-                                                                            Building.fromMap(
-                                                                                element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  BuildingDetailes(
-                                                                                      building:
-                                                                                          building)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                      if (element.data()["type"] ==
-                                                                          "ارض") {
-                                                                        Land land = Land.fromJson(
-                                                                            element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  LandDetailes(
-                                                                                      land: land)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                    });
-                                                                  });
-                                                                });
-                                                              },
-                                                              child: Text('تفاصيل العقار'),
-                                                              style: ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty.all(
-                                                                  Color.fromARGB(255, 82, 155, 210),
-                                                                ),
-                                                                shape: MaterialStateProperty.all(
-                                                                    RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                27))),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
+                                                      Radius.circular(5),
+                                                    ),
+                                                    border: Border.all(
+                                                      width: 1.5,
+                                                      color: Color.fromARGB(255, 19, 238, 30),
+                                                    ),
                                                   ),
+                                                  width: 85,
+                                                  padding: EdgeInsets.symmetric(vertical: 4),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'حجز مقبول',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: "Tajawal-m",
+                                                      ),
+                                                    ),
+                                                  )),
+                                            if (snapshot.data!.docs[index].data()['status'] ==
+                                                'cansled')
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.all(
+                                                      Radius.circular(5),
+                                                    ),
+                                                    border: Border.all(
+                                                      width: 1.5,
+                                                      color: Color.fromARGB(255, 238, 103, 19),
+                                                    ),
+                                                  ),
+                                                  width: 85,
+                                                  padding: EdgeInsets.symmetric(vertical: 4),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'حجز ملغي',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: "Tajawal-m",
+                                                      ),
+                                                    ),
+                                                  )),
+                                            if (snapshot.data!.docs[index].data()['status'] ==
+                                                'dicline')
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.all(
+                                                      Radius.circular(5),
+                                                    ),
+                                                    border: Border.all(
+                                                      width: 1.5,
+                                                      color: Color.fromARGB(255, 245, 11, 11),
+                                                    ),
+                                                  ),
+                                                  width: 85,
+                                                  padding: EdgeInsets.symmetric(vertical: 4),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'حجز مرفوض',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: "Tajawal-m",
+                                                      ),
+                                                    ),
+                                                  )),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(" صاحب الحجز :   " +
+                                                snapshot.data!.docs[index].data()['buyer_name']),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(" نوع الجولة :   " +
+                                                snapshot.data!.docs[index].data()['book_type']),
+                                            if (snapshot.data!.docs[index].data()['book_type'] ==
+                                                'افتراضية')
+                                              Text(" التطبيق :   " +
+                                                  snapshot.data!.docs[index].data()['videochat']),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(" رقم الحاجز :   " +
+                                                snapshot.data!.docs[index].data()['buyer_phone']),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(" التاريخ :   " +
+                                                snapshot.data!.docs[index].data()['Date']),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                FirebaseFirestore.instance
+                                                    .collection('properties')
+                                                    .where('property_id',
+                                                        isEqualTo: snapshot.data!.docs[index]
+                                                            .data()['property_id'])
+                                                    .get()
+                                                    .then((querySnapshot) {
+                                                  querySnapshot.docs.forEach((element) {
+                                                    setState(() {
+                                                      if (element["type"] == "فيلا") {
+                                                        Villa villa = Villa.fromMap(element.data());
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  VillaDetailes(villa: villa)),
+                                                        );
+                                                      }
+                                                      ;
+                                                      if (element.data()["type"] == "شقة") {
+                                                        Apartment apartment =
+                                                            Apartment.fromMap(element.data());
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ApartmentDetailes(
+                                                                      apartment: apartment)),
+                                                        );
+                                                      }
+                                                      ;
+                                                      if (element.data()["type"] == "عمارة") {
+                                                        Building building =
+                                                            Building.fromMap(element.data());
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  BuildingDetailes(
+                                                                      building: building)),
+                                                        );
+                                                      }
+                                                      ;
+                                                      if (element.data()["type"] == "ارض") {
+                                                        Land land = Land.fromJson(element.data());
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  LandDetailes(land: land)),
+                                                        );
+                                                      }
+                                                      ;
+                                                    });
+                                                  });
+                                                });
+                                              },
+                                              child: Text('تفاصيل العقار'),
+                                              style: ButtonStyle(
+                                                backgroundColor: MaterialStateProperty.all(
+                                                  Color.fromARGB(255, 82, 155, 210),
                                                 ),
+                                                shape: MaterialStateProperty.all(
+                                                    RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(27))),
                                               ),
-                                            );
-                                          }
-                                        }), 
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                     Column(
                       children: [
                         Container(
@@ -526,7 +486,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                                   border: Border.all(
                                                                     width: 1.5,
                                                                     color: Color.fromARGB(
-                                                                        255, 238, 103, 19),
+                                                                        255, 125, 120, 117),
                                                                   ),
                                                                 ),
                                                                 width: 85,
@@ -555,8 +515,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                             Text(" نوع الجولة :   " +
                                                                 snapshot.data!.docs[index]
                                                                     .data()['book_type']),
-
-                                                                     if (snapshot.data!.docs[index]
+                                                            if (snapshot.data!.docs[index]
                                                                     .data()['book_type'] ==
                                                                 'افتراضية')
                                                               Text(" التطبيق :   " +
@@ -769,14 +728,12 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                             Text(" نوع الجولة :   " +
                                                                 snapshot.data!.docs[index]
                                                                     .data()['book_type']),
-
-                                                                     if (snapshot.data!.docs[index]
+                                                            if (snapshot.data!.docs[index]
                                                                     .data()['book_type'] ==
                                                                 'افتراضية')
                                                               Text(" التطبيق :   " +
                                                                   snapshot.data!.docs[index]
                                                                       .data()['videochat']),
-
                                                             SizedBox(
                                                               height: 5,
                                                             ),
@@ -915,7 +872,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                   Radius.circular(15),
                                                 )),
                                                 child: Container(
-                                                  height: 250,
+                                                  height: 270,
 
                                                   // ignore: prefer_const_constructors
                                                   child: Row(
@@ -939,158 +896,179 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                       SizedBox(
                                                         width: 10,
                                                       ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(bottom: 3),
-                                                        child: Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 9,
-                                                            ),
-                                                            Container(
-                                                                decoration: BoxDecoration(
-                                                                  color: Colors.white,
-                                                                  borderRadius: BorderRadius.all(
-                                                                    Radius.circular(5),
-                                                                  ),
-                                                                  border: Border.all(
-                                                                    width: 1.5,
-                                                                    color: Color.fromARGB(
-                                                                        255, 19, 238, 30),
+                                                      Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Container(
+                                                              decoration: BoxDecoration(
+                                                                color: Colors.white,
+                                                                borderRadius: BorderRadius.all(
+                                                                  Radius.circular(5),
+                                                                ),
+                                                                border: Border.all(
+                                                                  width: 1.5,
+                                                                  color: Color.fromARGB(
+                                                                      255, 19, 238, 30),
+                                                                ),
+                                                              ),
+                                                              width: 85,
+                                                              padding:
+                                                                  EdgeInsets.symmetric(vertical: 4),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  'حجز مقبول',
+                                                                  style: TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontSize: 14,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontFamily: "Tajawal-m",
                                                                   ),
                                                                 ),
-                                                                width: 85,
-                                                                padding: EdgeInsets.symmetric(
-                                                                    vertical: 4),
-                                                                child: Center(
-                                                                  child: Text(
-                                                                    'حجز مقبول',
-                                                                    style: TextStyle(
-                                                                      color: Colors.black,
-                                                                      fontSize: 14,
-                                                                      fontWeight: FontWeight.bold,
-                                                                      fontFamily: "Tajawal-m",
-                                                                    ),
-                                                                  ),
-                                                                )),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Text(" صاحب الحجز :   " +
+                                                              )),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(" صاحب الحجز :   " +
+                                                              snapshot.data!.docs[index]
+                                                                  .data()['buyer_name']),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(" نوع الجولة : " +
+                                                              snapshot.data!.docs[index]
+                                                                  .data()['book_type']),
+                                                          if (snapshot.data!.docs[index]
+                                                                  .data()['book_type'] ==
+                                                              'افتراضية')
+                                                            Text(" التطبيق :   " +
                                                                 snapshot.data!.docs[index]
-                                                                    .data()['buyer_name']),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(" نوع الجولة : " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['book_type']),
-                                                                     if (snapshot.data!.docs[index]
-                                                                    .data()['book_type'] ==
-                                                                'افتراضية')
-                                                              Text(" التطبيق :   " +
-                                                                  snapshot.data!.docs[index]
-                                                                      .data()['videochat']),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(" رقم الحاجز :  " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['buyer_phone']),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(" التاريخ :   " +
-                                                                snapshot.data!.docs[index]
-                                                                    .data()['Date']),
-                                                            ElevatedButton(
-                                                              onPressed: () {
+                                                                    .data()['videochat']),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(" رقم الحاجز :  " +
+                                                              snapshot.data!.docs[index]
+                                                                  .data()['buyer_phone']),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(" التاريخ :   " +
+                                                              snapshot.data!.docs[index]
+                                                                  .data()['Date']),
+                                                          ElevatedButton(
+                                                            onPressed: () {
+                                                              setState(() {
                                                                 FirebaseFirestore.instance
-                                                                    .collection('properties')
-                                                                    .where('property_id',
-                                                                        isEqualTo: snapshot
-                                                                            .data!.docs[index]
-                                                                            .data()['property_id'])
-                                                                    .get()
-                                                                    .then((querySnapshot) {
-                                                                  querySnapshot.docs
-                                                                      .forEach((element) {
-                                                                    setState(() {
-                                                                      if (element["type"] ==
-                                                                          "فيلا") {
-                                                                        Villa villa = Villa.fromMap(
-                                                                            element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  VillaDetailes(
-                                                                                      villa:
-                                                                                          villa)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                      if (element.data()["type"] ==
-                                                                          "شقة") {
-                                                                        Apartment apartment =
-                                                                            Apartment.fromMap(
-                                                                                element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  ApartmentDetailes(
-                                                                                      apartment:
-                                                                                          apartment)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                      if (element.data()["type"] ==
-                                                                          "عمارة") {
-                                                                        Building building =
-                                                                            Building.fromMap(
-                                                                                element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  BuildingDetailes(
-                                                                                      building:
-                                                                                          building)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                      if (element.data()["type"] ==
-                                                                          "ارض") {
-                                                                        Land land = Land.fromJson(
-                                                                            element.data());
-                                                                        Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder: (context) =>
-                                                                                  LandDetailes(
-                                                                                      land: land)),
-                                                                        );
-                                                                      }
-                                                                      ;
-                                                                    });
+                                                                    .collection('bookings')
+                                                                    .doc(snapshot.data!.docs[index]
+                                                                        .data()['book_id'])
+                                                                    .update({
+                                                                  "status": "cansled",
+                                                                  "Date": " ",
+                                                                });
+                                                              });
+                                                            },
+                                                            child: Text('إلغاء الحجز'),
+                                                            style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all(
+                                                                      Color.fromARGB(
+                                                                          255, 245, 68, 82)),
+                                                              shape: MaterialStateProperty.all(
+                                                                  RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              27))),
+                                                            ),
+                                                          ),
+                                                          ElevatedButton(
+                                                            onPressed: () {
+                                                              FirebaseFirestore.instance
+                                                                  .collection('properties')
+                                                                  .where('property_id',
+                                                                      isEqualTo: snapshot
+                                                                          .data!.docs[index]
+                                                                          .data()['property_id'])
+                                                                  .get()
+                                                                  .then((querySnapshot) {
+                                                                querySnapshot.docs
+                                                                    .forEach((element) {
+                                                                  setState(() {
+                                                                    if (element["type"] == "فيلا") {
+                                                                      Villa villa = Villa.fromMap(
+                                                                          element.data());
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                VillaDetailes(
+                                                                                    villa: villa)),
+                                                                      );
+                                                                    }
+                                                                    ;
+                                                                    if (element.data()["type"] ==
+                                                                        "شقة") {
+                                                                      Apartment apartment =
+                                                                          Apartment.fromMap(
+                                                                              element.data());
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                ApartmentDetailes(
+                                                                                    apartment:
+                                                                                        apartment)),
+                                                                      );
+                                                                    }
+                                                                    ;
+                                                                    if (element.data()["type"] ==
+                                                                        "عمارة") {
+                                                                      Building building =
+                                                                          Building.fromMap(
+                                                                              element.data());
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                BuildingDetailes(
+                                                                                    building:
+                                                                                        building)),
+                                                                      );
+                                                                    }
+                                                                    ;
+                                                                    if (element.data()["type"] ==
+                                                                        "ارض") {
+                                                                      Land land = Land.fromJson(
+                                                                          element.data());
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                LandDetailes(
+                                                                                    land: land)),
+                                                                      );
+                                                                    }
+                                                                    ;
                                                                   });
                                                                 });
-                                                              },
-                                                              child: Text('تفاصيل العقار'),
-                                                              style: ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty.all(
-                                                                  Color.fromARGB(255, 82, 155, 210),
-                                                                ),
-                                                                shape: MaterialStateProperty.all(
-                                                                    RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                27))),
+                                                              });
+                                                            },
+                                                            child: Text('تفاصيل العقار'),
+                                                            style: ButtonStyle(
+                                                              backgroundColor:
+                                                                  MaterialStateProperty.all(
+                                                                Color.fromARGB(255, 82, 155, 210),
                                                               ),
+                                                              shape: MaterialStateProperty.all(
+                                                                  RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              27))),
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ],
                                                   ),
@@ -1110,8 +1088,6 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 SizedBox(height: 300, child: prviosBookings)) // toogle buttons list
                       ],
                     ),
-
-
                     FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         future: FirebaseFirestore.instance
                             .collection('bookings')
@@ -1187,12 +1163,10 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                             ),
                                             Text(" نوع الجولة :   " +
                                                 snapshot.data!.docs[index].data()['book_type']),
-                                                 if (snapshot.data!.docs[index]
-                                                                    .data()['book_type'] ==
-                                                                'افتراضية')
-                                                              Text(" التطبيق :   " +
-                                                                  snapshot.data!.docs[index]
-                                                                      .data()['videochat']),
+                                            if (snapshot.data!.docs[index].data()['book_type'] ==
+                                                'افتراضية')
+                                              Text(" التطبيق :   " +
+                                                  snapshot.data!.docs[index].data()['videochat']),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -1214,6 +1188,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                               .data()['book_id'])
                                                           .update({
                                                         "status": "cansled",
+                                                        "Date": "",
                                                       });
                                                     });
                                                   },
