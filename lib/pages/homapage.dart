@@ -492,7 +492,7 @@ class HomePageState extends State<HomePage> {
                                               }
                                               break;
                                             } else if (MaxPrice!.isNotEmpty) {
-                                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                                 if (address!.isNotEmpty) {
                                                   if (villa.properties.neighborhood == address) {
                                                     FilteredItems.add(villa);
@@ -715,7 +715,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -940,7 +940,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -1163,7 +1163,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -1390,7 +1390,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -1613,7 +1613,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -1838,7 +1838,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -2061,7 +2061,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -2290,7 +2290,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -2513,7 +2513,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -2738,7 +2738,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -2961,7 +2961,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -3188,7 +3188,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -3411,7 +3411,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -3636,7 +3636,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -3859,7 +3859,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -4090,7 +4090,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -4313,7 +4313,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -4538,7 +4538,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -4761,7 +4761,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -4988,7 +4988,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -5211,7 +5211,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -5436,7 +5436,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -5659,7 +5659,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -5888,7 +5888,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -6111,7 +6111,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -6336,7 +6336,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -6559,7 +6559,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -6786,7 +6786,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -7009,7 +7009,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -7234,7 +7234,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -7457,7 +7457,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -7690,7 +7690,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -7913,7 +7913,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -8138,7 +8138,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -8361,7 +8361,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -8588,7 +8588,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -8811,7 +8811,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -9036,7 +9036,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -9259,7 +9259,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -9488,7 +9488,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -9711,7 +9711,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -9936,7 +9936,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -10159,7 +10159,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -10386,7 +10386,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -10609,7 +10609,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -10834,7 +10834,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -11057,7 +11057,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -11288,7 +11288,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -11511,7 +11511,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -11736,7 +11736,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -11959,7 +11959,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -12186,7 +12186,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -12409,7 +12409,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -12634,7 +12634,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -12857,7 +12857,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -13086,7 +13086,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -13309,7 +13309,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -13534,7 +13534,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -13757,7 +13757,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -13984,7 +13984,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -14207,7 +14207,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -14432,7 +14432,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -14655,7 +14655,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -14890,7 +14890,7 @@ class HomePageState extends State<HomePage> {
                                           }
                                           break;
                                         } else if (MaxPrice!.isNotEmpty) {
-                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                             if (address!.isNotEmpty) {
                                               if (villa.properties.neighborhood == address) {
                                                 FilteredItems.add(villa);
@@ -15113,7 +15113,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -15338,7 +15338,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -15561,7 +15561,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -15788,7 +15788,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -16011,7 +16011,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -16236,7 +16236,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -16459,7 +16459,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -16688,7 +16688,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -16911,7 +16911,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -17136,7 +17136,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -17359,7 +17359,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -17586,7 +17586,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -17809,7 +17809,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -18034,7 +18034,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -18257,7 +18257,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -18488,7 +18488,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -18711,7 +18711,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -18936,7 +18936,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -19159,7 +19159,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -19386,7 +19386,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -19609,7 +19609,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -19834,7 +19834,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -20057,7 +20057,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -20286,7 +20286,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -20509,7 +20509,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -20734,7 +20734,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -20957,7 +20957,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -21184,7 +21184,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -21407,7 +21407,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -21632,7 +21632,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -21855,7 +21855,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -22088,7 +22088,7 @@ class HomePageState extends State<HomePage> {
                                       }
                                       break;
                                     } else if (MaxPrice!.isNotEmpty) {
-                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                         if (address!.isNotEmpty) {
                                           if (villa.properties.neighborhood == address) {
                                             FilteredItems.add(villa);
@@ -22311,7 +22311,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -22536,7 +22536,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -22759,7 +22759,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -22986,7 +22986,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -23209,7 +23209,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -23434,7 +23434,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -23657,7 +23657,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -23886,7 +23886,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -24109,7 +24109,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -24334,7 +24334,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -24557,7 +24557,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -24784,7 +24784,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -25007,7 +25007,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -25232,7 +25232,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -25455,7 +25455,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -25686,7 +25686,7 @@ class HomePageState extends State<HomePage> {
                                   }
                                   break;
                                 } else if (MaxPrice!.isNotEmpty) {
-                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                     if (address!.isNotEmpty) {
                                       if (villa.properties.neighborhood == address) {
                                         FilteredItems.add(villa);
@@ -25909,7 +25909,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -26134,7 +26134,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -26357,7 +26357,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -26584,7 +26584,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -26807,7 +26807,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -27032,7 +27032,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -27255,7 +27255,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -27484,7 +27484,7 @@ class HomePageState extends State<HomePage> {
                               }
                               break;
                             } else if (MaxPrice!.isNotEmpty) {
-                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                              if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                                 if (address!.isNotEmpty) {
                                   if (villa.properties.neighborhood == address) {
                                     FilteredItems.add(villa);
@@ -27707,7 +27707,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -27932,7 +27932,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -28155,7 +28155,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -28382,7 +28382,7 @@ class HomePageState extends State<HomePage> {
                           }
                           break;
                         } else if (MaxPrice!.isNotEmpty) {
-                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                          if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                             if (address!.isNotEmpty) {
                               if (villa.properties.neighborhood == address) {
                                 FilteredItems.add(villa);
@@ -28605,7 +28605,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -28830,7 +28830,7 @@ class HomePageState extends State<HomePage> {
                       }
                       break;
                     } else if (MaxPrice!.isNotEmpty) {
-                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                      if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                         if (address!.isNotEmpty) {
                           if (villa.properties.neighborhood == address) {
                             FilteredItems.add(villa);
@@ -29053,7 +29053,7 @@ class HomePageState extends State<HomePage> {
                   }
                   break;
                 } else if (MaxPrice!.isNotEmpty) {
-                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!)) && (int.parse(villa.properties.price) >= int.parse(MinPrice!))) {
+                  if ((int.parse(villa.properties.price) <= int.parse(MaxPrice!))) {
                     if (address!.isNotEmpty) {
                       if (villa.properties.neighborhood == address) {
                         FilteredItems.add(villa);
