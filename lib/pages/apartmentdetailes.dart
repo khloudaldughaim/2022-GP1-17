@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, prefer_const_constructors, curly_braces_in_flow_control_structures, sort_child_properties_last
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -99,8 +99,7 @@ class ApartmentDetailes extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.flag_outlined,
-                                  color:
-                                      const Color.fromARGB(255, 127, 166, 233),
+                                  color: const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -118,8 +117,7 @@ class ApartmentDetailes extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.favorite_outline,
-                                  color:
-                                      const Color.fromARGB(255, 127, 166, 233),
+                                  color: const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -216,8 +214,7 @@ class ApartmentDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -334,15 +331,13 @@ class ApartmentDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -354,15 +349,13 @@ class ApartmentDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -377,14 +370,11 @@ class ApartmentDetailes extends StatelessWidget {
                                         .doc('${apartment.properties.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
                                         Map<String, dynamic> user =
-                                            snapshot.data!.data()
-                                                as Map<String, dynamic>;
+                                            snapshot.data!.data() as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -433,17 +423,12 @@ class ApartmentDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(
-                                right: 24, left: 24, bottom: 24),
+                            padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                PropInfo(
-                                    Icons.chair,
-                                    '${apartment.number_of_livingRooms}',
-                                    'صالة'),
-                                PropInfo(Icons.elevator, '${ThereIsElevator}',
-                                    'مصعد'),
+                                PropInfo(Icons.chair, '${apartment.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
                               ],
                             )),
                         Padding(
@@ -458,8 +443,7 @@ class ApartmentDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -555,8 +539,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 232, bottom: 16),
+                                    padding: EdgeInsets.only(left: 232, bottom: 16),
                                     child: Text(
                                       "معلومات إضافية",
                                       style: TextStyle(
@@ -567,8 +550,7 @@ class ApartmentDetailes extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 5, left: 5, bottom: 16),
+                                    padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
                                     child: Text(
                                       '${apartment.properties.description}',
                                       textAlign: TextAlign.right,
@@ -598,8 +580,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
@@ -615,19 +596,16 @@ class ApartmentDetailes extends StatelessWidget {
                             : Container(
                                 height: 200,
                                 child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, bottom: 24, right: 20),
+                                  padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                   child: ListView.separated(
                                     physics: BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     // shrinkWrap: true,
-                                    separatorBuilder: (context, index) =>
-                                        SizedBox(width: 20),
-                                    itemCount:
-                                        apartment.properties.images.length,
+                                    separatorBuilder: (context, index) => SizedBox(width: 20),
+                                    itemCount: apartment.properties.images.length,
                                     itemBuilder: (context, index) => InkWell(
-                                      onTap: () => openGallery(
-                                          apartment.properties.images, context),
+                                      onTap: () =>
+                                          openGallery(apartment.properties.images, context),
                                       borderRadius: BorderRadius.circular(15),
                                       child: Image.network(
                                         apartment.properties.images[index],
@@ -651,8 +629,7 @@ class ApartmentDetailes extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
-                                  right: 5, left: 5, bottom: 16),
+                              padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
                               child: Text(
                                 '${apartment.properties.Location}',
                                 textAlign: TextAlign.right,
@@ -668,43 +645,56 @@ class ApartmentDetailes extends StatelessWidget {
                               child: Center(
                                   child: Text(
                                 "حجز جولة عقارية",
-                                style: TextStyle(
-                                    fontSize: 18, fontFamily: "Tajawal-m"),
+                                style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
                               )),
                               onPressed: () {
-                                FirebaseAuth.instance.currentUser == null
-                                    ? Fluttertoast.showToast(
-                                        msg: "عذرا لابد من تسجيل الدخول",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 5,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 252, 253, 255),
-                                        fontSize: 18.0,
-                                      )
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => boookingPage(
-                                                property_id:
-                                                    '${apartment.properties.property_id}',
-                                                user_id:
-                                                    '${apartment.properties.User_id}',
-                                                Pimge:
-                                                    '${apartment.properties.images[0]}')));
+                                if (FirebaseAuth.instance.currentUser == null) {
+                                  Fluttertoast.showToast(
+                                    msg: "عذرا لابد من تسجيل الدخول",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                    textColor: Color.fromARGB(255, 252, 253, 255),
+                                    fontSize: 18.0,
+                                  );
+                                } else if (FirebaseAuth.instance.currentUser!.uid ==
+                                    '${apartment.properties.User_id}') {
+                                  Fluttertoast.showToast(
+                                    msg: "أنت صاحب العقار بالفعل!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                    textColor: Color.fromARGB(255, 252, 253, 255),
+                                    fontSize: 18.0,
+                                  );
+                                } else if ('${apartment.properties.images.length}' == '0') {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => boookingPage(
+                                              property_id: '${apartment.properties.property_id}',
+                                              user_id: '${apartment.properties.User_id}',
+                                              Pimge:
+                                                  'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => boookingPage(
+                                              property_id: '${apartment.properties.property_id}',
+                                              user_id: '${apartment.properties.User_id}',
+                                              Pimge: '${apartment.properties.images[0]}')));
+                                }
                               },
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Color.fromARGB(255, 127, 166, 233)),
+                                backgroundColor:
+                                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
                                 padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 10)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(27))),
+                                    EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
                               ),
                             ),
                             SizedBox(
@@ -761,8 +751,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) =>
-    Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),

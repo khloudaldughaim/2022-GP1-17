@@ -46,8 +46,8 @@ class LandDetailes extends StatelessWidget {
                       )
                     : BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                              '${land.properties!.images[0]}'), //'${villa.images[0]}'
+                          image:
+                              NetworkImage('${land.properties!.images[0]}'), //'${villa.images[0]}'
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -106,8 +106,7 @@ class LandDetailes extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.flag_outlined,
-                                  color:
-                                      const Color.fromARGB(255, 127, 166, 233),
+                                  color: const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -125,8 +124,7 @@ class LandDetailes extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.favorite_outline,
-                                  color:
-                                      const Color.fromARGB(255, 127, 166, 233),
+                                  color: const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -223,8 +221,7 @@ class LandDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -301,15 +298,13 @@ class LandDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -321,15 +316,13 @@ class LandDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -344,14 +337,11 @@ class LandDetailes extends StatelessWidget {
                                         .doc('${land.properties!.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
                                         Map<String, dynamic> user =
-                                            snapshot.data!.data()
-                                                as Map<String, dynamic>;
+                                            snapshot.data!.data() as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -400,8 +390,7 @@ class LandDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(
-                                right: 24, left: 24, bottom: 24),
+                            padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [],
@@ -418,8 +407,7 @@ class LandDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -459,8 +447,7 @@ class LandDetailes extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 232, bottom: 16),
+                                    padding: EdgeInsets.only(left: 232, bottom: 16),
                                     child: Text(
                                       "معلومات إضافية",
                                       style: TextStyle(
@@ -471,8 +458,7 @@ class LandDetailes extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 5, left: 5, bottom: 16),
+                                    padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
                                     child: Text(
                                       '${land.properties!.description}',
                                       textAlign: TextAlign.right,
@@ -502,8 +488,7 @@ class LandDetailes extends StatelessWidget {
                                 height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
@@ -519,18 +504,15 @@ class LandDetailes extends StatelessWidget {
                             : Container(
                                 height: 200,
                                 child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, bottom: 24, right: 20),
+                                  padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                   child: ListView.separated(
                                     physics: BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     // shrinkWrap: true,
-                                    separatorBuilder: (context, index) =>
-                                        SizedBox(width: 20),
+                                    separatorBuilder: (context, index) => SizedBox(width: 20),
                                     itemCount: land.properties!.images.length,
                                     itemBuilder: (context, index) => InkWell(
-                                      onTap: () => openGallery(
-                                          land.properties!.images, context),
+                                      onTap: () => openGallery(land.properties!.images, context),
                                       borderRadius: BorderRadius.circular(15),
                                       child: Image.network(
                                         land.properties!.images[index],
@@ -554,8 +536,7 @@ class LandDetailes extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
-                                  right: 5, left: 5, bottom: 16),
+                              padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
                               child: Text(
                                 '${land.properties!.Location}',
                                 textAlign: TextAlign.right,
@@ -571,43 +552,56 @@ class LandDetailes extends StatelessWidget {
                               child: Center(
                                   child: Text(
                                 "حجز جولة عقارية",
-                                style: TextStyle(
-                                    fontSize: 18, fontFamily: "Tajawal-m"),
+                                style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
                               )),
                               onPressed: () {
-                                FirebaseAuth.instance.currentUser == null
-                                    ? Fluttertoast.showToast(
-                                        msg: "عذرا لابد من تسجيل الدخول",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 5,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 252, 253, 255),
-                                        fontSize: 18.0,
-                                      )
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => boookingPage(
-                                                property_id:
-                                                    '${land.properties!.property_id}',
-                                                user_id:
-                                                    '${land.properties!.User_id}',
-                                                Pimge:
-                                                    '${land.properties!.images[0]}')));
+                                if (FirebaseAuth.instance.currentUser == null) {
+                                  Fluttertoast.showToast(
+                                    msg: "عذرا لابد من تسجيل الدخول",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                    textColor: Color.fromARGB(255, 252, 253, 255),
+                                    fontSize: 18.0,
+                                  );
+                                } else if (FirebaseAuth.instance.currentUser!.uid ==
+                                    '${land.properties!.User_id}') {
+                                  Fluttertoast.showToast(
+                                    msg: "أنت صاحب العقار بالفعل!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                    textColor: Color.fromARGB(255, 252, 253, 255),
+                                    fontSize: 18.0,
+                                  );
+                                } else if ('${land.properties!.images.length}' == '0') {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => boookingPage(
+                                              property_id: '${land.properties!.property_id}',
+                                              user_id: '${land.properties!.User_id}',
+                                              Pimge:
+                                                  'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => boookingPage(
+                                              property_id: '${land.properties!.property_id}',
+                                              user_id: '${land.properties!.User_id}',
+                                              Pimge: '${land.properties!.images[0]}')));
+                                }
                               },
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Color.fromARGB(255, 127, 166, 233)),
+                                backgroundColor:
+                                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
                                 padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 10)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(27))),
+                                    EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
                               ),
                             ),
                           ],
@@ -661,8 +655,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) =>
-    Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),

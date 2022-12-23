@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
 import 'dart:convert';
 
@@ -409,6 +409,7 @@ class _BookingPagestate extends State<boookingPage> {
                               FirebaseFirestore.instance
                                   .collection('bookings')
                                   .where('Date', isEqualTo: datecontrolar.text)
+                                  .where("owner_id", isEqualTo: '${widget.user_id}')
                                   .get()
                                   .then((element) {
                                 if (element.docs.isEmpty) {

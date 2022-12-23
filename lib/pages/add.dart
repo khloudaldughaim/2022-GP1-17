@@ -62,16 +62,14 @@ class _AddPageState extends State<AddPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LogIn()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(255, 127, 166, 233)),
+                    backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
                     padding: MaterialStateProperty.all(
                         EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(27))),
+                    shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
                   ),
                   child: Text(
                     "تسجيل الدخول",
@@ -124,6 +122,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   String? city = "الرياض";
   final address = TextEditingController();
   final location = TextEditingController();
+  final TourTime = TextEditingController();
   int number_of_bathrooms = 0;
   int number_of_rooms = 0;
   int number_of_livingRooms = 0;
@@ -139,6 +138,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     address.dispose();
     location.dispose();
     description.dispose();
+    TourTime.dispose();
     super.dispose();
   }
 
@@ -224,10 +224,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           _formKey.currentState!.save();
           property_id = Uuid().v4();
           if (type1 == 'فيلا') {
-            FirebaseFirestore.instance
-                .collection('properties')
-                .doc(property_id)
-                .set({
+            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -248,21 +245,16 @@ class MyCustomFormState extends State<MyCustomForm> {
               'basement': basement,
               'number_of_livingRooms': number_of_livingRooms,
               'Location': location.text,
-              'description': description.text
+              'description': description.text,
+              "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance
-                .collection('Standard_user')
-                .doc(User_id)
-                .update({
+            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
           }
 
           if (type1 == 'شقة') {
-            FirebaseFirestore.instance
-                .collection('properties')
-                .doc(property_id)
-                .set({
+            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -282,21 +274,16 @@ class MyCustomFormState extends State<MyCustomForm> {
               'in_floor': in_floor.text,
               'number_of_livingRooms': number_of_livingRooms,
               'Location': location.text,
-              'description': description.text
+              'description': description.text,
+              "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance
-                .collection('Standard_user')
-                .doc(User_id)
-                .update({
+            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
           }
 
           if (type1 == 'ارض') {
-            FirebaseFirestore.instance
-                .collection('properties')
-                .doc(property_id)
-                .set({
+            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -310,21 +297,16 @@ class MyCustomFormState extends State<MyCustomForm> {
               'type': type1,
               'propertyUse': propertyUse1,
               'Location': location.text,
-              'description': description.text
+              'description': description.text,
+              "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance
-                .collection('Standard_user')
-                .doc(User_id)
-                .update({
+            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
           }
 
           if (type1 == 'عمارة') {
-            FirebaseFirestore.instance
-                .collection('properties')
-                .doc(property_id)
-                .set({
+            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -342,12 +324,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'pool': pool,
               'number_of_apartment': number_of_apartments,
               'Location': location.text,
-              'description': description.text
+              'description': description.text,
+              "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance
-                .collection('Standard_user')
-                .doc(User_id)
-                .update({
+            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
           }
@@ -362,8 +342,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             fontSize: 18.0,
           );
 
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => myProperty()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => myProperty()));
         },
       );
       // set up the AlertDialog
@@ -410,8 +389,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   Container(
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(' عقارك: ',
                                             style: TextStyle(
@@ -422,58 +400,45 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         Row(
                                           children: [
                                             Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2,
+                                              width: MediaQuery.of(context).size.width / 2,
                                               child: RadioListTile(
                                                 title: const Text(
                                                   'للبيع',
                                                   style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(
-                                                          255, 73, 75, 82)),
+                                                      color: Color.fromARGB(255, 73, 75, 82)),
                                                   textAlign: TextAlign.start,
                                                 ),
                                                 value: classification.sale,
                                                 groupValue: _class,
-                                                onChanged:
-                                                    (classification? value) {
+                                                onChanged: (classification? value) {
                                                   setState(() {
                                                     _class = value;
-                                                    if (_class ==
-                                                        classification.sale)
+                                                    if (_class == classification.sale)
                                                       classification1 = 'للبيع';
                                                   });
                                                 },
                                               ),
                                             ),
                                             Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2.5,
+                                              width: MediaQuery.of(context).size.width / 2.5,
                                               child: RadioListTile(
                                                 title: const Text(
                                                   'للإيجار',
                                                   style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(
-                                                          255, 73, 75, 82)),
+                                                      color: Color.fromARGB(255, 73, 75, 82)),
                                                   textAlign: TextAlign.start,
                                                 ),
                                                 value: classification.rent,
                                                 groupValue: _class,
-                                                onChanged:
-                                                    (classification? value) {
+                                                onChanged: (classification? value) {
                                                   setState(() {
                                                     _class = value;
-                                                    if (_class ==
-                                                        classification.rent)
-                                                      classification1 =
-                                                          'للإيجار';
+                                                    if (_class == classification.rent)
+                                                      classification1 = 'للإيجار';
                                                   });
                                                 },
                                               ),
@@ -497,31 +462,23 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
-                                                textDirection:
-                                                    TextDirection.rtl),
-                                            Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0)),
+                                                textDirection: TextDirection.rtl),
+                                            Padding(padding: const EdgeInsets.all(10.0)),
                                             Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 8),
+                                              padding: EdgeInsets.only(right: 8),
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10)),
+                                                      BorderRadius.all(Radius.circular(10)),
                                                   color: Colors.white,
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               height: 40,
                                               width: 150,
                                               child: DropdownButtonFormField(
                                                   decoration: InputDecoration(
                                                     isDense: true,
                                                     border: InputBorder.none,
-                                                    contentPadding:
-                                                        EdgeInsets.all(7),
+                                                    contentPadding: EdgeInsets.all(7),
                                                   ),
                                                   value: type,
                                                   items: [
@@ -530,14 +487,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         "فيلا",
                                                         style: TextStyle(
                                                             fontSize: 17.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
+                                                            fontFamily: "Tajawal-m",
+                                                            color: Color.fromARGB(255, 73, 75, 82)),
                                                       ),
                                                       value: 1,
                                                     ),
@@ -546,14 +497,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         "شقة",
                                                         style: TextStyle(
                                                             fontSize: 17.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
+                                                            fontFamily: "Tajawal-m",
+                                                            color: Color.fromARGB(255, 73, 75, 82)),
                                                       ),
                                                       value: 2,
                                                     ),
@@ -562,14 +507,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         "ارض",
                                                         style: TextStyle(
                                                             fontSize: 17.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
+                                                            fontFamily: "Tajawal-m",
+                                                            color: Color.fromARGB(255, 73, 75, 82)),
                                                       ),
                                                       value: 3,
                                                     ),
@@ -578,14 +517,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         "عمارة",
                                                         style: TextStyle(
                                                             fontSize: 17.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
+                                                            fontFamily: "Tajawal-m",
+                                                            color: Color.fromARGB(255, 73, 75, 82)),
                                                       ),
                                                       value: 4,
                                                     )
@@ -593,14 +526,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   onChanged: (int? value) {
                                                     setState(() {
                                                       type = value!;
-                                                      if (type == 1)
-                                                        type1 = 'فيلا';
-                                                      if (type == 2)
-                                                        type1 = 'شقة';
-                                                      if (type == 3)
-                                                        type1 = 'ارض';
-                                                      if (type == 4)
-                                                        type1 = 'عمارة';
+                                                      if (type == 1) type1 = 'فيلا';
+                                                      if (type == 2) type1 = 'شقة';
+                                                      if (type == 3) type1 = 'ارض';
+                                                      if (type == 4) type1 = 'عمارة';
                                                     });
                                                   }),
                                             ),
@@ -613,90 +542,56 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   type == 3
                                       ? Container(
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(' استخدام العقار: ',
                                                   style: TextStyle(
                                                     fontSize: 20.0,
                                                     fontFamily: "Tajawal-b",
                                                   ),
-                                                  textDirection:
-                                                      TextDirection.rtl),
+                                                  textDirection: TextDirection.rtl),
                                               Row(
                                                 children: [
                                                   Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            2,
+                                                    width: MediaQuery.of(context).size.width / 2,
                                                     child: RadioListTile(
                                                       title: const Text(
                                                         'سكني',
                                                         style: TextStyle(
                                                             fontSize: 18.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                        textAlign:
-                                                            TextAlign.start,
+                                                            fontFamily: "Tajawal-m",
+                                                            color: Color.fromARGB(255, 73, 75, 82)),
+                                                        textAlign: TextAlign.start,
                                                       ),
-                                                      value: propertyUse
-                                                          .residental,
+                                                      value: propertyUse.residental,
                                                       groupValue: _pUse,
-                                                      onChanged:
-                                                          (propertyUse? value) {
+                                                      onChanged: (propertyUse? value) {
                                                         setState(() {
                                                           _pUse = value;
-                                                          if (_pUse ==
-                                                              propertyUse
-                                                                  .residental)
-                                                            propertyUse1 =
-                                                                "سكني";
+                                                          if (_pUse == propertyUse.residental)
+                                                            propertyUse1 = "سكني";
                                                         });
                                                       },
                                                     ),
                                                   ),
                                                   Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            2.5,
+                                                    width: MediaQuery.of(context).size.width / 2.5,
                                                     child: RadioListTile(
                                                       title: const Text(
                                                         'تجاري',
                                                         style: TextStyle(
                                                             fontSize: 18.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    73,
-                                                                    75,
-                                                                    82)),
-                                                        textAlign:
-                                                            TextAlign.start,
+                                                            fontFamily: "Tajawal-m",
+                                                            color: Color.fromARGB(255, 73, 75, 82)),
+                                                        textAlign: TextAlign.start,
                                                       ),
-                                                      value: propertyUse
-                                                          .commercial,
+                                                      value: propertyUse.commercial,
                                                       groupValue: _pUse,
-                                                      onChanged:
-                                                          (propertyUse? value) {
+                                                      onChanged: (propertyUse? value) {
                                                         setState(() {
                                                           _pUse = value;
-                                                          if (_pUse ==
-                                                              propertyUse
-                                                                  .commercial)
-                                                            propertyUse1 =
-                                                                'تجاري';
+                                                          if (_pUse == propertyUse.commercial)
+                                                            propertyUse1 = 'تجاري';
                                                         });
                                                       },
                                                     ),
@@ -714,8 +609,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       : type == 2
                                           ? Container(
                                               child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
                                                     ' *رقم الدور: ',
@@ -726,60 +620,37 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   ),
                                                   Expanded(
                                                       child: Padding(
-                                                          padding: EdgeInsets
-                                                              .only(
-                                                                  left:93, right:33),
+                                                          padding:
+                                                              EdgeInsets.only(left: 93, right: 33),
                                                           child: Directionality(
-                                                            textDirection:
-                                                                TextDirection
-                                                                    .rtl,
-                                                            child:
-                                                                TextFormField(
-                                                              controller:
-                                                                  in_floor,
-                                                              autovalidateMode:
-                                                                  AutovalidateMode
-                                                                      .onUserInteraction,
-                                                              decoration:
-                                                                  InputDecoration(
+                                                            textDirection: TextDirection.rtl,
+                                                            child: TextFormField(
+                                                              controller: in_floor,
+                                                              autovalidateMode: AutovalidateMode
+                                                                  .onUserInteraction,
+                                                              decoration: InputDecoration(
                                                                 hintText: '5 ',
                                                                 filled: true,
-                                                                fillColor:
-                                                                    Colors
-                                                                        .white,
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(6),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
+                                                                fillColor: Colors.white,
+                                                                contentPadding: EdgeInsets.all(6),
+                                                                enabledBorder: OutlineInputBorder(
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Colors
-                                                                        .grey,
+                                                                      BorderRadius.circular(8),
+                                                                  borderSide: const BorderSide(
+                                                                    color: Colors.grey,
                                                                     width: 0.0,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              validator:
-                                                                  (value) {
-                                                                if (value ==
-                                                                        null ||
-                                                                    value
-                                                                        .isEmpty) {
+                                                              validator: (value) {
+                                                                if (value == null ||
+                                                                    value.isEmpty) {
                                                                   return 'الرجاء عدم ترك الخانة فارغة!';
-                                                                } else if (value
-                                                                        .length >
-                                                                    3) {
+                                                                } else if (value.length > 3) {
                                                                   return 'الرقم يجب الا يزيد عن 3 خانات';
                                                                 }
-                                                                if (!RegExp(
-                                                                        r'[0-9]')
-                                                                    .hasMatch(
-                                                                        value)) {
+                                                                if (!RegExp(r'[0-9]')
+                                                                    .hasMatch(value)) {
                                                                   return 'الرجاء إدخال أرقام فقط';
                                                                 }
                                                                 return null;
@@ -798,8 +669,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       : Container(),
                                   //space
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
                                         ' *المساحة: ',
@@ -810,44 +680,33 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 90, right: 35),
+                                              padding: EdgeInsets.only(left: 90, right: 35),
                                               child: Directionality(
-                                                textDirection:
-                                                    TextDirection.rtl,
+                                                textDirection: TextDirection.rtl,
                                                 child: TextFormField(
                                                   controller: space,
                                                   autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
+                                                      AutovalidateMode.onUserInteraction,
                                                   decoration: InputDecoration(
                                                     hintText: 'متر ² ',
                                                     filled: true,
                                                     fillColor: Colors.white,
-                                                    contentPadding:
-                                                        EdgeInsets.all(6),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
+                                                    contentPadding: EdgeInsets.all(6),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderSide: const BorderSide(
                                                         color: Colors.grey,
                                                         width: 0.0,
                                                       ),
                                                     ),
                                                   ),
                                                   validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
+                                                    if (value == null || value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
-                                                    } else if (value.length >
-                                                        6) {
+                                                    } else if (value.length > 6) {
                                                       return 'الرقم يجب الا يزيد عن 6 خانات';
                                                     }
-                                                    if (!RegExp(r'[0-9]')
-                                                        .hasMatch(value)) {
+                                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
                                                       return 'الرجاء إدخال أرقام فقط';
                                                     }
                                                     return null;
@@ -859,8 +718,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   SizedBox(height: 40),
                                   //  price
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
                                         ' *السعر: ',
@@ -874,41 +732,31 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 60, right: 35),
+                                              padding: EdgeInsets.only(left: 60, right: 35),
                                               child: Directionality(
-                                                textDirection:
-                                                    TextDirection.rtl,
+                                                textDirection: TextDirection.rtl,
                                                 child: TextFormField(
                                                   controller: price,
                                                   autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
+                                                      AutovalidateMode.onUserInteraction,
                                                   decoration: InputDecoration(
                                                     hintText: 'ريال ',
                                                     filled: true,
                                                     fillColor: Colors.white,
-                                                    contentPadding:
-                                                        EdgeInsets.all(6),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
+                                                    contentPadding: EdgeInsets.all(6),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderSide: const BorderSide(
                                                         color: Colors.grey,
                                                         width: 0.0,
                                                       ),
                                                     ),
                                                   ),
                                                   validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
+                                                    if (value == null || value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
-                                                    if (!RegExp(r'[0-9]')
-                                                        .hasMatch(value)) {
+                                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
                                                       return 'الرجاء إدخال أرقام فقط';
                                                     }
                                                     return null;
@@ -920,8 +768,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Text(
-                                      ' *إذا كان العقار للإيجار الرجاء إدخال الإيجار الشهري',
+                                  Text(' *إذا كان العقار للإيجار الرجاء إدخال الإيجار الشهري',
                                       style: TextStyle(
                                           fontSize: 10.0,
                                           fontFamily: "Tajawal-b",
@@ -941,26 +788,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
-                                                textDirection:
-                                                    TextDirection.rtl),
+                                                textDirection: TextDirection.rtl),
                                             Container(
                                               margin: const EdgeInsets.all(13),
                                             ),
-                                            Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0)),
+                                            Padding(padding: const EdgeInsets.all(10.0)),
                                             Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 7),
+                                              padding: EdgeInsets.only(right: 7),
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10)),
+                                                      BorderRadius.all(Radius.circular(10)),
                                                   color: Colors.white,
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               height: 40,
                                               width: 150,
                                               child: DropdownButtonFormField(
@@ -974,20 +814,17 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 }).toList(),
                                                 onChanged: (_selectedValue) {
                                                   setState(() {
-                                                    city = _selectedValue
-                                                        .toString();
+                                                    city = _selectedValue.toString();
                                                   });
                                                 },
                                                 style: TextStyle(
                                                     fontSize: 16.0,
                                                     fontFamily: "Tajawal-m",
-                                                    color: Color.fromARGB(
-                                                        255, 73, 75, 82)),
+                                                    color: Color.fromARGB(255, 73, 75, 82)),
                                                 decoration: InputDecoration(
                                                   isDense: true,
                                                   border: InputBorder.none,
-                                                  contentPadding:
-                                                      EdgeInsets.all(7),
+                                                  contentPadding: EdgeInsets.all(7),
                                                   hintText: 'الرياض',
                                                 ),
                                               ),
@@ -1000,8 +837,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
 
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
                                         ' *الحي: ',
@@ -1015,41 +851,31 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 60),
+                                              padding: EdgeInsets.symmetric(horizontal: 60),
                                               child: Directionality(
-                                                textDirection:
-                                                    TextDirection.rtl,
+                                                textDirection: TextDirection.rtl,
                                                 child: TextFormField(
                                                   controller: address,
                                                   autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
+                                                      AutovalidateMode.onUserInteraction,
                                                   decoration: InputDecoration(
                                                     hintText: 'القيروان ',
                                                     filled: true,
                                                     fillColor: Colors.white,
-                                                    contentPadding:
-                                                        EdgeInsets.all(6),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
+                                                    contentPadding: EdgeInsets.all(6),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderSide: const BorderSide(
                                                         color: Colors.grey,
                                                         width: 0.0,
                                                       ),
                                                     ),
                                                   ),
                                                   validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
+                                                    if (value == null || value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
-                                                    if (RegExp(r'[0-9]')
-                                                        .hasMatch(value)) {
+                                                    if (RegExp(r'[0-9]').hasMatch(value)) {
                                                       return 'الرجاء إدخال أحرف فقط';
                                                     }
                                                   },
@@ -1062,8 +888,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   //location
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
                                         ' *الموقع: ',
@@ -1074,39 +899,28 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 20, right: 20),
+                                              padding: EdgeInsets.only(left: 20, right: 20),
                                               child: Directionality(
-                                                textDirection:
-                                                    TextDirection.rtl,
+                                                textDirection: TextDirection.rtl,
                                                 child: TextFormField(
                                                   controller: location,
                                                   autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
+                                                      AutovalidateMode.onUserInteraction,
                                                   decoration: InputDecoration(
-                                                    hintText:
-                                                        'شارع المذيب مقابل..',
+                                                    hintText: 'شارع المذيب مقابل..',
                                                     filled: true,
                                                     fillColor: Colors.white,
-                                                    contentPadding:
-                                                        EdgeInsets.all(6),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Color.fromARGB(
-                                                            255, 167, 166, 166),
+                                                    contentPadding: EdgeInsets.all(6),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderSide: const BorderSide(
+                                                        color: Color.fromARGB(255, 167, 166, 166),
                                                         width: 0.0,
                                                       ),
                                                     ),
                                                   ),
                                                   validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
+                                                    if (value == null || value.isEmpty) {
                                                       return 'الرجاء عدم ترك الخانة فارغة!';
                                                     }
                                                   },
@@ -1118,8 +932,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     height: 30,
                                   ),
                                   Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
                                           "الموقع على الخريطة",
@@ -1144,13 +957,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           },
                                           myLocationButtonEnabled: true,
                                           myLocationEnabled: true,
-                                          initialCameraPosition: CameraPosition(
-                                              target: mapLatLng, zoom: 14),
+                                          initialCameraPosition:
+                                              CameraPosition(target: mapLatLng, zoom: 14),
                                         ),
                                         Container(
                                             alignment: Alignment.bottomRight,
-                                            margin: EdgeInsets.only(
-                                                right: 6, bottom: 108),
+                                            margin: EdgeInsets.only(right: 6, bottom: 108),
                                             child: FloatingActionButton(
                                               backgroundColor: Colors.white,
                                               child: Icon(
@@ -1161,23 +973,17 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 LocationData currentLocation;
                                                 var location = new Location();
 
-                                                currentLocation = await location
-                                                    .getLocation();
+                                                currentLocation = await location.getLocation();
 
-                                                LatLng latLng = LatLng(
-                                                    currentLocation.latitude!,
+                                                LatLng latLng = LatLng(currentLocation.latitude!,
                                                     currentLocation.longitude!);
 
-                                                controller!.animateCamera(
-                                                    CameraUpdate
-                                                        .newCameraPosition(
+                                                controller!
+                                                    .animateCamera(CameraUpdate.newCameraPosition(
                                                   CameraPosition(
                                                     bearing: 0,
-                                                    target: LatLng(
-                                                        currentLocation
-                                                            .latitude!,
-                                                        currentLocation
-                                                            .longitude!),
+                                                    target: LatLng(currentLocation.latitude!,
+                                                        currentLocation.longitude!),
                                                     zoom: 17.0,
                                                   ),
                                                 ));
@@ -1210,29 +1016,22 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             margin: EdgeInsets.only(top: 5),
                                             child: SearchMapPlaceWidget(
                                               strictBounds: true,
-                                              apiKey:
-                                                  "AIzaSyDKNtlGQXbyJBJYvBx-OrWqMbjln4NxTxs",
+                                              apiKey: "AIzaSyDKNtlGQXbyJBJYvBx-OrWqMbjln4NxTxs",
                                               bgColor: Colors.white,
                                               textColor: Colors.black,
                                               hasClearButton: true,
                                               placeholder: "إبحث عن مدينة، حي",
                                               placeType: PlaceType.address,
                                               onSelected: (place) async {
-                                                Geolocation? geolocation =
-                                                    await place.geolocation;
+                                                Geolocation? geolocation = await place.geolocation;
 
+                                                controller!.animateCamera(CameraUpdate.newLatLng(
+                                                    geolocation!.coordinates));
                                                 controller!.animateCamera(
-                                                    CameraUpdate.newLatLng(
-                                                        geolocation!
-                                                            .coordinates));
-                                                controller!.animateCamera(
-                                                    CameraUpdate
-                                                        .newLatLngBounds(
-                                                            geolocation.bounds,
-                                                            0));
+                                                    CameraUpdate.newLatLngBounds(
+                                                        geolocation.bounds, 0));
                                                 setState(() {
-                                                  mapLatLng =
-                                                      geolocation.coordinates;
+                                                  mapLatLng = geolocation.coordinates;
                                                 });
                                               },
                                             )),
@@ -1249,8 +1048,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       :
                                       //propertyAge
                                       Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               "عمر عقارك:",
@@ -1264,56 +1062,42 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 style: const TextStyle(
                                                     fontSize: 15.0,
                                                     fontFamily: "Tajawal-m",
-                                                    color: Color.fromARGB(
-                                                        255, 120, 122, 129)),
-                                                textDirection:
-                                                    TextDirection.rtl),
+                                                    color: Color.fromARGB(255, 120, 122, 129)),
+                                                textDirection: TextDirection.rtl),
                                             Container(
                                               height: 100,
                                               width: 380,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    margin:
-                                                        const EdgeInsets.all(3),
+                                                    margin: const EdgeInsets.all(3),
                                                   ),
                                                   Slider(
                                                     label: "عمر عقارك:",
-                                                    value:
-                                                        property_age.toDouble(),
+                                                    value: property_age.toDouble(),
                                                     onChanged: (value) {
                                                       setState(() {
-                                                        property_age =
-                                                            value.toDouble();
+                                                        property_age = value.toDouble();
                                                       });
                                                     },
                                                     min: 0.0,
                                                     max: 100.0,
                                                   ),
                                                   Text(
-                                                    " (شهر.سنة) " +
-                                                        property_age
-                                                            .toStringAsFixed(1),
+                                                    " (شهر.سنة) " + property_age.toStringAsFixed(1),
                                                     style: const TextStyle(
                                                         fontSize: 16.0,
                                                         fontFamily: "Tajawal-m",
-                                                        color: Color.fromARGB(
-                                                            255, 73, 75, 82)),
+                                                        color: Color.fromARGB(255, 73, 75, 82)),
                                                   ),
                                                   Container(
-                                                    margin:
-                                                        const EdgeInsets.all(5),
+                                                    margin: const EdgeInsets.all(5),
                                                   )
                                                 ],
                                               ),
@@ -1329,8 +1113,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           children: [
                                             Text("عدد الغرف",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b")),
+                                                    fontSize: 20.0, fontFamily: "Tajawal-b")),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -1338,17 +1121,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
@@ -1357,20 +1134,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .add_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.add_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       )),
                                                   Text("$number_of_rooms",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
-                                                          fontFamily:
-                                                              "Tajawal-b",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                      textDirection:
-                                                          TextDirection.rtl),
+                                                          fontFamily: "Tajawal-b",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
+                                                      textDirection: TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
                                                         number_of_rooms == 0
@@ -1380,10 +1152,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .remove_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.remove_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       ))
                                                 ],
                                               ),
@@ -1411,17 +1181,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
@@ -1430,20 +1194,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .add_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.add_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       )),
                                                   Text("$number_of_bathrooms",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                      textDirection:
-                                                          TextDirection.rtl),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
+                                                      textDirection: TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
                                                         number_of_bathrooms == 0
@@ -1453,10 +1212,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .remove_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.remove_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       ))
                                                 ],
                                               ),
@@ -1474,8 +1231,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           children: [
                                             Text("عدد الصالات",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b")),
+                                                    fontSize: 20.0, fontFamily: "Tajawal-b")),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -1483,17 +1239,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
@@ -1502,34 +1252,26 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .add_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.add_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       )),
                                                   Text("$number_of_livingRooms",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
-                                                          fontFamily:
-                                                              "Tajawal-b",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                      textDirection:
-                                                          TextDirection.rtl),
+                                                          fontFamily: "Tajawal-b",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
+                                                      textDirection: TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
-                                                        number_of_livingRooms ==
-                                                                0
+                                                        number_of_livingRooms == 0
                                                             ? null
                                                             : number_of_livingRooms--;
 
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .remove_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.remove_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       ))
                                                 ],
                                               ),
@@ -1546,8 +1288,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           children: [
                                             Text("عدد الشقق",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b")),
+                                                    fontSize: 20.0, fontFamily: "Tajawal-b")),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -1555,17 +1296,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
@@ -1574,34 +1309,26 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .add_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.add_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       )),
                                                   Text("$number_of_apartments",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
-                                                          fontFamily:
-                                                              "Tajawal-b",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                      textDirection:
-                                                          TextDirection.rtl),
+                                                          fontFamily: "Tajawal-b",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
+                                                      textDirection: TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
-                                                        number_of_apartments ==
-                                                                0
+                                                        number_of_apartments == 0
                                                             ? null
                                                             : number_of_apartments--;
 
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .remove_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.remove_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       ))
                                                 ],
                                               ),
@@ -1616,8 +1343,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           children: [
                                             Text("عدد الأدوار",
                                                 style: TextStyle(
-                                                    fontSize: 20.0,
-                                                    fontFamily: "Tajawal-b")),
+                                                    fontSize: 20.0, fontFamily: "Tajawal-b")),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -1625,17 +1351,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               height: 40,
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      width: 1)),
+                                                      color: Colors.grey.shade300, width: 1)),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   IconButton(
                                                       onPressed: () {
@@ -1644,20 +1364,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .add_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.add_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       )),
                                                   Text("$number_of_floors",
                                                       style: TextStyle(
                                                           fontSize: 20.0,
-                                                          fontFamily:
-                                                              "Tajawal-b",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                      textDirection:
-                                                          TextDirection.rtl),
+                                                          fontFamily: "Tajawal-b",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
+                                                      textDirection: TextDirection.rtl),
                                                   IconButton(
                                                       onPressed: () {
                                                         number_of_floors == 0
@@ -1667,10 +1382,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                         setState(() {});
                                                       },
                                                       icon: const Icon(
-                                                        Icons
-                                                            .remove_circle_outline,
-                                                        color: Color.fromARGB(
-                                                            255, 127, 166, 233),
+                                                        Icons.remove_circle_outline,
+                                                        color: Color.fromARGB(255, 127, 166, 233),
                                                       ))
                                                 ],
                                               ),
@@ -1685,68 +1398,52 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   type == 2 || type == 3
                                       ? Container()
                                       : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text('يوجد مسبح : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
-                                                textDirection:
-                                                    TextDirection.rtl),
+                                                textDirection: TextDirection.rtl),
                                             Row(
                                               children: [
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2,
+                                                  width: MediaQuery.of(context).size.width / 2,
                                                   child: RadioListTile(
                                                     title: const Text(
                                                       'نعم',
                                                       style: TextStyle(
                                                           fontSize: 18.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
                                                     ),
                                                     value: choice.yes,
                                                     groupValue: _poolCH,
                                                     onChanged: (choice? value) {
                                                       setState(() {
                                                         _poolCH = value;
-                                                        if (_poolCH ==
-                                                            choice.yes)
-                                                          pool = true;
+                                                        if (_poolCH == choice.yes) pool = true;
                                                       });
                                                     },
                                                   ),
                                                 ),
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2.5,
+                                                  width: MediaQuery.of(context).size.width / 2.5,
                                                   child: RadioListTile(
                                                     title: const Text(
                                                       'لا',
                                                       style: TextStyle(
                                                           fontSize: 18.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
                                                     ),
                                                     value: choice.no,
                                                     groupValue: _poolCH,
                                                     onChanged: (choice? value) {
                                                       setState(() {
                                                         _poolCH = value;
-                                                        if (_poolCH ==
-                                                            choice.no)
-                                                          pool = false;
+                                                        if (_poolCH == choice.no) pool = false;
                                                       });
                                                     },
                                                   ),
@@ -1762,67 +1459,53 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         ),
                                   type == 1
                                       ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text('يوجد قبو : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
-                                                textDirection:
-                                                    TextDirection.rtl),
+                                                textDirection: TextDirection.rtl),
                                             Row(
                                               children: [
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2,
+                                                  width: MediaQuery.of(context).size.width / 2,
                                                   child: RadioListTile(
                                                     title: const Text(
                                                       'نعم',
                                                       style: TextStyle(
                                                           fontSize: 18.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
                                                     ),
                                                     value: choice.yes,
                                                     groupValue: _basementCH,
                                                     onChanged: (choice? value) {
                                                       setState(() {
                                                         _basementCH = value;
-                                                        if (_basementCH ==
-                                                            choice.yes)
+                                                        if (_basementCH == choice.yes)
                                                           basement = true;
                                                       });
                                                     },
                                                   ),
                                                 ),
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2.5,
+                                                  width: MediaQuery.of(context).size.width / 2.5,
                                                   child: RadioListTile(
                                                     title: const Text(
                                                       'لا',
                                                       style: TextStyle(
                                                           fontSize: 18.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
                                                     ),
                                                     value: choice.no,
                                                     groupValue: _basementCH,
                                                     onChanged: (choice? value) {
                                                       setState(() {
                                                         _basementCH = value;
-                                                        if (_basementCH ==
-                                                            choice.no)
+                                                        if (_basementCH == choice.no)
                                                           basement = false;
                                                       });
                                                     },
@@ -1841,67 +1524,53 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   type == 3
                                       ? Container()
                                       : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text('يوجد مصعد : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
-                                                textDirection:
-                                                    TextDirection.rtl),
+                                                textDirection: TextDirection.rtl),
                                             Row(
                                               children: [
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2,
+                                                  width: MediaQuery.of(context).size.width / 2,
                                                   child: RadioListTile(
                                                     title: const Text(
                                                       'نعم',
                                                       style: TextStyle(
                                                           fontSize: 18.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
                                                     ),
                                                     value: choice.yes,
                                                     groupValue: _elevatorCH,
                                                     onChanged: (choice? value) {
                                                       setState(() {
                                                         _elevatorCH = value;
-                                                        if (_elevatorCH ==
-                                                            choice.yes)
+                                                        if (_elevatorCH == choice.yes)
                                                           elevator = true;
                                                       });
                                                     },
                                                   ),
                                                 ),
                                                 Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2.5,
+                                                  width: MediaQuery.of(context).size.width / 2.5,
                                                   child: RadioListTile(
                                                     title: const Text(
                                                       'لا',
                                                       style: TextStyle(
                                                           fontSize: 18.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
+                                                          fontFamily: "Tajawal-m",
+                                                          color: Color.fromARGB(255, 73, 75, 82)),
                                                     ),
                                                     value: choice.no,
                                                     groupValue: _elevatorCH,
                                                     onChanged: (choice? value) {
                                                       setState(() {
                                                         _elevatorCH = value;
-                                                        if (_elevatorCH ==
-                                                            choice.no)
+                                                        if (_elevatorCH == choice.no)
                                                           elevator = false;
                                                       });
                                                     },
@@ -1922,41 +1591,29 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(
-                                          color: Color.fromARGB(
-                                              255, 127, 126, 126),
+                                          color: Color.fromARGB(255, 127, 126, 126),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(5)),
                                     child: SizedBox(
                                         height: 100,
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        width: MediaQuery.of(context).size.width,
                                         child: ListView(
                                           scrollDirection: Axis.horizontal,
-                                          physics:
-                                              const AlwaysScrollableScrollPhysics(),
+                                          physics: const AlwaysScrollableScrollPhysics(),
                                           children: [
                                             selectedFiles.isEmpty
                                                 ? Container(
                                                     alignment: Alignment.center,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            1.1,
+                                                    width: MediaQuery.of(context).size.width / 1.1,
                                                     child: TextButton(
                                                       child: Text(
                                                         '+إرفع صور للعقار',
                                                         style: TextStyle(
                                                             fontSize: 20.0,
-                                                            fontFamily:
-                                                                "Tajawal-m",
+                                                            fontFamily: "Tajawal-m",
                                                             color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    127,
-                                                                    166,
-                                                                    233)),
+                                                                Color.fromARGB(255, 127, 166, 233)),
                                                       ),
                                                       onPressed: () {
                                                         selectImage();
@@ -1965,77 +1622,48 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   )
                                                 : Container(
                                                     margin: EdgeInsets.only(
-                                                      top:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              100,
+                                                      top: MediaQuery.of(context).size.height / 100,
                                                       right:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              100,
+                                                          MediaQuery.of(context).size.height / 100,
                                                       bottom:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              100,
+                                                          MediaQuery.of(context).size.height / 100,
                                                     ),
                                                     height: 100,
                                                     child: ListView(
                                                       shrinkWrap: true,
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      scrollDirection:
-                                                          Axis.horizontal,
+                                                      physics: const NeverScrollableScrollPhysics(),
+                                                      scrollDirection: Axis.horizontal,
                                                       children: selectedFiles
                                                           .map((e) => Stack(
                                                                 alignment:
-                                                                    AlignmentDirectional
-                                                                        .topEnd,
+                                                                    AlignmentDirectional.topEnd,
                                                                 children: [
                                                                   Padding(
                                                                     padding:
-                                                                        const EdgeInsets.all(
-                                                                            3.0),
-                                                                    child:
-                                                                        Container(
-                                                                      color: Colors
-                                                                          .blue,
-                                                                      child: Image
-                                                                          .file(
-                                                                        File(e
-                                                                            .path),
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                        height:
-                                                                            100,
-                                                                        width:
-                                                                            100,
+                                                                        const EdgeInsets.all(3.0),
+                                                                    child: Container(
+                                                                      color: Colors.blue,
+                                                                      child: Image.file(
+                                                                        File(e.path),
+                                                                        fit: BoxFit.cover,
+                                                                        height: 100,
+                                                                        width: 100,
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        setState(
-                                                                            () {
-                                                                          selectedFiles
-                                                                              .remove(e);
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          selectedFiles.remove(e);
                                                                         });
                                                                       },
-                                                                      child:
-                                                                          const Padding(
+                                                                      child: const Padding(
                                                                         padding:
                                                                             EdgeInsets.all(.02),
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .cancel,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.red,
+                                                                        child: Icon(
+                                                                          Icons.cancel,
+                                                                          size: 15,
+                                                                          color: Colors.red,
                                                                         ),
                                                                       )),
                                                                 ],
@@ -2051,8 +1679,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   ),
                                   //description
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
                                         ' معلومات اضافية: ',
@@ -2065,23 +1692,18 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         height: 8,
                                       ),
                                       Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
+                                          padding: EdgeInsets.symmetric(horizontal: 10),
                                           child: Directionality(
                                             textDirection: TextDirection.rtl,
                                             child: TextFormField(
                                               controller: description,
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
+                                              autovalidateMode: AutovalidateMode.onUserInteraction,
                                               decoration: InputDecoration(
                                                 filled: true,
                                                 fillColor: Colors.white,
-                                                contentPadding:
-                                                    EdgeInsets.all(6),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
+                                                contentPadding: EdgeInsets.all(6),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(8),
                                                   borderSide: const BorderSide(
                                                     color: Colors.grey,
                                                     width: 0.0,
@@ -2095,42 +1717,76 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   Container(
                                     margin: const EdgeInsets.all(15),
                                   ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'الساعات المتاحة للحولات العقارية؟* ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Tajawal-b",
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 10),
+                                          child: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: TextFormField(
+                                              controller: TourTime,
+                                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                              decoration: InputDecoration(
+                                                hintText: 'الأحد والاربعاء 4-8 م ',
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                                contentPadding: EdgeInsets.all(6),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 0.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(15),
+                                  ),
+
                                   //submit button
                                   SizedBox(
                                     width: 205.0,
                                     height: 70.0,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
+                                      padding:
+                                          const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                       child: ElevatedButton(
                                         onPressed: () async {
                                           getCities();
 
-                                          if (_formKey.currentState!
-                                              .validate()) {
+                                          if (_formKey.currentState!.validate()) {
                                             showAlertDialog(context);
                                           }
                                         },
                                         style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromARGB(
-                                                      255, 127, 166, 233)),
+                                          backgroundColor: MaterialStateProperty.all(
+                                              Color.fromARGB(255, 127, 166, 233)),
                                           padding: MaterialStateProperty.all(
-                                              EdgeInsets.symmetric(
-                                                  horizontal: 40, vertical: 5)),
+                                              EdgeInsets.symmetric(horizontal: 40, vertical: 5)),
                                           shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(27),
+                                              borderRadius: BorderRadius.circular(27),
                                             ),
                                           ),
                                         ),
                                         child: const Text(
                                           'إضافة',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontFamily: "Tajawal-m"),
+                                          style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
                                         ),
                                       ),
                                     ),
@@ -2164,8 +1820,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   Future<String> uploadFile(XFile _image, String userId) async {
     FirebaseStorage imageRef = FirebaseStorage.instance;
-    Reference reference =
-        imageRef.ref().child("propertyImages/$userId/${_image.name}");
+    Reference reference = imageRef.ref().child("propertyImages/$userId/${_image.name}");
     File file = File(_image.path);
     await reference.putFile(file);
     String downloadUrl = await reference.getDownloadURL();
