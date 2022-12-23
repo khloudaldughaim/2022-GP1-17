@@ -1336,7 +1336,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )
                                       : Container(),
-
+                                  type == 4 ?
+                                    Container(
+                                      margin: const EdgeInsets.all(10),
+                                    ):
+                                    Container(
+                                      margin: const EdgeInsets.all(5),
+                                    ),    
                                   type == 3
                                       ? Container()
                                       : Column(

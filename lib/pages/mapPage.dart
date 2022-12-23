@@ -15,6 +15,9 @@ import 'land.dart';
 import 'landdetailes.dart';
 import 'villadetailes.dart';
 import 'package:label_marker/label_marker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:search_map_place_updated/search_map_place_updated.dart';
 
 class mapPage extends StatefulWidget {
   const mapPage({
@@ -1546,12 +1549,32 @@ class _MapPageState extends State<mapPage> {
             markers: markers.map((e) => e).toSet(),
           ),
           Container(
+              alignment: Alignment.topCenter,
+              margin: EdgeInsets.only(top: 60),
+              child: SearchMapPlaceWidget(
+                strictBounds: true,
+                apiKey: "AIzaSyDKNtlGQXbyJBJYvBx-OrWqMbjln4NxTxs",
+                bgColor: Colors.white,
+                textColor: Color.fromARGB(255, 74, 74, 74),
+                hasClearButton: true,
+                placeholder: "...إبحث عن مدينة، حي",
+                placeType: PlaceType.address,
+                onSelected: (place) async {
+                  Geolocation? geolocation = await place.geolocation;
+
+                  controller!.animateCamera(
+                      CameraUpdate.newLatLng(geolocation!.coordinates));
+                  controller!.animateCamera(
+                      CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
+                },
+              )),
+          Container(
             margin: EdgeInsets.all(24),
             child: CircleAvatar(
               backgroundColor: Color.fromARGB(255, 225, 231, 255),
               radius: 30,
               child: IconButton(
-                icon: Icon(Icons.home, color: Color.fromARGB(255, 127, 166, 233)),
+                icon: Icon(Icons.list, color: Color.fromARGB(255, 127, 166, 233)),
                 onPressed: widget.onPressed,
               ),
             ),
