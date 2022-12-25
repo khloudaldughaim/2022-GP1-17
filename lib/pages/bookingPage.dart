@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, unnecessary_import, unused_import, camel_case_types, non_constant_identifier_names
 
 import 'dart:convert';
 
@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/pages/profile.dart';
 import 'package:nozol_application/pages/villa.dart';
+import 'package:nozol_application/registration/sign_up.dart';
 import 'package:uuid/uuid.dart';
 import '../registration/log_in.dart';
 import 'apartment.dart';
@@ -59,6 +60,7 @@ class _BookingPagestate extends State<boookingPage> {
   String Booktype = 'حضوري';
   videoChat? video = videoChat.zoom;
   String videochat = 'Zoom';
+  List<Suser> curentuserInfo = [];
 
 //  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
   final datecontrolar = TextEditingController(
@@ -71,10 +73,33 @@ class _BookingPagestate extends State<boookingPage> {
           DateTime.now().hour.toString() +
           ":" +
           DateTime.now().minute.toString());
-  final nameB = TextEditingController();
-  final phoneB = TextEditingController();
-  final emailB = TextEditingController();
+  var nameB = TextEditingController();
+  var phoneB = TextEditingController();
+  var emailB = TextEditingController();
   // text controllers
+
+  @override
+  void initState() {
+    super.initState();
+    getCuser();
+  }
+
+  Future<void> getCuser() async {
+    var docs = await FirebaseFirestore.instance.collection('Standard_user').get();
+    curentuserInfo = [];
+    nameB = TextEditingController();
+    phoneB = TextEditingController();
+    emailB = TextEditingController();
+    docs.docs.forEach((element) {
+      if (element["userId"] == curentId) {
+        curentuserInfo.add(Suser.fromJson(element.data()));
+        nameB = TextEditingController(text: curentuserInfo[0].name);
+        phoneB = TextEditingController(text: curentuserInfo[0].phoneNumber);
+        emailB = TextEditingController(text: curentuserInfo[0].email);
+      }
+    });
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -410,6 +435,7 @@ class _BookingPagestate extends State<boookingPage> {
                                   .collection('bookings')
                                   .where('Date', isEqualTo: datecontrolar.text)
                                   .where("owner_id", isEqualTo: '${widget.user_id}')
+                                  .where("isAvailable", isEqualTo: false)
                                   .get()
                                   .then((element) {
                                 if (element.docs.isEmpty) {
@@ -431,6 +457,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       "Pimage": '${widget.Pimge}',
                                       "book_id": book_id,
                                       "isExpired": false,
+                                      "isAvailable": false,
                                     });
                                     final ref = FirebaseFirestore.instance
                                         .collection('bookings')
