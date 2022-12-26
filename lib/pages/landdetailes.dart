@@ -7,9 +7,13 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 import 'bookingPage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:search_map_place_updated/search_map_place_updated.dart';
 
 class LandDetailes extends StatelessWidget {
   final Land land;
+  GoogleMapController? controller;
 
   LandDetailes({required this.land});
 
@@ -17,6 +21,7 @@ class LandDetailes extends StatelessWidget {
   Widget build(BuildContext context) {
     String Classification;
     String classification = land.properties?.classification ?? "";
+    LatLng mapLatLng = LatLng(land.properties!.latitude, land.properties!.longitude);
 
     if (classification == 'للإيجار') {
       Classification = 'للإيجار';
@@ -548,6 +553,39 @@ class LandDetailes extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              height: 200.0,
+                              width: 380,
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    //location
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: GoogleMap(
+                                      onMapCreated: (mapController) {
+                                        controller = mapController;
+                                      },
+                                      myLocationButtonEnabled: true,
+                                      myLocationEnabled: true,
+                                      initialCameraPosition: CameraPosition(
+                                          target: mapLatLng, zoom: 14),
+                                           markers: {
+                                            Marker(
+                                              markerId:
+                                                  const MarkerId("marker1"),
+                                                icon: BitmapDescriptor.defaultMarker,
+                                                visible: true,
+                                                position: mapLatLng
+                                            )
+                                          },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              width: 30),
                             ElevatedButton(
                               child: Center(
                                   child: Text(
