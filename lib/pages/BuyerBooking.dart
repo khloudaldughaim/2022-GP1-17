@@ -57,16 +57,16 @@ class _BuyerBookingsState extends State<BuyerBooking> {
     finished = [];
     docs.docs.forEach((element) {
       if (element["owner_id"] == curentId) {
-        if (element["status"] == "pending") {
+        if (element["status"] == "pending" && element["isExpired"] == false) {
           newBookings.add(BookingModel.fromJson(element.data()));
         }
-        if (element["status"] == "aproved") {
+        if (element["status"] == "aproved" && element["isExpired"] == false) {
           accepted.add(BookingModel.fromJson(element.data()));
         }
-        if (element["status"] == "cansled") {
+        if (element["status"] == "cansled" && element["isExpired"] == false) {
           canceled.add(BookingModel.fromJson(element.data()));
         }
-        if (element["status"] == "dicline") {
+        if (element["status"] == "dicline" && element["isExpired"] == false) {
           rejected.add(BookingModel.fromJson(element.data()));
         }
         if (element["status"] == "finshed") {
@@ -77,7 +77,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
     setState(() {});
   }
 
-  var currentIndex = 0;
+  var currentIndex = 2;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -256,6 +256,32 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                       ),
                                                     )),
                                               if (snapshot.data!.docs[index].data()['status'] ==
+                                                  'pending')
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
+                                                      border: Border.all(
+                                                        width: 1.5,
+                                                        color: Color.fromARGB(255, 233, 198, 82),
+                                                      ),
+                                                    ),
+                                                    width: 140,
+                                                    padding: EdgeInsets.symmetric(vertical: 4),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'حجز لم تتم معالجته',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Tajawal-m",
+                                                        ),
+                                                      ),
+                                                    )),
+                                              if (snapshot.data!.docs[index].data()['status'] ==
                                                   'dicline')
                                                 Container(
                                                     decoration: BoxDecoration(
@@ -379,48 +405,38 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                             },
                           ),
                         ),
-                        SizedBox( height: 15,),
-                         
+                        SizedBox(
+                          height: 15,
+                        ),
+
                         Expanded(
                           child: SizedBox(
                             height: 300,
                             child: Builder(
                               builder: (context) {
                                 if (currentIndex == 0) {
-                                   
-                                  return  
-                                  Column(  
-                                          children: [
-                                          
-                                        
-                                          
-                                            Expanded(
-                                              child: SizedBox(
-                                                //height: 525,
-                                                child:
-                                                    ListView.separated(
-                                                      itemCount: canceled.length,
-                                                      separatorBuilder: (BuildContext context, int index) {
-                                                        return  SizedBox(height: 10);
-                                                      },
-                                                      itemBuilder: (BuildContext context, int index) {
-                                                        return Column(
-                                                          children: [
-                                                          
-                                                            _buildCanceledItem(canceled[index]),
-                                                          ],
-                                                        );
-                                                      },
-                                                    ),
-                                                  
-                                              
-                                              ),
-                                            ),
-                                          ],
-                                       
-                                    
+                                  return Column(
+                                    children: [
+                                      Expanded(
+                                        child: SizedBox(
+                                          //height: 525,
+                                          child: ListView.separated(
+                                            itemCount: canceled.length,
+                                            separatorBuilder: (BuildContext context, int index) {
+                                              return SizedBox(height: 10);
+                                            },
+                                            itemBuilder: (BuildContext context, int index) {
+                                              return Column(
+                                                children: [
+                                                  _buildCanceledItem(canceled[index]),
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   );
-                                  
                                 }
                                 if (currentIndex == 1) {
                                   return ListView.separated(
@@ -543,17 +559,16 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                             Row(
                                               children: [
                                                 ElevatedButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      FirebaseFirestore.instance
-                                                          .collection('bookings')
-                                                          .doc(snapshot.data!.docs[index]
-                                                              .data()['book_id'])
-                                                          .update({
-                                                        "status": "cansled",
-                                                        "isAvailable": true,
-                                                      });
+                                                  onPressed: () async {
+                                                    await FirebaseFirestore.instance
+                                                        .collection('bookings')
+                                                        .doc(snapshot.data!.docs[index]
+                                                            .data()['book_id'])
+                                                        .update({
+                                                      "status": "cansled",
+                                                      "isAvailable": true,
                                                     });
+                                                    getBookings();
                                                   },
                                                   child: Text('إلغاء الحجز'),
                                                   style: ButtonStyle(
@@ -600,12 +615,12 @@ class _BuyerBookingsState extends State<BuyerBooking> {
     );
   }
 
-    //  Text(' عدد العقارات الملغاة من قبل المشترين هو ' + canceled.length.toString(),
-    //                                          style: TextStyle(
-    //                                           fontSize: 18, 
-    //                                           fontWeight: FontWeight.w300
-                                             
-    //                                             ),),
+  //  Text(' عدد العقارات الملغاة من قبل المشترين هو ' + canceled.length.toString(),
+  //                                          style: TextStyle(
+  //                                           fontSize: 18,
+  //                                           fontWeight: FontWeight.w300
+
+  //                                             ),),
 
   Card _buildAcceptedItem(BookingModel bookingModel) {
     return Card(
@@ -737,7 +752,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
         Radius.circular(15),
       )),
       child: Container(
-        height: 250,
+        height: 270,
 
         // ignore: prefer_const_constructors
         child: Row(
@@ -808,6 +823,10 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 5,
                   ),
                   Text(" التاريخ :   " + (bookingModel.date ?? "")),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(" سبب الرفض :   " + (bookingModel.reason ?? "")),
                   ElevatedButton(
                     onPressed: () {
                       realtyDetails(bookingModel.propertyId ?? "");
@@ -1006,7 +1025,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 5,
                   ),
                   if (bookingModel.bookType == "افتراضية")
-                 Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
+                    Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,

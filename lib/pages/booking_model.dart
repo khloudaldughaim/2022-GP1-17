@@ -12,6 +12,7 @@ class BookingModel {
   String? pimage;
   bool? isExpired;
   String? status;
+  String? reason;
 
   BookingModel(
       {this.bookType,
@@ -26,7 +27,8 @@ class BookingModel {
       this.date,
       this.pimage,
       this.isExpired,
-      this.status});
+      this.status,
+      this.reason});
 
   BookingModel.fromJson(Map<String, dynamic> json) {
     bookType = json['book_type'];
@@ -42,6 +44,7 @@ class BookingModel {
     pimage = json['Pimage'];
     isExpired = json['isExpired'];
     status = json['status'];
+    reason = json['reason'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,7 +62,7 @@ class BookingModel {
     data['Pimage'] = this.pimage;
     data['isExpired'] = this.isExpired;
     data['status'] = this.status;
+    data['reason'] = this.reason;
     return data;
   }
 }
-

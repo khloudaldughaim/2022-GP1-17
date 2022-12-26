@@ -458,6 +458,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       "book_id": book_id,
                                       "isExpired": false,
                                       "isAvailable": false,
+                                      "reason": " ",
                                     });
                                     final ref = FirebaseFirestore.instance
                                         .collection('bookings')

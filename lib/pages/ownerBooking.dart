@@ -2,7 +2,7 @@
 
 //import 'dart:convert';
 
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, unused_local_variable, prefer_const_literals_to_create_immutables, unused_import, file_names, camel_case_types, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, unused_local_variable, prefer_const_literals_to_create_immutables, unused_import, file_names, camel_case_types, sort_child_properties_last, unrelated_type_equality_checks
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,9 +24,6 @@ import 'booking_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-
-
-
 class ownerBooking extends StatefulWidget {
   // const myBookings({super.key});
   // final String property_id;
@@ -38,10 +35,9 @@ class ownerBooking extends StatefulWidget {
 }
 
 class _myBookingsState extends State<ownerBooking> {
-
-  List<bool> isSelected = [false, false, true];
+  List<bool> isSelected = [true, false, false];
   var property;
-
+  var reason = TextEditingController();
   List<BookingModel> newBookings = []; // 1
   List<BookingModel> canceled = []; // 2
   List<BookingModel> finished = []; // 3
@@ -67,16 +63,16 @@ class _myBookingsState extends State<ownerBooking> {
     finished = [];
     docs.docs.forEach((element) {
       if (element["owner_id"] == curentId) {
-        if (element["status"] == "pending") {
+        if (element["status"] == "pending" && element["isExpired"] == false) {
           newBookings.add(BookingModel.fromJson(element.data()));
         }
-        if (element["status"] == "aproved") {
+        if (element["status"] == "aproved" && element["isExpired"] == false) {
           accepted.add(BookingModel.fromJson(element.data()));
         }
-        if (element["status"] == "cansled") {
+        if (element["status"] == "cansled" && element["isExpired"] == false) {
           canceled.add(BookingModel.fromJson(element.data()));
         }
-        if (element["status"] == "dicline") {
+        if (element["status"] == "dicline" && element["isExpired"] == false) {
           rejected.add(BookingModel.fromJson(element.data()));
         }
         if (element["status"] == "finshed") {
@@ -104,7 +100,7 @@ class _myBookingsState extends State<ownerBooking> {
                   child: AppBar(
                     backgroundColor: Color.fromARGB(255, 138, 174, 222),
                     automaticallyImplyLeading: false,
-                   title: Padding(
+                    title: Padding(
                       padding: const EdgeInsets.only(left: 100),
                       child: Text("طلبات الجولة العقارية",
                           style: TextStyle(
@@ -113,16 +109,13 @@ class _myBookingsState extends State<ownerBooking> {
                             color: Color.fromARGB(255, 231, 232, 233),
                           )),
                     ),
-                      
-                     actions: [
+                    actions: [
                       Padding(
                         padding: EdgeInsets.only(right: 20.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NavigationBarPage()));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => NavigationBarPage()));
                           },
                           child: Icon(
                             Icons.arrow_forward_ios,
@@ -157,9 +150,9 @@ class _myBookingsState extends State<ownerBooking> {
                   height: 15,
                 ),
                 Expanded(
-                  child: TabBarView(children: [ 
-
-                     FutureBuilder<QuerySnapshot<Map<String, dynamic>>>( // tap 1 
+                  child: TabBarView(children: [
+                    FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        // tap 1
                         future: FirebaseFirestore.instance
                             .collection('bookings')
                             .where('owner_id', isEqualTo: curentId)
@@ -184,7 +177,7 @@ class _myBookingsState extends State<ownerBooking> {
                                   Radius.circular(15),
                                 )),
                                 child: Container(
-                                  height: 250,
+                                  height: 270,
 
                                   // ignore: prefer_const_constructors
                                   child: Row(
@@ -243,6 +236,32 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     )),
                                               if (snapshot.data!.docs[index].data()['status'] ==
+                                                  'pending')
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
+                                                      border: Border.all(
+                                                        width: 1.5,
+                                                        color: Color.fromARGB(255, 233, 198, 82),
+                                                      ),
+                                                    ),
+                                                    width: 140,
+                                                    padding: EdgeInsets.symmetric(vertical: 4),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'حجز لم تتم معالجته',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Tajawal-m",
+                                                        ),
+                                                      ),
+                                                    )),
+                                              if (snapshot.data!.docs[index].data()['status'] ==
                                                   'cansled')
                                                 Container(
                                                     decoration: BoxDecoration(
@@ -252,7 +271,7 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                       border: Border.all(
                                                         width: 1.5,
-                                                        color: Color.fromARGB(255, 115, 116, 121),
+                                                        color: Color.fromARGB(255, 119, 121, 115),
                                                       ),
                                                     ),
                                                     width: 85,
@@ -313,27 +332,30 @@ class _myBookingsState extends State<ownerBooking> {
                                               ),
                                               Text(" رقم الحاجز :   " +
                                                   snapshot.data!.docs[index].data()['buyer_phone']),
+                                              if (snapshot.data!.docs[index].data()['status'] ==
+                                                  'dicline')
+                                                Text(" سبب الرفض :   " +
+                                                    snapshot.data!.docs[index].data()['reason']),
                                               SizedBox(
                                                 height: 5,
                                               ),
                                               Text(" التاريخ :   " +
                                                   snapshot.data!.docs[index].data()['Date']),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                realtyDetails(snapshot.data!.docs[index]
-                                                    .data()['property_id']);
-                                              },
-                                              child: Text('تفاصيل العقار'),
-                                              style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(
-                                                  Color.fromARGB(255, 82, 155, 210),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  realtyDetails(snapshot.data!.docs[index]
+                                                      .data()['property_id']);
+                                                },
+                                                child: Text('تفاصيل العقار'),
+                                                style: ButtonStyle(
+                                                  backgroundColor: MaterialStateProperty.all(
+                                                    Color.fromARGB(255, 82, 155, 210),
+                                                  ),
+                                                  shape: MaterialStateProperty.all(
+                                                      RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(27))),
                                                 ),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(27))),
                                               ),
-                                            ),
-                                            
                                             ],
                                           ),
                                         ),
@@ -346,8 +368,8 @@ class _myBookingsState extends State<ownerBooking> {
                           }
                         }), // end of tap 1
 
-
-                    Column( // tap 2
+                    Column(
+                      // tap 2
                       children: [
                         Container(
                           decoration: BoxDecoration(
@@ -388,26 +410,30 @@ class _myBookingsState extends State<ownerBooking> {
                                   } else {
                                     isSelected[index] = false;
                                   }
-                                   if (newIndex == 0 && isSelected[newIndex])
-                                  {
-                                // Fluttertoast.showToast(msg: " عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),
-                                //             toastLength: Toast.LENGTH_SHORT,
-                                //             gravity: ToastGravity.CENTER,
-                                //             timeInSecForIosWeb: 1,
-                                //             backgroundColor: Color.fromARGB(211, 38, 93, 171),
-                                //             textColor: Color.fromARGB(255, 226, 226, 227),
-                                //             fontSize: 15);
+                                  if (newIndex == 0 && isSelected[newIndex]) {
+                                    // Fluttertoast.showToast(msg: " عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),
+                                    //             toastLength: Toast.LENGTH_SHORT,
+                                    //             gravity: ToastGravity.CENTER,
+                                    //             timeInSecForIosWeb: 1,
+                                    //             backgroundColor: Color.fromARGB(211, 38, 93, 171),
+                                    //             textColor: Color.fromARGB(255, 226, 226, 227),
+                                    //             fontSize: 15);
 
-                                 MotionToast(
-                                        title: Text("تنبيه", style:TextStyle(fontWeight: FontWeight.bold),),
-                                        description: Text(" عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),),
-                                         primaryColor: Color.fromARGB(255, 94, 161, 215),
-                                        barrierColor: Colors.transparent,
-                                        toastDuration : Duration(seconds: 4),
-                                        // width: 3,
+                                    MotionToast(
+                                      title: Text(
+                                        "تنبيه",
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      description: Text(
+                                        " عدد العقارات الملغاة من قبل المشترين هو " +
+                                            canceled.length.toString(),
+                                      ),
+                                      primaryColor: Color.fromARGB(255, 94, 161, 215),
+                                      barrierColor: Colors.transparent,
+                                      toastDuration: Duration(seconds: 4),
+                                      // width: 3,
                                     ).show(context);
-
-                                   }
+                                  }
                                 }
                               });
                             },
@@ -457,8 +483,9 @@ class _myBookingsState extends State<ownerBooking> {
                           ),
                         ) // toogle buttons list
                       ],
-                    ), // end of tap1 
-                    FutureBuilder<QuerySnapshot<Map<String, dynamic>>>( // Tap 2
+                    ), // end of tap1
+                    FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        // Tap 2
                         future: FirebaseFirestore.instance
                             .collection('bookings')
                             .where('owner_id', isEqualTo: curentId)
@@ -532,8 +559,10 @@ class _myBookingsState extends State<ownerBooking> {
                                             ),
                                             Text(" نوع الجولة :   " +
                                                 snapshot.data!.docs[index].data()['book_type']),
-                                    if ( snapshot.data!.docs[index].data()['book_type'] == "افتراضية")
-                                        Text(" التطبيق :  " + ( snapshot.data!.docs[index].data()['videochat'])),
+                                            if (snapshot.data!.docs[index].data()['book_type'] ==
+                                                "افتراضية")
+                                              Text(" التطبيق :  " +
+                                                  (snapshot.data!.docs[index].data()['videochat'])),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -572,14 +601,38 @@ class _myBookingsState extends State<ownerBooking> {
                                                   width: 10,
                                                 ),
                                                 ElevatedButton(
-                                                  onPressed: () async {
-                                                    await FirebaseFirestore.instance
-                                                        .collection('bookings')
-                                                        .doc(snapshot.data!.docs[index]
-                                                            .data()['book_id'])
-                                                        .update({
-                                                      "status": "dicline",
-                                                    });
+                                                  onPressed: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: ((context) => AlertDialog(
+                                                              title:
+                                                                  Text("من فضلك ماهو سبب الرفض ؟"),
+                                                              content: TextField(
+                                                                autofocus: true,
+                                                                controller: reason,
+                                                                decoration: InputDecoration(
+                                                                    hintText: "الوقت غير مناسب "),
+                                                              ),
+                                                              actions: [
+                                                                TextButton(
+                                                                    onPressed: () async {
+                                                                      await FirebaseFirestore
+                                                                          .instance
+                                                                          .collection('bookings')
+                                                                          .doc(snapshot
+                                                                              .data!.docs[index]
+                                                                              .data()['book_id'])
+                                                                          .update({
+                                                                        "reason": reason.text,
+                                                                        "status": "dicline",
+                                                                      });
+                                                                      Navigator.of(context).pop();
+                                                                      getBookings();
+                                                                    },
+                                                                    child: Text("حفظ"))
+                                                              ],
+                                                            )));
+
                                                     getBookings();
                                                   },
                                                   child: Text('رفض'),
@@ -700,7 +753,7 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
-                    if (bookingModel.bookType == "افتراضية")
+                  if (bookingModel.bookType == "افتراضية")
                     Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :  " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
@@ -738,7 +791,7 @@ class _myBookingsState extends State<ownerBooking> {
         Radius.circular(15),
       )),
       child: Container(
-        height: 250,
+        height: 270,
 
         // ignore: prefer_const_constructors
         child: Row(
@@ -802,13 +855,17 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
-                    if (bookingModel.bookType == "افتراضية")
+                  if (bookingModel.bookType == "افتراضية")
                     Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
                   ),
                   Text(" التاريخ :   " + (bookingModel.date ?? "")),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(" سبب الرفض :   " + (bookingModel.reason ?? "")),
                   ElevatedButton(
                     onPressed: () {
                       realtyDetails(bookingModel.propertyId ?? "");
@@ -905,8 +962,7 @@ class _myBookingsState extends State<ownerBooking> {
                     height: 5,
                   ),
                   if (bookingModel.bookType == "افتراضية")
-                   Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
-
+                    Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
@@ -980,7 +1036,7 @@ class _myBookingsState extends State<ownerBooking> {
                         ),
                         border: Border.all(
                           width: 1.5,
-                          color: Color.fromARGB(255, 238, 103, 19),
+                          color: Color.fromARGB(255, 126, 117, 111),
                         ),
                       ),
                       width: 85,
@@ -1007,7 +1063,7 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
-                    if (bookingModel.bookType == "افتراضية")
+                  if (bookingModel.bookType == "افتراضية")
                     Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
@@ -1036,7 +1092,7 @@ class _myBookingsState extends State<ownerBooking> {
     );
   }
 
-  void realtyDetails  (Object isEqualTo) {
+  void realtyDetails(Object isEqualTo) {
     FirebaseFirestore.instance
         .collection('properties')
         .where('property_id', isEqualTo: isEqualTo)
@@ -1081,16 +1137,3 @@ class _myBookingsState extends State<ownerBooking> {
     });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
