@@ -21,6 +21,10 @@ import 'villadetailes.dart';
 import 'package:label_marker/label_marker.dart';
 import 'profile.dart';
 import 'booking_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:motion_toast/motion_toast.dart';
+
+
 
 
 class ownerBooking extends StatefulWidget {
@@ -384,6 +388,26 @@ class _myBookingsState extends State<ownerBooking> {
                                   } else {
                                     isSelected[index] = false;
                                   }
+                                   if (newIndex == 0 && isSelected[newIndex])
+                                  {
+                                // Fluttertoast.showToast(msg: " عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),
+                                //             toastLength: Toast.LENGTH_SHORT,
+                                //             gravity: ToastGravity.CENTER,
+                                //             timeInSecForIosWeb: 1,
+                                //             backgroundColor: Color.fromARGB(211, 38, 93, 171),
+                                //             textColor: Color.fromARGB(255, 226, 226, 227),
+                                //             fontSize: 15);
+
+                                 MotionToast(
+                                        title: Text("تنبيه", style:TextStyle(fontWeight: FontWeight.bold),),
+                                        description: Text(" عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),),
+                                         primaryColor: Color.fromARGB(255, 94, 161, 215),
+                                        barrierColor: Colors.transparent,
+                                        toastDuration : Duration(seconds: 4),
+                                        // width: 3,
+                                    ).show(context);
+
+                                   }
                                 }
                               });
                             },
@@ -459,7 +483,7 @@ class _myBookingsState extends State<ownerBooking> {
                                   Radius.circular(15),
                                 )),
                                 child: Container(
-                                  height: 250,
+                                  height: 300,
 
                                   // ignore: prefer_const_constructors
                                   child: Row(
@@ -508,6 +532,8 @@ class _myBookingsState extends State<ownerBooking> {
                                             ),
                                             Text(" نوع الجولة :   " +
                                                 snapshot.data!.docs[index].data()['book_type']),
+                                    if ( snapshot.data!.docs[index].data()['book_type'] == "افتراضية")
+                                        Text(" التطبيق :  " + ( snapshot.data!.docs[index].data()['videochat'])),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -674,6 +700,8 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
+                    if (bookingModel.bookType == "افتراضية")
+                    Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :  " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
@@ -774,6 +802,8 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
+                    if (bookingModel.bookType == "افتراضية")
+                    Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
@@ -874,6 +904,9 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
+                  if (bookingModel.bookType == "افتراضية")
+                   Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
+
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
@@ -974,6 +1007,8 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 5,
                   ),
+                    if (bookingModel.bookType == "افتراضية")
+                    Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
