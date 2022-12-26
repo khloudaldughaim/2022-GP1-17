@@ -379,21 +379,48 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                             },
                           ),
                         ),
+                        SizedBox( height: 15,),
+                         
                         Expanded(
                           child: SizedBox(
                             height: 300,
                             child: Builder(
                               builder: (context) {
                                 if (currentIndex == 0) {
-                                  return ListView.separated(
-                                    itemCount: canceled.length,
-                                    separatorBuilder: (BuildContext context, int index) {
-                                      return SizedBox(height: 10);
-                                    },
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return _buildCanceledItem(canceled[index]);
-                                    },
+                                   
+                                  return  
+                                  Column(  
+                                          children: [
+                                          
+                                        
+                                          
+                                            Expanded(
+                                              child: SizedBox(
+                                                //height: 525,
+                                                child:
+                                                    ListView.separated(
+                                                      itemCount: canceled.length,
+                                                      separatorBuilder: (BuildContext context, int index) {
+                                                        return  SizedBox(height: 10);
+                                                      },
+                                                      itemBuilder: (BuildContext context, int index) {
+                                                        return Column(
+                                                          children: [
+                                                          
+                                                            _buildCanceledItem(canceled[index]),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
+                                                  
+                                              
+                                              ),
+                                            ),
+                                          ],
+                                       
+                                    
                                   );
+                                  
                                 }
                                 if (currentIndex == 1) {
                                   return ListView.separated(
@@ -572,6 +599,13 @@ class _BuyerBookingsState extends State<BuyerBooking> {
           )),
     );
   }
+
+    //  Text(' عدد العقارات الملغاة من قبل المشترين هو ' + canceled.length.toString(),
+    //                                          style: TextStyle(
+    //                                           fontSize: 18, 
+    //                                           fontWeight: FontWeight.w300
+                                             
+    //                                             ),),
 
   Card _buildAcceptedItem(BookingModel bookingModel) {
     return Card(
@@ -944,7 +978,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         ),
                         border: Border.all(
                           width: 1.5,
-                          color: Color.fromARGB(255, 238, 103, 19),
+                          color: Color.fromARGB(255, 67, 67, 67),
                         ),
                       ),
                       width: 85,
@@ -963,7 +997,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                  Text(" صاحب الإلغاء  :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -971,6 +1005,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   SizedBox(
                     height: 5,
                   ),
+                  if (bookingModel.bookType == "افتراضية")
+                 Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
                   Text(" رقم الحاجز :   " + (bookingModel.buyerPhone ?? "")),
                   SizedBox(
                     height: 5,
