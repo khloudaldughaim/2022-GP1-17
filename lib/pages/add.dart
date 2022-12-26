@@ -89,7 +89,7 @@ enum propertyUse { residental, commercial }
 
 enum choice { yes, no }
 
-LatLng mapLatLng = LatLng(23.88, 45.0792);
+LatLng mapLatLng = LatLng(24.774265, 46.738586);
 
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
@@ -957,8 +957,31 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           },
                                           myLocationButtonEnabled: true,
                                           myLocationEnabled: true,
-                                          initialCameraPosition:
-                                              CameraPosition(target: mapLatLng, zoom: 14),
+                                          initialCameraPosition: CameraPosition(
+                                              target: mapLatLng, zoom: 14),
+                                          markers: {
+                                            Marker(
+                                              markerId:
+                                                  const MarkerId("marker1"),
+                                              icon: BitmapDescriptor
+                                                  .defaultMarker,
+                                              visible: true,
+                                              draggable: true,
+                                              position:
+                                                  LatLng(24.774265, 46.738586),
+                                              onDrag: (place) async {
+                                                LatLng geolocation =
+                                                    await place;
+
+                                                controller!.animateCamera(
+                                                    CameraUpdate.newLatLng(
+                                                        geolocation));
+                                                setState(() {
+                                                  mapLatLng = geolocation;
+                                                });
+                                              },
+                                            )
+                                          },
                                         ),
                                         Container(
                                             alignment: Alignment.bottomRight,

@@ -10,8 +10,13 @@ import 'package:photo_view/photo_view_gallery.dart';
 
 import 'bookingPage.dart';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:search_map_place_updated/search_map_place_updated.dart';
+
 class VillaDetailes extends StatelessWidget {
   final Villa villa;
+  GoogleMapController? controller;
 
   VillaDetailes({required this.villa});
 
@@ -19,6 +24,7 @@ class VillaDetailes extends StatelessWidget {
   Widget build(BuildContext context) {
     String ThereIsPool;
     bool pool = villa.pool;
+    LatLng mapLatLng = LatLng(villa.properties.latitude, villa.properties.longitude);
 
     if (pool == true) {
       ThereIsPool = 'نعم';
@@ -660,6 +666,39 @@ class VillaDetailes extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              height: 200.0,
+                              width: 380,
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    //location
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: GoogleMap(
+                                      onMapCreated: (mapController) {
+                                        controller = mapController;
+                                      },
+                                      myLocationButtonEnabled: true,
+                                      myLocationEnabled: true,
+                                      initialCameraPosition: CameraPosition(
+                                          target: mapLatLng, zoom: 14),
+                                           markers: {
+                                            Marker(
+                                              markerId:
+                                                  const MarkerId("marker1"),
+                                                icon: BitmapDescriptor.defaultMarker,
+                                                visible: true,
+                                                position: mapLatLng
+                                            )
+                                          },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              width: 30),
                             ElevatedButton(
                               child: Center(
                                   child: Text(
