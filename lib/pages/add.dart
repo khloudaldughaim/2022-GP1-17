@@ -1711,7 +1711,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        ' معلومات اضافية: ',
+                                        ' معلومات اضافية : ',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
@@ -1750,7 +1750,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        'الساعات المتاحة للحولات العقارية؟* ',
+                                        'الأوقات المتاحة للجولات العقارية :',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
