@@ -61,6 +61,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.3.61
   json_annotation: ^4.7.0
   date_time_picker: ^2.1.0
+  motion_toast: ^2.6.4
 
 dev_dependencies:
   flutter_test:
