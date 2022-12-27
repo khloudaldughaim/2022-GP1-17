@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:nozol_application/pages/apartment.dart';
@@ -18,6 +19,10 @@ import 'villadetailes.dart';
 import 'package:label_marker/label_marker.dart';
 import 'profile.dart';
 import 'booking_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class BuyerBooking extends StatefulWidget {
   // const myBookings({super.key});
@@ -47,7 +52,96 @@ class _BuyerBookingsState extends State<BuyerBooking> {
   void initState() {
     super.initState();
     getBookings();
+    // Notifications step 3
+    initInfo();
+    // end of Notifications step 3
   }
+
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  initInfo() async {
+    var androidInitialize = const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings = InitializationSettings(android: androidInitialize);
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
+        final String? payload = notificationResponse.payload;
+        if (notificationResponse.payload != null) {
+          debugPrint('notification payload: $payload');
+        }
+        await Navigator.push(
+          context,
+          MaterialPageRoute<void>(builder: (context) => HomePage()),
+        );
+      },
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print("...................onMessage................");
+      print("onMessage: ${message.notification?.title}/${message.notification?.body}");
+
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+          message.notification!.body.toString(),
+          htmlFormatBigText: true,
+          contentTitle: message.notification!.title.toString(),
+          htmlFormatContentTitle: true);
+
+      AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        "dbfood",
+        "dbfood",
+        importance: Importance.high,
+        styleInformation: bigTextStyleInformation,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+          0, message.notification?.title, message.notification?.body, platformChannelSpecifics,
+          payload: message.data['body']);
+    });
+  }
+
+  void sendPushMessege(String token, String Fname) async {
+    print(token);
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAxBBGpRg:APA91bEFd4TNo4jbmY-3hnkWBd994HqIlQqhy0OLhHeZkdXYHGDBLIUO-c11XqtDFy5-J_7S1qYnlG7XsgYdW6SV1__7LA760i6kevCTTEG-UywJDXRYKPUNzwg6iTdvM9jWSTdZ89aj'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': 'your appointment has been canceled with ',
+              'title': 'appointment cancelation',
+            },
+            "notification": <String, dynamic>{
+              "title": "إلغاء الطلب",
+              "body": " $Fname , الغى طلب الجولة ",
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+      print(token);
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error push notifcathion");
+      }
+    }
+  }
+
+////////////////// END OF NOTIFICATIONS step 2 ///////////////
 
   Future<void> getBookings() async {
     var docs = await FirebaseFirestore.instance.collection('bookings').get();
@@ -401,7 +495,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                   } else {
                                     isSelected[index] = false;
                                   }
-                                    if (newIndex == 0 && isSelected[newIndex]) {
+                                  if (newIndex == 0 && isSelected[newIndex]) {
                                     // Fluttertoast.showToast(msg: " عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),
                                     //             toastLength: Toast.LENGTH_SHORT,
                                     //             gravity: ToastGravity.CENTER,
@@ -414,15 +508,13 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                       icon: Icons.light,
                                       title: Text(
                                         "تنبيه",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                       description: Text(
                                         " عدد العقارات الملغاة من قبل المشترين هو " +
                                             canceled.length.toString(),
                                       ),
-                                      primaryColor:
-                                          Color.fromARGB(255, 216, 201, 151),
+                                      primaryColor: Color.fromARGB(255, 216, 201, 151),
                                       barrierColor: Colors.transparent,
                                       toastDuration: Duration(seconds: 2),
                                       // width: 3,
@@ -596,7 +688,18 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                       "status": "cansled",
                                                       "isAvailable": true,
                                                     });
+                                                    var btoken = await FirebaseFirestore.instance
+                                                        .collection('Standard_user')
+                                                        .doc(snapshot.data!.docs[index]
+                                                            .data()['buyer_id'])
+                                                        .get();
+                                                    print('IT WORKS !!!! ' + btoken['token']);
+                                                    // end of Notifications step 4
                                                     getBookings();
+                                                    // Notifications step 5
+                                                    sendPushMessege(
+                                                        btoken['token'], btoken['name']);
+                                                    //end of  Notifications step 5
                                                   },
                                                   child: Text('إلغاء الحجز'),
                                                   style: ButtonStyle(
@@ -731,16 +834,24 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   ),
                   Text(" التاريخ :   " + (bookingModel.date ?? "")),
                   ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        FirebaseFirestore.instance
-                            .collection('bookings')
-                            .doc(bookingModel.bookId)
-                            .update({
-                          "status": "cansled",
-                          "isAvailable": true,
-                        });
+                    onPressed: () async {
+                      await FirebaseFirestore.instance
+                          .collection('bookings')
+                          .doc(bookingModel.bookId)
+                          .update({
+                        "status": "cansled",
+                        "isAvailable": true,
                       });
+                      var btoken = await FirebaseFirestore.instance
+                          .collection('Standard_user')
+                          .doc(bookingModel.buyerId)
+                          .get();
+                      print('IT WORKS !!!! ' + btoken['token']);
+                      // end of Notifications step 4
+                      getBookings();
+                      // Notifications step 5
+                      sendPushMessege(btoken['token'], btoken['name']);
+                      //end of  Notifications step 5
                     },
                     child: Text('إلغاء الحجز'),
                     style: ButtonStyle(
