@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:nozol_application/pages/apartment.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:nozol_application/pages/land.dart';
@@ -399,6 +400,33 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                     isSelected[index] = true;
                                   } else {
                                     isSelected[index] = false;
+                                  }
+                                    if (newIndex == 0 && isSelected[newIndex]) {
+                                    // Fluttertoast.showToast(msg: " عدد العقارات الملغاة من قبل المشترين هو " + canceled.length.toString(),
+                                    //             toastLength: Toast.LENGTH_SHORT,
+                                    //             gravity: ToastGravity.CENTER,
+                                    //             timeInSecForIosWeb: 1,
+                                    //             backgroundColor: Color.fromARGB(211, 38, 93, 171),
+                                    //             textColor: Color.fromARGB(255, 226, 226, 227),
+                                    //             fontSize: 15);
+
+                                    MotionToast(
+                                      icon: Icons.light,
+                                      title: Text(
+                                        "تنبيه",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      description: Text(
+                                        " عدد العقارات الملغاة من قبل المشترين هو " +
+                                            canceled.length.toString(),
+                                      ),
+                                      primaryColor:
+                                          Color.fromARGB(255, 216, 201, 151),
+                                      barrierColor: Colors.transparent,
+                                      toastDuration: Duration(seconds: 2),
+                                      // width: 3,
+                                    ).show(context);
                                   }
                                 }
                               });

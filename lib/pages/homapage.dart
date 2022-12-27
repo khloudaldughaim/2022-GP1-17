@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/pages/villa.dart';
@@ -56,6 +58,68 @@ class HomePageState extends State<HomePage> {
   String? MaxSpace;
   String? MinPrice;
   String? MaxPrice;
+
+
+
+
+////////////////////////////////////////////////////////////
+ void initState() {
+    super.initState();
+    // Notifications step 3 
+    requestPremission();
+    getToken();
+     // end of Notifications step 3
+  }
+
+late FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user = auth.currentUser;
+  late String curentId = user!.uid;
+ 
+void requestPremission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print("User granted premission");
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print("User granted provisional permission");
+    } else {
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print("User declined or has not accepted premission");
+    }
+  }
+
+  String? mtoken = " ";
+
+  void getToken() async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        mtoken = token;
+        print("My token is $mtoken");
+      });
+      saveToken(token!);
+    });
+  }
+
+  void saveToken(String token) async {
+    await FirebaseFirestore.instance
+        .collection("Standard_user")
+        .doc(curentId)
+        .update({'token': token});
+  }
+///////////////////////////////////////////////////////////////////
 
   void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
     try {
