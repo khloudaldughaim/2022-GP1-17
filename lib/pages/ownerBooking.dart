@@ -818,7 +818,7 @@ class _myBookingsState extends State<ownerBooking> {
                                                             .doc(snapshot.data!
                                                                     .docs[index]
                                                                     .data()[
-                                                                'owner_id'])
+                                                                'buyer_id'])
                                                             .get();
                                                     print('IT WORKS !!!! ' +
                                                         Otoken['token']);
@@ -827,11 +827,21 @@ class _myBookingsState extends State<ownerBooking> {
 
                                                     // setState(() {});
                                                     getBookings();
-
+                                                        var ONwerName =  
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Standard_user')
+                                                            .doc(snapshot.data!
+                                                                    .docs[index]
+                                                                    .data()[
+                                                                'owner_id'])
+                                                            .get();
+                                                            
                                                      // Notifications step 5 
                                                     sendPushMessege(   
                                                         Otoken['token'],
-                                                        Otoken['name']);
+                                                        ONwerName['name']);
                                                     //end of  Notifications step 5 
                                                   },
                                                   child: Text('قبول'),
@@ -898,15 +908,26 @@ class _myBookingsState extends State<ownerBooking> {
                                                             .doc(snapshot.data!
                                                                     .docs[index]
                                                                     .data()[
-                                                                'owner_id'])
+                                                                'buyer_id'])
                                                             .get();
                                                     print('IT WORKS !!!! ' +
                                                         btoken['token']);
 
+                                                       var ONwerName =  
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Standard_user')
+                                                            .doc(snapshot.data!
+                                                                    .docs[index]
+                                                                    .data()[
+                                                                'owner_id'])
+                                                            .get();
+                                                            
                                                 RejectsendPushMessege(   
                                                         btoken['token'],
-                                                        btoken['name']);
-                                                                          getBookings();
+                                                        ONwerName['name']);
+                                                         getBookings();
                                                                         },
                                                                         child: Text(
                                                                             "حفظ"))

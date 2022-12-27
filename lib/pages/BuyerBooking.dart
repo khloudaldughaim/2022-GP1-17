@@ -691,7 +691,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     var btoken = await FirebaseFirestore.instance
                                                         .collection('Standard_user')
                                                         .doc(snapshot.data!.docs[index]
-                                                            .data()['buyer_id'])
+                                                            .data()['owner_id'])
                                                         .get();
                                                     print('IT WORKS !!!! ' + btoken['token']);
                                                     // end of Notifications step 4
@@ -844,13 +844,14 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       });
                       var btoken = await FirebaseFirestore.instance
                           .collection('Standard_user')
-                          .doc(bookingModel.buyerId)
+                          .doc(bookingModel.ownerId)
                           .get();
                       print('IT WORKS !!!! ' + btoken['token']);
                       // end of Notifications step 4
                       getBookings();
                       // Notifications step 5
-                      sendPushMessege(btoken['token'], btoken['name']);
+                      var Bname =  bookingModel.buyerName ;
+                      sendPushMessege(btoken['token'], Bname.toString());
                       //end of  Notifications step 5
                     },
                     child: Text('إلغاء الحجز'),
