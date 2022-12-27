@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nozol_application/pages/BuyerBooking.dart';
 import 'package:nozol_application/pages/apartment.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:nozol_application/pages/land.dart';
@@ -63,8 +64,7 @@ class _myBookingsState extends State<ownerBooking> {
 
 
 
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   TextEditingController username = TextEditingController();
   TextEditingController title = TextEditingController();
   TextEditingController body = TextEditingController();
@@ -85,7 +85,7 @@ class _myBookingsState extends State<ownerBooking> {
         }
         await Navigator.push(
           context,
-          MaterialPageRoute<void>(builder: (context) => HomePage()),
+          MaterialPageRoute<void>(builder: (context) => BuyerBooking()),
         );
       },
     );
@@ -141,6 +141,44 @@ class _myBookingsState extends State<ownerBooking> {
             "notification": <String, dynamic>{
               "title": "قبول طلب",
               "body": "تم قبول طلب زيارتك من قبل صاحب العقار $Fname",
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+      print(token);
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error push notifcathion");
+      }
+    }
+  }
+
+
+
+  void RejectsendPushMessege(String token, String Fname) async {
+    print(token);
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAxBBGpRg:APA91bEFd4TNo4jbmY-3hnkWBd994HqIlQqhy0OLhHeZkdXYHGDBLIUO-c11XqtDFy5-J_7S1qYnlG7XsgYdW6SV1__7LA760i6kevCTTEG-UywJDXRYKPUNzwg6iTdvM9jWSTdZ89aj'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': 'your appointment has been canceled with ',
+              'title': 'appointment cancelation',
+            },
+            "notification": <String, dynamic>{
+              "title": "رفض طلب",
+              "body": "تم رفض طلب زيارتك من قبل صاحب العقار $Fname",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -772,7 +810,7 @@ class _myBookingsState extends State<ownerBooking> {
                                                       "status": "aproved",
                                                     });
                                                     // Notifications step 4
-                                                    var btoken =  
+                                                    var Otoken =  
                                                         await FirebaseFirestore
                                                             .instance
                                                             .collection(
@@ -780,10 +818,10 @@ class _myBookingsState extends State<ownerBooking> {
                                                             .doc(snapshot.data!
                                                                     .docs[index]
                                                                     .data()[
-                                                                'buyer_id'])
+                                                                'owner_id'])
                                                             .get();
                                                     print('IT WORKS !!!! ' +
-                                                        btoken['token']);
+                                                        Otoken['token']);
                                                     // end of Notifications step 4
 
 
@@ -792,8 +830,8 @@ class _myBookingsState extends State<ownerBooking> {
 
                                                      // Notifications step 5 
                                                     sendPushMessege(   
-                                                        btoken['token'],
-                                                        btoken['name']);
+                                                        Otoken['token'],
+                                                        Otoken['name']);
                                                     //end of  Notifications step 5 
                                                   },
                                                   child: Text('قبول'),
@@ -818,7 +856,7 @@ class _myBookingsState extends State<ownerBooking> {
                                                 ),
                                                 ElevatedButton(
                                                   // REJECT BUTTON
-                                                  onPressed: () {
+                                                  onPressed: () async {
                                                     showDialog(
                                                         context: context,
                                                         builder:
@@ -852,12 +890,29 @@ class _myBookingsState extends State<ownerBooking> {
                                                                           });
                                                                           Navigator.of(context)
                                                                               .pop();
+                                                               var btoken =  
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Standard_user')
+                                                            .doc(snapshot.data!
+                                                                    .docs[index]
+                                                                    .data()[
+                                                                'owner_id'])
+                                                            .get();
+                                                    print('IT WORKS !!!! ' +
+                                                        btoken['token']);
+
+                                                RejectsendPushMessege(   
+                                                        btoken['token'],
+                                                        btoken['name']);
                                                                           getBookings();
                                                                         },
                                                                         child: Text(
                                                                             "حفظ"))
                                                                   ],
                                                                 )));
+                                                         
 
                                                     getBookings();
                                                   },
