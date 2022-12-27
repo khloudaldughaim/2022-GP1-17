@@ -151,7 +151,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
     rejected = [];
     finished = [];
     docs.docs.forEach((element) {
-      if (element["owner_id"] == curentId) {
+      if (element["buyer_id"] == curentId) {
         if (element["status"] == "pending" && element["isExpired"] == false) {
           newBookings.add(BookingModel.fromJson(element.data()));
         }
@@ -244,7 +244,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         // tap 1
                         future: FirebaseFirestore.instance
                             .collection('bookings')
-                            .where('owner_id', isEqualTo: curentId)
+                            .where('buyer_id', isEqualTo: curentId)
                             .where("isExpired", isEqualTo: true)
                             .get(),
                         builder: (
@@ -697,8 +697,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     // end of Notifications step 4
                                                     getBookings();
                                                     // Notifications step 5
-                                                    sendPushMessege(
-                                                        btoken['token'], btoken['name']);
+                                                    var Bname = snapshot.data!.docs[index]
+                                                        .data()['buyer_name'];
+                                                    sendPushMessege(btoken['token'], Bname);
                                                     //end of  Notifications step 5
                                                   },
                                                   child: Text('إلغاء الحجز'),
@@ -850,7 +851,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       // end of Notifications step 4
                       getBookings();
                       // Notifications step 5
-                      var Bname =  bookingModel.buyerName ;
+                      var Bname = bookingModel.buyerName;
                       sendPushMessege(btoken['token'], Bname.toString());
                       //end of  Notifications step 5
                     },
