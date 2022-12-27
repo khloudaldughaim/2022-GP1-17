@@ -62,20 +62,17 @@ class _UpdateApartmentState extends State<UpdateApartment> {
   late TextEditingController in_floorController;
   late TextEditingController location;
   late TextEditingController description;
+  late TextEditingController TourTime;
 
   @override
   void initState() {
-    spaceController =
-        TextEditingController(text: widget.apartment.properties.space);
-    priceController =
-        TextEditingController(text: widget.apartment.properties.price);
-    neighborhoodController =
-        TextEditingController(text: widget.apartment.properties.neighborhood);
+    spaceController = TextEditingController(text: widget.apartment.properties.space);
+    priceController = TextEditingController(text: widget.apartment.properties.price);
+    neighborhoodController = TextEditingController(text: widget.apartment.properties.neighborhood);
     in_floorController = TextEditingController(text: widget.apartment.in_floor);
-    location =
-        TextEditingController(text: widget.apartment.properties.Location);
-    description =
-        TextEditingController(text: widget.apartment.properties.description);
+    location = TextEditingController(text: widget.apartment.properties.Location);
+    description = TextEditingController(text: widget.apartment.properties.description);
+    TourTime = TextEditingController(text: widget.apartment.properties.TourTime);
 
     type = '${widget.apartment.properties.type}';
     property_id = '${widget.apartment.properties.property_id}';
@@ -114,6 +111,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
     googleMapController?.dispose();
     in_floorController.dispose();
     description.dispose();
+    TourTime.dispose();
     location.dispose();
     super.dispose();
   }
@@ -171,7 +169,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
             'number_of_livingRooms': number_of_livingRooms,
             'number_of_bathroom': number_of_bathroom,
             'Location': location.text,
-            'description': description.text
+            'description': description.text,
+            'TourTime': TourTime.text
           });
 
           Fluttertoast.showToast(
@@ -485,9 +484,12 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                               fontFamily: "Tajawal-b",
                             ),
                           ),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Expanded(
                               child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 60),
+                                  padding: EdgeInsets.symmetric(horizontal: 2),
                                   child: Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: TextFormField(
@@ -519,7 +521,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -1193,12 +1195,53 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                               )),
                         ],
                       ),
+                      Container(
+                        margin: const EdgeInsets.all(20),
+                      ),
+                      //TourTime
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'الأوقات المتاحة للجولات العقارية :',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Tajawal-b",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: TourTime,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
                       SizedBox(
                         height: 25,
                       ),
                       //submit button
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 90),
+                        padding: EdgeInsets.symmetric(horizontal: 110),
                         child: ElevatedButton(
                           onPressed: () async {
                             showDialog(

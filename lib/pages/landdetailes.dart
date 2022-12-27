@@ -477,6 +477,51 @@ class LandDetailes extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 102, bottom: 16),
+                                child: Text(
+                                  "الأوقات المتاحة للجولات العقارية",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Tajawal-m",
+                                  ),
+                                ),
+                              ),
+                        '${land.properties!.TourTime}' == ''
+                            ? Container(
+                              height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          ' لا يوجد أوقات متاحة محدده من قبل المالك !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                            )
+                            : Container(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                child: Text(
+                                  '${land.properties!.TourTime}',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Tajawal-l",
+                                  ),
+                                ),
+                              ),
+                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -530,7 +575,7 @@ class LandDetailes extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 315, bottom: 16),
+                              padding: EdgeInsets.only(right: 25, bottom: 16),
                               child: Text(
                                 'الموقع',
                                 style: TextStyle(
@@ -541,7 +586,7 @@ class LandDetailes extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
+                              padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
                               child: Text(
                                 '${land.properties!.Location}',
                                 textAlign: TextAlign.right,
@@ -586,60 +631,63 @@ class LandDetailes extends StatelessWidget {
                             SizedBox(
                               height: 30,
                               width: 30),
-                            ElevatedButton(
-                              child: Center(
-                                  child: Text(
-                                "حجز جولة عقارية",
-                                style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
-                              )),
-                              onPressed: () {
-                                if (FirebaseAuth.instance.currentUser == null) {
-                                  Fluttertoast.showToast(
-                                    msg: "عذرا لابد من تسجيل الدخول",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 5,
-                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                    textColor: Color.fromARGB(255, 252, 253, 255),
-                                    fontSize: 18.0,
-                                  );
-                                } else if (FirebaseAuth.instance.currentUser!.uid ==
-                                    '${land.properties!.User_id}') {
-                                  Fluttertoast.showToast(
-                                    msg: "أنت صاحب العقار بالفعل!",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 5,
-                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                    textColor: Color.fromARGB(255, 252, 253, 255),
-                                    fontSize: 18.0,
-                                  );
-                                } else if ('${land.properties!.images.length}' == '0') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => boookingPage(
-                                              property_id: '${land.properties!.property_id}',
-                                              user_id: '${land.properties!.User_id}',
-                                              Pimge:
-                                                  'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => boookingPage(
-                                              property_id: '${land.properties!.property_id}',
-                                              user_id: '${land.properties!.User_id}',
-                                              Pimge: '${land.properties!.images[0]}')));
-                                }
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27))),
+                            Container(
+                              margin: const EdgeInsets.only(left: 95, right: 95,  bottom: 25),
+                              child: ElevatedButton(
+                                child: Center(
+                                    child: Text(
+                                  "حجز جولة عقارية",
+                                  style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                )),
+                                onPressed: () {
+                                  if (FirebaseAuth.instance.currentUser == null) {
+                                    Fluttertoast.showToast(
+                                      msg: "عذرا لابد من تسجيل الدخول",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                      textColor: Color.fromARGB(255, 252, 253, 255),
+                                      fontSize: 18.0,
+                                    );
+                                  } else if (FirebaseAuth.instance.currentUser!.uid ==
+                                      '${land.properties!.User_id}') {
+                                    Fluttertoast.showToast(
+                                      msg: "أنت صاحب العقار بالفعل!",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                      textColor: Color.fromARGB(255, 252, 253, 255),
+                                      fontSize: 18.0,
+                                    );
+                                  } else if ('${land.properties!.images.length}' == '0') {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => boookingPage(
+                                                property_id: '${land.properties!.property_id}',
+                                                user_id: '${land.properties!.User_id}',
+                                                Pimge:
+                                                    'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => boookingPage(
+                                                property_id: '${land.properties!.property_id}',
+                                                user_id: '${land.properties!.User_id}',
+                                                Pimge: '${land.properties!.images[0]}')));
+                                  }
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(27))),
+                                ),
                               ),
                             ),
                           ],

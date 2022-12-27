@@ -636,6 +636,51 @@ class BuildingDetailes extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 102, bottom: 16),
+                                child: Text(
+                                  "الأوقات المتاحة للجولات العقارية",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Tajawal-m",
+                                  ),
+                                ),
+                              ),
+                        '${building.properties.TourTime}' == ''
+                            ? Container(
+                              height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          ' لا يوجد أوقات متاحة محدده من قبل المالك !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                            )
+                            : Container(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                child: Text(
+                                  '${building.properties.TourTime}',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Tajawal-l",
+                                  ),
+                                ),
+                              ),
+                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -691,12 +736,13 @@ class BuildingDetailes extends StatelessWidget {
                                 ),
                               ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 315, bottom: 16),
+                              padding: EdgeInsets.only(right: 25, left: 25, bottom: 16),
                               child: Text(
                                 'الموقع',
+                                textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -705,8 +751,7 @@ class BuildingDetailes extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(
-                                  right: 5, left: 5, bottom: 16),
+                              padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
                               child: Text(
                                 '${building.properties.Location}',
                                 textAlign: TextAlign.right,

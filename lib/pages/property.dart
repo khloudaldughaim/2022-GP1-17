@@ -13,6 +13,7 @@ class Property {
   String Location;
   String type;
   String purpose;
+  String TourTime;
   
   Property({
     required this.property_id,
@@ -29,6 +30,7 @@ class Property {
     required this.Location,
     required this.type,
     required this.purpose,
+    required this.TourTime,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +49,7 @@ class Property {
       'description': description,
       'type': type,
       'purpose': purpose,
+      'TourTime': TourTime,
     };
   }
 
@@ -66,6 +69,7 @@ class Property {
       description: map['description'] ?? '',
       type: map['type'] ?? '',
       purpose: map['propertyUse'] ?? '',
+      TourTime: map['TourTime'] ?? '',
     );
   }
 }
