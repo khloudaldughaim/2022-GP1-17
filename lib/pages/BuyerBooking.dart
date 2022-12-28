@@ -23,6 +23,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:nozol_application/pages/ownerBooking.dart';
 
 class BuyerBooking extends StatefulWidget {
   // const myBookings({super.key});
@@ -73,7 +74,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
         }
         await Navigator.push(
           context,
-          MaterialPageRoute<void>(builder: (context) => HomePage()),
+          MaterialPageRoute<void>(builder: (context) => ownerBooking()),
         );
       },
     );
@@ -405,8 +406,15 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Text(" صاحب الحجز :   " +
-                                                  snapshot.data!.docs[index].data()['buyer_name']),
+                                              RegExp("[a-zA-Z]").hasMatch(snapshot.data!.docs[index]
+                                                      .data()['buyer_name'])
+                                                  ? Text("" +
+                                                      snapshot.data!.docs[index]
+                                                          .data()['buyer_name'] +
+                                                      "    : صاحب الحجز ")
+                                                  : Text(" صاحب الحجز :   " +
+                                                      snapshot.data!.docs[index]
+                                                          .data()['buyer_name']),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -655,8 +663,15 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            Text(" صاحب الحجز :   " +
-                                                snapshot.data!.docs[index].data()['buyer_name']),
+                                            RegExp("[a-zA-Z]").hasMatch(
+                                                    snapshot.data!.docs[index].data()['buyer_name'])
+                                                ? Text("" +
+                                                    snapshot.data!.docs[index]
+                                                        .data()['buyer_name'] +
+                                                    "    : صاحب الحجز ")
+                                                : Text(" صاحب الحجز :   " +
+                                                    snapshot.data!.docs[index]
+                                                        .data()['buyer_name']),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -819,7 +834,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                  RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
+                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
+                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -949,7 +966,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                  RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
+                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
+                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -1055,7 +1074,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                  RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
+                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
+                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -1157,7 +1178,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(" صاحب الإلغاء  :   " + (bookingModel.buyerName ?? "")),
+                  RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
+                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الإلغاء ")
+                      : Text(" صاحب الإلغاء :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),

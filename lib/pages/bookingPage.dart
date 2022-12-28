@@ -23,6 +23,7 @@ import 'buildingdetailes.dart';
 import 'filter.dart';
 import 'land.dart';
 import 'landdetailes.dart';
+import 'ownerBooking.dart';
 import 'villadetailes.dart';
 import 'mapPage.dart';
 import 'package:booking_calendar/booking_calendar.dart';
@@ -35,8 +36,7 @@ class boookingPage extends StatefulWidget {
   final String user_id;
 
   final String Pimge;
-  boookingPage(
-      {required this.property_id, required this.user_id, required this.Pimge});
+  boookingPage({required this.property_id, required this.user_id, required this.Pimge});
 
   //const boookingPage({Key? key, required Apartment Apartment}) : super(key: key);
   @override
@@ -84,9 +84,9 @@ class _BookingPagestate extends State<boookingPage> {
 
   @override
   void initState() {
-    super.initState();
     getCuser();
     initInfo();
+    super.initState();
   }
 
 ///////////////////////////////////////////////////////////////////////
@@ -98,30 +98,26 @@ class _BookingPagestate extends State<boookingPage> {
   TextEditingController body = TextEditingController();
 
   initInfo() async {
-    var androidInitialize =
-        const AndroidInitializationSettings("@mipmap/ic_launcher");
-    var initializationSettings =
-        InitializationSettings(android: androidInitialize);
+    var androidInitialize = const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings = InitializationSettings(android: androidInitialize);
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) async {
+      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
         final String? payload = notificationResponse.payload;
         if (notificationResponse.payload != null) {
           debugPrint('notification payload: $payload');
         }
         await Navigator.push(
           context,
-          MaterialPageRoute<void>(builder: (context) => BuyerBooking()),
+          MaterialPageRoute<void>(builder: (context) => ownerBooking()),
         );
       },
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("...................onMessage................");
-      print(
-          "onMessage: ${message.notification?.title}/${message.notification?.body}");
+      print("onMessage: ${message.notification?.title}/${message.notification?.body}");
 
       BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
           message.notification!.body.toString(),
@@ -129,8 +125,7 @@ class _BookingPagestate extends State<boookingPage> {
           contentTitle: message.notification!.title.toString(),
           htmlFormatContentTitle: true);
 
-      AndroidNotificationDetails androidPlatformChannelSpecifics =
-          AndroidNotificationDetails(
+      AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
         "dbfood",
         "dbfood",
         importance: Importance.high,
@@ -141,8 +136,8 @@ class _BookingPagestate extends State<boookingPage> {
 
       NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, platformChannelSpecifics,
+      await flutterLocalNotificationsPlugin.show(
+          0, message.notification?.title, message.notification?.body, platformChannelSpecifics,
           payload: message.data['body']);
     });
   }
@@ -168,7 +163,7 @@ class _BookingPagestate extends State<boookingPage> {
             },
             "notification": <String, dynamic>{
               "title": "حجز جديد",
-              "body": "وصلك حجز جديد" ,
+              "body": "وصلك حجز جديد",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -185,8 +180,7 @@ class _BookingPagestate extends State<boookingPage> {
 
 ///////////////////////////////////////////////////////////////////////
   Future<void> getCuser() async {
-    var docs =
-        await FirebaseFirestore.instance.collection('Standard_user').get();
+    var docs = await FirebaseFirestore.instance.collection('Standard_user').get();
     curentuserInfo = [];
     nameB = TextEditingController();
     phoneB = TextEditingController();
@@ -249,12 +243,10 @@ class _BookingPagestate extends State<boookingPage> {
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
                                 controller: nameB,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   labelText: "الأسم :",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-b"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
                                   prefixIcon: Icon(
                                     Icons.person,
                                     color: Color.fromARGB(255, 127, 166, 233),
@@ -263,8 +255,8 @@ class _BookingPagestate extends State<boookingPage> {
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
                                   if (value!.length < 2) {
@@ -290,8 +282,7 @@ class _BookingPagestate extends State<boookingPage> {
 
                                 decoration: InputDecoration(
                                   labelText: "التاريخ  :",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-b"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
                                   prefixIcon: Icon(
                                     Icons.calendar_month,
                                     color: Color.fromARGB(255, 127, 166, 233),
@@ -300,8 +291,8 @@ class _BookingPagestate extends State<boookingPage> {
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
 
                                 onChanged: (val) {
@@ -311,8 +302,7 @@ class _BookingPagestate extends State<boookingPage> {
                                   _valueToValidate1 = val ?? '';
                                   return null;
                                 },
-                                onSaved: (val) =>
-                                    () => _valueSaved1 = val ?? '',
+                                onSaved: (val) => () => _valueSaved1 = val ?? '',
                               ),
                             )),
                         SizedBox(
@@ -324,12 +314,10 @@ class _BookingPagestate extends State<boookingPage> {
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
                                 controller: emailB,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   labelText: "الإيميل  :",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-b"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
                                   prefixIcon: Icon(
                                     Icons.email,
                                     color: Color.fromARGB(255, 127, 166, 233),
@@ -338,12 +326,11 @@ class _BookingPagestate extends State<boookingPage> {
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty ||
-                                      emailB.text.trim() == "") {
+                                  if (value!.isEmpty || emailB.text.trim() == "") {
                                     return "البريد الألكتروني مطلوب ";
                                   } else if (!RegExp(
                                           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
@@ -362,12 +349,10 @@ class _BookingPagestate extends State<boookingPage> {
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
                                 controller: phoneB,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   labelText: "رقم الجوال  :",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-b"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
                                   prefixIcon: Icon(
                                     Icons.phone_android,
                                     color: Color.fromARGB(255, 127, 166, 233),
@@ -376,12 +361,11 @@ class _BookingPagestate extends State<boookingPage> {
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
-                                  if (!RegExp(
-                                          r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
+                                  if (!RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
                                       .hasMatch(value!)) {
                                     return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
                                   }
@@ -412,8 +396,7 @@ class _BookingPagestate extends State<boookingPage> {
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82)),
+                                            color: Color.fromARGB(255, 73, 75, 82)),
                                         textAlign: TextAlign.start,
                                       ),
                                       value: booktype.inperson,
@@ -421,8 +404,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       onChanged: (booktype? value) {
                                         setState(() {
                                           _book = value;
-                                          if (_book == booktype.inperson)
-                                            Booktype = 'حضورية';
+                                          if (_book == booktype.inperson) Booktype = 'حضورية';
                                         });
                                       },
                                     ),
@@ -438,8 +420,7 @@ class _BookingPagestate extends State<boookingPage> {
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             fontFamily: "Tajawal-m",
-                                            color: Color.fromARGB(
-                                                255, 73, 75, 82)),
+                                            color: Color.fromARGB(255, 73, 75, 82)),
                                         textAlign: TextAlign.start,
                                       ),
                                       value: booktype.online,
@@ -447,8 +428,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       onChanged: (booktype? value) {
                                         setState(() {
                                           _book = value;
-                                          if (_book == booktype.online)
-                                            Booktype = 'افتراضية';
+                                          if (_book == booktype.online) Booktype = 'افتراضية';
                                         });
                                       },
                                     ),
@@ -482,8 +462,7 @@ class _BookingPagestate extends State<boookingPage> {
                                             style: TextStyle(
                                                 fontSize: 18.0,
                                                 fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
+                                                color: Color.fromARGB(255, 73, 75, 82)),
                                             textAlign: TextAlign.start,
                                           ),
                                           value: videoChat.zoom,
@@ -491,8 +470,7 @@ class _BookingPagestate extends State<boookingPage> {
                                           onChanged: (videoChat? value) {
                                             setState(() {
                                               video = value;
-                                              if (video == videoChat.zoom)
-                                                videochat = 'Zoom';
+                                              if (video == videoChat.zoom) videochat = 'Zoom';
                                             });
                                           },
                                         ),
@@ -502,8 +480,7 @@ class _BookingPagestate extends State<boookingPage> {
                                             style: TextStyle(
                                                 fontSize: 18.0,
                                                 fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
+                                                color: Color.fromARGB(255, 73, 75, 82)),
                                             textAlign: TextAlign.start,
                                           ),
                                           value: videoChat.skype,
@@ -511,8 +488,7 @@ class _BookingPagestate extends State<boookingPage> {
                                           onChanged: (videoChat? value) {
                                             setState(() {
                                               video = value;
-                                              if (video == videoChat.skype)
-                                                videochat = 'Skype';
+                                              if (video == videoChat.skype) videochat = 'Skype';
                                             });
                                           },
                                         ),
@@ -522,8 +498,7 @@ class _BookingPagestate extends State<boookingPage> {
                                             style: TextStyle(
                                                 fontSize: 18.0,
                                                 fontFamily: "Tajawal-m",
-                                                color: Color.fromARGB(
-                                                    255, 73, 75, 82)),
+                                                color: Color.fromARGB(255, 73, 75, 82)),
                                             textAlign: TextAlign.start,
                                           ),
                                           value: videoChat.googelduo,
@@ -554,8 +529,7 @@ class _BookingPagestate extends State<boookingPage> {
                               FirebaseFirestore.instance
                                   .collection('bookings')
                                   .where('Date', isEqualTo: datecontrolar.text)
-                                  .where("owner_id",
-                                      isEqualTo: '${widget.user_id}')
+                                  .where("owner_id", isEqualTo: '${widget.user_id}')
                                   .where("isAvailable", isEqualTo: false)
                                   .get()
                                   .then((element) async {
@@ -598,31 +572,25 @@ class _BookingPagestate extends State<boookingPage> {
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 2,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 248, 249, 250),
+                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                      textColor: Color.fromARGB(255, 248, 249, 250),
                                       fontSize: 18.0,
                                     );
-                                    var Otoken = await FirebaseFirestore
-                                        .instance
+                                    var Otoken = await FirebaseFirestore.instance
                                         .collection('Standard_user')
                                         .doc('${widget.user_id}')
                                         .get();
                                     print('IT WORKS !!!! ' + Otoken['token']);
 
-                                    sendPushMessege(
-                                        Otoken['token'], Otoken['name']);
+                                    sendPushMessege(Otoken['token'], Otoken['name']);
                                   } catch (e, stack) {
                                     Fluttertoast.showToast(
                                       msg: "هناك خطأ ما",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 5,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 252, 253, 255),
+                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                      textColor: Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
                                   }
@@ -632,10 +600,8 @@ class _BookingPagestate extends State<boookingPage> {
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 5,
-                                    backgroundColor:
-                                        Color.fromARGB(255, 127, 166, 233),
-                                    textColor:
-                                        Color.fromARGB(255, 252, 253, 255),
+                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                    textColor: Color.fromARGB(255, 252, 253, 255),
                                     fontSize: 18.0,
                                   );
                                 }
@@ -643,19 +609,16 @@ class _BookingPagestate extends State<boookingPage> {
                             }
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 127, 166, 233)),
+                            backgroundColor:
+                                MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
                             padding: MaterialStateProperty.all(
-                                EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 10)),
+                                EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
                             shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27))),
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
                           ),
                           child: Text(
                             "حجز",
-                            style: TextStyle(
-                                fontSize: 18, fontFamily: "Tajawal-m"),
+                            style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
                           ),
                         ),
                       ]))))
