@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:nozol_application/Chat/ChatBody.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -24,7 +26,8 @@ class VillaDetailes extends StatelessWidget {
   Widget build(BuildContext context) {
     String ThereIsPool;
     bool pool = villa.pool;
-    LatLng mapLatLng = LatLng(villa.properties.latitude, villa.properties.longitude);
+    LatLng mapLatLng =
+        LatLng(villa.properties.latitude, villa.properties.longitude);
 
     if (pool == true) {
       ThereIsPool = 'نعم';
@@ -81,8 +84,8 @@ class VillaDetailes extends StatelessWidget {
                       )
                     : BoxDecoration(
                         image: DecorationImage(
-                          image:
-                              NetworkImage('${villa.properties.images[0]}'), //'${villa.images[0]}'
+                          image: NetworkImage(
+                              '${villa.properties.images[0]}'), //'${villa.images[0]}'
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -124,7 +127,8 @@ class VillaDetailes extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.flag_outlined,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -142,7 +146,8 @@ class VillaDetailes extends StatelessWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.favorite_outline,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
+                                  color:
+                                      const Color.fromARGB(255, 127, 166, 233),
                                   size: 28,
                                 ),
                               ),
@@ -239,7 +244,8 @@ class VillaDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(
+                        left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -356,13 +362,15 @@ class VillaDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        color:
+                                            Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -374,14 +382,28 @@ class VillaDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233)
+                                          .withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
-                                      child: Icon(
-                                        Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
-                                        size: 20,
+                                      child: IconButton( // Here the Massage button
+                                        icon: Icon(
+                                          Icons.message,
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
+                                          size: 20,
+                                        ),
+                                        onPressed: ()  {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ChatBody(
+                                                        Freind_id:
+                                                            '${villa.properties.User_id}',
+                                                      )));
+                                        },
                                       ),
                                     ),
                                   ),
@@ -395,11 +417,14 @@ class VillaDetailes extends StatelessWidget {
                                         .doc('${villa.properties.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
-                                      if (snapshot.connectionState == ConnectionState.done) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
                                         Map<String, dynamic> user =
-                                            snapshot.data!.data() as Map<String, dynamic>;
+                                            snapshot.data!.data()
+                                                as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -448,12 +473,15 @@ class VillaDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
+                            padding: EdgeInsets.only(
+                                right: 24, left: 24, bottom: 24),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                PropInfo(Icons.chair, '${villa.number_of_livingRooms}', 'صالة'),
-                                PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
+                                PropInfo(Icons.chair,
+                                    '${villa.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}',
+                                    'مصعد'),
                                 PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
                               ],
                             )),
@@ -469,7 +497,8 @@ class VillaDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(
+                              right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -565,7 +594,8 @@ class VillaDetailes extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 232, bottom: 16),
+                                    padding:
+                                        EdgeInsets.only(left: 232, bottom: 16),
                                     child: Text(
                                       "معلومات إضافية",
                                       style: TextStyle(
@@ -576,7 +606,8 @@ class VillaDetailes extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
+                                    padding: EdgeInsets.only(
+                                        right: 5, left: 5, bottom: 16),
                                     child: Text(
                                       '${villa.properties.description}',
                                       textAlign: TextAlign.right,
@@ -590,23 +621,24 @@ class VillaDetailes extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 102, bottom: 16),
-                                child: Text(
-                                  "الأوقات المتاحة للجولات العقارية",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-m",
-                                  ),
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 102, bottom: 16),
+                          child: Text(
+                            "الأوقات المتاحة للجولات العقارية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
                         '${villa.properties.TourTime}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
-                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
@@ -618,23 +650,24 @@ class VillaDetailes extends StatelessWidget {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
-                                child: Text(
-                                  '${villa.properties.TourTime}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      right: 25, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${villa.properties.TourTime}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -651,7 +684,8 @@ class VillaDetailes extends StatelessWidget {
                                 height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
-                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
@@ -667,15 +701,18 @@ class VillaDetailes extends StatelessWidget {
                             : Container(
                                 height: 200,
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 24, right: 20),
                                   child: ListView.separated(
                                     physics: BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     // shrinkWrap: true,
-                                    separatorBuilder: (context, index) => SizedBox(width: 20),
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 20),
                                     itemCount: villa.properties.images.length,
                                     itemBuilder: (context, index) => InkWell(
-                                      onTap: () => openGallery(villa.properties.images, context),
+                                      onTap: () => openGallery(
+                                          villa.properties.images, context),
                                       borderRadius: BorderRadius.circular(15),
                                       child: Image.network(
                                         villa.properties.images[index],
@@ -699,7 +736,8 @@ class VillaDetailes extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                              padding: EdgeInsets.only(
+                                  right: 25, left: 5, bottom: 16),
                               child: Text(
                                 '${villa.properties.Location}',
                                 textAlign: TextAlign.right,
@@ -727,60 +765,68 @@ class VillaDetailes extends StatelessWidget {
                                       myLocationEnabled: true,
                                       initialCameraPosition: CameraPosition(
                                           target: mapLatLng, zoom: 14),
-                                           markers: {
-                                            Marker(
-                                              markerId:
-                                                  const MarkerId("marker1"),
-                                                icon: BitmapDescriptor.defaultMarker,
-                                                visible: true,
-                                                position: mapLatLng
-                                            )
-                                          },
+                                      markers: {
+                                        Marker(
+                                            markerId: const MarkerId("marker1"),
+                                            icon:
+                                                BitmapDescriptor.defaultMarker,
+                                            visible: true,
+                                            position: mapLatLng)
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 30,
-                              width: 30),
+                            SizedBox(height: 30, width: 30),
                             Container(
-                              margin: const EdgeInsets.only(left: 95, right: 95,  bottom: 25),
+                              margin: const EdgeInsets.only(
+                                  left: 95, right: 95, bottom: 25),
                               child: ElevatedButton(
                                 child: Center(
                                     child: Text(
                                   "حجز جولة عقارية",
-                                  style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                  style: TextStyle(
+                                      fontSize: 18, fontFamily: "Tajawal-m"),
                                 )),
                                 onPressed: () {
-                                  if (FirebaseAuth.instance.currentUser == null) {
+                                  if (FirebaseAuth.instance.currentUser ==
+                                      null) {
                                     Fluttertoast.showToast(
                                       msg: "عذرا لابد من تسجيل الدخول",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 5,
-                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                      textColor: Color.fromARGB(255, 252, 253, 255),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 127, 166, 233),
+                                      textColor:
+                                          Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
-                                  } else if (FirebaseAuth.instance.currentUser!.uid ==
+                                  } else if (FirebaseAuth
+                                          .instance.currentUser!.uid ==
                                       '${villa.properties.User_id}') {
                                     Fluttertoast.showToast(
                                       msg: "أنت صاحب العقار بالفعل!",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 5,
-                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                      textColor: Color.fromARGB(255, 252, 253, 255),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 127, 166, 233),
+                                      textColor:
+                                          Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
-                                  } else if ('${villa.properties.images.length}' == '0') {
+                                  } else if ('${villa.properties.images.length}' ==
+                                      '0') {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${villa.properties.property_id}',
-                                                user_id: '${villa.properties.User_id}',
+                                                property_id:
+                                                    '${villa.properties.property_id}',
+                                                user_id:
+                                                    '${villa.properties.User_id}',
                                                 Pimge:
                                                     'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
                                   } else {
@@ -788,18 +834,24 @@ class VillaDetailes extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${villa.properties.property_id}',
-                                                user_id: '${villa.properties.User_id}',
-                                                Pimge: '${villa.properties.images[0]}')));
+                                                property_id:
+                                                    '${villa.properties.property_id}',
+                                                user_id:
+                                                    '${villa.properties.User_id}',
+                                                Pimge:
+                                                    '${villa.properties.images[0]}')));
                                   }
                                 },
                                 style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 127, 166, 233)),
                                   padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(27))),
+                                      EdgeInsets.symmetric(
+                                          horizontal: 40, vertical: 10)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(27))),
                                 ),
                               ),
                             ),
@@ -854,7 +906,8 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) =>
+    Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),

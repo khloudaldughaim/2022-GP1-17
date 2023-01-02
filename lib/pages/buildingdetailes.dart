@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/Chat/ChatBody.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -345,10 +346,23 @@ class BuildingDetailes extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
-                                      child: Icon(
-                                        Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
-                                        size: 20,
+                                      child: IconButton( // Here the Massage button
+                                        icon: Icon(
+                                          Icons.message,
+                                          color: Color.fromARGB(
+                                              255, 127, 166, 233),
+                                          size: 20,
+                                        ),
+                                        onPressed: ()  {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ChatBody(
+                                                        Freind_id:
+                                                            '${building.properties.User_id}',
+                                                      )));
+                                        },
                                       ),
                                     ),
                                   ),
