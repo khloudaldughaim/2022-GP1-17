@@ -14,6 +14,7 @@ import 'package:uuid/uuid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../registration/log_in.dart';
+import 'homapage.dart';
 import 'my-property.dart';
 
 class AddPage extends StatefulWidget {
@@ -224,7 +225,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           _formKey.currentState!.save();
           property_id = Uuid().v4();
           if (type1 == 'فيلا') {
-            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
+            await FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -248,13 +249,14 @@ class MyCustomFormState extends State<MyCustomForm> {
               'description': description.text,
               "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
+            await FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
+            setState((){HomePageState.isDownloadedData = false;});
           }
 
           if (type1 == 'شقة') {
-            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
+            await FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -277,13 +279,14 @@ class MyCustomFormState extends State<MyCustomForm> {
               'description': description.text,
               "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
+            await FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
+            setState((){HomePageState.isDownloadedData = false;});
           }
 
           if (type1 == 'ارض') {
-            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
+            await FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -300,13 +303,14 @@ class MyCustomFormState extends State<MyCustomForm> {
               'description': description.text,
               "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
+            await FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
+            setState((){HomePageState.isDownloadedData = false;});
           }
 
           if (type1 == 'عمارة') {
-            FirebaseFirestore.instance.collection('properties').doc(property_id).set({
+            await FirebaseFirestore.instance.collection('properties').doc(property_id).set({
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
@@ -327,9 +331,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               'description': description.text,
               "TourTime": TourTime.text
             });
-            FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
+            await FirebaseFirestore.instance.collection('Standard_user').doc(User_id).update({
               "ArrayOfProperty": FieldValue.arrayUnion([property_id])
             });
+            setState((){HomePageState.isDownloadedData = false;});
           }
 
           Fluttertoast.showToast(

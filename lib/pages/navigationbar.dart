@@ -30,10 +30,10 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: PageStorage(
-          child: currentScreen,
-          bucket: bucket,
-        ),
+        body: currentScreen, //PageStorage(
+        //   child: currentScreen,
+        //   bucket: bucket,
+        // ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: Color.fromARGB(255, 127, 166, 233),

@@ -59,8 +59,7 @@ class HomePageState extends State<HomePage> {
   static String? MaxSpace;
   static String? MinPrice;
   static String? MaxPrice;
-
-
+  static bool isDownloadedData = false ;
 
 ////////////////////////////////////////////////////////////
  void initState() {
@@ -215,7 +214,8 @@ void requestPremission() async {
       return Text("لا يوجد بيانات");
     }
     if (snapshot.hasData) {
-      if (allData.isEmpty) {
+      if (allData.isEmpty || !isDownloadedData) {
+        isDownloadedData = true;
         _handleData(snapshot.data!);
       }
       return handleListItems(allData);
