@@ -8,11 +8,17 @@ import 'package:nozol_application/Chat/ChatBody.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-
+import 'dart:convert';
 import 'bookingPage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
+import 'package:http/http.dart' as http;
+
+fetchdata(String url) async {
+  http.Response response = await http.get(Uri.parse(url));
+  return response.body;
+}
 
 class BuildingDetailes extends StatelessWidget {
   final Building building;
@@ -25,6 +31,9 @@ class BuildingDetailes extends StatelessWidget {
     String ThereIsPool;
     bool pool = building.pool;
     LatLng mapLatLng = LatLng(building.properties.latitude, building.properties.longitude);
+    String url = '';
+    var data;
+    List<dynamic> output;
 
     if (pool == true) {
       ThereIsPool = 'نعم';
@@ -346,21 +355,19 @@ class BuildingDetailes extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
-                                      child: IconButton( // Here the Massage button
+                                      child: IconButton(
+                                        // Here the Massage button
                                         icon: Icon(
                                           Icons.message,
-                                          color: Color.fromARGB(
-                                              255, 127, 166, 233),
+                                          color: Color.fromARGB(255, 127, 166, 233),
                                           size: 20,
                                         ),
-                                        onPressed: ()  {
+                                        onPressed: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ChatBody(
-                                                        Freind_id:
-                                                            '${building.properties.User_id}',
+                                                  builder: (context) => ChatBody(
+                                                        Freind_id: '${building.properties.User_id}',
                                                       )));
                                         },
                                       ),
@@ -570,20 +577,20 @@ class BuildingDetailes extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 102, bottom: 16),
-                                child: Text(
-                                  "الأوقات المتاحة للجولات العقارية",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-m",
-                                  ),
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 102, bottom: 16),
+                          child: Text(
+                            "الأوقات المتاحة للجولات العقارية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
                         '${building.properties.TourTime}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -598,23 +605,23 @@ class BuildingDetailes extends StatelessWidget {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
-                                child: Text(
-                                  '${building.properties.TourTime}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${building.properties.TourTime}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -705,25 +712,46 @@ class BuildingDetailes extends StatelessWidget {
                                       },
                                       myLocationButtonEnabled: true,
                                       myLocationEnabled: true,
-                                      initialCameraPosition: CameraPosition(
-                                          target: mapLatLng, zoom: 14),
-                                           markers: {
-                                            Marker(
-                                              markerId:
-                                                  const MarkerId("marker1"),
-                                                icon: BitmapDescriptor.defaultMarker,
-                                                visible: true,
-                                                position: mapLatLng
-                                            )
-                                          },
+                                      initialCameraPosition:
+                                          CameraPosition(target: mapLatLng, zoom: 14),
+                                      markers: {
+                                        Marker(
+                                            markerId: const MarkerId("marker1"),
+                                            icon: BitmapDescriptor.defaultMarker,
+                                            visible: true,
+                                            position: mapLatLng)
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 30,
-                              width: 30),
+                            SizedBox(height: 30, width: 30),
+                            Container(
+                              margin: const EdgeInsets.only(left: 95, right: 95, bottom: 25),
+                              child: ElevatedButton(
+                                child: Center(
+                                    child: Text(
+                                  " اظهر عقارات مشابهة ",
+                                  style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                )),
+                                onPressed: () async {
+                                  url = 'http://10.0.2.2:5000/api?query=' +
+                                      building.properties.property_id;
+                                  data = await fetchdata(url);
+                                  var decoded = jsonDecode(data);
+                                  output = decoded;
+                                  print(output);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(27))),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 30, width: 30),
                             Container(
                               margin: const EdgeInsets.only(left: 95, right: 95, bottom: 25),
                               child: ElevatedButton(
