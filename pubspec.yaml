@@ -65,6 +65,7 @@ dependencies:
   firebase_messaging: ^14.0.0
   flutter_local_notifications: ^13.0.0
   cached_network_image: ^3.2.3
+  flutter_keyboard_visibility: ^5.4.0
 
 
 dev_dependencies:

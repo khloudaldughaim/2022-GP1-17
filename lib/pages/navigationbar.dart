@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:nozol_application/pages/add.dart';
 import 'package:nozol_application/pages/chats.dart';
 import 'package:nozol_application/pages/favorite.dart';
@@ -27,6 +30,27 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = HomePage();
 
+  // New Lines
+  late StreamSubscription<bool> keyboardSubscription;
+  late bool isKeyboardOpening;
+
+  @override
+  void initState() {
+    super.initState();
+
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    // Query
+    print('Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
+    isKeyboardOpening = keyboardVisibilityController.isVisible;
+    // Subscribe
+    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
+      print('Keyboard visibility update. Is visible: $visible');
+      setState(() {
+        isKeyboardOpening = visible;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,16 +58,18 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
         //   child: currentScreen,
         //   bucket: bucket,
         // ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          backgroundColor: Color.fromARGB(255, 127, 166, 233),
-          onPressed: () {
-            setState(() {
-              currentScreen = AddPage();
-              currentIndex = 3;
-            });
-          },
-        ),
+        floatingActionButton: isKeyboardOpening
+            ? Container()
+            : FloatingActionButton(
+                child: Icon(Icons.add),
+                backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                onPressed: () {
+                  setState(() {
+                    currentScreen = AddPage();
+                    currentIndex = 3;
+                  });
+                },
+              ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),
