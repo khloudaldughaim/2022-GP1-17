@@ -1,24 +1,4 @@
 from flask import Flask, jsonify, request
-# import json
-
-# #declared an empty variable for reassignment
-# response = ''
-
-# #creating the instance of our flask application
-# app = Flask(__name__)
-
-# #route to entertain our post and get request from flutter app
-# @app.route('/api', methods = ['GET', 'POST'])
-# def returnascii():
-#     d = {}
-#     pID = str(request.args['query'])
-#     answer = str(pID + " sara")
-#     d['output'] = answer
-#     return d
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
 import firebase_admin 
 from firebase_admin import credentials 
 from firebase_admin import firestore 
@@ -36,8 +16,6 @@ app = Flask(__name__)
 
 cred = credentials.Certificate("nozol-aadd3-firebase-adminsdk-ozhbi-a894fc47c1.json") 
 firebase_admin.initialize_app(cred) 
-
-
 
 
 
@@ -81,8 +59,6 @@ def get_recommendations():
   sim = model(property_id) 
   return sim
   
-
-
 
 
 
