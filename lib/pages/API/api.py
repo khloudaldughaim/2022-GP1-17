@@ -1,24 +1,5 @@
 from flask import Flask, jsonify, request
 # import json
-
-# #declared an empty variable for reassignment
-# response = ''
-
-# #creating the instance of our flask application
-# app = Flask(__name__)
-
-# #route to entertain our post and get request from flutter app
-# @app.route('/api', methods = ['GET', 'POST'])
-# def returnascii():
-#     d = {}
-#     pID = str(request.args['query'])
-#     answer = str(pID + " sara")
-#     d['output'] = answer
-#     return d
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
 import firebase_admin 
 from firebase_admin import credentials 
 from firebase_admin import firestore 
@@ -62,7 +43,7 @@ def model (id):
    encoded_data = pd.get_dummies(df_sklearn, columns = ['city', 'type']) 
    property1 = encoded_data.loc[encoded_data['property_id'] == id] 
    encoded_data = encoded_data[encoded_data.property_id != id]
-   nbrs = NearestNeighbors(n_neighbors=3, algorithm='ball_tree').fit(encoded_data.drop(columns=['property_id'])) 
+   nbrs = NearestNeighbors(n_neighbors=3).fit(encoded_data.drop(columns=['property_id'])) 
    distances , indices = nbrs.kneighbors(property1.drop(columns=['property_id'])) 
    distance = distances[0] 
    simelrty = []
@@ -76,7 +57,7 @@ def model (id):
    avr = sum/3
 
    print(avr)
-   
+
    ss = [] 
    for i in indices :
      print(type(encoded_data.iloc[i]['property_id']))
