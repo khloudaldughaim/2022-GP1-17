@@ -22,8 +22,6 @@ firebase_admin.initialize_app(cred)
 
 
 
-
-
 def model (id): 
   #ger all properties 
    db = firestore.client() 
@@ -81,8 +79,6 @@ def get_recommendations():
   sim = model(property_id) 
   return sim
   
-
-
 
 
 
