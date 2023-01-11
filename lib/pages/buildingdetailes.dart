@@ -1,11 +1,16 @@
-// ignore_for_file: unnecessary_string_interpolations
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/Chat/ChatBody.dart';
+import 'package:nozol_application/pages/apartment.dart';
+import 'package:nozol_application/pages/apartmentdetailes.dart';
 import 'package:nozol_application/pages/building.dart';
+import 'package:nozol_application/pages/homapage.dart';
+import 'package:nozol_application/pages/land.dart';
+import 'package:nozol_application/pages/landdetailes.dart';
+import 'package:nozol_application/pages/villa.dart';
+import 'package:nozol_application/pages/villadetailes.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'dart:convert';
@@ -20,20 +25,39 @@ fetchdata(String url) async {
   return response.body;
 }
 
-class BuildingDetailes extends StatelessWidget {
+class BuildingDetailes extends StatefulWidget {
   final Building building;
-  GoogleMapController? controller;
 
   BuildingDetailes({required this.building});
 
   @override
+  State<BuildingDetailes> createState() => _BuildingDetailesState();
+}
+
+class _BuildingDetailesState extends State<BuildingDetailes> {
+  GoogleMapController? controller;
+  String url = '';
+  var data;
+  List<dynamic> output = [] ;
+
+  void initState() {
+    super.initState();
+    SimilarPropFunction();
+  }
+
+  void SimilarPropFunction() async {
+  url = 'http://10.0.2.2:5000/api?query=' + widget.building.properties.property_id;
+  data = await fetchdata(url);
+  var decoded = jsonDecode(data);
+  output = decoded;
+  setState((){});
+  }
+
+  @override
   Widget build(BuildContext context) {
     String ThereIsPool;
-    bool pool = building.pool;
-    LatLng mapLatLng = LatLng(building.properties.latitude, building.properties.longitude);
-    String url = '';
-    var data;
-    List<dynamic> output;
+    bool pool = widget.building.pool;
+    LatLng mapLatLng = LatLng(widget.building.properties.latitude, widget.building.properties.longitude);
 
     if (pool == true) {
       ThereIsPool = 'نعم';
@@ -42,7 +66,7 @@ class BuildingDetailes extends StatelessWidget {
     }
 
     String ThereIsElevator;
-    bool elevator = building.elevator;
+    bool elevator = widget.building.elevator;
 
     if (elevator == true) {
       ThereIsElevator = 'نعم';
@@ -51,7 +75,7 @@ class BuildingDetailes extends StatelessWidget {
     }
 
     String Classification;
-    String classification = building.properties.classification;
+    String classification = widget.building.properties.classification;
 
     if (classification == 'للإيجار') {
       Classification = 'للإيجار';
@@ -66,12 +90,12 @@ class BuildingDetailes extends StatelessWidget {
         body: Stack(
           children: [
             Hero(
-              tag: '${building.properties.images.length}' == '0'
+              tag: '${widget.building.properties.images.length}' == '0'
                   ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
-                  : building.properties.images[0], //'${building.images[0]}'
+                  : widget.building.properties.images[0], //'${building.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${building.properties.images.length}' == '0'
+                decoration: '${widget.building.properties.images.length}' == '0'
                     ? BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
@@ -82,12 +106,12 @@ class BuildingDetailes extends StatelessWidget {
                     : BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                              '${building.properties.images[0]}'), //'${villa.images[0]}'
+                              '${widget.building.properties.images[0]}'), //'${villa.images[0]}'
                           fit: BoxFit.cover,
                         ),
                       ),
                 child: Container(
-                  decoration: '${building.properties.images.length}' == '0'
+                  decoration: '${widget.building.properties.images.length}' == '0'
                       ? BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
@@ -98,7 +122,7 @@ class BuildingDetailes extends StatelessWidget {
                       : BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                                '${building.properties.images[0]}'), //'${villa.images[0]}'
+                                '${widget.building.properties.images[0]}'), //'${villa.images[0]}'
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -215,7 +239,7 @@ class BuildingDetailes extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 4),
                       child: Center(
                         child: Text(
-                          '${building.properties.type} ${Classification}',
+                          '${widget.building.properties.type} ${Classification}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -234,7 +258,7 @@ class BuildingDetailes extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${building.properties.type}',
+                          '${widget.building.properties.type}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,
@@ -243,7 +267,7 @@ class BuildingDetailes extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'ريال ${building.properties.price}',
+                          'ريال ${widget.building.properties.price}',
                           style: TextStyle(
                             height: 2,
                             color: Colors.white,
@@ -271,7 +295,7 @@ class BuildingDetailes extends StatelessWidget {
                               width: 4,
                             ),
                             Text(
-                              '${building.properties.neighborhood} ، ${building.properties.city}',
+                              '${widget.building.properties.neighborhood} ، ${widget.building.properties.city}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -289,7 +313,7 @@ class BuildingDetailes extends StatelessWidget {
                               size: 20,
                             ),
                             Text(
-                              '${building.properties.space} متر ² ',
+                              '${widget.building.properties.space} متر ² ',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -367,7 +391,7 @@ class BuildingDetailes extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) => ChatBody(
-                                                        Freind_id: '${building.properties.User_id}',
+                                                        Freind_id: '${widget.building.properties.User_id}',
                                                       )));
                                         },
                                       ),
@@ -380,7 +404,7 @@ class BuildingDetailes extends StatelessWidget {
                                   FutureBuilder<DocumentSnapshot>(
                                     future: FirebaseFirestore.instance
                                         .collection('Standard_user')
-                                        .doc('${building.properties.User_id}')
+                                        .doc('${widget.building.properties.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
                                       if (snapshot.connectionState == ConnectionState.done) {
@@ -463,7 +487,7 @@ class BuildingDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${building.property_age} سنة',
+                                    '${widget.building.property_age} سنة',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -491,7 +515,7 @@ class BuildingDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${building.number_of_apartment}',
+                                    '${widget.building.number_of_apartment}',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -519,7 +543,7 @@ class BuildingDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${building.number_of_floor}',
+                                    '${widget.building.number_of_floor}',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -546,7 +570,7 @@ class BuildingDetailes extends StatelessWidget {
                             ],
                           ),
                         ),
-                        '${building.properties.description}' == ''
+                        '${widget.building.properties.description}' == ''
                             ? Container()
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -565,7 +589,7 @@ class BuildingDetailes extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
                                     child: Text(
-                                      '${building.properties.description}',
+                                      '${widget.building.properties.description}',
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                         fontSize: 16,
@@ -588,7 +612,7 @@ class BuildingDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${building.properties.TourTime}' == ''
+                        '${widget.building.properties.TourTime}' == ''
                             ? Container(
                                 height: 50,
                                 alignment: Alignment.center,
@@ -611,7 +635,7 @@ class BuildingDetailes extends StatelessWidget {
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
                                   child: Text(
-                                    '${building.properties.TourTime}',
+                                    '${widget.building.properties.TourTime}',
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -633,7 +657,7 @@ class BuildingDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${building.properties.images.length}' == '0'
+                        '${widget.building.properties.images.length}' == '0'
                             ? Container(
                                 height: 50,
                                 alignment: Alignment.center,
@@ -660,12 +684,12 @@ class BuildingDetailes extends StatelessWidget {
                                     scrollDirection: Axis.horizontal,
                                     // shrinkWrap: true,
                                     separatorBuilder: (context, index) => SizedBox(width: 20),
-                                    itemCount: building.properties.images.length,
+                                    itemCount: widget.building.properties.images.length,
                                     itemBuilder: (context, index) => InkWell(
-                                      onTap: () => openGallery(building.properties.images, context),
+                                      onTap: () => openGallery(widget.building.properties.images, context),
                                       borderRadius: BorderRadius.circular(15),
                                       child: Image.network(
-                                        building.properties.images[index],
+                                        widget.building.properties.images[index],
                                       ),
                                     ),
                                   ),
@@ -688,7 +712,7 @@ class BuildingDetailes extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
                               child: Text(
-                                '${building.properties.Location}',
+                                '${widget.building.properties.Location}',
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 16,
@@ -726,32 +750,9 @@ class BuildingDetailes extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 30, width: 30),
-                            Container(
-                              margin: const EdgeInsets.only(left: 95, right: 95, bottom: 25),
-                              child: ElevatedButton(
-                                child: Center(
-                                    child: Text(
-                                  " اظهر عقارات مشابهة ",
-                                  style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
-                                )),
-                                onPressed: () async {
-                                  url = 'http://10.0.2.2:5000/api?query=' +
-                                      building.properties.property_id;
-                                  data = await fetchdata(url);
-                                  var decoded = jsonDecode(data);
-                                  output = decoded;
-                                  print(output);
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(27))),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 30, width: 30),
+                            SizedBox(
+                              height: 30,
+                              width: 30),
                             Container(
                               margin: const EdgeInsets.only(left: 95, right: 95, bottom: 25),
                               child: ElevatedButton(
@@ -772,7 +773,7 @@ class BuildingDetailes extends StatelessWidget {
                                       fontSize: 18.0,
                                     );
                                   } else if (FirebaseAuth.instance.currentUser!.uid ==
-                                      '${building.properties.User_id}') {
+                                      '${widget.building.properties.User_id}') {
                                     Fluttertoast.showToast(
                                       msg: "أنت صاحب العقار بالفعل!",
                                       toastLength: Toast.LENGTH_SHORT,
@@ -782,13 +783,13 @@ class BuildingDetailes extends StatelessWidget {
                                       textColor: Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
-                                  } else if ('${building.properties.images.length}' == '0') {
+                                  } else if ('${widget.building.properties.images.length}' == '0') {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${building.properties.property_id}',
-                                                user_id: '${building.properties.User_id}',
+                                                property_id: '${widget.building.properties.property_id}',
+                                                user_id: '${widget.building.properties.User_id}',
                                                 Pimge:
                                                     'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
                                   } else {
@@ -796,9 +797,9 @@ class BuildingDetailes extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${building.properties.property_id}',
-                                                user_id: '${building.properties.User_id}',
-                                                Pimge: '${building.properties.images[0]}')));
+                                                property_id: '${widget.building.properties.property_id}',
+                                                user_id: '${widget.building.properties.User_id}',
+                                                Pimge: '${widget.building.properties.images[0]}')));
                                   }
                                 },
                                 style: ButtonStyle(
@@ -812,6 +813,59 @@ class BuildingDetailes extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 235, bottom: 16),
+                          child: Text(
+                            "عقارات مشابهة",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 210,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              // shrinkWrap: true,
+                              separatorBuilder: (context, index) => SizedBox(width: 20),
+                              itemCount: output.length,
+                              itemBuilder: (context, index) {
+                                for(int i = 0 ; i < HomePageState.allData.length ; i++){
+                                  if(HomePageState.allData[i] is Villa){
+                                    Villa villa = HomePageState.allData[i] as Villa ;
+                                    if(villa.properties.property_id == output[index]){
+                                      return _buildVillaItem(HomePageState.allData[i] as Villa, context);
+                                    }
+                                  }
+                                  if(HomePageState.allData[i] is Apartment){
+                                    Apartment apartment = HomePageState.allData[i] as Apartment ;
+                                    if(apartment.properties.property_id == output[index]){
+                                      return _buildApartmentItem(HomePageState.allData[i] as Apartment, context);
+                                    }
+                                  }
+                                  if(HomePageState.allData[i] is Building){
+                                    Building building = HomePageState.allData[i] as Building ;
+                                    if(building.properties.property_id == output[index]){
+                                      return _buildBuildingItem(HomePageState.allData[i] as Building, context);
+                                    }
+                                  }
+                                  if(HomePageState.allData[i] is Land){
+                                    Land land = HomePageState.allData[i] as Land ;
+                                    if(land.properties!.property_id == output[index]){
+                                      return _buildLandItem(HomePageState.allData[i] as Land, context);
+                                    }
+                                  }
+                                }
+                                return Container();
+                              }
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -918,4 +972,339 @@ class _GalleryWidgetState extends State<GalleryWidget> {
       ),
     );
   }
+}
+
+///////////////////////homepagecode//////////////////////
+Widget _buildVillaItem(Villa villa, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.hotel,
+        color: Colors.white,
+        size: 18,
+      ),
+      SizedBox(
+        width: 3,
+      ),
+      Text(
+        '${villa.number_of_room}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.bathtub,
+        color: Colors.white,
+        size: 15,
+      ),
+      SizedBox(
+        width: 1,
+      ),
+      Text(
+        '${villa.number_of_bathroom}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${villa.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+    );
+  }, rowItem, villa);
+}
+
+Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.hotel,
+        color: Colors.white,
+        size: 18,
+      ),
+      SizedBox(
+        width: 3,
+      ),
+      Text(
+        '${apartment.number_of_room}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.bathtub,
+        color: Colors.white,
+        size: 15,
+      ),
+      SizedBox(
+        width: 1,
+      ),
+      Text(
+        '${apartment.number_of_bathroom}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${apartment.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+    );
+  }, rowItem, apartment);
+}
+
+Widget _buildBuildingItem(Building building, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${building.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+    );
+  }, rowItem, building);
+}
+
+Widget _buildLandItem(Land land, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${land.properties!.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
+    );
+  }, rowItem, land);
+}
+
+Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Card(
+      margin: EdgeInsets.fromLTRB(12, 12, 12, 6),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+        Radius.circular(15),
+      )),
+      child: Container(
+        height: 210,
+        width : 250,
+        decoration: '${type.properties.images.length}' == '0'
+            ? BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                    fit: BoxFit.cover),
+              )
+            : BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
+              ),
+        child: Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.5, 1.0],
+              colors: [
+                Colors.transparent,
+                Colors.black.withOpacity(0.7),
+              ],
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                  border: Border.all(
+                    width: 1.5,
+                    color: Color.fromARGB(255, 127, 166, 233),
+                  ),
+                ),
+                width: 85,
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: Center(
+                    child: '${type.properties.classification}' == 'للإيجار'
+                        ? Text(
+                            '${type.properties.type} للإيجار',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          )
+                        : Text(
+                            '${type.properties.type} للبيع',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          )),
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${type.properties.type}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Tajawal-l",
+                        ),
+                      ),
+                      Text(
+                        'ريال ${type.properties.price}',
+                        style: TextStyle(
+                          height: 2,
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Tajawal-l",
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_city,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            '${type.properties.city}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-l",
+                            ),
+                          ),
+                        ],
+                      ),
+                      rowItem,
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

@@ -1,30 +1,63 @@
-// ignore_for_file: unnecessary_string_interpolations, prefer_const_constructors, curly_braces_in_flow_control_structures, sort_child_properties_last
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/Chat/ChatBody.dart';
 import 'package:nozol_application/pages/apartment.dart';
+import 'package:nozol_application/pages/building.dart';
+import 'package:nozol_application/pages/buildingdetailes.dart';
+import 'package:nozol_application/pages/homapage.dart';
+import 'package:nozol_application/pages/land.dart';
+import 'package:nozol_application/pages/landdetailes.dart';
+import 'package:nozol_application/pages/villa.dart';
+import 'package:nozol_application/pages/villadetailes.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'bookingPage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
+fetchdata(String url) async {
+  http.Response response = await http.get(Uri.parse(url));
+  return response.body;
+}
 
-class ApartmentDetailes extends StatelessWidget {
+class ApartmentDetailes extends StatefulWidget {
   final Apartment apartment;
-  GoogleMapController? controller;
 
   ApartmentDetailes({required this.apartment});
 
   @override
+  State<ApartmentDetailes> createState() => _ApartmentDetailesState();
+}
+
+class _ApartmentDetailesState extends State<ApartmentDetailes> {
+  GoogleMapController? controller;
+  String url = '';
+  var data;
+  List<dynamic> output = [] ;
+
+  void initState() {
+    super.initState();
+    SimilarPropFunction();
+  }
+
+  void SimilarPropFunction() async {
+  url = 'http://10.0.2.2:5000/api?query=' + widget.apartment.properties.property_id;
+  data = await fetchdata(url);
+  var decoded = jsonDecode(data);
+  output = decoded;
+  setState((){});
+  }
+
+  @override
   Widget build(BuildContext context) {
     String ThereIsElevator;
-    bool elevator = apartment.elevator;
-    LatLng mapLatLng = LatLng(apartment.properties.latitude, apartment.properties.longitude);
+    bool elevator = widget.apartment.elevator;
+    LatLng mapLatLng = LatLng(widget.apartment.properties.latitude, widget.apartment.properties.longitude);
 
     if (elevator == true) {
       ThereIsElevator = 'نعم';
@@ -33,7 +66,7 @@ class ApartmentDetailes extends StatelessWidget {
     }
 
     String Classification;
-    String classification = apartment.properties.classification;
+    String classification = widget.apartment.properties.classification;
 
     if (classification == 'للإيجار') {
       Classification = 'للإيجار';
@@ -48,12 +81,12 @@ class ApartmentDetailes extends StatelessWidget {
         body: Stack(
           children: [
             Hero(
-              tag: '${apartment.properties.images.length}' == '0'
+              tag: '${widget.apartment.properties.images.length}' == '0'
                   ? 'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'
-                  : apartment.properties.images[0], //'${apartment.images[0]}'
+                  : widget.apartment.properties.images[0], //'${apartment.images[0]}'
               child: Container(
                 height: size.height * 0.5,
-                decoration: '${apartment.properties.images.length}' == '0'
+                decoration: '${widget.apartment.properties.images.length}' == '0'
                     ? BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
@@ -64,7 +97,7 @@ class ApartmentDetailes extends StatelessWidget {
                     : BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                              '${apartment.properties.images[0]}'), //'${villa.images[0]}'
+                              '${widget.apartment.properties.images[0]}'), //'${villa.images[0]}'
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -180,7 +213,7 @@ class ApartmentDetailes extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 4),
                       child: Center(
                         child: Text(
-                          '${apartment.properties.type} ${Classification}',
+                          '${widget.apartment.properties.type} ${Classification}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -199,7 +232,7 @@ class ApartmentDetailes extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${apartment.properties.type}',
+                          '${widget.apartment.properties.type}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,
@@ -208,7 +241,7 @@ class ApartmentDetailes extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'ريال ${apartment.properties.price}',
+                          'ريال ${widget.apartment.properties.price}',
                           style: TextStyle(
                             height: 2,
                             color: Colors.white,
@@ -236,7 +269,7 @@ class ApartmentDetailes extends StatelessWidget {
                               width: 4,
                             ),
                             Text(
-                              '${apartment.properties.neighborhood} ، ${apartment.properties.city}',
+                              '${widget.apartment.properties.neighborhood} ، ${widget.apartment.properties.city}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -257,7 +290,7 @@ class ApartmentDetailes extends StatelessWidget {
                               width: 3,
                             ),
                             Text(
-                              '${apartment.number_of_room}',
+                              '${widget.apartment.number_of_room}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -277,7 +310,7 @@ class ApartmentDetailes extends StatelessWidget {
                               width: 1,
                             ),
                             Text(
-                              '${apartment.number_of_bathroom}',
+                              '${widget.apartment.number_of_bathroom}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -294,7 +327,7 @@ class ApartmentDetailes extends StatelessWidget {
                               size: 20,
                             ),
                             Text(
-                              '${apartment.properties.space} متر ² ',
+                              '${widget.apartment.properties.space} متر ² ',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -374,7 +407,7 @@ class ApartmentDetailes extends StatelessWidget {
                                                   builder: (context) =>
                                                       ChatBody(
                                                         Freind_id:
-                                                            '${apartment.properties.User_id}',
+                                                            '${widget.apartment.properties.User_id}',
                                                       )));
                                         },
                                       ),
@@ -387,7 +420,7 @@ class ApartmentDetailes extends StatelessWidget {
                                   FutureBuilder<DocumentSnapshot>(
                                     future: FirebaseFirestore.instance
                                         .collection('Standard_user')
-                                        .doc('${apartment.properties.User_id}')
+                                        .doc('${widget.apartment.properties.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
                                       if (snapshot.connectionState == ConnectionState.done) {
@@ -447,7 +480,7 @@ class ApartmentDetailes extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                PropInfo(Icons.chair, '${apartment.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.chair, '${widget.apartment.number_of_livingRooms}', 'صالة'),
                                 PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
                               ],
                             )),
@@ -470,7 +503,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${apartment.property_age} سنة',
+                                    '${widget.apartment.property_age} سنة',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -498,7 +531,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${apartment.in_floor}',
+                                    '${widget.apartment.in_floor}',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -526,7 +559,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${apartment.number_of_floor}',
+                                    '${widget.apartment.number_of_floor}',
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -553,7 +586,7 @@ class ApartmentDetailes extends StatelessWidget {
                             ],
                           ),
                         ),
-                        '${apartment.properties.description}' == ''
+                        '${widget.apartment.properties.description}' == ''
                             ? Container()
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -572,7 +605,7 @@ class ApartmentDetailes extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
                                     child: Text(
-                                      '${apartment.properties.description}',
+                                      '${widget.apartment.properties.description}',
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                         fontSize: 16,
@@ -595,7 +628,7 @@ class ApartmentDetailes extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                        '${apartment.properties.TourTime}' == ''
+                        '${widget.apartment.properties.TourTime}' == ''
                             ? Container(
                               height: 50,
                                 alignment: Alignment.center,
@@ -618,7 +651,7 @@ class ApartmentDetailes extends StatelessWidget {
                               child: Padding(
                                 padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
                                 child: Text(
-                                  '${apartment.properties.TourTime}',
+                                  '${widget.apartment.properties.TourTime}',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     fontSize: 16,
@@ -640,7 +673,7 @@ class ApartmentDetailes extends StatelessWidget {
                             ),
                           ),
                         ),
-                        '${apartment.properties.images.length}' == '0'
+                        '${widget.apartment.properties.images.length}' == '0'
                             ? Container(
                                 height: 50,
                                 alignment: Alignment.center,
@@ -667,13 +700,13 @@ class ApartmentDetailes extends StatelessWidget {
                                     scrollDirection: Axis.horizontal,
                                     // shrinkWrap: true,
                                     separatorBuilder: (context, index) => SizedBox(width: 20),
-                                    itemCount: apartment.properties.images.length,
+                                    itemCount: widget.apartment.properties.images.length,
                                     itemBuilder: (context, index) => InkWell(
                                       onTap: () =>
-                                          openGallery(apartment.properties.images, context),
+                                          openGallery(widget.apartment.properties.images, context),
                                       borderRadius: BorderRadius.circular(15),
                                       child: Image.network(
-                                        apartment.properties.images[index],
+                                        widget.apartment.properties.images[index],
                                       ),
                                     ),
                                   ),
@@ -696,7 +729,7 @@ class ApartmentDetailes extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
                               child: Text(
-                                '${apartment.properties.Location}',
+                                '${widget.apartment.properties.Location}',
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 16,
@@ -759,7 +792,7 @@ class ApartmentDetailes extends StatelessWidget {
                                       fontSize: 18.0,
                                     );
                                   } else if (FirebaseAuth.instance.currentUser!.uid ==
-                                      '${apartment.properties.User_id}') {
+                                      '${widget.apartment.properties.User_id}') {
                                     Fluttertoast.showToast(
                                       msg: "أنت صاحب العقار بالفعل!",
                                       toastLength: Toast.LENGTH_SHORT,
@@ -769,13 +802,13 @@ class ApartmentDetailes extends StatelessWidget {
                                       textColor: Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
-                                  } else if ('${apartment.properties.images.length}' == '0') {
+                                  } else if ('${widget.apartment.properties.images.length}' == '0') {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${apartment.properties.property_id}',
-                                                user_id: '${apartment.properties.User_id}',
+                                                property_id: '${widget.apartment.properties.property_id}',
+                                                user_id: '${widget.apartment.properties.User_id}',
                                                 Pimge:
                                                     'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
                                   } else {
@@ -783,9 +816,9 @@ class ApartmentDetailes extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${apartment.properties.property_id}',
-                                                user_id: '${apartment.properties.User_id}',
-                                                Pimge: '${apartment.properties.images[0]}')));
+                                                property_id: '${widget.apartment.properties.property_id}',
+                                                user_id: '${widget.apartment.properties.User_id}',
+                                                Pimge: '${widget.apartment.properties.images[0]}')));
                                   }
                                 },
                                 style: ButtonStyle(
@@ -802,6 +835,59 @@ class ApartmentDetailes extends StatelessWidget {
                               height: 30,
                             ),
                           ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 235, bottom: 16),
+                          child: Text(
+                            "عقارات مشابهة",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 210,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              // shrinkWrap: true,
+                              separatorBuilder: (context, index) => SizedBox(width: 20),
+                              itemCount: output.length,
+                              itemBuilder: (context, index) {
+                                for(int i = 0 ; i < HomePageState.allData.length ; i++){
+                                  if(HomePageState.allData[i] is Villa){
+                                    Villa villa = HomePageState.allData[i] as Villa ;
+                                    if(villa.properties.property_id == output[index]){
+                                      return _buildVillaItem(HomePageState.allData[i] as Villa, context);
+                                    }
+                                  }
+                                  if(HomePageState.allData[i] is Apartment){
+                                    Apartment apartment = HomePageState.allData[i] as Apartment ;
+                                    if(apartment.properties.property_id == output[index]){
+                                      return _buildApartmentItem(HomePageState.allData[i] as Apartment, context);
+                                    }
+                                  }
+                                  if(HomePageState.allData[i] is Building){
+                                    Building building = HomePageState.allData[i] as Building ;
+                                    if(building.properties.property_id == output[index]){
+                                      return _buildBuildingItem(HomePageState.allData[i] as Building, context);
+                                    }
+                                  }
+                                  if(HomePageState.allData[i] is Land){
+                                    Land land = HomePageState.allData[i] as Land ;
+                                    if(land.properties!.property_id == output[index]){
+                                      return _buildLandItem(HomePageState.allData[i] as Land, context);
+                                    }
+                                  }
+                                }
+                                return Container();
+                              }
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -908,4 +994,339 @@ class _GalleryWidgetState extends State<GalleryWidget> {
       ),
     );
   }
+}
+
+///////////////////////homepagecode//////////////////////
+Widget _buildVillaItem(Villa villa, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.hotel,
+        color: Colors.white,
+        size: 18,
+      ),
+      SizedBox(
+        width: 3,
+      ),
+      Text(
+        '${villa.number_of_room}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.bathtub,
+        color: Colors.white,
+        size: 15,
+      ),
+      SizedBox(
+        width: 1,
+      ),
+      Text(
+        '${villa.number_of_bathroom}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${villa.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+    );
+  }, rowItem, villa);
+}
+
+Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.hotel,
+        color: Colors.white,
+        size: 18,
+      ),
+      SizedBox(
+        width: 3,
+      ),
+      Text(
+        '${apartment.number_of_room}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.bathtub,
+        color: Colors.white,
+        size: 15,
+      ),
+      SizedBox(
+        width: 1,
+      ),
+      Text(
+        '${apartment.number_of_bathroom}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${apartment.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+    );
+  }, rowItem, apartment);
+}
+
+Widget _buildBuildingItem(Building building, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${building.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+    );
+  }, rowItem, building);
+}
+
+Widget _buildLandItem(Land land, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${land.properties!.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
+    );
+  }, rowItem, land);
+}
+
+Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Card(
+      margin: EdgeInsets.fromLTRB(12, 12, 12, 6),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+        Radius.circular(15),
+      )),
+      child: Container(
+        height: 210,
+        width : 250,
+        decoration: '${type.properties.images.length}' == '0'
+            ? BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                    fit: BoxFit.cover),
+              )
+            : BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
+              ),
+        child: Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.5, 1.0],
+              colors: [
+                Colors.transparent,
+                Colors.black.withOpacity(0.7),
+              ],
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                  border: Border.all(
+                    width: 1.5,
+                    color: Color.fromARGB(255, 127, 166, 233),
+                  ),
+                ),
+                width: 85,
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: Center(
+                    child: '${type.properties.classification}' == 'للإيجار'
+                        ? Text(
+                            '${type.properties.type} للإيجار',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          )
+                        : Text(
+                            '${type.properties.type} للبيع',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          )),
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${type.properties.type}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Tajawal-l",
+                        ),
+                      ),
+                      Text(
+                        'ريال ${type.properties.price}',
+                        style: TextStyle(
+                          height: 2,
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Tajawal-l",
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_city,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            '${type.properties.city}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-l",
+                            ),
+                          ),
+                        ],
+                      ),
+                      rowItem,
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
