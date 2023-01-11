@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:nozol_application/Chat/SingleMessage.dart';
+import 'package:nozol_application/pages/chats.dart';
 import 'MessageTextField.dart';
 
 class ChatBody extends StatefulWidget {
@@ -23,6 +24,7 @@ class _ChatBodyState extends State<ChatBody> {
   void initState() {
     super.initState();
     FriendName();
+    saveToken();
   }
 
   String Name = " ";
@@ -37,10 +39,21 @@ class _ChatBodyState extends State<ChatBody> {
     setState(() {});
   }
 
+  void saveToken() async { // futuer 
+    await FirebaseFirestore.instance
+        .collection("Standard_user")
+        .doc(curentId)
+        .update({'token': ''});
+        setState(() {
+          
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 138, 174, 222),
         title: Row(
           children: [
@@ -64,6 +77,19 @@ class _ChatBodyState extends State<ChatBody> {
             )
           ],
         ),
+        actions: [Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                 Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+            ),],
       ),
       body: Column(
         children: [
