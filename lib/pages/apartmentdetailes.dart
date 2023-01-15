@@ -38,7 +38,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
   GoogleMapController? controller;
   String url = '';
   var data;
-  List<dynamic> output = [] ;
+  List<dynamic> output = [];
 
   void initState() {
     super.initState();
@@ -46,18 +46,19 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
   }
 
   void SimilarPropFunction() async {
-  url = 'http://10.0.2.2:5000/api?query=' + widget.apartment.properties.property_id;
-  data = await fetchdata(url);
-  var decoded = jsonDecode(data);
-  output = decoded;
-  setState((){});
+    url = 'http://10.0.2.2:5000/api?query=' + widget.apartment.properties.property_id;
+    data = await fetchdata(url);
+    var decoded = jsonDecode(data);
+    output = decoded;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     String ThereIsElevator;
     bool elevator = widget.apartment.elevator;
-    LatLng mapLatLng = LatLng(widget.apartment.properties.latitude, widget.apartment.properties.longitude);
+    LatLng mapLatLng =
+        LatLng(widget.apartment.properties.latitude, widget.apartment.properties.longitude);
 
     if (elevator == true) {
       ThereIsElevator = 'نعم';
@@ -393,19 +394,18 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
-                                      child: IconButton( // Here the Massage button
+                                      child: IconButton(
+                                        // Here the Massage button
                                         icon: Icon(
                                           Icons.message,
-                                          color: Color.fromARGB(
-                                              255, 127, 166, 233),
+                                          color: Color.fromARGB(255, 127, 166, 233),
                                           size: 20,
                                         ),
-                                        onPressed: ()  {
+                                        onPressed: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ChatBody(
+                                                  builder: (context) => ChatBody(
                                                         Freind_id:
                                                             '${widget.apartment.properties.User_id}',
                                                       )));
@@ -480,7 +480,8 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                PropInfo(Icons.chair, '${widget.apartment.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.chair, '${widget.apartment.number_of_livingRooms}',
+                                    'صالة'),
                                 PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
                               ],
                             )),
@@ -617,20 +618,20 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 102, bottom: 16),
-                                child: Text(
-                                  "الأوقات المتاحة للجولات العقارية",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-m",
-                                  ),
-                                ),
-                              ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 102, bottom: 16),
+                          child: Text(
+                            "الأوقات المتاحة للجولات العقارية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
                         '${widget.apartment.properties.TourTime}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -645,23 +646,23 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
-                                child: Text(
-                                  '${widget.apartment.properties.TourTime}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${widget.apartment.properties.TourTime}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -753,27 +754,23 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                       },
                                       myLocationButtonEnabled: true,
                                       myLocationEnabled: true,
-                                      initialCameraPosition: CameraPosition(
-                                          target: mapLatLng, zoom: 14),
-                                           markers: {
-                                            Marker(
-                                              markerId:
-                                                  const MarkerId("marker1"),
-                                                icon: BitmapDescriptor.defaultMarker,
-                                                visible: true,
-                                                position: mapLatLng
-                                            )
-                                          },
+                                      initialCameraPosition:
+                                          CameraPosition(target: mapLatLng, zoom: 14),
+                                      markers: {
+                                        Marker(
+                                            markerId: const MarkerId("marker1"),
+                                            icon: BitmapDescriptor.defaultMarker,
+                                            visible: true,
+                                            position: mapLatLng)
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 30,
-                              width: 30),
+                            SizedBox(height: 30, width: 30),
                             Container(
-                              margin: const EdgeInsets.only(left: 95, right: 95,),
+                              margin: const EdgeInsets.only(left: 90, right: 90, bottom: 25),
                               child: ElevatedButton(
                                 child: Center(
                                     child: Text(
@@ -802,12 +799,14 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                       textColor: Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
-                                  } else if ('${widget.apartment.properties.images.length}' == '0') {
+                                  } else if ('${widget.apartment.properties.images.length}' ==
+                                      '0') {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${widget.apartment.properties.property_id}',
+                                                property_id:
+                                                    '${widget.apartment.properties.property_id}',
                                                 user_id: '${widget.apartment.properties.User_id}',
                                                 Pimge:
                                                     'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg')));
@@ -816,9 +815,11 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => boookingPage(
-                                                property_id: '${widget.apartment.properties.property_id}',
+                                                property_id:
+                                                    '${widget.apartment.properties.property_id}',
                                                 user_id: '${widget.apartment.properties.User_id}',
-                                                Pimge: '${widget.apartment.properties.images[0]}')));
+                                                Pimge:
+                                                    '${widget.apartment.properties.images[0]}')));
                                   }
                                 },
                                 style: ButtonStyle(
@@ -852,41 +853,44 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                             child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              // shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(width: 20),
-                              itemCount: output.length,
-                              itemBuilder: (context, index) {
-                                for(int i = 0 ; i < HomePageState.allData.length ; i++){
-                                  if(HomePageState.allData[i] is Villa){
-                                    Villa villa = HomePageState.allData[i] as Villa ;
-                                    if(villa.properties.property_id == output[index]){
-                                      return _buildVillaItem(HomePageState.allData[i] as Villa, context);
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                // shrinkWrap: true,
+                                separatorBuilder: (context, index) => SizedBox(width: 20),
+                                itemCount: output.length,
+                                itemBuilder: (context, index) {
+                                  for (int i = 0; i < HomePageState.allData.length; i++) {
+                                    if (HomePageState.allData[i] is Villa) {
+                                      Villa villa = HomePageState.allData[i] as Villa;
+                                      if (villa.properties.property_id == output[index]) {
+                                        return _buildVillaItem(
+                                            HomePageState.allData[i] as Villa, context);
+                                      }
+                                    }
+                                    if (HomePageState.allData[i] is Apartment) {
+                                      Apartment apartment = HomePageState.allData[i] as Apartment;
+                                      if (apartment.properties.property_id == output[index]) {
+                                        return _buildApartmentItem(
+                                            HomePageState.allData[i] as Apartment, context);
+                                      }
+                                    }
+                                    if (HomePageState.allData[i] is Building) {
+                                      Building building = HomePageState.allData[i] as Building;
+                                      if (building.properties.property_id == output[index]) {
+                                        return _buildBuildingItem(
+                                            HomePageState.allData[i] as Building, context);
+                                      }
+                                    }
+                                    if (HomePageState.allData[i] is Land) {
+                                      Land land = HomePageState.allData[i] as Land;
+                                      if (land.properties!.property_id == output[index]) {
+                                        return _buildLandItem(
+                                            HomePageState.allData[i] as Land, context);
+                                      }
                                     }
                                   }
-                                  if(HomePageState.allData[i] is Apartment){
-                                    Apartment apartment = HomePageState.allData[i] as Apartment ;
-                                    if(apartment.properties.property_id == output[index]){
-                                      return _buildApartmentItem(HomePageState.allData[i] as Apartment, context);
-                                    }
-                                  }
-                                  if(HomePageState.allData[i] is Building){
-                                    Building building = HomePageState.allData[i] as Building ;
-                                    if(building.properties.property_id == output[index]){
-                                      return _buildBuildingItem(HomePageState.allData[i] as Building, context);
-                                    }
-                                  }
-                                  if(HomePageState.allData[i] is Land){
-                                    Land land = HomePageState.allData[i] as Land ;
-                                    if(land.properties!.property_id == output[index]){
-                                      return _buildLandItem(HomePageState.allData[i] as Land, context);
-                                    }
-                                  }
-                                }
-                                return Container();
-                              }
-                            ),
+                                  return Container();
+                                }),
                           ),
                         ),
                       ],
@@ -1200,7 +1204,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
       )),
       child: Container(
         height: 210,
-        width : 250,
+        width: 250,
         decoration: '${type.properties.images.length}' == '0'
             ? BoxDecoration(
                 image: DecorationImage(

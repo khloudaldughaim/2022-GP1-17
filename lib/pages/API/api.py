@@ -38,8 +38,7 @@ def model (id):
    c2 = 'space' 
    df_sklearn[column] = MinMaxScaler().fit_transform(np.array(df_sklearn[column]).reshape(-1,1)) 
    df_sklearn[c2] = MinMaxScaler().fit_transform(np.array(df_sklearn[c2]).reshape(-1,1)) 
-   
-   # view normalized data   
+    
    encoded_data = pd.get_dummies(df_sklearn, columns = ['city', 'type']) 
    property1 = encoded_data.loc[encoded_data['property_id'] == id] 
    encoded_data = encoded_data[encoded_data.property_id != id]
@@ -82,4 +81,4 @@ def get_recommendations():
 
 
 if __name__ == "__main__":
-  app.run()
+  app.run(host="0.0.0.0")
