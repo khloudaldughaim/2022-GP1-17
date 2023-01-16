@@ -147,7 +147,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   List<XFile> selectedFiles = [];
 
   GoogleMapController? controller;
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   //String _currentAddress = "";
 
@@ -201,13 +200,6 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    final MarkerId mid = MarkerId("m1");
-    final Marker marker = Marker(
-      markerId: mid,
-      position: LatLng(24.774265, 46.738586),
-    );
-    markers[mid] = marker;
-
     GlobalKey<CSCPickerState> _cscPickerKey = GlobalKey();
     void getCities() async {}
 
@@ -973,42 +965,32 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     child: Stack(
                                       children: [
                                         GoogleMap(
-                                            onMapCreated: (mapController) {
-                                              controller = mapController;
-                                            },
-                                            myLocationButtonEnabled: true,
-                                            myLocationEnabled: true,
-                                            initialCameraPosition:
-                                                CameraPosition(target: mapLatLng, zoom: 14),
-                                            markers: Set<Marker>.of(markers.values),
-                                            // {
-                                            //   Marker(
-                                            //     markerId: const MarkerId("marker1"),
-                                            //     icon: BitmapDescriptor.defaultMarker,
-                                            //     visible: true,
-                                            //     draggable: true,
-                                            //     position: LatLng(24.774265, 46.738586),
-                                            //     onDrag: (place) async {
-                                            //       LatLng geolocation = await place;
+                                          onMapCreated: (mapController) {
+                                            controller = mapController;
+                                          },
+                                          myLocationButtonEnabled: true,
+                                          myLocationEnabled: true,
+                                          initialCameraPosition:
+                                              CameraPosition(target: mapLatLng, zoom: 14),
+                                          markers: {
+                                            Marker(
+                                              markerId: const MarkerId("marker1"),
+                                              icon: BitmapDescriptor.defaultMarker,
+                                              visible: true,
+                                              draggable: true,
+                                              position: LatLng(24.774265, 46.738586),
+                                              onDrag: (place) async {
+                                                LatLng geolocation = await place;
 
-                                            //       controller!.animateCamera(
-                                            //           CameraUpdate.newLatLng(geolocation));
-                                            //       setState(() {
-                                            //         mapLatLng = geolocation;
-                                            //       });
-                                            //     },
-                                            //   )
-                                            // },
-                                            onTap: (selectedPosition) {
-                                              final MarkerId ss = MarkerId("m1");
-                                              final Marker marker1 =
-                                                  Marker(markerId: ss, position: selectedPosition);
-                                              controller!.animateCamera(
-                                                  CameraUpdate.newLatLng(selectedPosition));
-                                              setState(() {
-                                                markers[mid] = marker1;
-                                              });
-                                            }),
+                                                controller!.animateCamera(
+                                                    CameraUpdate.newLatLng(geolocation));
+                                                setState(() {
+                                                  mapLatLng = geolocation;
+                                                });
+                                              },
+                                            )
+                                          },
+                                        ),
                                         Container(
                                             alignment: Alignment.bottomRight,
                                             margin: EdgeInsets.only(right: 6, bottom: 108),
@@ -1776,7 +1758,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        'الأوقات المتاحة للجولات العقارية :',
+                                        'الوقت الذي تفضله للجولات العقارية:',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
