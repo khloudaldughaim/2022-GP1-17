@@ -54,16 +54,20 @@ def model (id):
    for s in range(3):
      sum += simelrty[s]
    avr = sum/3
-
+   print(indices)
    print(avr)
 
    ss = [] 
+   test =0
    for i in indices :
      print(type(encoded_data.iloc[i]['property_id']))
      jsonObj = json.loads(encoded_data.iloc[i]['property_id'].to_json())
      print(type(jsonObj))
      for key, value in jsonObj.items(): 
-      ss.append(value)
+      if (simelrty[test]>80):
+       print(simelrty[test])
+       ss.append(value)
+      test+=1
 
    return json.dumps(ss)
 

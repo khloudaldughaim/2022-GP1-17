@@ -46,7 +46,8 @@ class _BuildingDetailesState extends State<BuildingDetailes> {
   }
 
   void SimilarPropFunction() async {
-    url = 'http://10.0.2.2:5000/api?query=' + widget.building.properties.property_id;
+    url = 'https://recommender-nozol.herokuapp.com/api?query=' +
+        widget.building.properties.property_id;
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded;

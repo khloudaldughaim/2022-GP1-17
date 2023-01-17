@@ -46,7 +46,8 @@ class _LandDetailesState extends State<LandDetailes> {
   }
 
   void SimilarPropFunction() async {
-    url = 'http://10.0.2.2:5000/api?query=' + widget.land.properties!.property_id;
+    url =
+        'https://recommender-nozol.herokuapp.com/api?query=' + widget.land.properties!.property_id;
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded;

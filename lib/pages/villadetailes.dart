@@ -47,7 +47,8 @@ class _VillaDetailesState extends State<VillaDetailes> {
   }
 
   void SimilarPropFunction() async {
-    url = 'http://10.0.2.2:5000/api?query=' + widget.villa.properties.property_id;
+    url =
+        'https://recommender-nozol.herokuapp.com/api?query=' + widget.villa.properties.property_id;
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded;
