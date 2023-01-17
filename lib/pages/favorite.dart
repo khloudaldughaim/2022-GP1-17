@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+
 
 class FavoritePage extends StatefulWidget {
    const FavoritePage({Key? key}) : super(key: key);
@@ -19,4 +21,6 @@ class _FavoritePageState extends State<FavoritePage> {
       ),
     );
   }
+
+
 }
