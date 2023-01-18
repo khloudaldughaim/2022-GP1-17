@@ -9,6 +9,7 @@ import 'package:nozol_application/pages/ownerBooking.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import '../registration/sign_up.dart';
 import 'BuyerBooking.dart';
+import 'edit-profile-info.dart';
 import 'my-property.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -27,28 +28,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   // bottom: const
-        //   title: Center(
-        //     child: Text("حسابي",
-        //         style: TextStyle(
-        //           fontSize: 17,
-        //           fontFamily: "Tajawal-m",
-        //         )),
-        //   ),
-        //   actions: [
-        //     new IconButton(
-        //         icon: new Icon(Icons.logout),
-        //         onPressed: () {
-        //           FirebaseAuth.instance.signOut().then((value) =>
-        //               Navigator.push(context,
-        //                   MaterialPageRoute(builder: (context) => LogIn())));
-        //         })
-        //   ],
-        //   toolbarHeight: 60,
-        //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
-        // ),
-
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 127, 166, 233),
           automaticallyImplyLeading: false,
@@ -94,177 +73,166 @@ class _ProfilePageState extends State<ProfilePage> {
                           return Column(
                             children: [
                               SizedBox(
-                                height: 30,
+                                height: 40,
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                child: Text(
-                                  "المعلومات الشخصية",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color.fromARGB(255, 127, 166, 233),
-                                    fontFamily: "Tajawal-b",
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: TextFormField(
-                                      controller: nameControlar,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.person,
-                                          color: Color.fromARGB(255, 127, 166, 233),
-                                        ),
-                                        suffixIcon: Icon(
-                                          Icons.edit,
-                                          color: Color.fromARGB(255, 127, 166, 233),
-                                        ),
-                                        fillColor: Color.fromARGB(255, 225, 225, 228),
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(66.0),
-                                            borderSide: const BorderSide(
-                                                width: 0, style: BorderStyle.none)),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.length < 2) {
-                                          return "الأسم يجب ان يكون خانتين فأكثر ";
-                                        }
-                                      },
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: TextFormField(
-                                      readOnly: true,
-                                      controller: emailcontrolar,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.email,
-                                          color: Color.fromARGB(255, 127, 166, 233),
-                                        ),
-                                        fillColor: Color.fromARGB(255, 225, 225, 228),
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(66.0),
-                                            borderSide: const BorderSide(
-                                                width: 0, style: BorderStyle.none)),
-                                      ),
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: TextFormField(
-                                      controller: phoneControlar,
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.phone_android,
-                                          color: Color.fromARGB(255, 127, 166, 233),
-                                        ),
-                                        suffixIcon: Icon(
-                                          Icons.edit,
-                                          color: Color.fromARGB(255, 127, 166, 233),
-                                        ),
-                                        fillColor: Color.fromARGB(255, 225, 225, 228),
-                                        filled: true,
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(66.0),
-                                            borderSide: const BorderSide(
-                                                width: 0, style: BorderStyle.none)),
-                                      ),
-                                      validator: (value) {
-                                        if (!RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
-                                            .hasMatch(value!)) {
-                                          return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
-                                        }
-                                      },
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 50,
-                              ),
-                              Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Container(
-                                    width: 350,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                      color: Colors.grey,
+
+                              Container(
+                                  width: 350,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(119, 110, 110, 110),
                                       width: 1,
-                                    ))),
-                                    child: Row(
-                                      children: [
-                                        IconButton(
+                                    ),
+                                    color: Color.fromARGB(33, 215, 215, 218),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => editProfile()));
+                                        },
+                                        icon: const Icon(Icons.keyboard_arrow_left),
+                                        color: Colors.grey,
+                                        iconSize: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 30,
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => editProfile()));
+                                          },
+                                          child: Text(
+                                            "تعديل المعلومات الشخصية",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                          )),
+                                      Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 137, 139, 145),
+                                      )
+                                    ],
+                                  )),
+
+                              SizedBox(
+                                height: 25,
+                              ),
+                              Container(
+                                  width: 350,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(119, 110, 110, 110),
+                                      width: 1,
+                                    ),
+                                    color: Color.fromARGB(33, 215, 215, 218),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => myProperty()));
+                                        },
+                                        icon: const Icon(Icons.keyboard_arrow_left),
+                                        color: Colors.grey,
+                                        iconSize: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 190,
+                                      ),
+                                      TextButton(
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) => myProperty()));
                                           },
-                                          icon: const Icon(Icons.keyboard_arrow_right),
-                                          color: Colors.grey,
-                                          iconSize: 30,
-                                        ),
-                                        SizedBox(
-                                          width: 210,
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => myProperty()));
-                                            },
-                                            child: Text(
-                                              "عقاراتي",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                fontFamily: "Tajawal-b",
-                                              ),
-                                            )),
-                                      ],
-                                    )),
-                              ),
+                                          child: Text(
+                                            "عقاراتي",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                          )),
+                                      Icon(
+                                        Icons.villa,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 137, 139, 145),
+                                      )
+                                    ],
+                                  )),
+
                               //this for booking page [start]
                               SizedBox(
                                 height: 25,
                               ),
-                              Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Container(
-                                    width: 350,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                      color: Colors.grey,
+                              Container(
+                                  width: 350,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(119, 110, 110, 110),
                                       width: 1,
-                                    ))),
-                                    child: Row(
-                                      children: [
-                                        IconButton(
+                                    ),
+                                    color: Color.fromARGB(33, 215, 215, 218),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          FirebaseFirestore.instance
+                                              .collection('bookings')
+                                              .where('owner_id', isEqualTo: curentId)
+                                              .get()
+                                              .then((querySnapshot) {
+                                            querySnapshot.docs.forEach((element) {
+                                              DateTime d = DateTime.parse(element["Date"]);
+                                              DateTime t = DateTime.now();
+                                              print(d);
+                                              bool s = d.isBefore(t);
+                                              print(s);
+                                              if (d.isBefore(t)) {
+                                                print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                                                FirebaseFirestore.instance
+                                                    .collection('bookings')
+                                                    .doc(element["book_id"])
+                                                    .update({
+                                                  "isExpired": true,
+                                                });
+                                              }
+                                            });
+                                          });
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => ownerBooking()));
+                                        },
+                                        icon: const Icon(Icons.keyboard_arrow_left),
+                                        color: Colors.grey,
+                                        iconSize: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 65,
+                                      ),
+                                      TextButton(
                                           onPressed: () {
                                             FirebaseFirestore.instance
                                                 .collection('bookings')
@@ -275,8 +243,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 DateTime d = DateTime.parse(element["Date"]);
                                                 DateTime t = DateTime.now();
                                                 print(d);
-                                                bool s = d.isBefore(t);
-                                                print(s);
                                                 if (d.isBefore(t)) {
                                                   print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                                                   FirebaseFirestore.instance
@@ -293,69 +259,76 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 MaterialPageRoute(
                                                     builder: (context) => ownerBooking()));
                                           },
-                                          icon: const Icon(Icons.keyboard_arrow_right),
-                                          color: Colors.grey,
-                                          iconSize: 30,
-                                        ),
-                                        SizedBox(
-                                          width: 90,
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              FirebaseFirestore.instance
-                                                  .collection('bookings')
-                                                  .where('owner_id', isEqualTo: curentId)
-                                                  .get()
-                                                  .then((querySnapshot) {
-                                                querySnapshot.docs.forEach((element) {
-                                                  DateTime d = DateTime.parse(element["Date"]);
-                                                  DateTime t = DateTime.now();
-                                                  print(d);
-                                                  if (d.isBefore(t)) {
-                                                    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                                                    FirebaseFirestore.instance
-                                                        .collection('bookings')
-                                                        .doc(element["book_id"])
-                                                        .update({
-                                                      "isExpired": true,
-                                                    });
-                                                  }
-                                                });
-                                              });
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => ownerBooking()));
-                                            },
-                                            child: Text(
-                                              "طلبات الجولات العقارية",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                fontFamily: "Tajawal-b",
-                                              ),
-                                            )),
-                                      ],
-                                    )),
-                              ),
+                                          child: Text(
+                                            "طلبات الجولات العقارية",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                          )),
+                                      Icon(
+                                        Icons.call_made,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 137, 139, 145),
+                                      )
+                                    ],
+                                  )),
+
                               //this for owner booking page [End]
                               SizedBox(
                                 height: 25,
                               ),
-                              Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Container(
-                                    width: 350,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                      color: Colors.grey,
+                              Container(
+                                  width: 350,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(119, 110, 110, 110),
                                       width: 1,
-                                    ))),
-                                    child: Row(
-                                      children: [
-                                        IconButton(
+                                    ),
+                                    color: Color.fromARGB(33, 215, 215, 218),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          FirebaseFirestore.instance
+                                              .collection('bookings')
+                                              .where('buyer_id', isEqualTo: curentId)
+                                              .get()
+                                              .then((querySnapshot) {
+                                            querySnapshot.docs.forEach((element) {
+                                              DateTime d = DateTime.parse(element["Date"]);
+                                              DateTime t = DateTime.now();
+                                              print(d);
+                                              bool s = d.isBefore(t);
+                                              print(s);
+                                              if (d.isBefore(t)) {
+                                                print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                                                FirebaseFirestore.instance
+                                                    .collection('bookings')
+                                                    .doc(element["book_id"])
+                                                    .update({
+                                                  "isExpired": true,
+                                                });
+                                              }
+                                            });
+                                          });
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => BuyerBooking()));
+                                        },
+                                        icon: const Icon(Icons.keyboard_arrow_left),
+                                        color: Colors.grey,
+                                        iconSize: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 180,
+                                      ),
+                                      TextButton(
                                           onPressed: () {
                                             FirebaseFirestore.instance
                                                 .collection('bookings')
@@ -366,10 +339,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 DateTime d = DateTime.parse(element["Date"]);
                                                 DateTime t = DateTime.now();
                                                 print(d);
-                                                bool s = d.isBefore(t);
-                                                print(s);
                                                 if (d.isBefore(t)) {
-                                                  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                                                  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                                                   FirebaseFirestore.instance
                                                       .collection('bookings')
                                                       .doc(element["book_id"])
@@ -384,101 +355,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 MaterialPageRoute(
                                                     builder: (context) => BuyerBooking()));
                                           },
-                                          icon: const Icon(Icons.keyboard_arrow_right),
-                                          color: Colors.grey,
-                                          iconSize: 30,
-                                        ),
-                                        SizedBox(
-                                          width: 210,
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              FirebaseFirestore.instance
-                                                  .collection('bookings')
-                                                  .where('buyer_id', isEqualTo: curentId)
-                                                  .get()
-                                                  .then((querySnapshot) {
-                                                querySnapshot.docs.forEach((element) {
-                                                  DateTime d = DateTime.parse(element["Date"]);
-                                                  DateTime t = DateTime.now();
-                                                  print(d);
-                                                  if (d.isBefore(t)) {
-                                                    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                                                    FirebaseFirestore.instance
-                                                        .collection('bookings')
-                                                        .doc(element["book_id"])
-                                                        .update({
-                                                      "isExpired": true,
-                                                    });
-                                                  }
-                                                });
-                                              });
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => BuyerBooking()));
-                                            },
-                                            child: Text(
-                                              "حجوزاتي",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                fontFamily: "Tajawal-b",
-                                              ),
-                                            )),
-                                      ],
-                                    )),
-                              ),
+                                          child: Text(
+                                            "حجوزاتي",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                          )),
+                                      Icon(
+                                        Icons.calendar_month,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 137, 139, 145),
+                                      )
+                                    ],
+                                  )),
+
                               //this for buyer booking page [End]
                               SizedBox(
                                 height: 120,
-                              ),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  if (profileformkey.currentState!.validate()) {
-                                    try {
-                                      FirebaseFirestore.instance
-                                          .collection('Standard_user')
-                                          .doc(curentId)
-                                          .update({
-                                        'name': nameControlar.text,
-                                        'phoneNumber': phoneControlar.text,
-                                      });
-
-                                      Fluttertoast.showToast(
-                                        msg: "تم التحديث بنجاح",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 2,
-                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                        textColor: Color.fromARGB(255, 248, 249, 250),
-                                        fontSize: 18.0,
-                                      );
-                                    } catch (e, stack) {
-                                      Fluttertoast.showToast(
-                                        msg: "هناك خطأ ما",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 5,
-                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                        textColor: Color.fromARGB(255, 252, 253, 255),
-                                        fontSize: 18.0,
-                                      );
-                                    }
-                                  }
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(27))),
-                                ),
-                                child: Text(
-                                  "حفظ التغيرات",
-                                  style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
-                                ),
                               ),
                             ],
                           );

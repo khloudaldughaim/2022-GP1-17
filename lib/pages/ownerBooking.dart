@@ -247,8 +247,7 @@ class _myBookingsState extends State<ownerBooking> {
                         padding: EdgeInsets.only(right: 20.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => NavigationBarPage()));
+                            Navigator.pop(context);
                           },
                           child: Icon(
                             Icons.arrow_forward_ios,
