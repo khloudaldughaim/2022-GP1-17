@@ -542,7 +542,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       "Date": datecontrolar.text,
                                       "property_id": '${widget.property_id}',
                                       "buyer_id": curentId,
-                                      "buyer_name": nameB.text,
+                                     "buyer_name": nameB.text,
                                       "buyer_email": emailB.text,
                                       "buyer_phone": phoneB.text,
                                       "book_type": Booktype,

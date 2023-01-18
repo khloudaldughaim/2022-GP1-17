@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,10 +25,31 @@ class _MessageTextFieldState extends State<MessageTextField> {
   late FirebaseAuth auth = FirebaseAuth.instance;
   late User? user = auth.currentUser;
   late String curentId = user!.uid;
+   late StreamSubscription streamSub;
 
   void initState() {
     super.initState();
     initInfo();
+     streamSub = FirebaseFirestore.instance
+        .collection('Standard_user')
+        .doc(curentId)
+        .collection('messages')
+        .doc(widget.friendId)
+        .snapshots()
+        .listen((event) {
+      print("Listening Function");
+      event.reference.update({
+        "count_messages_unseen": 0,
+        "is_show_last_message": true,
+      });
+    });
+  }
+
+  void dispose() {
+    // TODO: implement dispose
+   streamSub.cancel();
+      super.dispose();
+
   }
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -159,7 +181,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                     .collection('Standard_user')
                     .doc(curentId)
                     .get();
-
+////////////Current user ////////////
                 await FirebaseFirestore.instance
                     .collection('Standard_user')
                     .doc(curentId)
@@ -173,16 +195,21 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   "type": "text",
                   "date": DateTime.now(),
                 }).then((value) {
+                  print(" PART ONE 111111 curent user");
                   FirebaseFirestore.instance
                       .collection('Standard_user')
                       .doc(curentId)
                       .collection('messages')
                       .doc(widget.friendId)
                       .set({
-                    'last_msg': message,
+                    "last_msg": message,
+                    'count_messages_unseen': 0,
+                    'date': DateTime.now(),
                   });
+                  print(" PART ONE 333333 curent user");
                 });
 
+                ///////////Friend user //////////////
                 await FirebaseFirestore.instance
                     .collection('Standard_user')
                     .doc(widget.friendId)
@@ -200,8 +227,40 @@ class _MessageTextFieldState extends State<MessageTextField> {
                       .collection('Standard_user')
                       .doc(widget.friendId)
                       .collection('messages')
-                      .doc(curentId)
-                      .set({"last_msg": message});
+                      .get()
+                      .then((isExsist) async {
+                    if (isExsist.docs.isEmpty) {
+                      print(" PART ONE 111111");
+                      FirebaseFirestore.instance
+                          .collection('Standard_user')
+                          .doc(widget.friendId)
+                          .collection('messages')
+                          .doc(curentId)
+                          .set({
+                        "last_msg": message,
+                        'count_messages_unseen': FieldValue.increment(1),
+                        'is_show_last_message': false,
+                        'date': DateTime.now(),
+
+                      });
+                      print('DDDDDDDDDDONE 11111111');
+                    } else {
+                      print(" PART two 222222");
+                      FirebaseFirestore.instance
+                          .collection('Standard_user')
+                          .doc(widget.friendId)
+                          .collection('messages')
+                          .doc(curentId)
+                          .update({
+                        "last_msg": message,
+                        'count_messages_unseen': FieldValue.increment(1),
+                        'is_show_last_message': false,
+                                            'date': DateTime.now(),
+
+                      });
+                      print('DDDDDDDDDDONE 222222222');
+                    }
+                  });
                 });
 
                 sendPushMessege(Fr['token'], Me['name'], message);

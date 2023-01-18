@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +27,23 @@ class _ChatBodyState extends State<ChatBody> {
     super.initState();
     FriendName();
     saveToken();
+   ///Problem 
+    // FirebaseFirestore.instance
+    //     .collection('Standard_user')
+    //     .doc(curentId)
+    //     .collection('messages')
+    //     .doc(widget.Freind_id)
+    //     .snapshots()
+    //     .listen((event) {
+    //     print("in listen function");
+    //   event.reference.update({
+    //     "count_messages_unseen": 0,
+    //     "is_show_last_message": true,
+    //   });
+    // });
   }
 
-  String Name = " ";
+    String Name = " ";
 
   Future<void> FriendName() async {
     final ref = await FirebaseFirestore.instance
@@ -39,14 +55,13 @@ class _ChatBodyState extends State<ChatBody> {
     setState(() {});
   }
 
-  void saveToken() async { // futuer 
+  void saveToken() async {
+    // futuer
     await FirebaseFirestore.instance
         .collection("Standard_user")
         .doc(curentId)
         .update({'token': ''});
-        setState(() {
-          
-        });
+    setState(() {});
   }
 
   @override
@@ -77,19 +92,21 @@ class _ChatBodyState extends State<ChatBody> {
             )
           ],
         ),
-        actions: [Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                 Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 28,
-                ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+                size: 28,
               ),
-            ),],
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -114,7 +131,7 @@ class _ChatBodyState extends State<ChatBody> {
                   if (snapshot.hasData) {
                     if (snapshot.data.docs.length < 1) {
                       return Center(
-                        child: Text("Say Hi"),
+                        child: Text("لا توجد رسائل بعد"),
                       );
                     }
                     return ListView.builder(

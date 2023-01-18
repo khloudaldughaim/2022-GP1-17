@@ -16,59 +16,6 @@ class _ChatsPageState extends State<ChatsPage> {
   late FirebaseAuth auth = FirebaseAuth.instance;
   late User? user = auth.currentUser;
   late String curentId = user!.uid;
-  void initState() {
-    super.initState();
-    // Notifications step 3
-    requestPremission();
-    getToken();
-    // end of Notifications step 3
-  }
-
-  void requestPremission() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      print("User granted premission");
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      print("User granted provisional permission");
-    } else {
-      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-      print("User declined or has not accepted premission");
-    }
-  }
-
-  String? mtoken = " ";
-
-  void getToken() async {
-    await FirebaseMessaging.instance.getToken().then((token) {
-      setState(() {
-        mtoken = token;
-        print("My token is $mtoken");
-      });
-      saveToken(token!);
-    });
-  }
-
-  void saveToken(String token) async {
-    await FirebaseFirestore.instance
-        .collection("Standard_user")
-        .doc(curentId)
-        .update({'token': token});
-  }
-///////////////////////////////////////////////////////////////////
 
   showAlertDialog(BuildContext context, friendId) {
     Widget cancelButton = TextButton(
@@ -115,8 +62,7 @@ class _ChatsPageState extends State<ChatsPage> {
         content: Text("هل تريد حذف المحادثة؟"),
         actions: [cancelButton, DeleteButton]);
 
-        return alert ;
-
+    return alert;
   }
 
   @override
@@ -134,12 +80,13 @@ class _ChatsPageState extends State<ChatsPage> {
               .collection('Standard_user')
               .doc(curentId)
               .collection('messages')
+              .orderBy('date', descending: true)
               .snapshots(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.docs.length < 1) {
                 return Center(
-                  child: Text("No Chats Available!"),
+                  child: Text("لا توجد محادثات بعد"),
                 );
               }
               return ListView.builder(
@@ -147,6 +94,8 @@ class _ChatsPageState extends State<ChatsPage> {
                   itemBuilder: (context, index) {
                     var friendId = snapshot.data.docs[index].id;
                     var lastMsg = snapshot.data.docs[index]['last_msg'];
+                    var BadgeCounter =
+                        snapshot.data.docs[index]['count_messages_unseen'];
 
                     //       FirebaseFirestore.instance
                     //     .collection('Standard_user')
@@ -186,99 +135,70 @@ class _ChatsPageState extends State<ChatsPage> {
                         if (asyncSnapshot.hasData) {
                           var friend = asyncSnapshot.data;
                           return ListTile(
-                            onLongPress: () {
-
-                                 
-
-                                  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return showAlertDialog(context, friendId);
-      },
-    );
-
-                              // AlertDialog alert = AlertDialog(
-                              //   title: Text("حذف محادثة"),
-                              //   content: Text("هل تريد حذف المحادثة؟"),
-                              //   actions: [
-                              //     TextButton(
-                              //         onPressed: () async {
-                              //           try {
-                              //             await FirebaseFirestore.instance
-                              //                 .collection('Standard_user')
-                              //                 .doc(curentId)
-                              //                 .collection('messages')
-                              //                 .doc(friendId)
-                              //                 .collection("chats")
-                              //                 .get()
-                              //                 .then((value) {
-                              //               value.docs.forEach((element) {
-                              //                 element.reference.delete();
-                              //               });
-                              //             });
-                              //             print("move to the next");
-                              //             await FirebaseFirestore.instance
-                              //                 .collection('Standard_user')
-                              //                 .doc(curentId)
-                              //                 .collection('messages')
-                              //                 .doc(friendId)
-                              //                 .delete()
-                              //                 .then((value) =>
-                              //                     print('messages Deleted'));
-
-                              //             print('delete button');
-                              //             Navigator.of(context).pop();
-                              //             print("it passed the naveigator");
-                              //           } catch (e) {
-                              //             print(e);
-                              //           }
-                              //         },
-                              //         child: Text('حذف')),
-                              //     TextButton(
-                              //       child: Text("إلغاء"),
-                              //       onPressed: () async {
-                              //         Navigator.of(context).pop();
-                              //       },
-                              //     )
-                              //   ],
-                              // );
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) {
-                              //     return alert;
-                              //   },
-                              // );
-                            },
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "https://wallpapercave.com/wp/wp9566480.png",
-                                placeholder: (conteext, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Icon(
-                                  Icons.error,
+                              onLongPress: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return showAlertDialog(context, friendId);
+                                  },
+                                );
+                              },
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(80),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://wallpapercave.com/wp/wp9566480.png",
+                                  placeholder: (conteext, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Icon(
+                                    Icons.error,
+                                  ),
+                                  height: 50,
                                 ),
-                                height: 50,
                               ),
-                            ),
-                            title: Text(friend['name']),
-                            subtitle: Container(
-                              child: Text(
-                                "$lastMsg",
-                                style: TextStyle(color: Colors.grey),
-                                overflow: TextOverflow.ellipsis,
+                              title: Text(friend['name']),
+                              subtitle: Container(
+                                child: Text(
+                                  "$lastMsg",
+                                  style: TextStyle(color: Colors.grey),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ChatBody(
-                                            Freind_id: friend['userId'],
-                                          )));
-                            },
-                          );
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatBody(
+                                              Freind_id: friend['userId'],
+                                            )));
+                              },
+                              trailing: BadgeCounter == 0
+                                  ? SizedBox()
+                                  : Material(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.blue,
+                                      child: SizedBox(
+                                        width: 18,
+                                        height: 18,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 5,
+                                            right: 5,
+                                            top: 2,
+                                            bottom: 1,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              '${BadgeCounter > 99 ? '99+' : BadgeCounter}',
+                                              style: const TextStyle(
+                                                fontSize: 11,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ));
                         }
                         return LinearProgressIndicator();
                       },
