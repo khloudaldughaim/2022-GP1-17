@@ -172,14 +172,14 @@ class afforCalcFormState extends State<afforCalcForm> {
                                         ),
                                       )),
                                   Container(
-                                    margin: const EdgeInsets.all(19),
+                                    margin: const EdgeInsets.all(15),
                                   ),
                                   Row(
                                     children: [
                                       Container(
                                           //calculator
                                           alignment: Alignment.topRight,
-                                          height: 500,
+                                          height: 400,
                                           width: 230,
                                           decoration: BoxDecoration(
                                               color: Color.fromARGB(
@@ -374,67 +374,6 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                                 return null;
                                                               },
                                                             ),
-                                                          ))), //home assosiation
-                                                  Text(
-                                                    'مستحقات إتحاد الملّاك',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontFamily: "Tajawal-b",
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 7,
-                                                  ),
-                                                  Expanded(
-                                                      child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          child: Directionality(
-                                                            textDirection:
-                                                                TextDirection
-                                                                    .rtl,
-                                                            child:
-                                                                TextFormField(
-                                                              controller: loans,
-                                                              autovalidateMode:
-                                                                  AutovalidateMode
-                                                                      .onUserInteraction,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                hintText:
-                                                                    'قرض منزل، سيارة...',
-                                                                filled: true,
-                                                                fillColor:
-                                                                    Colors
-                                                                        .white,
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(6),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                    width: 0.0,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              validator:
-                                                                  (value) {
-                                                                if (!RegExp(
-                                                                        r'[0-9]')
-                                                                    .hasMatch(
-                                                                        value!)) {
-                                                                  return 'الرجاء إدخال أرقام فقط';
-                                                                }
-                                                                return null;
-                                                              },
-                                                            ),
                                                           ))),
                                                   //submit button
                                                   SizedBox(
@@ -494,7 +433,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               ))),
                                       Container(
                                         margin: const EdgeInsets.only(
-                                            bottom: 70, right: 7),
+                                            top: 5, right: 7),
                                         child: Column(
                                           children: [
                                             //city
@@ -746,7 +685,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                         TextDirection.rtl),
                                                 Container(
                                                   margin:
-                                                      const EdgeInsets.all(15),
+                                                      const EdgeInsets.all(10),
                                                 ),
                                                 Container(
                                                     height: 140,
