@@ -19,6 +19,7 @@ import 'package:location/location.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:nozol_application/pages/favorite.dart';
 
 fetchdata(String url) async {
   http.Response response = await http.get(Uri.parse(url));
@@ -39,10 +40,12 @@ class _LandDetailesState extends State<LandDetailes> {
   String url = '';
   var data;
   List<dynamic> output = [];
+  bool _fav = false ;
 
   void initState() {
     super.initState();
     SimilarPropFunction();
+    _isFav();
   }
 
   void SimilarPropFunction() async {
@@ -51,6 +54,57 @@ class _LandDetailesState extends State<LandDetailes> {
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded;
+    setState(() {});
+  }
+
+  void _toggleFavorite(){
+    if(_fav){
+        _fav = false ;
+        // FavoritePageState.favoriteList.remove(widget.villa);
+        FirebaseFirestore.instance
+        .collection('Standard_user')
+        .doc(cpuid)
+        .collection('Favorite')
+        .doc(widget.land.properties!.property_id)
+        .delete();
+      }else{
+        _fav = true ;
+        // FavoritePageState.favoriteList.add(widget.villa);
+        FirebaseFirestore.instance
+        .collection('Standard_user')
+        .doc(cpuid)
+        .collection('Favorite')
+        .doc(widget.land.properties!.property_id)
+        .set({
+          "property_id" : widget.land.properties!.property_id,
+        });
+        // FirebaseFirestore.instance
+        // .collection('Standard_user')
+        // .doc(cpuid)
+        // .update({
+        //   "FavoriteList": FieldValue.arrayUnion([widget.villa.properties.property_id])
+        // });
+      }
+    setState(() {});
+  }
+
+  void _isFav() async {
+    var doc = await FirebaseFirestore.instance
+    .collection('Standard_user')
+    .doc(cpuid)
+    .collection('Favorite')
+    .doc(widget.land.properties!.property_id)
+    .get();
+
+    if (doc.exists) {
+      // doc exits
+      print("موجوده ونص");
+      _fav = true;
+    } else {
+      // doc not exits
+      print("مش موجوده");
+      _fav = false;
+    }
     setState(() {});
   }
 
@@ -164,10 +218,13 @@ class _LandDetailesState extends State<LandDetailes> {
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
-                                child: Icon(
-                                  Icons.favorite_outline,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
-                                  size: 28,
+                                child: IconButton(
+                                  alignment: Alignment.center,
+                                  icon : (_fav
+                                  ? Icon(Icons.favorite)
+                                  : Icon(Icons.favorite_border)),
+                                  color: const Color.fromARGB(255, 127, 166, 233), 
+                                  onPressed: _toggleFavorite,
                                 ),
                               ),
                             ),
