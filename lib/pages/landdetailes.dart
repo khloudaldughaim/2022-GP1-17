@@ -7,6 +7,7 @@ import 'package:nozol_application/pages/apartment.dart';
 import 'package:nozol_application/pages/apartmentdetailes.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:nozol_application/pages/buildingdetailes.dart';
+import 'package:nozol_application/pages/complaint.dart';
 import 'package:nozol_application/pages/land.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'package:nozol_application/pages/villadetailes.dart';
@@ -200,10 +201,30 @@ class _LandDetailesState extends State<LandDetailes> {
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
-                                child: Icon(
-                                  Icons.flag_outlined,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
-                                  size: 28,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.flag_outlined,
+                                    color: const Color.fromARGB(255, 127, 166, 233),
+                                    size: 28,
+                                  ), 
+                                  onPressed: () {
+                                    if (FirebaseAuth.instance.currentUser == null) {
+                                      Fluttertoast.showToast(
+                                        msg: "عذرا لابد من تسجيل الدخول",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                        textColor: Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      );
+                                    }else{
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Complaints(property_id: widget.land.properties!.property_id, user_id: widget.land.properties!.User_id,)),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ),

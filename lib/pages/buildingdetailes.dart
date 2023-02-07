@@ -6,6 +6,7 @@ import 'package:nozol_application/Chat/ChatBody.dart';
 import 'package:nozol_application/pages/apartment.dart';
 import 'package:nozol_application/pages/apartmentdetailes.dart';
 import 'package:nozol_application/pages/building.dart';
+import 'package:nozol_application/pages/complaint.dart';
 import 'package:nozol_application/pages/homapage.dart';
 import 'package:nozol_application/pages/land.dart';
 import 'package:nozol_application/pages/landdetailes.dart';
@@ -219,10 +220,30 @@ class _BuildingDetailesState extends State<BuildingDetailes> {
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
-                                child: Icon(
-                                  Icons.flag_outlined,
-                                  color: const Color.fromARGB(255, 127, 166, 233),
-                                  size: 28,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.flag_outlined,
+                                    color: const Color.fromARGB(255, 127, 166, 233),
+                                    size: 28,
+                                  ), 
+                                  onPressed: () {
+                                    if (FirebaseAuth.instance.currentUser == null) {
+                                      Fluttertoast.showToast(
+                                        msg: "عذرا لابد من تسجيل الدخول",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                        textColor: Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      );
+                                    }else{
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Complaints(property_id: widget.building.properties.property_id, user_id: widget.building.properties.User_id,)),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ),
