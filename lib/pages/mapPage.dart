@@ -1,9 +1,10 @@
-// ignore_for_file: dead_code, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
+// ignore_for_file: dead_code, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unused_local_variable, non_constant_identifier_names
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nozol_application/pages/filter_map.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'apartment.dart';
 import 'apartmentdetailes.dart';
@@ -40,9 +41,7 @@ class _MapPageState extends State<mapPage> {
   Set<Marker> markers = {};
   List<dynamic> MapArray = [];
 
-  bool Bspace = false;
-  bool Bprice = false;
-  bool Btype = false;
+  static String? filter_val;
 
   TextEditingController SearchController = TextEditingController();
   String name = '';
@@ -153,8 +152,13 @@ class _MapPageState extends State<mapPage> {
                   color: Colors.white,
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
-              backgroundColor:
-                  Btype ? Color.fromARGB(255, 166, 212, 243) : Color.fromARGB(255, 83, 111, 249),
+              backgroundColor: filter_val == "type"
+                  ? Color.fromARGB(255, 166, 212, 243)
+                  : filter_val == "price"
+                      ? price_colored(villa.properties.price)
+                      : filter_val == "space"
+                          ? space_colored(villa.properties.space)
+                          : Color.fromARGB(255, 42, 45, 237),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -467,8 +471,13 @@ class _MapPageState extends State<mapPage> {
                   color: Colors.white,
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
-              backgroundColor:
-                  Btype ? Color.fromARGB(255, 243, 204, 166) : Color.fromARGB(255, 83, 111, 249),
+              backgroundColor: filter_val == "type"
+                  ? Color.fromARGB(255, 243, 204, 166)
+                  : filter_val == "price"
+                      ? price_colored(apartment.properties.price)
+                      : filter_val == "space"
+                          ? space_colored(apartment.properties.space)
+                          : Color.fromARGB(255, 42, 45, 237),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -783,8 +792,13 @@ class _MapPageState extends State<mapPage> {
                   color: Colors.white,
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
-              backgroundColor:
-                  Btype ? Color.fromARGB(255, 243, 166, 240) : Color.fromARGB(255, 83, 111, 249),
+              backgroundColor: filter_val == "type"
+                  ? Color.fromARGB(255, 243, 166, 240)
+                  : filter_val == "price"
+                      ? price_colored(building.properties.price)
+                      : filter_val == "space"
+                          ? space_colored(building.properties.space)
+                          : Color.fromARGB(255, 42, 45, 237),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -1058,8 +1072,13 @@ class _MapPageState extends State<mapPage> {
                   color: Colors.white,
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
-              backgroundColor:
-                  Btype ? Color.fromARGB(255, 166, 243, 220) : Color.fromARGB(255, 83, 111, 249),
+              backgroundColor: filter_val == "type"
+                  ? Color.fromARGB(255, 166, 243, 220)
+                  : filter_val == "price"
+                      ? price_colored(land.properties!.price)
+                      : filter_val == "space"
+                          ? space_colored(land.properties!.space)
+                          : Color.fromARGB(255, 42, 45, 237),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -1360,1360 +1379,18 @@ class _MapPageState extends State<mapPage> {
                     color: Color.fromARGB(255, 127, 166, 233),
                     size: 30,
                   ),
-                  onPressed: () {
-                    showModalBottomSheet(
+                  onPressed: () async {
+                    final res = await showModalBottomSheet(
                       backgroundColor: Colors.transparent,
                       context: context,
                       isScrollControlled: true,
-                      builder: (BuildContext context) {
-                        return DraggableScrollableSheet(
-                          initialChildSize: 0.5,
-                          maxChildSize: 0.9,
-                          minChildSize: 0.5,
-                          builder: (context, scrollController) {
-                            return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(15),
-                                    right: Radius.circular(15),
-                                  ),
-                                ),
-                                child: SingleChildScrollView(
-                                  controller: scrollController,
-                                  child: Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 310),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            color: Color.fromARGB(255, 226, 237, 255),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.close,
-                                              color: const Color.fromARGB(255, 127, 166, 233),
-                                              size: 28,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      "خصائص الخريطة",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: "Tajawal-b",
-                                          color: Color.fromARGB(255, 127, 166, 233)),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    //                 Directionality(
-                                    // textDirection: TextDirection.rtl,
-                                    Padding(
-                                        padding: EdgeInsets.only(left: 230),
-                                        child: Text(
-                                          ": ألوان الخريطة تحدد",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: "Tajawal-m",
-                                              color: Color.fromARGB(255, 91, 94, 98)),
-                                        )),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 180.0,
-                                          height: 50.0,
-                                          child: Padding(
-                                              padding: EdgeInsets.only(left: 30),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Btype = true;
-                                                    Bprice = false;
-                                                    Bspace = false;
-                                                    print("stttt");
-                                                  });
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    side: BorderSide(
-                                                        color: Color.fromARGB(255, 135, 136, 138)),
-                                                    elevation: 3,
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(10.0)),
-                                                    backgroundColor: Btype
-                                                        ? Color.fromARGB(255, 135, 165, 203)
-                                                        : Color.fromARGB(194, 180, 183, 187)),
-                                                child: Center(
-                                                    child: Text(
-                                                  "نوع العقار",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(255, 255, 255, 255)),
-                                                )),
-                                              )),
-                                        ),
-                                        SizedBox(
-                                          width: 180.0,
-                                          height: 50.0,
-                                          child: Padding(
-                                              padding: EdgeInsets.only(left: 30),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    Bspace = false;
-                                                    Btype = false;
-                                                    Bprice = true;
-                                                    print("stttt");
-                                                  });
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    side: BorderSide(
-                                                        color: Color.fromARGB(255, 135, 136, 138)),
-                                                    elevation: 3,
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(10.0)),
-                                                    backgroundColor: Bprice
-                                                        ? Color.fromARGB(255, 135, 165, 203)
-                                                        : Color.fromARGB(194, 180, 183, 187)),
-                                                child: Center(
-                                                    child: Text(
-                                                  "سعر العقار",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(255, 255, 255, 255)),
-                                                )),
-                                              )),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      width: 180.0,
-                                      height: 50.0,
-                                      child: Padding(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                Bspace = true;
-                                                Btype = false;
-                                                Bprice = false;
-                                                print("stttt");
-                                              });
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                                side: BorderSide(
-                                                    color: Color.fromARGB(255, 135, 136, 138)),
-                                                elevation: 3,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(10.0)),
-                                                backgroundColor: Bspace
-                                                    ? Color.fromARGB(255, 135, 165, 203)
-                                                    : Color.fromARGB(194, 180, 183, 187)),
-                                            child: Center(
-                                                child: Text(
-                                              "المساحة",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontFamily: "Tajawal-m",
-                                                  color: Color.fromARGB(255, 255, 255, 255)),
-                                            )),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                    if (Btype)
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("فيلا",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 166, 212, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("عمارة",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 166, 240),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("شقة",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 204, 166),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(left: 270),
-                                                child: Container(
-                                                  width: 110,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: Color.fromARGB(68, 178, 178, 178),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius: BorderRadius.circular(8),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    children: [
-                                                      Text("أرض",
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontFamily: "Tajawal-m",
-                                                          )),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Icon(
-                                                        Icons.circle,
-                                                        color: Color.fromARGB(255, 166, 243, 220),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                    if (Bspace)
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("400-599",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 204, 166),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("200-399",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 166, 240),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("0-199",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 166, 212, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("1000-1199",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 166, 240, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("800-999",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 166, 166),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("600-799",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 180, 166, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("1600-1799",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 115, 107, 99),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("1400-1599",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 119, 116, 52),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("1200-1399",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 119, 124, 118),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text(">2200",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 125, 124, 122),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("2000-2200",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 207, 196, 206),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("1800-1999",
-                                                                  style: TextStyle(
-                                                                    fontSize: 16,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 72, 107, 131),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                    if (Bprice)
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("50K - 99.9K",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 204, 166),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("10K - 49.9K",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 166, 240),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("0 - 9.99K",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 166, 212, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("1M - 1.99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 166, 240, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("500K - 999K",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 243, 166, 166),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("100K - 499K",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 180, 166, 243),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("4M - 4.99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 115, 107, 99),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("3M - 3.99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 119, 116, 52),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("2M - 2.99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 119, 124, 118),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.only(right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text(">6,99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 125, 124, 122),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("6M - 6.99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 207, 196, 206),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.only(left: 10),
-                                                        child: Container(
-                                                          width: 110,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  Color.fromARGB(68, 178, 178, 178),
-                                                              width: 1,
-                                                            ),
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.end,
-                                                            children: [
-                                                              Text("5M - 5.99M",
-                                                                  style: TextStyle(
-                                                                    fontSize: 15,
-                                                                    fontFamily: "Tajawal-m",
-                                                                  )),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons.circle,
-                                                                color: Color.fromARGB(
-                                                                    255, 72, 107, 131),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 3,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  ],
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                  ]),
-                                ));
-                          },
-                        );
-                      },
+                      builder: (context) => filterMap(),
                     );
+                    setState(() {
+                      filter_val = res["filter_val"];
+                      initState();
+                    });
+                    print(filter_val);
                   },
                 ),
                 Text(
@@ -2743,5 +1420,87 @@ class _MapPageState extends State<mapPage> {
         ],
       ),
     );
+  }
+
+  price_colored(String price) {
+    var num = int.parse(price);
+
+    if (num <= 9999) {
+      return Color.fromARGB(255, 166, 212, 243);
+    }
+    if (num > 9999 && num <= 49999) {
+      return Color.fromARGB(255, 243, 166, 240);
+    }
+    if (num > 49999 && num <= 99999) {
+      return Color.fromARGB(255, 243, 204, 166);
+    }
+    if (num > 99999 && num <= 499999) {
+      return Color.fromARGB(255, 180, 166, 243);
+    }
+    if (num > 499999 && num <= 999999) {
+      return Color.fromARGB(255, 243, 166, 166);
+    }
+    if (num > 999999 && num <= 1999999) {
+      return Color.fromARGB(255, 166, 240, 243);
+    }
+    if (num > 1999999 && num <= 2999999) {
+      return Color.fromARGB(255, 119, 124, 118);
+    }
+    if (num > 2999999 && num <= 3999999) {
+      return Color.fromARGB(255, 119, 52, 107);
+    }
+    if (num > 3999999 && num <= 4999999) {
+      return Color.fromARGB(255, 115, 107, 99);
+    }
+    if (num > 4999999 && num <= 5999999) {
+      return Color.fromARGB(255, 72, 107, 131);
+    }
+    if (num > 5999999 && num <= 6999999) {
+      return Color.fromARGB(255, 223, 65, 57);
+    }
+    if (num > 6999999) {
+      return Color.fromARGB(255, 211, 175, 103);
+    }
+  }
+
+  space_colored(String space) {
+    var num = int.parse(space);
+
+    if (num <= 199) {
+      return Color.fromARGB(255, 166, 212, 243);
+    }
+    if (num > 199 && num <= 399) {
+      return Color.fromARGB(255, 243, 166, 240);
+    }
+    if (num > 399 && num <= 599) {
+      return Color.fromARGB(255, 243, 204, 166);
+    }
+    if (num > 599 && num <= 799) {
+      return Color.fromARGB(255, 180, 166, 243);
+    }
+    if (num > 799 && num <= 999) {
+      return Color.fromARGB(255, 243, 166, 166);
+    }
+    if (num > 999 && num <= 1199) {
+      return Color.fromARGB(255, 166, 240, 243);
+    }
+    if (num > 1199 && num <= 1399) {
+      return Color.fromARGB(255, 119, 124, 118);
+    }
+    if (num > 1399 && num <= 1599) {
+      return Color.fromARGB(255, 119, 52, 76);
+    }
+    if (num > 1599 && num <= 1799) {
+      return Color.fromARGB(255, 115, 107, 99);
+    }
+    if (num > 1799 && num <= 1999) {
+      return Color.fromARGB(255, 72, 107, 131);
+    }
+    if (num > 1999 && num <= 2200) {
+      return Color.fromARGB(255, 201, 58, 82);
+    }
+    if (num > 2200) {
+      return Color.fromARGB(255, 152, 124, 69);
+    }
   }
 }
