@@ -435,39 +435,70 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      border: Border.all(
+                        width: 1.5,
+                        color: Color.fromARGB(255, 127, 166, 233),
+                      ),
+                    ),
+                    width: 85,
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    child: Center(
+                        child: '${type.properties.classification}' == 'للإيجار'
+                            ? Text(
+                                '${type.properties.type} للإيجار',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
+                                ),
+                              )
+                            : Text(
+                                '${type.properties.type} للبيع',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
+                                ),
+                              )),
                   ),
-                  border: Border.all(
-                    width: 1.5,
-                    color: Color.fromARGB(255, 127, 166, 233),
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 226, 237, 255),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: IconButton(
+                        alignment: Alignment.center,
+                        icon : (
+                        Icon(Icons.favorite)),
+                        color: const Color.fromARGB(255, 127, 166, 233), 
+                        onPressed: (){
+                          print("favooo");
+                          print(type.properties.property_id);
+                          FirebaseFirestore.instance
+                          .collection('Standard_user')
+                          .doc(cpuid)
+                          .collection('Favorite')
+                          .doc(type.properties.property_id)
+                          .delete();
+                        }
+                      ),
+                    ),
                   ),
-                ),
-                width: 85,
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: Center(
-                    child: '${type.properties.classification}' == 'للإيجار'
-                        ? Text(
-                            '${type.properties.type} للإيجار',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          )
-                        : Text(
-                            '${type.properties.type} للبيع',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          )),
+                ],
               ),
               Expanded(
                 child: Container(),
