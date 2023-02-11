@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/pages/villa.dart';
 
+import 'apartment.dart';
+import 'building.dart';
 import 'homapage.dart';
+import 'land.dart';
 
 class affordCalcPage extends StatefulWidget {
   const affordCalcPage({Key? key}) : super(key: key);
@@ -67,6 +71,9 @@ class afforCalcFormState extends State<afforCalcForm> {
   final income = TextEditingController();
   final spendings = TextEditingController();
   final loans = TextEditingController();
+  double result = 0;
+  bool showInRange = false;
+  List<dynamic> inRangeProp = [];
 
   int type = 1;
   String type1 = 'فيلا';
@@ -130,8 +137,6 @@ class afforCalcFormState extends State<afforCalcForm> {
 
   @override
   Widget build(BuildContext context) {
-    calculate() {}
-
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -154,7 +159,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.all(20),
+                                    margin: const EdgeInsets.all(10),
                                   ),
                                   Container(
                                       alignment: Alignment.center,
@@ -164,7 +169,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                           'حاسبة التكاليف تحسب مقدار الإيجار المناسب لميزانيتك',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: 25.0,
+                                              fontSize: 15.0,
                                               fontFamily: "Tajawal-b",
                                               fontWeight: FontWeight.bold,
                                               color: Color.fromARGB(
@@ -172,331 +177,188 @@ class afforCalcFormState extends State<afforCalcForm> {
                                         ),
                                       )),
                                   Container(
-                                    margin: const EdgeInsets.all(15),
+                                    margin: const EdgeInsets.all(5),
                                   ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          //calculator
-                                          alignment: Alignment.topRight,
-                                          height: 400,
-                                          width: 230,
-                                          decoration: BoxDecoration(
-                                              color: Color.fromARGB(
-                                                  255, 202, 216, 227),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                          child: Padding(
-                                              padding: EdgeInsets.all(20.0),
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    'الدخل الشهري ',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontFamily: "Tajawal-b",
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 7,
-                                                  ),
-                                                  Expanded(
-                                                      child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          child: Directionality(
-                                                            textDirection:
-                                                                TextDirection
-                                                                    .rtl,
-                                                            child:
-                                                                TextFormField(
-                                                              controller:
-                                                                  income,
-                                                              autovalidateMode:
-                                                                  AutovalidateMode
-                                                                      .onUserInteraction,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                hintText:
-                                                                    'الراتب وأي مصادر دخل أخرى',
-                                                                filled: true,
-                                                                fillColor:
-                                                                    Colors
-                                                                        .white,
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(6),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                    width: 0.0,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              validator:
-                                                                  (value) {
-                                                                if (!RegExp(
-                                                                        r'[0-9]')
-                                                                    .hasMatch(
-                                                                        value!)) {
-                                                                  return 'الرجاء إدخال أرقام فقط';
-                                                                }
-                                                                return null;
-                                                              },
-                                                            ),
-                                                          ))), //spendings
-                                                  Text(
-                                                    ' الإلتزامات الشهرية ',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontFamily: "Tajawal-b",
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 7,
-                                                  ),
-                                                  Expanded(
-                                                      child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          child: Directionality(
-                                                            textDirection:
-                                                                TextDirection
-                                                                    .rtl,
-                                                            child:
-                                                                TextFormField(
-                                                              controller:
-                                                                  spendings,
-                                                              autovalidateMode:
-                                                                  AutovalidateMode
-                                                                      .onUserInteraction,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                hintText:
-                                                                    'نفقة، فواتير ماء، كهرب...',
-                                                                filled: true,
-                                                                fillColor:
-                                                                    Colors
-                                                                        .white,
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(6),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                    width: 0.0,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              validator:
-                                                                  (value) {
-                                                                if (!RegExp(
-                                                                        r'[0-9]')
-                                                                    .hasMatch(
-                                                                        value!)) {
-                                                                  return 'الرجاء إدخال أرقام فقط';
-                                                                }
-                                                                return null;
-                                                              },
-                                                            ),
-                                                          ))), //loan
-                                                  Text(
-                                                    ' القروض الشهرية',
-                                                    style: TextStyle(
-                                                      fontSize: 18.0,
-                                                      fontFamily: "Tajawal-b",
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 7,
-                                                  ),
-                                                  Expanded(
-                                                      child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          child: Directionality(
-                                                            textDirection:
-                                                                TextDirection
-                                                                    .rtl,
-                                                            child:
-                                                                TextFormField(
-                                                              controller: loans,
-                                                              autovalidateMode:
-                                                                  AutovalidateMode
-                                                                      .onUserInteraction,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                hintText:
-                                                                    'قرض منزل، سيارة...',
-                                                                filled: true,
-                                                                fillColor:
-                                                                    Colors
-                                                                        .white,
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .all(6),
-                                                                enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                    width: 0.0,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              validator:
-                                                                  (value) {
-                                                                if (!RegExp(
-                                                                        r'[0-9]')
-                                                                    .hasMatch(
-                                                                        value!)) {
-                                                                  return 'الرجاء إدخال أرقام فقط';
-                                                                }
-                                                                return null;
-                                                              },
-                                                            ),
-                                                          ))),
-                                                  //submit button
-                                                  SizedBox(
-                                                    width: 205.0,
-                                                    height: 70.0,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 10),
-                                                      child: ElevatedButton(
-                                                        onPressed: () async {
-                                                          if (_formKey
-                                                              .currentState!
-                                                              .validate()) {
-                                                            calculate();
-                                                          }
-                                                        },
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          127,
-                                                                          166,
-                                                                          233)),
-                                                          padding: MaterialStateProperty
-                                                              .all(EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          40,
-                                                                      vertical:
-                                                                          5)),
-                                                          shape:
-                                                              MaterialStateProperty
-                                                                  .all(
-                                                            RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          27),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        child: const Text(
-                                                          'إحسب',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontFamily:
-                                                                  "Tajawal-m"),
-                                                        ),
+                                  Container(
+                                    margin:
+                                        const EdgeInsets.only(top: 5, right: 7),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            child: Column(
+                                          children: [
+                                            Text('أقصى حد للإيجار',
+                                                style: TextStyle(
+                                                    fontSize: 21.0,
+                                                    fontFamily: "Tajawal-b",
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textDirection:
+                                                    TextDirection.rtl),
+                                            Container(
+                                              margin: const EdgeInsets.all(7),
+                                            ),
+                                            Container(
+                                                height: 180,
+                                                width: 180,
+                                                padding: const EdgeInsets.only(
+                                                    top: 70, ),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                        width: 4,
+                                                        color: Color.fromARGB(
+                                                            255,
+                                                            134,
+                                                            206,
+                                                            137))),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      '$result',
+                                                      style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 134, 206, 137),
+                                                        fontSize: 39.0,
+                                                        fontFamily: "Tajawal-b",
                                                       ),
                                                     ),
-                                                  )
-                                                ],
-                                              ))),
-                                      Container(
-                                        margin: const EdgeInsets.only(
-                                            top: 5, right: 7),
-                                        child: Column(
-                                          children: [
-                                            //city
-                                            Container(
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(0.0),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                          'المدينة                ',
+                                                    Text(
+                                                      ' ر.س ',
+                                                      style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 134, 206, 137),
+                                                        fontSize: 20.0,
+                                                        fontFamily: "Tajawal-b",
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(12),
+                                  ),
+                                  Container(
+                                      //calculator
+                                      height: 550,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 202, 216, 227),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                      child: Padding(
+                                          padding: EdgeInsets.all(20.0),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 230),
+                                                  child: Text(
+                                                    'المدينة : ',
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-b",
+                                                    ),
+                                                  )),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.only(right: 7),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: Colors.white,
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        width: 1)),
+                                                height: 45,
+                                                width: 320,
+                                                child: DropdownButtonFormField(
+                                                  menuMaxHeight: 400,
+                                                  value: city,
+                                                  items:
+                                                      citiesList.map((value) {
+                                                    return DropdownMenuItem(
+                                                      value: value,
+                                                      child: Text(value),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (_selectedValue) {
+                                                    setState(() {
+                                                      city = _selectedValue
+                                                          .toString();
+                                                    });
+                                                  },
+                                                  style: TextStyle(
+                                                      fontSize: 16.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(
+                                                          255, 73, 75, 82)),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    border: InputBorder.none,
+                                                    contentPadding:
+                                                        EdgeInsets.all(7),
+                                                    hintText: 'الرياض',
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 14,
+                                              ),
+                                              //type
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 215),
+                                                  child: Text(
+                                                    'نوع العقار :',
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-b",
+                                                    ),
+                                                  )),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.only(right: 8),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: Colors.white,
+                                                    border: Border.all(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        width: 1)),
+                                                height: 45,
+                                                width: 320,
+                                                child: DropdownButtonFormField(
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      border: InputBorder.none,
+                                                      contentPadding:
+                                                          EdgeInsets.all(7),
+                                                    ),
+                                                    value: type,
+                                                    items: [
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                          "فيلا",
                                                           style: TextStyle(
-                                                            fontSize: 19.0,
-                                                            fontFamily:
-                                                                "Tajawal-b",
-                                                          ),
-                                                          textDirection:
-                                                              TextDirection
-                                                                  .rtl),
-                                                      Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(5.0)),
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 7),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            color: Colors.white,
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300,
-                                                                width: 1)),
-                                                        height: 40,
-                                                        width: 150,
-                                                        child:
-                                                            DropdownButtonFormField(
-                                                          menuMaxHeight: 400,
-                                                          value: city,
-                                                          items: citiesList
-                                                              .map((value) {
-                                                            return DropdownMenuItem(
-                                                              value: value,
-                                                              child:
-                                                                  Text(value),
-                                                            );
-                                                          }).toList(),
-                                                          onChanged:
-                                                              (_selectedValue) {
-                                                            setState(() {
-                                                              city =
-                                                                  _selectedValue
-                                                                      .toString();
-                                                            });
-                                                          },
-                                                          style: TextStyle(
-                                                              fontSize: 16.0,
+                                                              fontSize: 17.0,
                                                               fontFamily:
                                                                   "Tajawal-m",
                                                               color: Color
@@ -505,257 +367,378 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                                       73,
                                                                       75,
                                                                       82)),
+                                                        ),
+                                                        value: 1,
+                                                      ),
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                          "شقة",
+                                                          style: TextStyle(
+                                                              fontSize: 17.0,
+                                                              fontFamily:
+                                                                  "Tajawal-m",
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      73,
+                                                                      75,
+                                                                      82)),
+                                                        ),
+                                                        value: 2,
+                                                      ),
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                          "ارض",
+                                                          style: TextStyle(
+                                                              fontSize: 17.0,
+                                                              fontFamily:
+                                                                  "Tajawal-m",
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      73,
+                                                                      75,
+                                                                      82)),
+                                                        ),
+                                                        value: 3,
+                                                      ),
+                                                      DropdownMenuItem(
+                                                        child: Text(
+                                                          "عمارة",
+                                                          style: TextStyle(
+                                                              fontSize: 17.0,
+                                                              fontFamily:
+                                                                  "Tajawal-m",
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      73,
+                                                                      75,
+                                                                      82)),
+                                                        ),
+                                                        value: 4,
+                                                      )
+                                                    ],
+                                                    onChanged: (int? value) {
+                                                      setState(() {
+                                                        type = value!;
+                                                        if (type == 1)
+                                                          type1 = 'فيلا';
+                                                        if (type == 2)
+                                                          type1 = 'شقة';
+                                                        if (type == 3)
+                                                          type1 = 'ارض';
+                                                        if (type == 4)
+                                                          type1 = 'عمارة';
+                                                      });
+                                                    }),
+                                              ),
+                                              SizedBox(
+                                                height: 14,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 170),
+                                                  child: Text(
+                                                    'الدخل الشهري :',
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-b",
+                                                    ),
+                                                  )),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              Expanded(
+                                                  child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(0),
+                                                      child: Directionality(
+                                                        textDirection:
+                                                            TextDirection.rtl,
+                                                        child: TextFormField(
+                                                          controller: income,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
                                                           decoration:
                                                               InputDecoration(
-                                                            isDense: true,
-                                                            border: InputBorder
-                                                                .none,
+                                                            hintText:
+                                                                'الراتب وأي مصادر دخل أخرى',
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
                                                             contentPadding:
                                                                 EdgeInsets.all(
-                                                                    7),
-                                                            hintText: 'الرياض',
+                                                                    6),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color:
+                                                                    Colors.grey,
+                                                                width: 0.0,
+                                                              ),
+                                                            ),
                                                           ),
+                                                          validator: (value) {
+                                                            if (!RegExp(
+                                                                    r'[0-9]')
+                                                                .hasMatch(
+                                                                    value!)) {
+                                                              return 'الرجاء إدخال أرقام فقط';
+                                                            }
+                                                            return null;
+                                                          },
                                                         ),
-                                                      ),
-                                                    ],
-                                                  )),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.all(13),
-                                            ),
-                                            //type
-                                            Container(
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(0.0),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                          'نوع العقار           ',
-                                                          style: TextStyle(
-                                                            fontSize: 19.0,
-                                                            fontFamily:
-                                                                "Tajawal-b",
-                                                          ),
-                                                          textDirection:
-                                                              TextDirection
-                                                                  .rtl),
-                                                      Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(5.0)),
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            color: Colors.white,
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300,
-                                                                width: 1)),
-                                                        height: 40,
-                                                        width: 150,
-                                                        child:
-                                                            DropdownButtonFormField(
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  isDense: true,
-                                                                  border:
-                                                                      InputBorder
-                                                                          .none,
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              7),
-                                                                ),
-                                                                value: type,
-                                                                items: [
-                                                                  DropdownMenuItem(
-                                                                    child: Text(
-                                                                      "فيلا",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          fontFamily:
-                                                                              "Tajawal-m",
-                                                                          color: Color.fromARGB(
-                                                                              255,
-                                                                              73,
-                                                                              75,
-                                                                              82)),
-                                                                    ),
-                                                                    value: 1,
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    child: Text(
-                                                                      "شقة",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          fontFamily:
-                                                                              "Tajawal-m",
-                                                                          color: Color.fromARGB(
-                                                                              255,
-                                                                              73,
-                                                                              75,
-                                                                              82)),
-                                                                    ),
-                                                                    value: 2,
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    child: Text(
-                                                                      "ارض",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          fontFamily:
-                                                                              "Tajawal-m",
-                                                                          color: Color.fromARGB(
-                                                                              255,
-                                                                              73,
-                                                                              75,
-                                                                              82)),
-                                                                    ),
-                                                                    value: 3,
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    child: Text(
-                                                                      "عمارة",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              17.0,
-                                                                          fontFamily:
-                                                                              "Tajawal-m",
-                                                                          color: Color.fromARGB(
-                                                                              255,
-                                                                              73,
-                                                                              75,
-                                                                              82)),
-                                                                    ),
-                                                                    value: 4,
-                                                                  )
-                                                                ],
-                                                                onChanged: (int?
-                                                                    value) {
-                                                                  setState(() {
-                                                                    type =
-                                                                        value!;
-                                                                    if (type ==
-                                                                        1)
-                                                                      type1 =
-                                                                          'فيلا';
-                                                                    if (type ==
-                                                                        2)
-                                                                      type1 =
-                                                                          'شقة';
-                                                                    if (type ==
-                                                                        3)
-                                                                      type1 =
-                                                                          'ارض';
-                                                                    if (type ==
-                                                                        4)
-                                                                      type1 =
-                                                                          'عمارة';
-                                                                  });
-                                                                }),
-                                                      ),
-                                                    ],
-                                                  )),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.all(13),
-                                            ),
-                                            Container(
-                                                child: Column(
-                                              children: [
-                                                Text('الإيجار المناسب:',
+                                                      ))),
+                                              SizedBox(
+                                                height: 7,
+                                              ), //spendings
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 145),
+                                                  child: Text(
+                                                    ' الإلتزامات الشهرية :',
                                                     style: TextStyle(
-                                                        fontSize: 21.0,
-                                                        fontFamily: "Tajawal-b",
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    textDirection:
-                                                        TextDirection.rtl),
-                                                Container(
-                                                  margin:
-                                                      const EdgeInsets.all(10),
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-b",
+                                                    ),
+                                                  )),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              Expanded(
+                                                  child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(0),
+                                                      child: Directionality(
+                                                        textDirection:
+                                                            TextDirection.rtl,
+                                                        child: TextFormField(
+                                                          controller: spendings,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                ' فواتير ماء، كهرب، نفقة...',
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
+                                                            contentPadding:
+                                                                EdgeInsets.all(
+                                                                    6),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color:
+                                                                    Colors.grey,
+                                                                width: 0.0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          validator: (value) {
+                                                            if (!RegExp(
+                                                                    r'[0-9]')
+                                                                .hasMatch(
+                                                                    value!)) {
+                                                              return 'الرجاء إدخال أرقام فقط';
+                                                            }
+                                                            return null;
+                                                          },
+                                                        ),
+                                                      ))),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              //loan
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 155),
+                                                  child: Text(
+                                                    ' القروض الشهرية :',
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontFamily: "Tajawal-b",
+                                                    ),
+                                                  )),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              Expanded(
+                                                  child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(0),
+                                                      child: Directionality(
+                                                        textDirection:
+                                                            TextDirection.rtl,
+                                                        child: TextFormField(
+                                                          controller: loans,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'قرض منزل، سيارة...',
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
+                                                            contentPadding:
+                                                                EdgeInsets.all(
+                                                                    6),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color:
+                                                                    Colors.grey,
+                                                                width: 0.0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          validator: (value) {
+                                                            if (!RegExp(
+                                                                    r'[0-9]')
+                                                                .hasMatch(
+                                                                    value!)) {
+                                                              return 'الرجاء إدخال أرقام فقط';
+                                                            }
+                                                            return null;
+                                                          },
+                                                        ),
+                                                      ))),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              //submit button
+                                              SizedBox(
+                                                width: 205.0,
+                                                height: 70.0,
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                                  child: ElevatedButton(
+                                                    onPressed: () async {
+                                                      //calculate functionality
+                                                      if (_formKey.currentState!.validate()) {
+                                                        setState(() {
+                                                        int income1 = int.parse(income.text);
+                                                        int spendings1 = int.parse(spendings.text);
+                                                        int loans1 = int.parse(loans.text);
+                                                        result = (income1 - spendings1 - loans1) * 0.25;
+
+                                                        HomePageState.allData.forEach((element) {
+                                                          if (element is Villa) {
+                                                            final villa = element;
+                                                            if (villa.properties.type == type1 && villa.properties.classification == 'للإيجار' && villa.properties.city == city && int.parse(villa.properties.price) <= result) {
+                                                              inRangeProp.add(villa);
+                                                            }
+                                                          }
+                                                          if (element is Apartment) {
+                                                            final apartment = element;
+                                                            if (apartment.properties.type == type1 && apartment.properties.classification == 'للإيجار' && apartment.properties.city == city && int.parse(apartment.properties.price) <= result) {
+                                                              inRangeProp.add(apartment);
+                                                            }
+                                                          }
+                                                          if (element is Building) {
+                                                            final building = element;
+                                                            if (building.properties.type == type1 && building.properties.classification == 'للإيجار' && building.properties.city == city && int.parse(building.properties.price) <= result) {
+                                                              inRangeProp.add(building);
+                                                            }
+                                                          }
+                                                          if (element is Land) {
+                                                            final land = element;
+                                                            if (land.properties!.type == type1 && land.properties!.classification == 'للإيجار' && land.properties!.city == city && int.parse(land.properties!.price) <= result) {
+                                                              inRangeProp.add(land);
+                                                            }
+                                                          }
+                                                        });
+
+                                                        showInRange = true;
+
+                                                        });
+                                                      }
+                                                    },
+                                                    style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      127,
+                                                                      166,
+                                                                      233)),
+                                                      padding:
+                                                          MaterialStateProperty
+                                                              .all(EdgeInsets
+                                                                  .symmetric(
+                                                                      horizontal:
+                                                                          40,
+                                                                      vertical:
+                                                                          5)),
+                                                      shape:
+                                                          MaterialStateProperty
+                                                              .all(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(27),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    child: const Text(
+                                                      'إحسب',
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontFamily:
+                                                              "Tajawal-m"),
+                                                    ),
+                                                  ),
                                                 ),
-                                                Container(
-                                                    height: 140,
-                                                    width: 140,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 40),
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        border: Border.all(
-                                                            width: 4,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    134,
-                                                                    206,
-                                                                    137))),
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          ' 5000 ',
-                                                          style: TextStyle(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    134,
-                                                                    206,
-                                                                    137),
-                                                            fontSize: 45.0,
-                                                            fontFamily:
-                                                                "Tajawal-b",
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          ' ر.س ',
-                                                          style: TextStyle(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    134,
-                                                                    206,
-                                                                    137),
-                                                            fontSize: 20.0,
-                                                            fontFamily:
-                                                                "Tajawal-b",
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )),
-                                              ],
-                                            )),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                              )
+                                            ],
+                                          ))),
                                   Container(
                                     margin: const EdgeInsets.all(20),
                                   ),
                                   //recommended properties
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 120),
-                                    child: Text(
-                                      'عقارات مناسبة لميزانيتك:',
-                                      style: TextStyle(
-                                        fontSize: 23.0,
-                                        fontFamily: "Tajawal-b",
-                                      ),
-                                    ),
-                                  ),
+                                  showInRange == true
+                                      ? Container(
+                                          padding:
+                                              const EdgeInsets.only(left: 95),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'عقارات مناسبة لميزانيتك :',
+                                                style: TextStyle(
+                                                  fontSize: 23.0,
+                                                  fontFamily: "Tajawal-b",
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: const EdgeInsets.all(20),
+                                        ),
                                 ],
                               ),
                             ),
