@@ -42,7 +42,8 @@ class _VillaDetailesState extends State<VillaDetailes> {
   String url = '';
   var data;
   List<dynamic> output = [];
-  bool _fav = false ;
+  bool _fav = false;
+  String id = getuser();
 
   void initState() {
     super.initState();
@@ -51,14 +52,15 @@ class _VillaDetailesState extends State<VillaDetailes> {
   }
 
   void SimilarPropFunction() async {
-    url = 'https://recommender-nozol.herokuapp.com/api?query=' + widget.villa.properties.property_id;
+    url =
+        'https://recommender-nozol.herokuapp.com/api?query=' + widget.villa.properties.property_id;
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded;
     setState(() {});
   }
 
-  void _toggleFavorite(){
+  void _toggleFavorite() {
     if (FirebaseAuth.instance.currentUser == null) {
       Fluttertoast.showToast(
         msg: "عذرا لابد من تسجيل الدخول",
@@ -79,43 +81,43 @@ class _VillaDetailesState extends State<VillaDetailes> {
         textColor: Color.fromARGB(255, 252, 253, 255),
         fontSize: 18.0,
       );
-    } else if(_fav){
-        _fav = false ;
-        // FavoritePageState.favoriteList.remove(widget.villa);
-        FirebaseFirestore.instance
-        .collection('Standard_user')
-        .doc(cpuid)
-        .collection('Favorite')
-        .doc(widget.villa.properties.property_id)
-        .delete();
-      }else{
-        _fav = true ;
-        // FavoritePageState.favoriteList.add(widget.villa);
-        FirebaseFirestore.instance
-        .collection('Standard_user')
-        .doc(cpuid)
-        .collection('Favorite')
-        .doc(widget.villa.properties.property_id)
-        .set({
-          "property_id" : widget.villa.properties.property_id,
-        });
-        // FirebaseFirestore.instance
-        // .collection('Standard_user')
-        // .doc(cpuid)
-        // .update({
-        //   "FavoriteList": FieldValue.arrayUnion([widget.villa.properties.property_id])
-        // });
-      }
+    } else if (_fav) {
+      _fav = false;
+      // FavoritePageState.favoriteList.remove(widget.villa);
+      FirebaseFirestore.instance
+          .collection('Standard_user')
+          .doc(id)
+          .collection('Favorite')
+          .doc(widget.villa.properties.property_id)
+          .delete();
+    } else {
+      _fav = true;
+      // FavoritePageState.favoriteList.add(widget.villa);
+      FirebaseFirestore.instance
+          .collection('Standard_user')
+          .doc(id)
+          .collection('Favorite')
+          .doc(widget.villa.properties.property_id)
+          .set({
+        "property_id": widget.villa.properties.property_id,
+      });
+      // FirebaseFirestore.instance
+      // .collection('Standard_user')
+      // .doc(cpuid)
+      // .update({
+      //   "FavoriteList": FieldValue.arrayUnion([widget.villa.properties.property_id])
+      // });
+    }
     setState(() {});
   }
 
   void _isFav() async {
     var doc = await FirebaseFirestore.instance
-    .collection('Standard_user')
-    .doc(cpuid)
-    .collection('Favorite')
-    .doc(widget.villa.properties.property_id)
-    .get();
+        .collection('Standard_user')
+        .doc(id)
+        .collection('Favorite')
+        .doc(widget.villa.properties.property_id)
+        .get();
 
     if (doc.exists) {
       // doc exits
@@ -236,7 +238,7 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                     Icons.flag_outlined,
                                     color: const Color.fromARGB(255, 127, 166, 233),
                                     size: 28,
-                                  ), 
+                                  ),
                                   onPressed: () {
                                     if (FirebaseAuth.instance.currentUser == null) {
                                       Fluttertoast.showToast(
@@ -248,7 +250,8 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                         textColor: Color.fromARGB(255, 252, 253, 255),
                                         fontSize: 18.0,
                                       );
-                                    } else if (FirebaseAuth.instance.currentUser!.uid == '${widget.villa.properties.User_id}') {
+                                    } else if (FirebaseAuth.instance.currentUser!.uid ==
+                                        '${widget.villa.properties.User_id}') {
                                       Fluttertoast.showToast(
                                         msg: "أنت صاحب العقار بالفعل!",
                                         toastLength: Toast.LENGTH_SHORT,
@@ -258,10 +261,14 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                         textColor: Color.fromARGB(255, 252, 253, 255),
                                         fontSize: 18.0,
                                       );
-                                    } else{
+                                    } else {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => Complaints(property_id: widget.villa.properties.property_id, user_id: widget.villa.properties.User_id,)),
+                                        MaterialPageRoute(
+                                            builder: (context) => Complaints(
+                                                  property_id: widget.villa.properties.property_id,
+                                                  user_id: widget.villa.properties.User_id,
+                                                )),
                                       );
                                     }
                                   },
@@ -281,10 +288,8 @@ class _VillaDetailesState extends State<VillaDetailes> {
                               child: Center(
                                 child: IconButton(
                                   alignment: Alignment.center,
-                                  icon : (_fav
-                                  ? Icon(Icons.favorite)
-                                  : Icon(Icons.favorite_border)),
-                                  color: const Color.fromARGB(255, 127, 166, 233), 
+                                  icon: (_fav ? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
+                                  color: const Color.fromARGB(255, 127, 166, 233),
                                   onPressed: _toggleFavorite,
                                 ),
                               ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/pages/apartmentdetailes.dart';
 import 'package:nozol_application/pages/complaintdetails.dart';
@@ -12,7 +13,6 @@ import 'package:nozol_application/pages/villa.dart';
 import 'package:nozol_application/pages/building.dart';
 import 'package:nozol_application/pages/land.dart';
 
-
 class MyComplaints extends StatefulWidget {
   const MyComplaints({super.key});
 
@@ -23,6 +23,7 @@ class MyComplaints extends StatefulWidget {
 class _MyComplaintsState extends State<MyComplaints> {
   @override
   Widget build(BuildContext context) {
+    String id = getuser();
     return SafeArea(
       child: Scaffold(
         body: DefaultTabController(
@@ -50,12 +51,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                       padding: EdgeInsets.only(right: 20.0),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NavigationBarPage()
-                            )
-                          );
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => NavigationBarPage()));
                         },
                         child: Icon(
                           Icons.arrow_forward_ios,
@@ -87,12 +84,12 @@ class _MyComplaintsState extends State<MyComplaints> {
                 height: 15,
               ),
               Expanded(
-                child: TabBarView(
-                  children: [
-                    // tab 1 (تمت المعالجة)
-                    FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                child: TabBarView(children: [
+                  // tab 1 (تمت المعالجة)
+                  FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       future: FirebaseFirestore.instance
                           .collection('Complaints')
+                          .where('user_id', isEqualTo: id)
                           .where('done', isEqualTo: true)
                           .get(),
                       builder: (
@@ -110,7 +107,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                               margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                               clipBehavior: Clip.antiAlias,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
+                                  borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               )),
                               child: Container(
@@ -127,7 +124,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top:5, left:10, bottom: 5),
+                                      padding: const EdgeInsets.only(top: 5, left: 10, bottom: 5),
                                       child: Column(
                                         children: [
                                           SizedBox(
@@ -135,11 +132,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                             child: ElevatedButton(
                                               onPressed: () {
                                                 Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => ComplaintDetailes(complaint_id: snapshot.data!.docs[index].data()['complaint_id'])
-                                                  )
-                                                );
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => ComplaintDetailes(
+                                                            complaint_id: snapshot.data!.docs[index]
+                                                                .data()['complaint_id'])));
                                               },
                                               child: Text('تفاصيل البلاغ'),
                                               style: ButtonStyle(
@@ -147,18 +144,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                   Color.fromARGB(255, 127, 166, 233),
                                                 ),
                                                 shape: MaterialStateProperty.all(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(27)
-                                                  )
-                                                ),
-                                                
+                                                    RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(27))),
                                               ),
                                             ),
                                           ),
                                           ElevatedButton(
                                             onPressed: () {
-                                              realtyDetails(snapshot.data!.docs[index]
-                                                .data()['property_id']);
+                                              realtyDetails(
+                                                  snapshot.data!.docs[index].data()['property_id']);
                                             },
                                             child: Text('تفاصيل العقار المبلغ عنه'),
                                             style: ButtonStyle(
@@ -166,8 +160,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 Color.fromARGB(255, 127, 166, 233),
                                               ),
                                               shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(27))),
+                                                  RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(27))),
                                             ),
                                           ),
                                         ],
@@ -177,7 +171,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                       width: 30,
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top:17, right:10, bottom: 5),
+                                      padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
@@ -197,7 +191,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text("تاريخ البلاغ : " + snapshot.data!.docs[index].data()['date']),
+                                          Text("تاريخ البلاغ : " +
+                                              snapshot.data!.docs[index].data()['date']),
                                         ],
                                       ),
                                     ),
@@ -207,12 +202,12 @@ class _MyComplaintsState extends State<MyComplaints> {
                             ),
                           );
                         }
-                      }
-                    ),
-                    // tab 2 (قيد المعالجة)
-                    FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      }),
+                  // tab 2 (قيد المعالجة)
+                  FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       future: FirebaseFirestore.instance
                           .collection('Complaints')
+                          .where('user_id', isEqualTo: id)
                           .where('done', isEqualTo: false)
                           .get(),
                       builder: (
@@ -230,7 +225,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                               margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                               clipBehavior: Clip.antiAlias,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
+                                  borderRadius: BorderRadius.all(
                                 Radius.circular(15),
                               )),
                               child: Container(
@@ -247,7 +242,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top:5, left:10, bottom: 5),
+                                      padding: const EdgeInsets.only(top: 5, left: 10, bottom: 5),
                                       child: Column(
                                         children: [
                                           SizedBox(
@@ -255,11 +250,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                             child: ElevatedButton(
                                               onPressed: () {
                                                 Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => ComplaintDetailes(complaint_id: snapshot.data!.docs[index].data()['complaint_id'])
-                                                  )
-                                                );
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => ComplaintDetailes(
+                                                            complaint_id: snapshot.data!.docs[index]
+                                                                .data()['complaint_id'])));
                                               },
                                               child: Text('تفاصيل البلاغ'),
                                               style: ButtonStyle(
@@ -267,18 +262,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                   Color.fromARGB(255, 127, 166, 233),
                                                 ),
                                                 shape: MaterialStateProperty.all(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(27)
-                                                  )
-                                                ),
-                                                
+                                                    RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(27))),
                                               ),
                                             ),
                                           ),
                                           ElevatedButton(
                                             onPressed: () {
-                                              realtyDetails(snapshot.data!.docs[index]
-                                                .data()['property_id']);
+                                              realtyDetails(
+                                                  snapshot.data!.docs[index].data()['property_id']);
                                             },
                                             child: Text('تفاصيل العقار المبلغ عنه'),
                                             style: ButtonStyle(
@@ -286,8 +278,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 Color.fromARGB(255, 127, 166, 233),
                                               ),
                                               shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(27))),
+                                                  RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(27))),
                                             ),
                                           ),
                                         ],
@@ -297,7 +289,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                       width: 30,
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top:17, right:10, bottom: 5),
+                                      padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
@@ -317,7 +309,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text("تاريخ البلاغ : " + snapshot.data!.docs[index].data()['date']),
+                                          Text("تاريخ البلاغ : " +
+                                              snapshot.data!.docs[index].data()['date']),
                                         ],
                                       ),
                                     ),
@@ -327,10 +320,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                             ),
                           );
                         }
-                      }
-                    ),
-                  ]
-                ),
+                      }),
+                ]),
               ),
             ],
           ),
@@ -382,5 +373,12 @@ class _MyComplaintsState extends State<MyComplaints> {
         });
       });
     });
+  }
+
+  String getuser() {
+    late FirebaseAuth auth = FirebaseAuth.instance;
+    late User? user = auth.currentUser;
+    var cpuid = user!.uid;
+    return cpuid;
   }
 }

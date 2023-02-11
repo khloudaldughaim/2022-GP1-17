@@ -77,8 +77,7 @@ class _myPropertyState extends State<myProperty> {
     );
   }
 
-  Widget _handleSnapshot(
-      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+  Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator());
     }
@@ -99,6 +98,7 @@ class _myPropertyState extends State<myProperty> {
 
   @override
   Widget build(BuildContext context) {
+    String id = getuser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 127, 166, 233),
@@ -117,9 +117,7 @@ class _myPropertyState extends State<myProperty> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NavigationBarPage()));
+                    context, MaterialPageRoute(builder: (context) => NavigationBarPage()));
               },
               child: Icon(
                 Icons.arrow_forward_ios,
@@ -133,12 +131,13 @@ class _myPropertyState extends State<myProperty> {
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
         future: FirebaseFirestore.instance
             .collection('properties')
-            .where('User_id', isEqualTo: cpuid)
+            .where('User_id', isEqualTo: id)
             .get(),
         builder: (
           BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
         ) {
+          print(id);
           return _handleSnapshot(snapshot);
         },
       ),
@@ -276,8 +275,7 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => ApartmentDetailes(apartment: apartment)),
+      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
     );
   }, rowItem, apartment);
 }
@@ -305,8 +303,7 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
   return _buildItem(() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => BuildingDetailes(building: building)),
+      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
     );
   }, rowItem, building);
 }
@@ -360,8 +357,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
               )
             : BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage('${type.properties.images[0]}'),
-                    fit: BoxFit.cover),
+                    image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
               ),
         child: Container(
           padding: EdgeInsets.all(20),
@@ -482,9 +478,13 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
   );
 }
 
-final FirebaseAuth auth = FirebaseAuth.instance;
-final User? user = auth.currentUser;
-final cpuid = user!.uid;
+String getuser() {
+  late FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user = auth.currentUser;
+  var cpuid = user!.uid;
+  return cpuid;
+}
+
 
 // Stream<List<Property>> readmyPropertys() => FirebaseFirestore.instance
 //     .collection('properties')

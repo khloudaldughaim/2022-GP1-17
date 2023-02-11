@@ -16,31 +16,29 @@ import 'package:nozol_application/pages/villadetailes.dart';
 import 'package:nozol_application/registration/log_in.dart';
 
 class FavoritePage extends StatefulWidget {
-   const FavoritePage({Key? key}) : super(key: key);
+  const FavoritePage({Key? key}) : super(key: key);
 
   @override
   State<FavoritePage> createState() => FavoritePageState();
 }
 
 class FavoritePageState extends State<FavoritePage> {
-
   // static List<dynamic> favoriteList = HomePageState.allData ;
-  static List<dynamic> favoriteList = [] ;
-
+  static List<dynamic> favoriteList = [];
+  String id = getuser();
   void initState() {
     super.initState();
     getFav();
   }
 
   void getFav() async {
-
     favoriteList.clear();
 
     var snapshot = await FirebaseFirestore.instance
-    .collection('Standard_user')
-    .doc(cpuid)
-    .collection('Favorite')
-    .get();
+        .collection('Standard_user')
+        .doc(id)
+        .collection('Favorite')
+        .get();
 
     if (snapshot.docs.isNotEmpty) {
       // Collection exits
@@ -48,8 +46,7 @@ class FavoritePageState extends State<FavoritePage> {
       snapshot.docs.forEach((element) {
         favoriteList.add(element.data()['property_id']);
       });
-    }
-    else{
+    } else {
       print("ما فيه كولكشن فيفورت");
     }
     setState(() {});
@@ -131,117 +128,113 @@ class FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar : AppBar(
+        appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 127, 166, 233),
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 155),
-          child: const Text('المفضلة',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: "Tajawal-b",
-              )),
-        ),
-        // actions: [
-        //   Padding(
-        //     padding: EdgeInsets.only(right: 20.0),
-        //     child: GestureDetector(
-        //       onTap: () {
-        //         Navigator.push(
-        //             context,
-        //             MaterialPageRoute(
-        //                 builder: (context) => NavigationBarPage()));
-        //       },
-        //       child: Icon(
-        //         Icons.arrow_forward_ios,
-        //         color: Colors.white,
-        //         size: 28,
-        //       ),
-        //     ),
-        //   ),
-        // ],
-        ),
-        body: FirebaseAuth.instance.currentUser == null ?
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            SizedBox(height: 10),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 85),
-                child: Text(
-                  "عذراً لابد من تسجيل الدخول ",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: "Tajawal-b",
-                      color: Color.fromARGB(255, 127, 166, 233)),
-                  textAlign: TextAlign.center,
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 155),
+            child: const Text('المفضلة',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Tajawal-b",
                 )),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => LogIn()));
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                padding: MaterialStateProperty.all( EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(27)
-                  ),
-                ),
-              ),
-              child: Text(
-                "تسجيل الدخول",
-                style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
-              ),
-            )
-          ],
-        ):
-        favoriteList.length > 0 ?
-          ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(width: 20),
-            itemCount: favoriteList.length,
-            itemBuilder: (context, index) {
-              for (int i = 0; i < HomePageState.allData.length; i++) {
-                if (HomePageState.allData[i] is Villa) {
-                  Villa villa = HomePageState.allData[i] as Villa;
-                  if (villa.properties.property_id == favoriteList[index]) {
-                    return _buildVillaItem(
-                        HomePageState.allData[i] as Villa, context);
-                  }
-                }
-                if (HomePageState.allData[i] is Apartment) {
-                  Apartment apartment = HomePageState.allData[i] as Apartment;
-                  if (apartment.properties.property_id == favoriteList[index]) {
-                    return _buildApartmentItem(
-                        HomePageState.allData[i] as Apartment, context);
-                  }
-                }
-                if (HomePageState.allData[i] is Building) {
-                  Building building = HomePageState.allData[i] as Building;
-                  if (building.properties.property_id == favoriteList[index]) {
-                    return _buildBuildingItem(
-                        HomePageState.allData[i] as Building, context);
-                  }
-                }
-                if (HomePageState.allData[i] is Land) {
-                  Land land = HomePageState.allData[i] as Land;
-                  if (land.properties!.property_id == favoriteList[index]) {
-                    return _buildLandItem(
-                        HomePageState.allData[i] as Land, context);
-                  }
-                }
-              }
-              return Container();
-            }
-          ) :
-        Center(
-          child:  Text("لا يوجد عقارات في المفضلة"),
+          ),
+          // actions: [
+          //   Padding(
+          //     padding: EdgeInsets.only(right: 20.0),
+          //     child: GestureDetector(
+          //       onTap: () {
+          //         Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) => NavigationBarPage()));
+          //       },
+          //       child: Icon(
+          //         Icons.arrow_forward_ios,
+          //         color: Colors.white,
+          //         size: 28,
+          //       ),
+          //     ),
+          //   ),
+          // ],
         ),
+        body: FirebaseAuth.instance.currentUser == null
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  SizedBox(height: 10),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 85),
+                      child: Text(
+                        "عذراً لابد من تسجيل الدخول ",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "Tajawal-b",
+                            color: Color.fromARGB(255, 127, 166, 233)),
+                        textAlign: TextAlign.center,
+                      )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                      padding: MaterialStateProperty.all(
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
+                      ),
+                    ),
+                    child: Text(
+                      "تسجيل الدخول",
+                      style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+                    ),
+                  )
+                ],
+              )
+            : favoriteList.length > 0
+                ? ListView.separated(
+                    separatorBuilder: (context, index) => SizedBox(width: 20),
+                    itemCount: favoriteList.length,
+                    itemBuilder: (context, index) {
+                      for (int i = 0; i < HomePageState.allData.length; i++) {
+                        if (HomePageState.allData[i] is Villa) {
+                          Villa villa = HomePageState.allData[i] as Villa;
+                          if (villa.properties.property_id == favoriteList[index]) {
+                            return _buildVillaItem(HomePageState.allData[i] as Villa, context);
+                          }
+                        }
+                        if (HomePageState.allData[i] is Apartment) {
+                          Apartment apartment = HomePageState.allData[i] as Apartment;
+                          if (apartment.properties.property_id == favoriteList[index]) {
+                            return _buildApartmentItem(
+                                HomePageState.allData[i] as Apartment, context);
+                          }
+                        }
+                        if (HomePageState.allData[i] is Building) {
+                          Building building = HomePageState.allData[i] as Building;
+                          if (building.properties.property_id == favoriteList[index]) {
+                            return _buildBuildingItem(
+                                HomePageState.allData[i] as Building, context);
+                          }
+                        }
+                        if (HomePageState.allData[i] is Land) {
+                          Land land = HomePageState.allData[i] as Land;
+                          if (land.properties!.property_id == favoriteList[index]) {
+                            return _buildLandItem(HomePageState.allData[i] as Land, context);
+                          }
+                        }
+                      }
+                      return Container();
+                    })
+                : Center(
+                    child: Text("لا يوجد عقارات في المفضلة"),
+                  ),
       ),
     );
   }
@@ -439,6 +432,7 @@ Widget _buildLandItem(Land land, BuildContext context) {
 }
 
 Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
+  String id = getuser();
   return GestureDetector(
     onTap: onTap,
     child: Card(
@@ -523,21 +517,19 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                     ),
                     child: Center(
                       child: IconButton(
-                        alignment: Alignment.center,
-                        icon : (
-                        Icon(Icons.favorite)),
-                        color: const Color.fromARGB(255, 127, 166, 233), 
-                        onPressed: (){
-                          print("favooo");
-                          print(type.properties.property_id);
-                          FirebaseFirestore.instance
-                          .collection('Standard_user')
-                          .doc(cpuid)
-                          .collection('Favorite')
-                          .doc(type.properties.property_id)
-                          .delete();
-                        }
-                      ),
+                          alignment: Alignment.center,
+                          icon: (Icon(Icons.favorite)),
+                          color: const Color.fromARGB(255, 127, 166, 233),
+                          onPressed: () {
+                            print("favooo");
+                            print(type.properties.property_id);
+                            FirebaseFirestore.instance
+                                .collection('Standard_user')
+                                .doc(id)
+                                .collection('Favorite')
+                                .doc(type.properties.property_id)
+                                .delete();
+                          }),
                     ),
                   ),
                 ],
@@ -611,6 +603,9 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
   );
 }
 
-final FirebaseAuth auth = FirebaseAuth.instance;
-final User? user = auth.currentUser;
-final cpuid = user!.uid;
+String getuser() {
+  late FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user = auth.currentUser;
+  var cpuid = user!.uid;
+  return cpuid;
+}
