@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/pages/apartmentdetailes.dart';
+import 'package:nozol_application/pages/buildingdetailes.dart';
+import 'package:nozol_application/pages/landdetailes.dart';
 import 'package:nozol_application/pages/villa.dart';
+import 'package:nozol_application/pages/villadetailes.dart';
 
 import 'apartment.dart';
 import 'building.dart';
@@ -649,30 +653,32 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                           if (element is Villa) {
                                                             final villa = element;
                                                             if (villa.properties.type == type1 && villa.properties.classification == 'للإيجار' && villa.properties.city == city && int.parse(villa.properties.price) <= result) {
-                                                              inRangeProp.add(villa);
+                                                              inRangeProp.add(villa.properties.property_id);
                                                             }
                                                           }
                                                           if (element is Apartment) {
                                                             final apartment = element;
                                                             if (apartment.properties.type == type1 && apartment.properties.classification == 'للإيجار' && apartment.properties.city == city && int.parse(apartment.properties.price) <= result) {
-                                                              inRangeProp.add(apartment);
+                                                              inRangeProp.add(apartment.properties.property_id);
                                                             }
                                                           }
                                                           if (element is Building) {
                                                             final building = element;
                                                             if (building.properties.type == type1 && building.properties.classification == 'للإيجار' && building.properties.city == city && int.parse(building.properties.price) <= result) {
-                                                              inRangeProp.add(building);
+                                                              inRangeProp.add(building.properties.property_id);
                                                             }
                                                           }
                                                           if (element is Land) {
                                                             final land = element;
                                                             if (land.properties!.type == type1 && land.properties!.classification == 'للإيجار' && land.properties!.city == city && int.parse(land.properties!.price) <= result) {
-                                                              inRangeProp.add(land);
+                                                              inRangeProp.add(land.properties!.property_id);
                                                             }
                                                           }
                                                         });
 
-                                                        showInRange = true;
+                                                        if(inRangeProp.isNotEmpty){
+                                                          showInRange = true;
+                                                        }
 
                                                         });
                                                       }
@@ -722,15 +728,64 @@ class afforCalcFormState extends State<afforCalcForm> {
                                   //recommended properties
                                   showInRange == true
                                       ? Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 95),
                                           child: Column(
                                             children: [
-                                              Text(
-                                                'عقارات مناسبة لميزانيتك :',
-                                                style: TextStyle(
-                                                  fontSize: 23.0,
-                                                  fontFamily: "Tajawal-b",
+                                              Padding(
+                                                padding: const EdgeInsets.only(left:75),
+                                                child: Text(
+                                                  'عقارات مناسبة لميزانيتك :',
+                                                  style: TextStyle(
+                                                    fontSize: 23.0,
+                                                    fontFamily: "Tajawal-b",
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 210,
+                                                child: Directionality(
+                                                  textDirection: TextDirection.ltr,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(bottom: 24, right: 20),
+                                                    child: ListView.separated(
+                                                        physics: BouncingScrollPhysics(),
+                                                        scrollDirection: Axis.horizontal,
+                                                        // shrinkWrap: true,
+                                                        separatorBuilder: (context, index) => SizedBox(width: 20),
+                                                        itemCount: inRangeProp.length,
+                                                        itemBuilder: (context, index) {
+                                                          for (int i = 0; i < HomePageState.allData.length; i++) {
+                                                            if (HomePageState.allData[i] is Villa) {
+                                                              Villa villa = HomePageState.allData[i] as Villa;
+                                                              if (villa.properties.property_id == inRangeProp[index]) {
+                                                                return _buildVillaItem(
+                                                                    HomePageState.allData[i] as Villa, context);
+                                                              }
+                                                            }
+                                                            if (HomePageState.allData[i] is Apartment) {
+                                                              Apartment apartment = HomePageState.allData[i] as Apartment;
+                                                              if (apartment.properties.property_id == inRangeProp[index]) {
+                                                                return _buildApartmentItem(
+                                                                    HomePageState.allData[i] as Apartment, context);
+                                                              }
+                                                            }
+                                                            if (HomePageState.allData[i] is Building) {
+                                                              Building building = HomePageState.allData[i] as Building;
+                                                              if (building.properties.property_id == inRangeProp[index]) {
+                                                                return _buildBuildingItem(
+                                                                    HomePageState.allData[i] as Building, context);
+                                                              }
+                                                            }
+                                                            if (HomePageState.allData[i] is Land) {
+                                                              Land land = HomePageState.allData[i] as Land;
+                                                              if (land.properties!.property_id == inRangeProp[index]) {
+                                                                return _buildLandItem(
+                                                                    HomePageState.allData[i] as Land, context);
+                                                              }
+                                                            }
+                                                          }
+                                                          return Container();
+                                                        }),
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -753,4 +808,342 @@ class afforCalcFormState extends State<afforCalcForm> {
       ),
     );
   }
+}
+
+/////////////////////////////////////////////////////////////////////
+Widget _buildVillaItem(Villa villa, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.hotel,
+        color: Colors.white,
+        size: 18,
+      ),
+      SizedBox(
+        width: 3,
+      ),
+      Text(
+        '${villa.number_of_room}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.bathtub,
+        color: Colors.white,
+        size: 15,
+      ),
+      SizedBox(
+        width: 1,
+      ),
+      Text(
+        '${villa.number_of_bathroom}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${villa.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+    );
+  }, rowItem, villa);
+}
+
+Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.hotel,
+        color: Colors.white,
+        size: 18,
+      ),
+      SizedBox(
+        width: 3,
+      ),
+      Text(
+        '${apartment.number_of_room}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.bathtub,
+        color: Colors.white,
+        size: 15,
+      ),
+      SizedBox(
+        width: 1,
+      ),
+      Text(
+        '${apartment.number_of_bathroom}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${apartment.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+    );
+  }, rowItem, apartment);
+}
+
+Widget _buildBuildingItem(Building building, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${building.properties.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+    );
+  }, rowItem, building);
+}
+
+Widget _buildLandItem(Land land, BuildContext context) {
+  Row rowItem = Row(
+    children: [
+      Icon(
+        Icons.square_foot,
+        color: Colors.white,
+        size: 18,
+      ),
+      Text(
+        '${land.properties!.space} متر ² ',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Tajawal-l",
+        ),
+      ),
+    ],
+  );
+
+  return _buildItem(() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
+    );
+  }, rowItem, land);
+}
+
+Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Directionality(
+      textDirection: TextDirection.ltr,
+      child: Card(
+        margin: EdgeInsets.fromLTRB(12, 12, 12, 6),
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        )),
+        child: Container(
+          height: 210,
+          width: 250,
+          decoration: '${type.properties.images.length}' == '0'
+              ? BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                      fit: BoxFit.cover),
+                )
+              : BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
+                ),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.5, 1.0],
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withOpacity(0.7),
+                ],
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                    border: Border.all(
+                      width: 1.5,
+                      color: Color.fromARGB(255, 127, 166, 233),
+                    ),
+                  ),
+                  width: 85,
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Center(
+                      child: '${type.properties.classification}' == 'للإيجار'
+                          ? Text(
+                              '${type.properties.type} للإيجار',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            )
+                          : Text(
+                              '${type.properties.type} للبيع',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            )),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${type.properties.type}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
+                        ),
+                        Text(
+                          'ريال ${type.properties.price}',
+                          style: TextStyle(
+                            height: 2,
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_city,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '${type.properties.city}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-l",
+                              ),
+                            ),
+                          ],
+                        ),
+                        rowItem,
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
