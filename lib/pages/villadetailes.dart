@@ -59,7 +59,27 @@ class _VillaDetailesState extends State<VillaDetailes> {
   }
 
   void _toggleFavorite(){
-    if(_fav){
+    if (FirebaseAuth.instance.currentUser == null) {
+      Fluttertoast.showToast(
+        msg: "عذرا لابد من تسجيل الدخول",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+        textColor: Color.fromARGB(255, 252, 253, 255),
+        fontSize: 18.0,
+      );
+    } else if (FirebaseAuth.instance.currentUser!.uid == '${widget.villa.properties.User_id}') {
+      Fluttertoast.showToast(
+        msg: "أنت صاحب العقار بالفعل!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+        textColor: Color.fromARGB(255, 252, 253, 255),
+        fontSize: 18.0,
+      );
+    } else if(_fav){
         _fav = false ;
         // FavoritePageState.favoriteList.remove(widget.villa);
         FirebaseFirestore.instance
@@ -228,7 +248,17 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                         textColor: Color.fromARGB(255, 252, 253, 255),
                                         fontSize: 18.0,
                                       );
-                                    }else{
+                                    } else if (FirebaseAuth.instance.currentUser!.uid == '${widget.villa.properties.User_id}') {
+                                      Fluttertoast.showToast(
+                                        msg: "أنت صاحب العقار بالفعل!",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                        textColor: Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      );
+                                    } else{
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => Complaints(property_id: widget.villa.properties.property_id, user_id: widget.villa.properties.User_id,)),

@@ -13,6 +13,7 @@ import 'package:nozol_application/pages/navigationbar.dart';
 import 'package:nozol_application/pages/property.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'package:nozol_application/pages/villadetailes.dart';
+import 'package:nozol_application/registration/log_in.dart';
 
 class FavoritePage extends StatefulWidget {
    const FavoritePage({Key? key}) : super(key: key);
@@ -160,43 +161,84 @@ class FavoritePageState extends State<FavoritePage> {
         //   ),
         // ],
         ),
-        body: favoriteList.length > 0 ?
-        ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(width: 20),
-          itemCount: favoriteList.length,
-          itemBuilder: (context, index) {
-            for (int i = 0; i < HomePageState.allData.length; i++) {
-              if (HomePageState.allData[i] is Villa) {
-                Villa villa = HomePageState.allData[i] as Villa;
-                if (villa.properties.property_id == favoriteList[index]) {
-                  return _buildVillaItem(
-                      HomePageState.allData[i] as Villa, context);
+        body: FirebaseAuth.instance.currentUser == null ?
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            SizedBox(height: 10),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 85),
+                child: Text(
+                  "عذراً لابد من تسجيل الدخول ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Tajawal-b",
+                      color: Color.fromARGB(255, 127, 166, 233)),
+                  textAlign: TextAlign.center,
+                )),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => LogIn()));
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                padding: MaterialStateProperty.all( EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(27)
+                  ),
+                ),
+              ),
+              child: Text(
+                "تسجيل الدخول",
+                style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+              ),
+            )
+          ],
+        ):
+        favoriteList.length > 0 ?
+          ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(width: 20),
+            itemCount: favoriteList.length,
+            itemBuilder: (context, index) {
+              for (int i = 0; i < HomePageState.allData.length; i++) {
+                if (HomePageState.allData[i] is Villa) {
+                  Villa villa = HomePageState.allData[i] as Villa;
+                  if (villa.properties.property_id == favoriteList[index]) {
+                    return _buildVillaItem(
+                        HomePageState.allData[i] as Villa, context);
+                  }
+                }
+                if (HomePageState.allData[i] is Apartment) {
+                  Apartment apartment = HomePageState.allData[i] as Apartment;
+                  if (apartment.properties.property_id == favoriteList[index]) {
+                    return _buildApartmentItem(
+                        HomePageState.allData[i] as Apartment, context);
+                  }
+                }
+                if (HomePageState.allData[i] is Building) {
+                  Building building = HomePageState.allData[i] as Building;
+                  if (building.properties.property_id == favoriteList[index]) {
+                    return _buildBuildingItem(
+                        HomePageState.allData[i] as Building, context);
+                  }
+                }
+                if (HomePageState.allData[i] is Land) {
+                  Land land = HomePageState.allData[i] as Land;
+                  if (land.properties!.property_id == favoriteList[index]) {
+                    return _buildLandItem(
+                        HomePageState.allData[i] as Land, context);
+                  }
                 }
               }
-              if (HomePageState.allData[i] is Apartment) {
-                Apartment apartment = HomePageState.allData[i] as Apartment;
-                if (apartment.properties.property_id == favoriteList[index]) {
-                  return _buildApartmentItem(
-                      HomePageState.allData[i] as Apartment, context);
-                }
-              }
-              if (HomePageState.allData[i] is Building) {
-                Building building = HomePageState.allData[i] as Building;
-                if (building.properties.property_id == favoriteList[index]) {
-                  return _buildBuildingItem(
-                      HomePageState.allData[i] as Building, context);
-                }
-              }
-              if (HomePageState.allData[i] is Land) {
-                Land land = HomePageState.allData[i] as Land;
-                if (land.properties!.property_id == favoriteList[index]) {
-                  return _buildLandItem(
-                      HomePageState.allData[i] as Land, context);
-                }
-              }
+              return Container();
             }
-            return Container();
-          }) :
+          ) :
         Center(
           child:  Text("لا يوجد عقارات في المفضلة"),
         ),

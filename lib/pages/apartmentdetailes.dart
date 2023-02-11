@@ -59,7 +59,27 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
   }
 
   void _toggleFavorite(){
-    if(_fav){
+    if (FirebaseAuth.instance.currentUser == null) {
+      Fluttertoast.showToast(
+        msg: "عذرا لابد من تسجيل الدخول",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+        textColor: Color.fromARGB(255, 252, 253, 255),
+        fontSize: 18.0,
+      );
+    } else if (FirebaseAuth.instance.currentUser!.uid == '${widget.apartment.properties.User_id}') {
+      Fluttertoast.showToast(
+        msg: "أنت صاحب العقار بالفعل!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+        textColor: Color.fromARGB(255, 252, 253, 255),
+        fontSize: 18.0,
+      );
+    } else if(_fav){
         _fav = false ;
         // FavoritePageState.favoriteList.remove(widget.villa);
         FirebaseFirestore.instance
@@ -211,7 +231,17 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                         textColor: Color.fromARGB(255, 252, 253, 255),
                                         fontSize: 18.0,
                                       );
-                                    }else{
+                                    } else if (FirebaseAuth.instance.currentUser!.uid == '${widget.apartment.properties.User_id}') {
+                                      Fluttertoast.showToast(
+                                        msg: "أنت صاحب العقار بالفعل!",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                        textColor: Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      );
+                                    } else{
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => Complaints(property_id: widget.apartment.properties.property_id, user_id: widget.apartment.properties.User_id,)),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/pages/mycomplaints.dart';
 import 'package:uuid/uuid.dart';
 import '../registration/sign_up.dart';
 
@@ -22,6 +23,7 @@ class _ComplaintsState extends State<Complaints> {
   late String curentId = user!.uid;
   String complaint_id = '';
   List<Suser> curentuserInfo = [];
+  bool done = false;
 
   var name = TextEditingController();
   var phone = TextEditingController();
@@ -118,7 +120,7 @@ class _ComplaintsState extends State<Complaints> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
                                       borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
+                                        const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
                                   if (value!.length < 2) {
@@ -186,7 +188,7 @@ class _ComplaintsState extends State<Complaints> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
                                       borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
+                                        const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
                                   if (!RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
@@ -218,7 +220,7 @@ class _ComplaintsState extends State<Complaints> {
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(33.0),
                                         borderSide:
-                                            const BorderSide(width: 0, style: BorderStyle.none)),
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty || reason.text.trim() == "") {
@@ -256,12 +258,19 @@ class _ComplaintsState extends State<Complaints> {
                                                 .collection('Complaints')
                                                 .doc(complaint_id)
                                                 .set({
+                                                "complaint_id": complaint_id,
                                                 "property_id": '${widget.property_id}',
                                                 "user_id": curentId,
                                                 "name": name.text,
                                                 "email": email.text,
                                                 "phone": phone.text,
                                                 "reason": reason.text,
+                                                "done": done,
+                                                "date": DateTime.now().year.toString() 
+                                                        + "-" + DateTime.now().month.toString() 
+                                                        + "-" + DateTime.now().day.toString() 
+                                                        + " " + DateTime.now().hour.toString() 
+                                                        + ":" + DateTime.now().minute.toString(),
                                               });
                                               
                                               Fluttertoast.showToast(
@@ -274,7 +283,12 @@ class _ComplaintsState extends State<Complaints> {
                                                 fontSize: 18.0,
                                               );
 
-                                              Navigator.of(context).pop();
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => MyComplaints()
+                                                )
+                                              );
 
                                             } catch (e, stack) {
                                               Fluttertoast.showToast(

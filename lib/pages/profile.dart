@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nozol_application/pages/mycomplaints.dart';
 import 'package:nozol_application/pages/ownerBooking.dart';
 import 'package:nozol_application/registration/log_in.dart';
 import '../registration/sign_up.dart';
@@ -371,7 +372,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       )
                                     ],
                                   )),
-
                               //this for buyer booking page [End]
                               SizedBox(
                                 height: 25,
@@ -394,7 +394,59 @@ class _ProfilePageState extends State<ProfilePage> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => editProfile()));
+                                                  builder: (context) => MyComplaints()));
+                                        },
+                                        icon: const Icon(Icons.keyboard_arrow_left),
+                                        color: Colors.grey,
+                                        iconSize: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 187,
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => MyComplaints()));
+                                          },
+                                          child: Text(
+                                            "بلاغاتي",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                          )),
+                                      Icon(
+                                        Icons.flag,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 137, 139, 145),
+                                      )
+                                    ],
+                                  )),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              Container(
+                                  width: 350,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(119, 110, 110, 110),
+                                      width: 1,
+                                    ),
+                                    color: Color.fromARGB(33, 215, 215, 218),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => affordCalcPage()));
                                         },
                                         icon: const Icon(Icons.keyboard_arrow_left),
                                         color: Colors.grey,
