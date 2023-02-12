@@ -259,6 +259,7 @@ class _BookingPagestate extends State<boookingPage> {
                                           const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
+                                  print("ppppppppppppppppppppp");
                                   if (value!.length < 2) {
                                     return "الأسم يجب ان يكون خانتين فأكثر ";
                                   }
@@ -273,37 +274,50 @@ class _BookingPagestate extends State<boookingPage> {
                             child: Directionality(
                               textDirection: TextDirection.rtl,
                               child: DateTimePicker(
-                                type: DateTimePickerType.dateTime,
-                                dateMask: 'hh:mma -  d MMM, yyyy ',
-                                controller: datecontrolar,
-                                //initialValue: _initialValue,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(2024),
-
-                                decoration: InputDecoration(
-                                  labelText: "التاريخ  :",
-                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: Icon(
-                                    Icons.calendar_month,
-                                    color: Color.fromARGB(255, 127, 166, 233),
+                                  autovalidate: true,
+                                  type: DateTimePickerType.dateTime,
+                                  dateMask: 'hh:mma -  d MMM, yyyy ',
+                                  controller: datecontrolar,
+                                  //initialValue: _initialValue,
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(2024),
+                                  decoration: InputDecoration(
+                                    labelText: "التاريخ  :",
+                                    labelStyle: TextStyle(fontFamily: "Tajawal-b"),
+                                    prefixIcon: Icon(
+                                      Icons.calendar_month,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                    ),
+                                    fillColor: Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(66.0),
+                                        borderSide:
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
-                                  fillColor: Color.fromARGB(255, 225, 225, 228),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(66.0),
-                                      borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
-                                ),
-
-                                onChanged: (val) {
-                                  _valueChanged1 = val;
-                                },
-                                validator: (val) {
-                                  _valueToValidate1 = val ?? '';
-                                  return null;
-                                },
-                                onSaved: (val) => () => _valueSaved1 = val ?? '',
-                              ),
+                                  validator: (val) {
+                                    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                                    FirebaseFirestore.instance
+                                        .collection('bookings')
+                                        .where('Date', isEqualTo: val)
+                                        .where("owner_id", isEqualTo: '${widget.user_id}')
+                                        .where("isAvailable", isEqualTo: false)
+                                        .get()
+                                        .then((element) async {
+                                      if (element.docs.isEmpty) {
+                                        print("noooooooooooooooooooooooot");
+                                      } else {
+                                        print("محجوووووووووووووووووووز");
+                                        getmassege();
+                                      }
+                                    });
+                                  },
+                                  onChanged: (val) {
+                                    _valueChanged1 = val;
+                                  },
+                                  onSaved: (val) {
+                                    _valueSaved1 = val ?? '';
+                                  }),
                             )),
                         SizedBox(
                           height: 30,
@@ -542,7 +556,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       "Date": datecontrolar.text,
                                       "property_id": '${widget.property_id}',
                                       "buyer_id": curentId,
-                                     "buyer_name": nameB.text,
+                                      "buyer_name": nameB.text,
                                       "buyer_email": emailB.text,
                                       "buyer_phone": phoneB.text,
                                       "book_type": Booktype,
@@ -576,6 +590,7 @@ class _BookingPagestate extends State<boookingPage> {
                                       textColor: Color.fromARGB(255, 248, 249, 250),
                                       fontSize: 18.0,
                                     );
+                                    Navigator.pop(context);
                                     var Otoken = await FirebaseFirestore.instance
                                         .collection('Standard_user')
                                         .doc('${widget.user_id}')
@@ -599,7 +614,7 @@ class _BookingPagestate extends State<boookingPage> {
                                     msg: "التاريخ محجوز مسبقاً",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 5,
+                                    timeInSecForIosWeb: 3,
                                     backgroundColor: Color.fromARGB(255, 127, 166, 233),
                                     textColor: Color.fromARGB(255, 252, 253, 255),
                                     fontSize: 18.0,
@@ -623,5 +638,18 @@ class _BookingPagestate extends State<boookingPage> {
                         ),
                       ]))))
         ])))));
+  }
+
+  void getmassege() {
+    print("meeeeethooood");
+    Fluttertoast.showToast(
+      msg: "التاريخ محجوز مسبقاً,اختر وقت اَخر",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Color.fromARGB(255, 237, 123, 94),
+      textColor: Color.fromARGB(255, 252, 253, 255),
+      fontSize: 18.0,
+    );
   }
 }

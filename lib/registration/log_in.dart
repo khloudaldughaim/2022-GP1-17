@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +60,7 @@ class _LogInState extends State<LogIn> {
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontFamily: "Tajawal-b",
-                                      color:
-                                          Color.fromARGB(255, 127, 166, 233)),
+                                      color: Color.fromARGB(255, 127, 166, 233)),
                                 ),
                                 SizedBox(
                                   width: 45,
@@ -71,8 +71,7 @@ class _LogInState extends State<LogIn> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Welcome()),
+                                        MaterialPageRoute(builder: (context) => Welcome()),
                                       );
                                     },
                                     child: Icon(
@@ -100,32 +99,25 @@ class _LogInState extends State<LogIn> {
                                   textDirection: TextDirection.rtl,
                                   child: TextFormField(
                                     controller: email,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.mail,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                       ),
                                       labelText: " البريد الإلكتروني :",
-                                      labelStyle:
-                                          TextStyle(fontFamily: "Tajawal-m"),
+                                      labelStyle: TextStyle(fontFamily: "Tajawal-m"),
                                       hintText: "exampel@gmail.com",
                                       hintStyle: TextStyle(fontSize: 10),
-                                      fillColor:
-                                          Color.fromARGB(255, 225, 225, 228),
+                                      fillColor: Color.fromARGB(255, 225, 225, 228),
                                       filled: true,
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(66.0),
-                                          borderSide: const BorderSide(
-                                              width: 0,
-                                              style: BorderStyle.none)),
+                                          borderRadius: BorderRadius.circular(66.0),
+                                          borderSide:
+                                              const BorderSide(width: 0, style: BorderStyle.none)),
                                     ),
                                     validator: (value) {
-                                      if (value!.isEmpty ||
-                                          email.text.trim() == "") {
+                                      if (value!.isEmpty || email.text.trim() == "") {
                                         return "البريد الألكتروني مطلوب ";
                                       }
                                     },
@@ -141,33 +133,26 @@ class _LogInState extends State<LogIn> {
                                   child: TextFormField(
                                     obscureText: true,
                                     controller: password,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.lock,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 19,
                                       ),
                                       labelText: "كلمة المرور:",
-                                      labelStyle:
-                                          TextStyle(fontFamily: "Tajawal-m"),
+                                      labelStyle: TextStyle(fontFamily: "Tajawal-m"),
                                       hintText: "أدخل كلمة مرور صالحة ",
                                       hintStyle: TextStyle(fontSize: 10),
-                                      fillColor:
-                                          Color.fromARGB(255, 225, 225, 228),
+                                      fillColor: Color.fromARGB(255, 225, 225, 228),
                                       filled: true,
                                       border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(66.0),
-                                          borderSide: const BorderSide(
-                                              width: 0,
-                                              style: BorderStyle.none)),
+                                          borderRadius: BorderRadius.circular(66.0),
+                                          borderSide:
+                                              const BorderSide(width: 0, style: BorderStyle.none)),
                                     ),
                                     validator: (value) {
-                                      if (value!.isEmpty ||
-                                          password.text.trim() == "") {
+                                      if (value!.isEmpty || password.text.trim() == "") {
                                         return "كلمة السر مطلوبة ";
                                       }
                                     },
@@ -181,16 +166,14 @@ class _LogInState extends State<LogIn> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, "/forgetPassword");
+                                    Navigator.pushNamed(context, "/forgetPassword");
                                   },
                                   child: Text(
                                     "نسيت كلمة المرور ؟        ",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontFamily: "Tajawal-b",
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233)),
+                                        color: Color.fromARGB(255, 127, 166, 233)),
                                   ),
                                 ),
                               ],
@@ -202,46 +185,55 @@ class _LogInState extends State<LogIn> {
                               onPressed: () async {
                                 if (loginformkey.currentState!.validate()) {
                                   try {
-                                    UserCredential userCredential =
-                                        await FirebaseAuth.instance
-                                            .signInWithEmailAndPassword(
-                                                email: email.text,
-                                                password: password.text);
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return NavigationBarPage();
-                                    }));
+                                    UserCredential userCredential = await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email.text, password: password.text);
+                                    FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .where('Email', isEqualTo: email.text)
+                                        .get()
+                                        .then((element) async {
+                                      if (element.docs.isEmpty) {
+                                        Fluttertoast.showToast(
+                                          msg: "عذرًا حسابك موقوف ",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 5,
+                                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                          textColor: Color.fromARGB(255, 252, 253, 255),
+                                          fontSize: 18.0,
+                                        );
+                                      } else {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) {
+                                          return NavigationBarPage();
+                                        }));
+                                      }
+                                    });
                                   } catch (e, stack) {
                                     Fluttertoast.showToast(
-                                      msg:
-                                          "البريد الألكتروني او كلمة المرور غير صحيحة",
+                                      msg: "البريد الألكتروني او كلمة المرور غير صحيحة",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.CENTER,
                                       timeInSecForIosWeb: 5,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 252, 253, 255),
+                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                      textColor: Color.fromARGB(255, 252, 253, 255),
                                       fontSize: 18.0,
                                     );
                                   }
                                 }
                               },
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Color.fromARGB(255, 127, 166, 233)),
+                                backgroundColor:
+                                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
                                 padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 10)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(27))),
+                                    EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
                               ),
                               child: Text(
                                 "تسجيل الدخول",
-                                style: TextStyle(
-                                    fontSize: 18, fontFamily: "Tajawal-m"),
+                                style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
                               ),
                             ),
                             SizedBox(
@@ -259,14 +251,12 @@ class _LogInState extends State<LogIn> {
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontFamily: "Tajawal-b",
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233)),
+                                        color: Color.fromARGB(255, 127, 166, 233)),
                                   ),
                                 ),
                                 Text(
                                   " ليس لديك حساب ؟     ",
-                                  style: TextStyle(
-                                      fontSize: 14, fontFamily: "Tajawal-l"),
+                                  style: TextStyle(fontSize: 14, fontFamily: "Tajawal-l"),
                                 ),
                               ],
                             ),
