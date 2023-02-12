@@ -1,4 +1,4 @@
-// ignore_for_file: dead_code, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unused_local_variable, non_constant_identifier_names
+// ignore_for_file: dead_code, prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, unused_local_variable, non_constant_identifier_names, unused_import
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -1390,6 +1390,7 @@ class _MapPageState extends State<mapPage> {
                       filter_val = res["filter_val"];
                       initState();
                     });
+
                     print(filter_val);
                   },
                 ),
@@ -1502,5 +1503,12 @@ class _MapPageState extends State<mapPage> {
     if (num > 2200) {
       return Color.fromARGB(255, 152, 124, 69);
     }
+  }
+
+  change_color(String value) {
+    setState(() {
+      filter_val = value;
+      initState();
+    });
   }
 }

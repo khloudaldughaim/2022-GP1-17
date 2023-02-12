@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, camel_case_types, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:flutter/material.dart';
-import 'mapPage.dart';
+import 'package:nozol_application/pages/mapPage.dart';
 
 class filterMap extends StatefulWidget {
   @override
@@ -9,7 +9,10 @@ class filterMap extends StatefulWidget {
 }
 
 class _filterMapState extends State<filterMap> {
+  late final mapPage logic;
+
   static String filter_val = " ";
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -84,8 +87,11 @@ class _filterMapState extends State<filterMap> {
                 Row(
                   children: [
                     SizedBox(
-                      width: 180.0,
-                      height: 50.0,
+                      width: 10,
+                    ),
+                    SizedBox(
+                      width: 165.0,
+                      height: 40.0,
                       child: Padding(
                           padding: EdgeInsets.only(left: 30),
                           child: ElevatedButton(
@@ -109,20 +115,22 @@ class _filterMapState extends State<filterMap> {
                                     borderRadius: BorderRadius.circular(10.0)),
                                 backgroundColor: filter_val == "type"
                                     ? Color.fromARGB(255, 135, 165, 203)
-                                    : Color.fromARGB(194, 180, 183, 187)),
+                                    : Color.fromARGB(255, 248, 248, 248)),
                             child: Center(
                                 child: Text(
                               "نوع العقار",
                               style: TextStyle(
                                   fontSize: 17,
                                   fontFamily: "Tajawal-m",
-                                  color: Color.fromARGB(255, 255, 255, 255)),
+                                  color: filter_val == "type"
+                                      ? Color.fromARGB(255, 255, 255, 255)
+                                      : Color.fromARGB(194, 67, 66, 66)),
                             )),
                           )),
                     ),
                     SizedBox(
-                      width: 180.0,
-                      height: 50.0,
+                      width: 160.0,
+                      height: 40.0,
                       child: Padding(
                           padding: EdgeInsets.only(left: 30),
                           child: ElevatedButton(
@@ -146,14 +154,16 @@ class _filterMapState extends State<filterMap> {
                                     borderRadius: BorderRadius.circular(10.0)),
                                 backgroundColor: filter_val == "price"
                                     ? Color.fromARGB(255, 135, 165, 203)
-                                    : Color.fromARGB(194, 180, 183, 187)),
+                                    : Color.fromARGB(255, 248, 248, 248)),
                             child: Center(
                                 child: Text(
                               "سعر العقار",
                               style: TextStyle(
                                   fontSize: 17,
                                   fontFamily: "Tajawal-m",
-                                  color: Color.fromARGB(255, 255, 255, 255)),
+                                  color: filter_val == "price"
+                                      ? Color.fromARGB(255, 255, 255, 255)
+                                      : Color.fromARGB(194, 67, 66, 66)),
                             )),
                           )),
                     ),
@@ -163,8 +173,8 @@ class _filterMapState extends State<filterMap> {
                   height: 10,
                 ),
                 SizedBox(
-                  width: 180.0,
-                  height: 50.0,
+                  width: 150.0,
+                  height: 40.0,
                   child: Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: ElevatedButton(
@@ -188,14 +198,16 @@ class _filterMapState extends State<filterMap> {
                                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                             backgroundColor: filter_val == "space"
                                 ? Color.fromARGB(255, 135, 165, 203)
-                                : Color.fromARGB(194, 180, 183, 187)),
+                                : Color.fromARGB(255, 248, 248, 248)),
                         child: Center(
                             child: Text(
                           "المساحة",
                           style: TextStyle(
                               fontSize: 17,
                               fontFamily: "Tajawal-m",
-                              color: Color.fromARGB(255, 255, 255, 255)),
+                              color: filter_val == "space"
+                                  ? Color.fromARGB(255, 255, 255, 255)
+                                  : Color.fromARGB(194, 67, 66, 66)),
                         )),
                       )),
                 ),
@@ -1285,6 +1297,25 @@ class _filterMapState extends State<filterMap> {
                       ],
                     ),
                   ),
+                SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, {"filter_val": filter_val});
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                    shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                  ),
+                  child: Text(
+                    "إظهار",
+                    style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                  ),
+                ),
               ]),
             ));
       },
