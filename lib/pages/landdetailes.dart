@@ -202,7 +202,7 @@ class _LandDetailesState extends State<LandDetailes> {
               ),
             ),
             Container(
-              height: size.height * 0.35,
+              height: size.height * 0.45,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -607,37 +607,51 @@ class _LandDetailesState extends State<LandDetailes> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 232, bottom: 16),
+                          child: Text(
+                            "معلومات إضافية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
                         '${widget.land.properties!.description}' == ''
-                            ? Container()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 232, bottom: 16),
-                                    child: Text(
-                                      "معلومات إضافية",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Tajawal-m",
-                                      ),
-                                    ),
+                            ? Container(
+                              height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد معلومات إضافية !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                            )
+                            : Container(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
+                                child: Text(
+                                  '${widget.land.properties!.description}',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Tajawal-l",
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 5, left: 5, bottom: 16),
-                                    child: Text(
-                                      '${widget.land.properties!.description}',
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey[500],
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Tajawal-l",
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
+                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 102, bottom: 16),
                           child: Text(
@@ -712,27 +726,30 @@ class _LandDetailesState extends State<LandDetailes> {
                                           ),
                                         ))),
                               )
-                            : Container(
-                                height: 200,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                                  child: ListView.separated(
-                                    physics: BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    // shrinkWrap: true,
-                                    separatorBuilder: (context, index) => SizedBox(width: 20),
-                                    itemCount: widget.land.properties!.images.length,
-                                    itemBuilder: (context, index) => InkWell(
-                                      onTap: () =>
-                                          openGallery(widget.land.properties!.images, context),
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        widget.land.properties!.images[index],
+                            : Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Container(
+                                  height: 200,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    child: ListView.separated(
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      // shrinkWrap: true,
+                                      separatorBuilder: (context, index) => SizedBox(width: 20),
+                                      itemCount: widget.land.properties!.images.length,
+                                      itemBuilder: (context, index) => InkWell(
+                                        onTap: () =>
+                                            openGallery(widget.land.properties!.images, context),
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.network(
+                                          widget.land.properties!.images[index],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                            ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -863,51 +880,54 @@ class _LandDetailesState extends State<LandDetailes> {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                            child: ListView.separated(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                // shrinkWrap: true,
-                                separatorBuilder: (context, index) => SizedBox(width: 20),
-                                itemCount: output.length,
-                                itemBuilder: (context, index) {
-                                  for (int i = 0; i < HomePageState.allData.length; i++) {
-                                    if (HomePageState.allData[i] is Villa) {
-                                      Villa villa = HomePageState.allData[i] as Villa;
-                                      if (villa.properties.property_id == output[index] as String) {
-                                        return _buildVillaItem(
-                                            HomePageState.allData[i] as Villa, context);
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Container(
+                            height: 200,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                              child: ListView.separated(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  // shrinkWrap: true,
+                                  separatorBuilder: (context, index) => SizedBox(width: 20),
+                                  itemCount: output.length,
+                                  itemBuilder: (context, index) {
+                                    for (int i = 0; i < HomePageState.allData.length; i++) {
+                                      if (HomePageState.allData[i] is Villa) {
+                                        Villa villa = HomePageState.allData[i] as Villa;
+                                        if (villa.properties.property_id == output[index] as String) {
+                                          return _buildVillaItem(
+                                              HomePageState.allData[i] as Villa, context);
+                                        }
+                                      }
+                                      if (HomePageState.allData[i] is Apartment) {
+                                        Apartment apartment = HomePageState.allData[i] as Apartment;
+                                        if (apartment.properties.property_id ==
+                                            output[index] as String) {
+                                          return _buildApartmentItem(
+                                              HomePageState.allData[i] as Apartment, context);
+                                        }
+                                      }
+                                      if (HomePageState.allData[i] is Building) {
+                                        Building building = HomePageState.allData[i] as Building;
+                                        if (building.properties.property_id ==
+                                            output[index] as String) {
+                                          return _buildBuildingItem(
+                                              HomePageState.allData[i] as Building, context);
+                                        }
+                                      }
+                                      if (HomePageState.allData[i] is Land) {
+                                        Land land = HomePageState.allData[i] as Land;
+                                        if (land.properties!.property_id == output[index] as String) {
+                                          return _buildLandItem(
+                                              HomePageState.allData[i] as Land, context);
+                                        }
                                       }
                                     }
-                                    if (HomePageState.allData[i] is Apartment) {
-                                      Apartment apartment = HomePageState.allData[i] as Apartment;
-                                      if (apartment.properties.property_id ==
-                                          output[index] as String) {
-                                        return _buildApartmentItem(
-                                            HomePageState.allData[i] as Apartment, context);
-                                      }
-                                    }
-                                    if (HomePageState.allData[i] is Building) {
-                                      Building building = HomePageState.allData[i] as Building;
-                                      if (building.properties.property_id ==
-                                          output[index] as String) {
-                                        return _buildBuildingItem(
-                                            HomePageState.allData[i] as Building, context);
-                                      }
-                                    }
-                                    if (HomePageState.allData[i] is Land) {
-                                      Land land = HomePageState.allData[i] as Land;
-                                      if (land.properties!.property_id == output[index] as String) {
-                                        return _buildLandItem(
-                                            HomePageState.allData[i] as Land, context);
-                                      }
-                                    }
-                                  }
-                                  return Container();
-                                }),
+                                    return Container();
+                                  }),
+                            ),
                           ),
                         ),
                       ],
@@ -1219,131 +1239,135 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
           borderRadius: BorderRadius.all(
         Radius.circular(15),
       )),
-      child: Container(
-        height: 210,
-        decoration: '${type.properties.images.length}' == '0'
-            ? BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
-                    fit: BoxFit.cover),
-              )
-            : BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
-              ),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
         child: Container(
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.5, 1.0],
-              colors: [
-                Colors.transparent,
-                Colors.black.withOpacity(0.7),
-              ],
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                  border: Border.all(
-                    width: 1.5,
-                    color: Color.fromARGB(255, 127, 166, 233),
-                  ),
+          height: 210,
+          width: 250,
+          decoration: '${type.properties.images.length}' == '0'
+              ? BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          'https://www.guardanthealthamea.com/wp-content/uploads/2019/09/no-image.jpg'),
+                      fit: BoxFit.cover),
+                )
+              : BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage('${type.properties.images[0]}'), fit: BoxFit.cover),
                 ),
-                width: 85,
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: Center(
-                    child: '${type.properties.classification}' == 'للإيجار'
-                        ? Text(
-                            '${type.properties.type} للإيجار',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          )
-                        : Text(
-                            '${type.properties.type} للبيع',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          )),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${type.properties.type}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Tajawal-l",
-                        ),
-                      ),
-                      Text(
-                        'ريال ${type.properties.price}',
-                        style: TextStyle(
-                          height: 2,
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Tajawal-l",
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_city,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            '${type.properties.city}',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-l",
-                            ),
-                          ),
-                        ],
-                      ),
-                      rowItem,
-                    ],
-                  ),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.5, 1.0],
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withOpacity(0.7),
                 ],
               ),
-            ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                    border: Border.all(
+                      width: 1.5,
+                      color: Color.fromARGB(255, 127, 166, 233),
+                    ),
+                  ),
+                  width: 85,
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Center(
+                      child: '${type.properties.classification}' == 'للإيجار'
+                          ? Text(
+                              '${type.properties.type} للإيجار',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            )
+                          : Text(
+                              '${type.properties.type} للبيع',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            )),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${type.properties.type}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
+                        ),
+                        Text(
+                          'ريال ${type.properties.price}',
+                          style: TextStyle(
+                            height: 2,
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_city,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '${type.properties.city}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-l",
+                              ),
+                            ),
+                          ],
+                        ),
+                        rowItem,
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -155,7 +155,7 @@ class BuildingDetailes extends StatelessWidget {
               ),
             ),
             Container(
-              height: size.height * 0.35,
+              height: size.height * 0.45,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -603,39 +603,51 @@ class BuildingDetailes extends StatelessWidget {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 232, bottom: 16),
+                          child: Text(
+                            "معلومات إضافية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
+                            ),
+                          ),
+                        ),
                         '${building.properties.description}' == ''
-                            ? Container()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 232, bottom: 16),
-                                    child: Text(
-                                      "معلومات إضافية",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Tajawal-m",
-                                      ),
-                                    ),
+                            ? Container(
+                              height: 50,
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    child: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لا يوجد معلومات إضافية !',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Tajawal-l",
+                                          ),
+                                        ))),
+                            )
+                            : Container(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
+                                child: Text(
+                                  '${building.properties.description}',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Tajawal-l",
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 5, left: 5, bottom: 16),
-                                    child: Text(
-                                      '${building.properties.description}',
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey[500],
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "Tajawal-l",
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
+                            ),
                               Padding(
                                 padding: EdgeInsets.only(left: 102, bottom: 16),
                                 child: Text(
@@ -711,30 +723,33 @@ class BuildingDetailes extends StatelessWidget {
                                           ),
                                         ))),
                               )
-                            : Container(
-                                height: 200,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, bottom: 24, right: 20),
-                                  child: ListView.separated(
-                                    physics: BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    // shrinkWrap: true,
-                                    separatorBuilder: (context, index) =>
-                                        SizedBox(width: 20),
-                                    itemCount:
-                                        building.properties.images.length,
-                                    itemBuilder: (context, index) => InkWell(
-                                      onTap: () => openGallery(
-                                          building.properties.images, context),
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        building.properties.images[index],
+                            : Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Container(
+                                  height: 200,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, bottom: 24, right: 20),
+                                    child: ListView.separated(
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      // shrinkWrap: true,
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(width: 20),
+                                      itemCount:
+                                          building.properties.images.length,
+                                      itemBuilder: (context, index) => InkWell(
+                                        onTap: () => openGallery(
+                                            building.properties.images, context),
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.network(
+                                          building.properties.images[index],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                            ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [

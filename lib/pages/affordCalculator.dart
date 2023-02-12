@@ -743,7 +743,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               Container(
                                                 height: 210,
                                                 child: Directionality(
-                                                  textDirection: TextDirection.ltr,
+                                                  textDirection: TextDirection.rtl,
                                                   child: Padding(
                                                     padding: EdgeInsets.only(bottom: 24, right: 20),
                                                     child: ListView.separated(
