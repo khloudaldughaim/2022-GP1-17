@@ -23,7 +23,7 @@ class _ComplaintsState extends State<Complaints> {
   late String curentId = user!.uid;
   String complaint_id = '';
   List<Suser> curentuserInfo = [];
-  bool done = false;
+  String status = "1";
 
   var name = TextEditingController();
   var phone = TextEditingController();
@@ -265,7 +265,7 @@ class _ComplaintsState extends State<Complaints> {
                                                 "email": email.text,
                                                 "phone": phone.text,
                                                 "reason": reason.text,
-                                                "done": done,
+                                                "status": status,
                                                 "date": DateTime.now().year.toString() 
                                                         + "-" + DateTime.now().month.toString() 
                                                         + "-" + DateTime.now().day.toString() 

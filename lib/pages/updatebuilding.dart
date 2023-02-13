@@ -1098,7 +1098,7 @@ class _UpdateBuildingState extends State<UpdateBuilding> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'الأوقات المتاحة للجولات العقارية :',
+                            'الوقت الذي تفضله للجولات العقارية:',
                             style: TextStyle(
                               fontSize: 20.0,
                               fontFamily: "Tajawal-b",

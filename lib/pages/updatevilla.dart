@@ -1276,7 +1276,7 @@ class _UpdateVillaState extends State<UpdateVilla> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'الأوقات المتاحة للجولات العقارية :',
+                            'الوقت الذي تفضله للجولات العقارية:',
                             style: TextStyle(
                               fontSize: 20.0,
                               fontFamily: "Tajawal-b",

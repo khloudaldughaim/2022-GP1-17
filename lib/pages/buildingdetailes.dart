@@ -734,7 +734,7 @@ class _BuildingDetailesState extends State<BuildingDetailes> {
                         Padding(
                           padding: EdgeInsets.only(left: 102, bottom: 16),
                           child: Text(
-                            "الأوقات المتاحة للجولات العقارية",
+                            "الوقت المفضل للجولات العقارية",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
