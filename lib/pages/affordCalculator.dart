@@ -648,6 +648,8 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                         int spendings1 = int.parse(spendings.text);
                                                         int loans1 = int.parse(loans.text);
                                                         result = (income1 - spendings1 - loans1) * 0.25;
+                                                        inRangeProp.clear();
+                                                        showInRange = false;
 
                                                         HomePageState.allData.forEach((element) {
                                                           if (element is Villa) {
