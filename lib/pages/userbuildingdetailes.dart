@@ -61,10 +61,27 @@ class BuildingDetailes extends StatelessWidget {
                   child: Text("نعم"),
                   onPressed: () {
                     try {
+                      FirebaseFirestore.instance.collection('properties').doc(pId).delete();
                       FirebaseFirestore.instance
-                          .collection('properties')
-                          .doc(pId)
-                          .delete();
+                          .collection('bookings')
+                          .where("property_id", isEqualTo: pId)
+                          .get()
+                          .then((Snapshot) async {
+                        Snapshot.docs.forEach((element) {
+                          FirebaseFirestore.instance
+                              .collection('bookings')
+                              .doc(element['book_id'])
+                              .update({
+                            "status": "deleted",
+                          });
+                        });
+                      });
+                      // for (int i = 0; i < bookid.length; i++) {
+                      //   FirebaseFirestore.instance.collection('bookings').doc(bookid[i]).update({
+                      //     "status": "deleted",
+                      //   });
+                      // }
+
                       Fluttertoast.showToast(
                         msg: "تم الحذف بنجاح",
                         toastLength: Toast.LENGTH_SHORT,
@@ -75,9 +92,7 @@ class BuildingDetailes extends StatelessWidget {
                         fontSize: 18.0,
                       );
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => myProperty()));
+                          context, MaterialPageRoute(builder: (context) => myProperty()));
                     } catch (e, stack) {
                       Fluttertoast.showToast(
                         msg: "هناك خطأ ما",
@@ -170,22 +185,19 @@ class BuildingDetailes extends StatelessWidget {
                             //delete
                             GestureDetector(
                               onTap: () {
-                                deleteproperty(
-                                    '${building.properties.property_id}');
+                                deleteproperty('${building.properties.property_id}');
                               },
                               child: Container(
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Color.fromARGB(255, 226, 237, 255),
+                                  color: Color.fromARGB(255, 226, 237, 255),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.delete,
-                                    color: const Color.fromARGB(
-                                        255, 127, 166, 233),
+                                    color: const Color.fromARGB(255, 127, 166, 233),
                                     size: 28,
                                   ),
                                 ),
@@ -199,23 +211,20 @@ class BuildingDetailes extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          UpdateBuilding(building: building)),
+                                      builder: (context) => UpdateBuilding(building: building)),
                                 );
                               },
                               child: Container(
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Color.fromARGB(255, 226, 237, 255),
+                                  color: Color.fromARGB(255, 226, 237, 255),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.edit,
-                                    color: const Color.fromARGB(
-                                        255, 127, 166, 233),
+                                    color: const Color.fromARGB(255, 127, 166, 233),
                                     size: 28,
                                   ),
                                 ),
@@ -313,8 +322,7 @@ class BuildingDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -391,15 +399,13 @@ class BuildingDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -411,15 +417,13 @@ class BuildingDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -434,14 +438,11 @@ class BuildingDetailes extends StatelessWidget {
                                         .doc('${building.properties.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
                                         Map<String, dynamic> user =
-                                            snapshot.data!.data()
-                                                as Map<String, dynamic>;
+                                            snapshot.data!.data() as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -490,13 +491,11 @@ class BuildingDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(
-                                right: 24, left: 24, bottom: 24),
+                            padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                PropInfo(Icons.elevator, '${ThereIsElevator}',
-                                    'مصعد'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
                                 PropInfo(Icons.pool, '${ThereIsPool}', 'مسبح'),
                               ],
                             )),
@@ -512,8 +511,7 @@ class BuildingDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -616,7 +614,7 @@ class BuildingDetailes extends StatelessWidget {
                         ),
                         '${building.properties.description}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -631,37 +629,37 @@ class BuildingDetailes extends StatelessWidget {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
-                                child: Text(
-                                  '${building.properties.description}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${building.properties.description}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 102, bottom: 16),
+                          child: Text(
+                            "الوقت المفضل للجولات العقارية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 102, bottom: 16),
-                                child: Text(
-                                  "الوقت المفضل للجولات العقارية",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-m",
-                                  ),
-                                ),
-                              ),
+                          ),
+                        ),
                         '${building.properties.TourTime}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -676,23 +674,23 @@ class BuildingDetailes extends StatelessWidget {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
-                                child: Text(
-                                  '${building.properties.TourTime}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${building.properties.TourTime}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -709,8 +707,7 @@ class BuildingDetailes extends StatelessWidget {
                                 height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
@@ -724,23 +721,20 @@ class BuildingDetailes extends StatelessWidget {
                                         ))),
                               )
                             : Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Container(
+                                textDirection: TextDirection.rtl,
+                                child: Container(
                                   height: 200,
                                   child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                     child: ListView.separated(
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       // shrinkWrap: true,
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(width: 20),
-                                      itemCount:
-                                          building.properties.images.length,
+                                      separatorBuilder: (context, index) => SizedBox(width: 20),
+                                      itemCount: building.properties.images.length,
                                       itemBuilder: (context, index) => InkWell(
-                                        onTap: () => openGallery(
-                                            building.properties.images, context),
+                                        onTap: () =>
+                                            openGallery(building.properties.images, context),
                                         borderRadius: BorderRadius.circular(15),
                                         child: Image.network(
                                           building.properties.images[index],
@@ -749,7 +743,7 @@ class BuildingDetailes extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                            ),
+                              ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -829,8 +823,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) =>
-    Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),

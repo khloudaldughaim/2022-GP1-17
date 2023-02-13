@@ -52,10 +52,27 @@ class ApartmentDetailes extends StatelessWidget {
                   child: Text("نعم"),
                   onPressed: () {
                     try {
+                      FirebaseFirestore.instance.collection('properties').doc(pId).delete();
                       FirebaseFirestore.instance
-                          .collection('properties')
-                          .doc(pId)
-                          .delete();
+                          .collection('bookings')
+                          .where("property_id", isEqualTo: pId)
+                          .get()
+                          .then((Snapshot) async {
+                        Snapshot.docs.forEach((element) {
+                          FirebaseFirestore.instance
+                              .collection('bookings')
+                              .doc(element['book_id'])
+                              .update({
+                            "status": "deleted",
+                          });
+                        });
+                      });
+                      // for (int i = 0; i < bookid.length; i++) {
+                      //   FirebaseFirestore.instance.collection('bookings').doc(bookid[i]).update({
+                      //     "status": "deleted",
+                      //   });
+                      // }
+
                       Fluttertoast.showToast(
                         msg: "تم الحذف بنجاح",
                         toastLength: Toast.LENGTH_SHORT,
@@ -66,9 +83,7 @@ class ApartmentDetailes extends StatelessWidget {
                         fontSize: 18.0,
                       );
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => myProperty()));
+                          context, MaterialPageRoute(builder: (context) => myProperty()));
                     } catch (e, stack) {
                       Fluttertoast.showToast(
                         msg: "هناك خطأ ما",
@@ -144,22 +159,19 @@ class ApartmentDetailes extends StatelessWidget {
                             //delete
                             GestureDetector(
                               onTap: () {
-                                deleteproperty(
-                                    '${apartment.properties.property_id}');
+                                deleteproperty('${apartment.properties.property_id}');
                               },
                               child: Container(
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Color.fromARGB(255, 226, 237, 255),
+                                  color: Color.fromARGB(255, 226, 237, 255),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.delete,
-                                    color: const Color.fromARGB(
-                                        255, 127, 166, 233),
+                                    color: const Color.fromARGB(255, 127, 166, 233),
                                     size: 28,
                                   ),
                                 ),
@@ -173,23 +185,20 @@ class ApartmentDetailes extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => UpdateApartment(
-                                          apartment: apartment)),
+                                      builder: (context) => UpdateApartment(apartment: apartment)),
                                 );
                               },
                               child: Container(
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Color.fromARGB(255, 226, 237, 255),
+                                  color: Color.fromARGB(255, 226, 237, 255),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Icon(
                                     Icons.edit,
-                                    color: const Color.fromARGB(
-                                        255, 127, 166, 233),
+                                    color: const Color.fromARGB(255, 127, 166, 233),
                                     size: 28,
                                   ),
                                 ),
@@ -287,8 +296,7 @@ class ApartmentDetailes extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: 24, right: 24, top: 8, bottom: 16),
+                    padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -405,15 +413,13 @@ class ApartmentDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.whatsapp,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -425,15 +431,13 @@ class ApartmentDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233)
-                                          .withOpacity(0.1),
+                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
                                       child: Icon(
                                         Icons.message,
-                                        color:
-                                            Color.fromARGB(255, 127, 166, 233),
+                                        color: Color.fromARGB(255, 127, 166, 233),
                                         size: 20,
                                       ),
                                     ),
@@ -448,14 +452,11 @@ class ApartmentDetailes extends StatelessWidget {
                                         .doc('${apartment.properties.User_id}')
                                         .get(),
                                     builder: ((context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
                                         Map<String, dynamic> user =
-                                            snapshot.data!.data()
-                                                as Map<String, dynamic>;
+                                            snapshot.data!.data() as Map<String, dynamic>;
                                         return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '${user['name']}',
@@ -504,17 +505,12 @@ class ApartmentDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(
-                                right: 24, left: 24, bottom: 24),
+                            padding: EdgeInsets.only(right: 24, left: 24, bottom: 24),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                PropInfo(
-                                    Icons.chair,
-                                    '${apartment.number_of_livingRooms}',
-                                    'صالة'),
-                                PropInfo(Icons.elevator, '${ThereIsElevator}',
-                                    'مصعد'),
+                                PropInfo(Icons.chair, '${apartment.number_of_livingRooms}', 'صالة'),
+                                PropInfo(Icons.elevator, '${ThereIsElevator}', 'مصعد'),
                               ],
                             )),
                         Padding(
@@ -529,8 +525,7 @@ class ApartmentDetailes extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -633,7 +628,7 @@ class ApartmentDetailes extends StatelessWidget {
                         ),
                         '${apartment.properties.description}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -648,37 +643,37 @@ class ApartmentDetailes extends StatelessWidget {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
-                                child: Text(
-                                  '${apartment.properties.description}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${apartment.properties.description}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 102, bottom: 16),
+                          child: Text(
+                            "الوقت المفضل للجولات العقارية",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Tajawal-m",
                             ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 102, bottom: 16),
-                                child: Text(
-                                  "الوقت المفضل للجولات العقارية",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-m",
-                                  ),
-                                ),
-                              ),
+                          ),
+                        ),
                         '${apartment.properties.TourTime}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -693,23 +688,23 @@ class ApartmentDetailes extends StatelessWidget {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
+                              )
                             : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
-                                child: Text(
-                                  '${apartment.properties.TourTime}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                  child: Text(
+                                    '${apartment.properties.TourTime}',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Tajawal-l",
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                         Padding(
                           padding: EdgeInsets.only(left: 320, bottom: 16),
                           child: Text(
@@ -726,8 +721,7 @@ class ApartmentDetailes extends StatelessWidget {
                                 height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
@@ -741,23 +735,20 @@ class ApartmentDetailes extends StatelessWidget {
                                         ))),
                               )
                             : Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Container(
+                                textDirection: TextDirection.rtl,
+                                child: Container(
                                   height: 200,
                                   child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, bottom: 24, right: 20),
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
                                     child: ListView.separated(
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       // shrinkWrap: true,
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(width: 20),
-                                      itemCount:
-                                          apartment.properties.images.length,
+                                      separatorBuilder: (context, index) => SizedBox(width: 20),
+                                      itemCount: apartment.properties.images.length,
                                       itemBuilder: (context, index) => InkWell(
-                                        onTap: () => openGallery(
-                                            apartment.properties.images, context),
+                                        onTap: () =>
+                                            openGallery(apartment.properties.images, context),
                                         borderRadius: BorderRadius.circular(15),
                                         child: Image.network(
                                           apartment.properties.images[index],
@@ -766,7 +757,7 @@ class ApartmentDetailes extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                            ),
+                              ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -846,8 +837,7 @@ Widget PropInfo(IconData iconData, String text, String label) {
   );
 }
 
-openGallery(List images, BuildContext context) =>
-    Navigator.of(context).push(MaterialPageRoute(
+openGallery(List images, BuildContext context) => Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => GalleryWidget(
         images: images,
       ),
