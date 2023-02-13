@@ -590,7 +590,7 @@ class LandDetailes extends StatelessWidget {
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
-                                          ' لا يوجد أوقات متاحة محدده من قبل المالك !',
+                                          'لا يفضل المالك وقت محدد للجولات العقارية !',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[500],

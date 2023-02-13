@@ -9,8 +9,11 @@ import '../registration/sign_up.dart';
 class Complaints extends StatefulWidget {
   final String property_id;
   final String user_id;
+  final String type;
+  final String city;
+  final String neighborhood;
 
-  Complaints({required this.property_id,required this.user_id});
+  Complaints({required this.property_id, required this.user_id, required this.type, required this.city, required this.neighborhood});
 
   @override
   State<Complaints> createState() => _ComplaintsState();
@@ -271,6 +274,9 @@ class _ComplaintsState extends State<Complaints> {
                                                         + "-" + DateTime.now().day.toString() 
                                                         + " " + DateTime.now().hour.toString() 
                                                         + ":" + DateTime.now().minute.toString(),
+                                                "type": widget.type,
+                                                "city": widget.city,
+                                                "neighborhood": widget.neighborhood,
                                               });
                                               
                                               Fluttertoast.showToast(

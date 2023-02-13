@@ -114,7 +114,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                 Radius.circular(15),
                               )),
                               child: Container(
-                                height: 80,
+                                height: 115,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Color.fromARGB(119, 110, 110, 110),
@@ -123,14 +123,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                                   color: Color.fromARGB(235, 202, 222, 245),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15, left: 10, bottom: 5),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
                                               onPressed: () {
@@ -152,48 +153,42 @@ class _MyComplaintsState extends State<MyComplaints> {
                                               ),
                                             ),
                                           ),
-                                          // ElevatedButton(
-                                          //   onPressed: () {
-                                          //     realtyDetails(
-                                          //         snapshot.data!.docs[index].data()['property_id']);
-                                          //   },
-                                          //   child: Text('تفاصيل العقار المبلغ عنه'),
-                                          //   style: ButtonStyle(
-                                          //     backgroundColor: MaterialStateProperty.all(
-                                          //       Color.fromARGB(255, 127, 166, 233),
-                                          //     ),
-                                          //     shape: MaterialStateProperty.all(
-                                          //         RoundedRectangleBorder(
-                                          //             borderRadius: BorderRadius.circular(27))),
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                'بلاغ تمت معالجته',
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Tajawal-m",
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("تاريخ البلاغ : " +
+                                                snapshot.data!.docs[index].data()['date']),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            'بلاغ تمت معالجته',
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: "Tajawal-m",
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text("تاريخ البلاغ : " +
-                                              snapshot.data!.docs[index].data()['date']),
-                                        ],
+                                      padding: const EdgeInsets.only(top:5, left : 20, right: 20, bottom: 5),
+                                      child: Text('العقار المبلغ عنه : ' 
+                                        + snapshot.data!.docs[index].data()['type'] + ", "
+                                        + snapshot.data!.docs[index].data()['city'] + ", "
+                                        + snapshot.data!.docs[index].data()['neighborhood'],
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],
@@ -229,23 +224,24 @@ class _MyComplaintsState extends State<MyComplaints> {
                                 Radius.circular(15),
                               )),
                               child: Container(
-                                height: 80,
+                                height: 115,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Color.fromARGB(119, 110, 110, 110),
                                     width: 1,
                                   ),
-                                  color: Color.fromARGB(33, 215, 215, 218),
+                                  color: Color.fromARGB(235, 202, 222, 245),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15, left: 10, bottom: 5),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
                                               onPressed: () {
@@ -267,48 +263,42 @@ class _MyComplaintsState extends State<MyComplaints> {
                                               ),
                                             ),
                                           ),
-                                          // ElevatedButton(
-                                          //   onPressed: () {
-                                          //     realtyDetails(
-                                          //         snapshot.data!.docs[index].data()['property_id']);
-                                          //   },
-                                          //   child: Text('تفاصيل العقار المبلغ عنه'),
-                                          //   style: ButtonStyle(
-                                          //     backgroundColor: MaterialStateProperty.all(
-                                          //       Color.fromARGB(255, 127, 166, 233),
-                                          //     ),
-                                          //     shape: MaterialStateProperty.all(
-                                          //         RoundedRectangleBorder(
-                                          //             borderRadius: BorderRadius.circular(27))),
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                'بلاغ قيد المعالجة',
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Tajawal-m",
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("تاريخ البلاغ : " +
+                                                snapshot.data!.docs[index].data()['date']),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            'بلاغ قيد المعالجة',
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: "Tajawal-m",
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text("تاريخ البلاغ : " +
-                                              snapshot.data!.docs[index].data()['date']),
-                                        ],
+                                      padding: const EdgeInsets.only(top:5, left : 20, right: 20, bottom: 5),
+                                      child: Text('العقار المبلغ عنه : ' 
+                                        + snapshot.data!.docs[index].data()['type'] + ", "
+                                        + snapshot.data!.docs[index].data()['city'] + ", "
+                                        + snapshot.data!.docs[index].data()['neighborhood'],
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],
@@ -344,23 +334,24 @@ class _MyComplaintsState extends State<MyComplaints> {
                                 Radius.circular(15),
                               )),
                               child: Container(
-                                height: 80,
+                                height: 115,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Color.fromARGB(119, 110, 110, 110),
                                     width: 1,
                                   ),
-                                  color: Color.fromARGB(33, 215, 215, 218),
+                                  color: Color.fromARGB(235, 202, 222, 245),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15, left: 10, bottom: 5),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
                                               onPressed: () {
@@ -382,48 +373,42 @@ class _MyComplaintsState extends State<MyComplaints> {
                                               ),
                                             ),
                                           ),
-                                          // ElevatedButton(
-                                          //   onPressed: () {
-                                          //     realtyDetails(
-                                          //         snapshot.data!.docs[index].data()['property_id']);
-                                          //   },
-                                          //   child: Text('تفاصيل العقار المبلغ عنه'),
-                                          //   style: ButtonStyle(
-                                          //     backgroundColor: MaterialStateProperty.all(
-                                          //       Color.fromARGB(255, 127, 166, 233),
-                                          //     ),
-                                          //     shape: MaterialStateProperty.all(
-                                          //         RoundedRectangleBorder(
-                                          //             borderRadius: BorderRadius.circular(27))),
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                'بلاغ بانتظار المعالجة',
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: "Tajawal-m",
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("تاريخ البلاغ : " +
+                                                snapshot.data!.docs[index].data()['date']),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            'بلاغ بانتظار المعالجة',
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: "Tajawal-m",
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text("تاريخ البلاغ : " +
-                                              snapshot.data!.docs[index].data()['date']),
-                                        ],
+                                      padding: const EdgeInsets.only(top:5, left : 20, right: 20, bottom: 5),
+                                      child: Text('العقار المبلغ عنه : ' 
+                                        + snapshot.data!.docs[index].data()['type'] + ", "
+                                        + snapshot.data!.docs[index].data()['city'] + ", "
+                                        + snapshot.data!.docs[index].data()['neighborhood'],
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],

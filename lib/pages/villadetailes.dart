@@ -43,12 +43,15 @@ class _VillaDetailesState extends State<VillaDetailes> {
   var data;
   List<dynamic> output = [];
   bool _fav = false;
-  String id = getuser();
+  late String id ;
 
   void initState() {
     super.initState();
     SimilarPropFunction();
-    _isFav();
+    if(FirebaseAuth.instance.currentUser != null){
+      id = getuser();
+      _isFav();
+    }
   }
 
   void SimilarPropFunction() async {
@@ -268,6 +271,9 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                             builder: (context) => Complaints(
                                                   property_id: widget.villa.properties.property_id,
                                                   user_id: widget.villa.properties.User_id,
+                                                  type: widget.villa.properties.type,
+                                                  city: widget.villa.properties.city,
+                                                  neighborhood: widget.villa.properties.neighborhood,
                                                 )),
                                       );
                                     }
@@ -784,7 +790,7 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
-                                          ' لا يوجد أوقات متاحة محدده من قبل المالك !',
+                                          'لا يفضل المالك وقت محدد للجولات العقارية !',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[500],

@@ -42,12 +42,15 @@ class _BuildingDetailesState extends State<BuildingDetailes> {
   var data;
   List<dynamic> output = [];
   bool _fav = false;
-  String id = getuser();
+  late String id ;
 
   void initState() {
     super.initState();
     SimilarPropFunction();
-    _isFav();
+    if(FirebaseAuth.instance.currentUser != null){
+      id = getuser();
+      _isFav();
+    }
   }
 
   void SimilarPropFunction() async {
@@ -274,9 +277,11 @@ class _BuildingDetailesState extends State<BuildingDetailes> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Complaints(
-                                                  property_id:
-                                                      widget.building.properties.property_id,
+                                                  property_id: widget.building.properties.property_id,
                                                   user_id: widget.building.properties.User_id,
+                                                  type: widget.building.properties.type,
+                                                  city: widget.building.properties.city,
+                                                  neighborhood: widget.building.properties.neighborhood,
                                                 )),
                                       );
                                     }
@@ -751,7 +756,7 @@ class _BuildingDetailesState extends State<BuildingDetailes> {
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
-                                          ' لا يوجد أوقات متاحة محدده من قبل المالك !',
+                                          'لا يفضل المالك وقت محدد للجولات العقارية !',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[500],

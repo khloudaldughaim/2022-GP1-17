@@ -25,10 +25,13 @@ class FavoritePage extends StatefulWidget {
 class FavoritePageState extends State<FavoritePage> {
   // static List<dynamic> favoriteList = HomePageState.allData ;
   static List<dynamic> favoriteList = [];
-  String id = getuser();
+  late String id ;
   void initState() {
     super.initState();
-    getFav();
+    if(FirebaseAuth.instance.currentUser != null){
+      id = getuser();
+      getFav();
+    }
   }
 
   void getFav() async {
@@ -238,9 +241,8 @@ class FavoritePageState extends State<FavoritePage> {
       ),
     );
   }
-}
 
-Widget _buildVillaItem(Villa villa, BuildContext context) {
+  Widget _buildVillaItem(Villa villa, BuildContext context) {
   Row rowItem = Row(
     children: [
       Icon(
@@ -521,14 +523,18 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                           icon: (Icon(Icons.favorite)),
                           color: const Color.fromARGB(255, 127, 166, 233),
                           onPressed: () {
-                            print("favooo");
-                            print(type.properties.property_id);
-                            FirebaseFirestore.instance
-                                .collection('Standard_user')
-                                .doc(id)
-                                .collection('Favorite')
-                                .doc(type.properties.property_id)
-                                .delete();
+                            setState(() {
+                              print("favooo");
+                              print(type.properties.property_id);
+                              FirebaseFirestore.instance
+                                  .collection('Standard_user')
+                                  .doc(id)
+                                  .collection('Favorite')
+                                  .doc(type.properties.property_id)
+                                  .delete();
+
+                                  getFav();
+                            });
                           }),
                     ),
                   ),
@@ -601,6 +607,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
       ),
     ),
   );
+}
 }
 
 String getuser() {

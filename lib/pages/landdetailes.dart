@@ -42,12 +42,15 @@ class _LandDetailesState extends State<LandDetailes> {
   var data;
   List<dynamic> output = [];
   bool _fav = false;
-  String id = getuser();
+  late String id ;
 
   void initState() {
     super.initState();
     SimilarPropFunction();
-    _isFav();
+    if(FirebaseAuth.instance.currentUser != null){
+      id = getuser();
+      _isFav();
+    }
   }
 
   void SimilarPropFunction() async {
@@ -257,6 +260,9 @@ class _LandDetailesState extends State<LandDetailes> {
                                             builder: (context) => Complaints(
                                                   property_id: widget.land.properties!.property_id,
                                                   user_id: widget.land.properties!.User_id,
+                                                  type: widget.land.properties!.type,
+                                                  city: widget.land.properties!.city,
+                                                  neighborhood: widget.land.properties!.neighborhood,
                                                 )),
                                       );
                                     }
@@ -672,7 +678,7 @@ class _LandDetailesState extends State<LandDetailes> {
                                     child: Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: Text(
-                                          ' لا يوجد أوقات متاحة محدده من قبل المالك !',
+                                          'لا يفضل المالك وقت محدد للجولات العقارية !',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[500],
