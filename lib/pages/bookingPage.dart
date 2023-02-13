@@ -581,6 +581,12 @@ class _BookingPagestate extends State<boookingPage> {
                                         .update({
                                       "ArrayOfbooking": book,
                                     });
+                                    FirebaseFirestore.instance
+                                        .collection('Standard_user')
+                                        .doc(curentId)
+                                        .update({
+                                      "ArrayOfbooking": book,
+                                    });
                                     Fluttertoast.showToast(
                                       msg: "تم الحجز بنجاح",
                                       toastLength: Toast.LENGTH_SHORT,

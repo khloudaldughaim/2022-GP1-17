@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:nozol_application/pages/apartment.dart';
 import 'package:nozol_application/pages/building.dart';
@@ -1217,47 +1218,78 @@ class _BuyerBookingsState extends State<BuyerBooking> {
   }
 
   void realtyDetails(Object isEqualTo) {
+    print(isEqualTo);
     FirebaseFirestore.instance
         .collection('properties')
         .where('property_id', isEqualTo: isEqualTo)
         .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((element) {
-        setState(() {
-          if (element["type"] == "فيلا") {
-            Villa villa = Villa.fromMap(element.data());
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+        .then((querySnapshot) async {
+      if (querySnapshot.docs.isEmpty) {
+        FirebaseFirestore.instance
+            .collection('Hidden_properties')
+            .where('property_id', isEqualTo: isEqualTo)
+            .get()
+            .then((Snapshot) async {
+          if (Snapshot.docs.isEmpty) {
+            Fluttertoast.showToast(
+              msg: "عذرًا تم حذف هذا العقار ",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              textColor: Color.fromARGB(255, 248, 249, 250),
+              fontSize: 18.0,
+            );
+          } else {
+            Fluttertoast.showToast(
+              msg: "عذرًا هذا العقار موقوف",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              textColor: Color.fromARGB(255, 248, 249, 250),
+              fontSize: 18.0,
             );
           }
-          ;
-          if (element.data()["type"] == "شقة") {
-            Apartment apartment = Apartment.fromMap(element.data());
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
-            );
-          }
-          ;
-          if (element.data()["type"] == "عمارة") {
-            Building building = Building.fromMap(element.data());
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
-            );
-          }
-          ;
-          if (element.data()["type"] == "ارض") {
-            Land land = Land.fromJson(element.data());
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
-            );
-          }
-          ;
         });
-      });
+      } else {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (element["type"] == "فيلا") {
+              Villa villa = Villa.fromMap(element.data());
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+              );
+            }
+            ;
+            if (element.data()["type"] == "شقة") {
+              Apartment apartment = Apartment.fromMap(element.data());
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+              );
+            }
+            ;
+            if (element.data()["type"] == "عمارة") {
+              Building building = Building.fromMap(element.data());
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+              );
+            }
+            ;
+            if (element.data()["type"] == "ارض") {
+              Land land = Land.fromJson(element.data());
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
+              );
+            }
+            ;
+          });
+        });
+      }
     });
   }
 }
