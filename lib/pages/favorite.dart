@@ -1,3 +1,6 @@
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,119 +19,99 @@ import 'package:nozol_application/pages/villadetailes.dart';
 import 'package:nozol_application/registration/log_in.dart';
 
 class FavoritePage extends StatefulWidget {
-  const FavoritePage({Key? key}) : super(key: key);
+  const FavoritePage({super.key});
 
   @override
-  State<FavoritePage> createState() => FavoritePageState();
+  State<FavoritePage> createState() => _FavoritePageState();
 }
 
-class FavoritePageState extends State<FavoritePage> {
-  // static List<dynamic> favoriteList = HomePageState.allData ;
-  static List<dynamic> favoriteList = [];
+class _FavoritePageState extends State<FavoritePage> {
+  List<dynamic> favoriteList = [];
   late String id ;
-  void initState() {
-    super.initState();
-    if(FirebaseAuth.instance.currentUser != null){
-      id = getuser();
-      getFav();
-    }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getFav(String id){
+    Future<QuerySnapshot<Map<String, dynamic>>> snapshot =  FirebaseFirestore.instance
+    .collection('Standard_user')
+    .doc(id)
+    .collection('Favorite')
+    .get();
+    return snapshot ;
   }
 
-  void getFav() async {
-    favoriteList.clear();
+  void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
+    try {
+      favoriteList.clear();
 
-    var snapshot = await FirebaseFirestore.instance
-        .collection('Standard_user')
-        .doc(id)
-        .collection('Favorite')
-        .get();
-
-    if (snapshot.docs.isNotEmpty) {
-      // Collection exits
-      print("فيه كولكشن فيفورت");
-      snapshot.docs.forEach((element) {
+      data.docs.forEach((element) {
         favoriteList.add(element.data()['property_id']);
       });
-    } else {
-      print("ما فيه كولكشن فيفورت");
+    } catch (e) {
+      debugPrint(e.toString());
     }
-    setState(() {});
   }
 
-  // Widget DisplayFavorite(List<dynamic> listItem){
-  //   return ListView.separated(
-  //     itemCount: listItem.length,
-  //     separatorBuilder: (BuildContext context, int index) {
-  //       return SizedBox(height: 10);
-  //     },
-  //     itemBuilder: (BuildContext context, int index) {
-  //       if (listItem[index] is Villa) {
-  //         return _buildVillaItem(listItem[index] as Villa, context);
-  //       }
-  //       if (listItem[index] is Apartment) {
-  //         return _buildApartmentItem(listItem[index] as Apartment, context);
-  //       }
-  //       if (listItem[index] is Building) {
-  //         return _buildBuildingItem(listItem[index] as Building, context);
-  //       }
-  //       if (listItem[index] is Land) {
-  //         return _buildLandItem(listItem[index] as Land, context);
-  //       }
-  //       return Container();
-  //     },
-  //   );
-  // }
+  Widget _handleListItems(List<dynamic> listItem) {
+    return ListView.separated(
+      separatorBuilder: (context, index) => SizedBox(width: 20),
+      itemCount: favoriteList.length,
+      itemBuilder: (context, index) {
+        for (int i = 0; i < HomePageState.allData.length; i++) {
+          if (HomePageState.allData[i] is Villa) {
+            Villa villa = HomePageState.allData[i] as Villa;
+            if (villa.properties.property_id == favoriteList[index]) {
+              return _buildVillaItem(HomePageState.allData[i] as Villa, context);
+            }
+          }
+          if (HomePageState.allData[i] is Apartment) {
+            Apartment apartment = HomePageState.allData[i] as Apartment;
+            if (apartment.properties.property_id == favoriteList[index]) {
+              return _buildApartmentItem( HomePageState.allData[i] as Apartment, context);
+            }
+          }
+          if (HomePageState.allData[i] is Building) {
+            Building building = HomePageState.allData[i] as Building;
+            if (building.properties.property_id == favoriteList[index]) {
+              return _buildBuildingItem( HomePageState.allData[i] as Building, context);
+            }
+          }
+          if (HomePageState.allData[i] is Land) {
+            Land land = HomePageState.allData[i] as Land;
+            if (land.properties!.property_id == favoriteList[index]) {
+              return _buildLandItem(HomePageState.allData[i] as Land, context);
+            }
+          }
+        }
+        return Container();
+    });
+  }
 
-  // void _handleData(QuerySnapshot<Map<String, dynamic>> data) async {
-  //   try {
-  //     favoriteList.clear();
-
-  //     data.docs.forEach((element) {
-  //       if (element.data()["type"] == "فيلا") {
-  //         favoriteList.add(Villa.fromMap(element.data()));
-  //       }
-
-  //       if (element.data()["type"] == "شقة") {
-  //         favoriteList.add(Apartment.fromMap(element.data()));
-  //       }
-
-  //       if (element.data()["type"] == "عمارة") {
-  //         favoriteList.add(Building.fromMap(element.data()));
-  //       }
-
-  //       if (element.data()["type"] == "ارض") {
-  //         favoriteList.add(Land.fromJson(element.data()));
-  //       }
-  //     });
-  //     Future.delayed(Duration(seconds: 1), () {
-  //       setState(() {});
-  //     });
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
-
-  // Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-  //   if (snapshot.connectionState == ConnectionState.waiting) {
-  //     return Center(child: CircularProgressIndicator());
-  //   }
-  //   if (snapshot.hasError) {
-  //     return Text("حصل خطأً ما");
-  //   }
-  //   if (!snapshot.hasData) {
-  //     return Text("لا يوجد بيانات");
-  //   }
-  //   if (snapshot.hasData) {
-  //     if (favoriteList.isEmpty) {
-  //       _handleData(snapshot.data!);
-  //     }
-  //     return DisplayFavorite(favoriteList);
-  //   }
-  //   return Container();
-  // }
+  Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (snapshot.hasError) {
+      return Text("حصل خطأً ما");
+    }
+    if (!snapshot.hasData) {
+      return Center(child: Text("لا يوجد بيانات"));
+    }
+    if (snapshot.hasData) {
+      _handleData(snapshot.data!);
+      if(favoriteList.isEmpty){
+        return Center(child: Text("لا يوجد عقارات في المفضلة"));
+      }else{
+        return _handleListItems(favoriteList);
+      }
+    }
+    return Container();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if(FirebaseAuth.instance.currentUser != null){
+      id = getuser();
+      print(id);
+    }
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -142,102 +125,55 @@ class FavoritePageState extends State<FavoritePage> {
                   fontFamily: "Tajawal-b",
                 )),
           ),
-          // actions: [
-          //   Padding(
-          //     padding: EdgeInsets.only(right: 20.0),
-          //     child: GestureDetector(
-          //       onTap: () {
-          //         Navigator.push(
-          //             context,
-          //             MaterialPageRoute(
-          //                 builder: (context) => NavigationBarPage()));
-          //       },
-          //       child: Icon(
-          //         Icons.arrow_forward_ios,
-          //         color: Colors.white,
-          //         size: 28,
-          //       ),
-          //     ),
-          //   ),
-          // ],
         ),
-        body: FirebaseAuth.instance.currentUser == null
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  SizedBox(height: 10),
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 85),
-                      child: Text(
-                        "عذراً لابد من تسجيل الدخول ",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Tajawal-b",
-                            color: Color.fromARGB(255, 127, 166, 233)),
-                        textAlign: TextAlign.center,
-                      )),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                      padding: MaterialStateProperty.all(
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
-                      ),
-                    ),
-                    child: Text(
-                      "تسجيل الدخول",
-                      style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
-                    ),
-                  )
-                ],
-              )
-            : favoriteList.length > 0
-                ? ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(width: 20),
-                    itemCount: favoriteList.length,
-                    itemBuilder: (context, index) {
-                      for (int i = 0; i < HomePageState.allData.length; i++) {
-                        if (HomePageState.allData[i] is Villa) {
-                          Villa villa = HomePageState.allData[i] as Villa;
-                          if (villa.properties.property_id == favoriteList[index]) {
-                            return _buildVillaItem(HomePageState.allData[i] as Villa, context);
-                          }
-                        }
-                        if (HomePageState.allData[i] is Apartment) {
-                          Apartment apartment = HomePageState.allData[i] as Apartment;
-                          if (apartment.properties.property_id == favoriteList[index]) {
-                            return _buildApartmentItem(
-                                HomePageState.allData[i] as Apartment, context);
-                          }
-                        }
-                        if (HomePageState.allData[i] is Building) {
-                          Building building = HomePageState.allData[i] as Building;
-                          if (building.properties.property_id == favoriteList[index]) {
-                            return _buildBuildingItem(
-                                HomePageState.allData[i] as Building, context);
-                          }
-                        }
-                        if (HomePageState.allData[i] is Land) {
-                          Land land = HomePageState.allData[i] as Land;
-                          if (land.properties!.property_id == favoriteList[index]) {
-                            return _buildLandItem(HomePageState.allData[i] as Land, context);
-                          }
-                        }
-                      }
-                      return Container();
-                    })
-                : Center(
-                    child: Text("لا يوجد عقارات في المفضلة"),
-                  ),
+        body: FirebaseAuth.instance.currentUser == null ?
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 10),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 85),
+                child: Text(
+                  "عذراً لابد من تسجيل الدخول ",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: "Tajawal-b",
+                      color: Color.fromARGB(255, 127, 166, 233)),
+                  textAlign: TextAlign.center,
+                )),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+              },
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                padding: MaterialStateProperty.all(
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
+                ),
+              ),
+              child: Text(
+                "تسجيل الدخول",
+                style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+              ),
+            )
+          ],
+        ) 
+        : FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            future: getFav(id),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+            ) {
+              print(id);
+              return _handleSnapshot(snapshot);
+            },
+          ),
       ),
     );
   }
@@ -277,9 +213,9 @@ class FavoritePageState extends State<FavoritePage> {
         '${villa.number_of_bathroom}',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
           fontWeight: FontWeight.bold,
           fontFamily: "Tajawal-l",
+          fontSize: 14,
         ),
       ),
       SizedBox(
@@ -294,9 +230,9 @@ class FavoritePageState extends State<FavoritePage> {
         '${villa.properties.space} متر ² ',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
           fontWeight: FontWeight.bold,
           fontFamily: "Tajawal-l",
+          fontSize: 14,
         ),
       ),
     ],
@@ -306,7 +242,7 @@ class FavoritePageState extends State<FavoritePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
-    );
+    ).then((_) => setState(() {}));
   }, rowItem, villa);
 }
 
@@ -345,8 +281,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
         '${apartment.number_of_bathroom}',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
           fontWeight: FontWeight.bold,
+          fontSize: 14,
           fontFamily: "Tajawal-l",
         ),
       ),
@@ -362,8 +298,8 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
         '${apartment.properties.space} متر ² ',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
           fontWeight: FontWeight.bold,
+          fontSize: 14,
           fontFamily: "Tajawal-l",
         ),
       ),
@@ -373,7 +309,7 @@ Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
-    );
+    ).then((_) => setState(() {}));
   }, rowItem, apartment);
 }
 
@@ -389,8 +325,8 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
         '${building.properties.space} متر ² ',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
           fontWeight: FontWeight.bold,
+          fontSize: 14,
           fontFamily: "Tajawal-l",
         ),
       ),
@@ -401,7 +337,7 @@ Widget _buildBuildingItem(Building building, BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
-    );
+    ).then((_) => setState(() {}));
   }, rowItem, building);
 }
 
@@ -417,8 +353,8 @@ Widget _buildLandItem(Land land, BuildContext context) {
         '${land.properties!.space} متر ² ',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
           fontWeight: FontWeight.bold,
+          fontSize: 14,
           fontFamily: "Tajawal-l",
         ),
       ),
@@ -429,7 +365,7 @@ Widget _buildLandItem(Land land, BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
-    );
+    ).then((_) => setState(() {}));
   }, rowItem, land);
 }
 
@@ -533,7 +469,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                                   .doc(type.properties.property_id)
                                   .delete();
 
-                                  getFav();
+                              getFav(id);
                             });
                           }),
                     ),
