@@ -64,6 +64,7 @@ class ApartmentDetailes extends StatelessWidget {
                               .doc(element['book_id'])
                               .update({
                             "status": "deleted",
+                            "isExpired": true,
                           });
                         });
                       });

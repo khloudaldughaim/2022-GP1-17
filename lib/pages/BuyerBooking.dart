@@ -403,6 +403,58 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                         ),
                                                       ),
                                                     )),
+                                              if (snapshot.data!.docs[index].data()['status'] ==
+                                                  'deleted')
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
+                                                      border: Border.all(
+                                                        width: 1.5,
+                                                        color: Color.fromARGB(255, 7, 5, 1),
+                                                      ),
+                                                    ),
+                                                    width: 140,
+                                                    padding: EdgeInsets.symmetric(vertical: 4),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'عقار محذوف ',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Tajawal-m",
+                                                        ),
+                                                      ),
+                                                    )),
+                                              if (snapshot.data!.docs[index].data()['status'] ==
+                                                  'suspended')
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
+                                                      border: Border.all(
+                                                        width: 1.5,
+                                                        color: Color.fromARGB(255, 221, 136, 9),
+                                                      ),
+                                                    ),
+                                                    width: 140,
+                                                    padding: EdgeInsets.symmetric(vertical: 4),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'عقار موقوف ',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Tajawal-m",
+                                                        ),
+                                                      ),
+                                                    )),
                                               SizedBox(
                                                 height: 10,
                                               ),

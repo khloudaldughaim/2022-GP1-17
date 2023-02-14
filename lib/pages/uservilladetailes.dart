@@ -82,9 +82,9 @@ class VillaDetailes extends StatelessWidget {
                               .doc(element['book_id'])
                               .update({
                             "status": "deleted",
+                            "isExpired": true,
                           });
                         });
-                        // print(bookid);
                       });
                       // for (int i = 0; i < bookid.length; i++) {
                       //   FirebaseFirestore.instance.collection('bookings').doc(bookid[i]).update({

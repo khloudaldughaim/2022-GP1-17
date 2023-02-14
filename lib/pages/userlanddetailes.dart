@@ -56,6 +56,7 @@ class LandDetailes extends StatelessWidget {
                               .doc(element['book_id'])
                               .update({
                             "status": "deleted",
+                            "isExpired": true,
                           });
                         });
                         print(bookid);
