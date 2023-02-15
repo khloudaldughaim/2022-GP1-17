@@ -1467,41 +1467,32 @@ class _MapPageState extends State<mapPage> {
   space_colored(String space) {
     var num = int.parse(space);
 
-    if (num <= 199) {
-      return Color.fromARGB(255, 166, 212, 243);
+    if (num <= 299) {
+      return Color.fromARGB(255, 143, 182, 176);
     }
-    if (num > 199 && num <= 399) {
-      return Color.fromARGB(255, 243, 166, 240);
+    if (num > 299 && num <= 599) {
+      return Color.fromARGB(248, 69, 165, 112);
     }
-    if (num > 399 && num <= 599) {
-      return Color.fromARGB(255, 243, 204, 166);
+    if (num > 599 && num <= 899) {
+      return Color.fromARGB(255, 143, 158, 9);
     }
-    if (num > 599 && num <= 799) {
-      return Color.fromARGB(255, 180, 166, 243);
+    if (num > 899 && num <= 1199) {
+      return Color.fromARGB(255, 217, 203, 17);
     }
-    if (num > 799 && num <= 999) {
-      return Color.fromARGB(255, 243, 166, 166);
+    if (num > 1199 && num <= 1499) {
+      return Color.fromARGB(255, 200, 140, 20);
     }
-    if (num > 999 && num <= 1199) {
-      return Color.fromARGB(255, 166, 240, 243);
+    if (num > 1499 && num <= 1799) {
+      return Color.fromARGB(255, 189, 92, 7);
     }
-    if (num > 1199 && num <= 1399) {
-      return Color.fromARGB(255, 119, 124, 118);
+    if (num > 1799 && num <= 2199) {
+      return Color.fromARGB(255, 212, 73, 55);
     }
-    if (num > 1399 && num <= 1599) {
-      return Color.fromARGB(255, 119, 52, 76);
+    if (num > 2199 && num <= 2499) {
+      return Color.fromARGB(255, 205, 37, 37);
     }
-    if (num > 1599 && num <= 1799) {
-      return Color.fromARGB(255, 115, 107, 99);
-    }
-    if (num > 1799 && num <= 1999) {
-      return Color.fromARGB(255, 72, 107, 131);
-    }
-    if (num > 1999 && num <= 2200) {
-      return Color.fromARGB(255, 201, 58, 82);
-    }
-    if (num > 2200) {
-      return Color.fromARGB(255, 152, 124, 69);
+    if (num > 2499) {
+      return Color.fromARGB(255, 223, 13, 80);
     }
   }
 
