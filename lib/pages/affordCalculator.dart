@@ -176,73 +176,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               fontSize: 15.0,
                                               fontFamily: "Tajawal-b",
                                               fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 163, 163, 163)),
+                                              color: Color.fromARGB(255, 139, 139, 139)),
                                         ),
                                       )),
-                                  Container(
-                                    margin: const EdgeInsets.all(5),
-                                  ),
-                                  Container(
-                                    margin:
-                                        const EdgeInsets.only(top: 5, right: 7),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            child: Column(
-                                          children: [
-                                            Text('أقصى حد للإيجار',
-                                                style: TextStyle(
-                                                    fontSize: 21.0,
-                                                    fontFamily: "Tajawal-b",
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textDirection:
-                                                    TextDirection.rtl),
-                                            Container(
-                                              margin: const EdgeInsets.all(7),
-                                            ),
-                                            Container(
-                                                height: 180,
-                                                width: 180,
-                                                padding: const EdgeInsets.only(
-                                                    top: 70, ),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                        width: 4,
-                                                        color: Color.fromARGB(
-                                                            255,
-                                                            134,
-                                                            206,
-                                                            137))),
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      '$result',
-                                                      style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 134, 206, 137),
-                                                        fontSize: 39.0,
-                                                        fontFamily: "Tajawal-b",
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ' ر.س ',
-                                                      style: TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 134, 206, 137),
-                                                        fontSize: 20.0,
-                                                        fontFamily: "Tajawal-b",
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                          ],
-                                        )),
-                                      ],
-                                    ),
-                                  ),
                                   Container(
                                     margin: const EdgeInsets.all(12),
                                   ),
@@ -723,75 +659,250 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 ),
                                               )
                                             ],
-                                          ))),
+                                          ))),    
                                   Container(
-                                    margin: const EdgeInsets.all(20),
+                                    margin: const EdgeInsets.all(13),
                                   ),
-                                  //recommended properties
                                   showInRange == true
-                                      ? Container(
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(left:75),
-                                                child: Text(
-                                                  'عقارات مناسبة لميزانيتك :',
-                                                  style: TextStyle(
-                                                    fontSize: 23.0,
-                                                    fontFamily: "Tajawal-b",
-                                                  ),
-                                                ),
+                                      ? Column(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                  top: 5, right: 7),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                      child: Column(
+                                                    children: [
+                                                      Container(
+                                                          height: 180,
+                                                          width: 180,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            top: 43,
+                                                          ),
+                                                          decoration: BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              border: Border.all(
+                                                                  width: 3.5,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          134,
+                                                                          206,
+                                                                          137))),
+                                                          child: Column(
+                                                            children: [
+                                                              Text(
+                                                                  'أقصى حد للإيجار',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            134,
+                                                                            206,
+                                                                            137),
+                                                                    fontSize:
+                                                                        19.0,
+                                                                    fontFamily:
+                                                                        "Tajawal-b",
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                  textDirection:
+                                                                      TextDirection
+                                                                          .rtl),
+                                                              Container(
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                        .all(6),
+                                                              ),
+                                                              Text(
+                                                                '$result',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          134,
+                                                                          206,
+                                                                          137),
+                                                                  fontSize:
+                                                                      39.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontFamily:
+                                                                      "Tajawal-b",
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                        .all(2),
+                                                              ),
+                                                              Text(
+                                                                '  ر.س ',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          134,
+                                                                          206,
+                                                                          137),
+                                                                  fontSize:
+                                                                      19.0,
+                                                                  fontFamily:
+                                                                      "Tajawal-b",
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ],
+                                                  )),
+                                                ],
                                               ),
-                                              Container(
-                                                height: 210,
-                                                child: Directionality(
-                                                  textDirection: TextDirection.rtl,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(bottom: 24, right: 20),
-                                                    child: ListView.separated(
-                                                        physics: BouncingScrollPhysics(),
-                                                        scrollDirection: Axis.horizontal,
-                                                        // shrinkWrap: true,
-                                                        separatorBuilder: (context, index) => SizedBox(width: 20),
-                                                        itemCount: inRangeProp.length,
-                                                        itemBuilder: (context, index) {
-                                                          for (int i = 0; i < HomePageState.allData.length; i++) {
-                                                            if (HomePageState.allData[i] is Villa) {
-                                                              Villa villa = HomePageState.allData[i] as Villa;
-                                                              if (villa.properties.property_id == inRangeProp[index]) {
-                                                                return _buildVillaItem(
-                                                                    HomePageState.allData[i] as Villa, context);
-                                                              }
-                                                            }
-                                                            if (HomePageState.allData[i] is Apartment) {
-                                                              Apartment apartment = HomePageState.allData[i] as Apartment;
-                                                              if (apartment.properties.property_id == inRangeProp[index]) {
-                                                                return _buildApartmentItem(
-                                                                    HomePageState.allData[i] as Apartment, context);
-                                                              }
-                                                            }
-                                                            if (HomePageState.allData[i] is Building) {
-                                                              Building building = HomePageState.allData[i] as Building;
-                                                              if (building.properties.property_id == inRangeProp[index]) {
-                                                                return _buildBuildingItem(
-                                                                    HomePageState.allData[i] as Building, context);
-                                                              }
-                                                            }
-                                                            if (HomePageState.allData[i] is Land) {
-                                                              Land land = HomePageState.allData[i] as Land;
-                                                              if (land.properties!.property_id == inRangeProp[index]) {
-                                                                return _buildLandItem(
-                                                                    HomePageState.allData[i] as Land, context);
-                                                              }
-                                                            }
-                                                          }
-                                                          return Container();
-                                                        }),
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.all(25),
+                                            ),
+                                            //recommended properties
+                                            Container(
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 90),
+                                                    child: Text(
+                                                      'عقارات مناسبة لميزانيتك :',
+                                                      style: TextStyle(
+                                                        fontSize: 22.0,
+                                                        fontFamily: "Tajawal-b",
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                  Container(
+                                                    height: 210,
+                                                    child: Directionality(
+                                                      textDirection:
+                                                          TextDirection.rtl,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 24,
+                                                                right: 20),
+                                                        child:
+                                                            ListView.separated(
+                                                                physics:
+                                                                    BouncingScrollPhysics(),
+                                                                scrollDirection: Axis
+                                                                    .horizontal,
+                                                                // shrinkWrap: true,
+                                                                separatorBuilder: (context,
+                                                                        index) =>
+                                                                    SizedBox(
+                                                                        width:
+                                                                            20),
+                                                                itemCount:
+                                                                    inRangeProp
+                                                                        .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          HomePageState
+                                                                              .allData
+                                                                              .length;
+                                                                      i++) {
+                                                                    if (HomePageState
+                                                                            .allData[i]
+                                                                        is Villa) {
+                                                                      Villa
+                                                                          villa =
+                                                                          HomePageState.allData[i]
+                                                                              as Villa;
+                                                                      if (villa
+                                                                              .properties
+                                                                              .property_id ==
+                                                                          inRangeProp[
+                                                                              index]) {
+                                                                        return _buildVillaItem(
+                                                                            HomePageState.allData[i]
+                                                                                as Villa,
+                                                                            context);
+                                                                      }
+                                                                    }
+                                                                    if (HomePageState
+                                                                            .allData[i]
+                                                                        is Apartment) {
+                                                                      Apartment
+                                                                          apartment =
+                                                                          HomePageState.allData[i]
+                                                                              as Apartment;
+                                                                      if (apartment
+                                                                              .properties
+                                                                              .property_id ==
+                                                                          inRangeProp[
+                                                                              index]) {
+                                                                        return _buildApartmentItem(
+                                                                            HomePageState.allData[i]
+                                                                                as Apartment,
+                                                                            context);
+                                                                      }
+                                                                    }
+                                                                    if (HomePageState
+                                                                            .allData[i]
+                                                                        is Building) {
+                                                                      Building
+                                                                          building =
+                                                                          HomePageState.allData[i]
+                                                                              as Building;
+                                                                      if (building
+                                                                              .properties
+                                                                              .property_id ==
+                                                                          inRangeProp[
+                                                                              index]) {
+                                                                        return _buildBuildingItem(
+                                                                            HomePageState.allData[i]
+                                                                                as Building,
+                                                                            context);
+                                                                      }
+                                                                    }
+                                                                    if (HomePageState
+                                                                            .allData[i]
+                                                                        is Land) {
+                                                                      Land
+                                                                          land =
+                                                                          HomePageState.allData[i]
+                                                                              as Land;
+                                                                      if (land.properties!
+                                                                              .property_id ==
+                                                                          inRangeProp[
+                                                                              index]) {
+                                                                        return _buildLandItem(
+                                                                            HomePageState.allData[i]
+                                                                                as Land,
+                                                                            context);
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                  return Container();
+                                                                }),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                            )
+                                          ],
                                         )
                                       : Container(
                                           margin: const EdgeInsets.all(20),

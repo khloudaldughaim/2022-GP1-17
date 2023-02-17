@@ -1468,31 +1468,31 @@ class _MapPageState extends State<mapPage> {
     var num = int.parse(space);
 
     if (num <= 299) {
-      return Color.fromARGB(255, 143, 182, 176);
+      return Color.fromARGB(255, 127, 218, 183);
     }
     if (num > 299 && num <= 599) {
-      return Color.fromARGB(248, 69, 165, 112);
+      return Color.fromARGB(255, 20, 160, 90);
     }
     if (num > 599 && num <= 899) {
-      return Color.fromARGB(255, 143, 158, 9);
+      return Color.fromARGB(255, 2, 85, 43);
     }
     if (num > 899 && num <= 1199) {
-      return Color.fromARGB(255, 217, 203, 17);
+      return Color.fromARGB(255, 230, 222, 17);
     }
     if (num > 1199 && num <= 1499) {
-      return Color.fromARGB(255, 200, 140, 20);
+      return Color.fromARGB(255, 182, 143, 36);
     }
     if (num > 1499 && num <= 1799) {
-      return Color.fromARGB(255, 189, 92, 7);
+      return Color.fromARGB(255, 235, 117, 7);
     }
     if (num > 1799 && num <= 2199) {
-      return Color.fromARGB(255, 212, 73, 55);
+      return Color.fromARGB(255, 240, 38, 38);
     }
     if (num > 2199 && num <= 2499) {
-      return Color.fromARGB(255, 205, 37, 37);
+      return Color.fromARGB(255, 170, 6, 6);
     }
     if (num > 2499) {
-      return Color.fromARGB(255, 223, 13, 80);
+      return Color.fromARGB(255, 77, 41, 14);
     }
   }
 
