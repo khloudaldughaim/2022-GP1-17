@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
@@ -143,10 +144,56 @@ class MyCustomFormState extends State<MyCustomForm> {
     super.dispose();
   }
 
+  void initState() {
+    getCurrentPosition();
+
+    super.initState();
+  }
+
+  GoogleMapController? mapController;
+  List<Marker> markers = <Marker>[];
+
+  Position position = Position.fromMap({'latitude': 24.7136, 'longitude': 46.6753});
+  @override
+  void getCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    Position currentLocation = await Geolocator.getCurrentPosition();
+    setState(() {
+      position = currentLocation;
+    });
+
+    markers.add(Marker(
+      markerId: MarkerId(position.latitude.toString() + position.longitude.toString()),
+      position: LatLng(position.latitude, position.longitude),
+      infoWindow: const InfoWindow(
+        title: 'موقع العقار',
+      ),
+      icon: BitmapDescriptor.defaultMarker,
+      draggable: true,
+    ));
+  }
+
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedFiles = [];
-
-  GoogleMapController? controller;
 
   //String _currentAddress = "";
 
@@ -965,83 +1012,94 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     child: Stack(
                                       children: [
                                         GoogleMap(
-                                          onMapCreated: (mapController) {
-                                            controller = mapController;
-                                          },
-                                          myLocationButtonEnabled: true,
-                                          myLocationEnabled: true,
-                                          initialCameraPosition:
-                                              CameraPosition(target: mapLatLng, zoom: 14),
-                                          markers: {
-                                            Marker(
-                                              markerId: const MarkerId("marker1"),
-                                              icon: BitmapDescriptor.defaultMarker,
-                                              visible: true,
-                                              draggable: true,
-                                              position: LatLng(24.774265, 46.738586),
-                                              onDrag: (place) async {
-                                                LatLng geolocation = await place;
-
-                                                controller!.animateCamera(
-                                                    CameraUpdate.newLatLng(geolocation));
-                                                setState(() {
-                                                  mapLatLng = geolocation;
-                                                });
-                                              },
-                                            )
-                                          },
-                                        ),
-                                        Container(
-                                            alignment: Alignment.bottomRight,
-                                            margin: EdgeInsets.only(right: 6, bottom: 108),
-                                            child: FloatingActionButton(
-                                              backgroundColor: Colors.white,
-                                              child: Icon(
-                                                Icons.location_on,
-                                                color: Colors.blue,
-                                              ),
-                                              onPressed: () async {
-                                                LocationData currentLocation;
-                                                var location = new Location();
-
-                                                currentLocation = await location.getLocation();
-
-                                                LatLng latLng = LatLng(currentLocation.latitude!,
-                                                    currentLocation.longitude!);
-
-                                                controller!
-                                                    .animateCamera(CameraUpdate.newCameraPosition(
-                                                  CameraPosition(
-                                                    bearing: 0,
-                                                    target: LatLng(currentLocation.latitude!,
-                                                        currentLocation.longitude!),
-                                                    zoom: 17.0,
+                                          markers: markers.toSet(),
+                                          onTap: (tapped) async {
+                                            markers.removeAt(0);
+                                            markers.insert(
+                                                0,
+                                                Marker(
+                                                  markerId: MarkerId(tapped.latitude.toString() +
+                                                      tapped.longitude.toString()),
+                                                  position:
+                                                      LatLng(tapped.latitude, tapped.longitude),
+                                                  infoWindow: const InfoWindow(
+                                                    title: 'موقع العقار',
                                                   ),
+                                                  draggable: true,
+                                                  icon: BitmapDescriptor.defaultMarker,
                                                 ));
+                                            setState(() {
+                                              markers = markers;
+                                              print("items ready and set state");
+                                            });
 
-                                                setState(() {
-                                                  mapLatLng = latLng;
-                                                });
-/* 
-                                                List<geo.Placemark> places = await geo.placemarkFromCoordinates(
-        mapLatLng.latitude, mapLatLng.longitude);
-    _currentAddress =
-        places.first.name! +
-        "1-" +
-        places.first.subAdministrativeArea! +
-        "2-" +
-        places.first.subLocality! +
-        "3-" +
-        places.first.subThoroughfare! +
-        "4-" +
-        places.first.thoroughfare!;
-        
-        places.first.administrativeArea! +
-        "3-" +
-        places.first.postalCode! +
-        "4-" +*/
-                                              },
-                                            )),
+                                            print(markers);
+                                          },
+                                          zoomGesturesEnabled: true,
+                                          mapType: MapType.normal,
+                                          myLocationEnabled: true,
+                                          myLocationButtonEnabled: true,
+                                          onMapCreated: (controller) {
+                                            setState(() {
+                                              mapController = controller;
+                                            });
+                                          },
+                                          initialCameraPosition: CameraPosition(
+                                            target: LatLng(position.latitude, position.longitude),
+                                            zoom: 10.0,
+                                          ),
+                                        ),
+//                                         Container(
+//                                             alignment: Alignment.bottomRight,
+//                                             margin: EdgeInsets.only(right: 6, bottom: 108),
+//                                             child: FloatingActionButton(
+//                                               backgroundColor: Colors.white,
+//                                               child: Icon(
+//                                                 Icons.location_on,
+//                                                 color: Colors.blue,
+//                                               ),
+//                                               onPressed: () async {
+//                                                 LocationData currentLocation;
+//                                                 var location = new Location();
+
+//                                                 currentLocation = await location.getLocation();
+
+//                                                 LatLng latLng = LatLng(currentLocation.latitude!,
+//                                                     currentLocation.longitude!);
+
+//                                                 mapController!
+//                                                     .animateCamera(CameraUpdate.newCameraPosition(
+//                                                   CameraPosition(
+//                                                     bearing: 0,
+//                                                     target: LatLng(currentLocation.latitude!,
+//                                                         currentLocation.longitude!),
+//                                                     zoom: 17.0,
+//                                                   ),
+//                                                 ));
+
+//                                                 setState(() {
+//                                                   mapLatLng = latLng;
+//                                                 });
+// /*
+//                                                 List<geo.Placemark> places = await geo.placemarkFromCoordinates(
+//         mapLatLng.latitude, mapLatLng.longitude);
+//     _currentAddress =
+//         places.first.name! +
+//         "1-" +
+//         places.first.subAdministrativeArea! +
+//         "2-" +
+//         places.first.subLocality! +
+//         "3-" +
+//         places.first.subThoroughfare! +
+//         "4-" +
+//         places.first.thoroughfare!;
+
+//         places.first.administrativeArea! +
+//         "3-" +
+//         places.first.postalCode! +
+//         "4-" +*/
+//                                               },
+//                                             )),
                                         Container(
                                             alignment: Alignment.topCenter,
                                             margin: EdgeInsets.only(top: 5),
@@ -1056,9 +1114,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                               onSelected: (place) async {
                                                 Geolocation? geolocation = await place.geolocation;
 
-                                                controller!.animateCamera(CameraUpdate.newLatLng(
+                                                mapController!.animateCamera(CameraUpdate.newLatLng(
                                                     geolocation!.coordinates));
-                                                controller!.animateCamera(
+                                                mapController!.animateCamera(
                                                     CameraUpdate.newLatLngBounds(
                                                         geolocation.bounds, 0));
                                                 setState(() {
