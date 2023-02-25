@@ -17,6 +17,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../registration/log_in.dart';
 import 'homapage.dart';
 import 'my-property.dart';
+import 'package:nozol_application/Cities/cities.dart';
+import 'package:nozol_application/Cities/neighborhood.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -122,7 +124,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool basement = false;
   bool elevator = false;
   String? city = "الرياض";
-  final address = TextEditingController();
+  String? address;
   final location = TextEditingController();
   final TourTime = TextEditingController();
   int number_of_bathrooms = 0;
@@ -131,13 +133,12 @@ class MyCustomFormState extends State<MyCustomForm> {
   int number_of_floors = 0;
   int number_of_apartments = 0;
   final description = TextEditingController();
+  final GlobalKey<FormFieldState> _AddressKey = GlobalKey<FormFieldState>();
 
   void dispose() {
     price.dispose();
-    address.dispose();
     in_floor.dispose();
     space.dispose();
-    address.dispose();
     location.dispose();
     description.dispose();
     TourTime.dispose();
@@ -203,20 +204,16 @@ class MyCustomFormState extends State<MyCustomForm> {
     "مكة",
     "المدينة",
     "الدمام",
-    "الاحساء",
-    "الخبر",
-    "القطيف",
-    "الخفجي",
     "الهفوف",
-    "الطائف",
+    "الطايف",
     "تبوك",
     "بريدة",
     "خميس مشيط",
     "الجبيل",
     "نجران",
     "المبرز",
-    "حايل",
-    "ابها",
+    "حائل",
+    "أبها",
     "ينبع",
     "عرعر",
     "عنيزة",
@@ -226,25 +223,9 @@ class MyCustomFormState extends State<MyCustomForm> {
     "الباحة",
     "بيشة",
     "الرس",
-    "البكيرية",
     "الشفا",
-    "العلا",
-    "القنفذة",
-    "رنية",
-    "رابغ",
-    "النماص",
-    "سراة عبيدة",
-    "رجال المع",
-    "ضباء",
-    "املج",
-    "بقعاء",
-    "رفحاء",
-    "صبيا",
-    "شرورة",
-    "بلجرشي",
-    "دومة الجندل"
   ];
-
+  List areasList = [];
   @override
   Widget build(BuildContext context) {
     GlobalKey<CSCPickerState> _cscPickerKey = GlobalKey();
@@ -281,7 +262,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'price': price.text,
               'space': space.text,
               'city': city,
-              'neighborhood': address.text,
+              'neighborhood': address,
               'images': arrImage,
               'type': type1,
               'property_age': property_age,
@@ -314,7 +295,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'price': price.text,
               'space': space.text,
               'city': city,
-              'neighborhood': address.text,
+              'neighborhood': address,
               'images': arrImage,
               'type': type1,
               'property_age': property_age,
@@ -346,7 +327,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'price': price.text,
               'space': space.text,
               'city': city,
-              'neighborhood': address.text,
+              'neighborhood': address,
               'images': arrImage,
               'type': type1,
               'propertyUse': propertyUse1,
@@ -372,7 +353,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'price': price.text,
               'space': space.text,
               'city': city,
-              'neighborhood': address.text,
+              'neighborhood': address,
               'images': arrImage,
               'type': type1,
               'property_age': property_age,
@@ -532,7 +513,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   color: Colors.white,
                                                   border: Border.all(
                                                       color: Colors.grey.shade300, width: 1)),
-                                              height: 40,
+                                              height: 55,
                                               width: 150,
                                               child: DropdownButtonFormField(
                                                   decoration: InputDecoration(
@@ -861,22 +842,37 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   color: Colors.white,
                                                   border: Border.all(
                                                       color: Colors.grey.shade300, width: 1)),
-                                              height: 40,
-                                              width: 150,
+                                              height: 55,
+                                              width: 190,
                                               child: DropdownButtonFormField(
+                                                isExpanded: true,
                                                 menuMaxHeight: 400,
-                                                value: city,
                                                 items: citiesList.map((value) {
                                                   return DropdownMenuItem(
                                                     value: value,
                                                     child: Text(value),
                                                   );
                                                 }).toList(),
-                                                onChanged: (_selectedValue) {
+                                                onChanged: (_selectedValue) async {
+                                                  var tempCity = await cities.where((element) =>
+                                                      (element['name_ar'] == _selectedValue));
+                                                  var tempArea = await areas.where((element) =>
+                                                      (element['city_id'] ==
+                                                          tempCity.first['city_id']));
+                                                  _AddressKey.currentState?.reset();
+                                                  areasList.clear();
+                                                  areasList.addAll(tempArea);
                                                   setState(() {
                                                     city = _selectedValue.toString();
                                                   });
                                                 },
+                                                validator: (value) {
+                                                  if (value == null) {
+                                                    return 'الرجاء اختيار المدينة';
+                                                  }
+                                                },
+                                                autovalidateMode:
+                                                    AutovalidateMode.onUserInteraction,
                                                 style: TextStyle(
                                                     fontSize: 16.0,
                                                     fontFamily: "Tajawal-m",
@@ -885,7 +881,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   isDense: true,
                                                   border: InputBorder.none,
                                                   contentPadding: EdgeInsets.all(7),
-                                                  hintText: 'الرياض',
+                                                  hintText: 'اختر المدينة',
                                                 ),
                                               ),
                                             ),
@@ -909,38 +905,48 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       Container(
                                         margin: const EdgeInsets.all(7),
                                       ),
-                                      Expanded(
-                                          child: Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 60),
-                                              child: Directionality(
-                                                textDirection: TextDirection.rtl,
-                                                child: TextFormField(
-                                                  controller: address,
-                                                  autovalidateMode:
-                                                      AutovalidateMode.onUserInteraction,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'القيروان ',
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                    contentPadding: EdgeInsets.all(6),
-                                                    enabledBorder: OutlineInputBorder(
-                                                      borderRadius: BorderRadius.circular(8),
-                                                      borderSide: const BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 0.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value == null || value.isEmpty) {
-                                                      return 'الرجاء عدم ترك الخانة فارغة!';
-                                                    }
-                                                    if (RegExp(r'[0-9]').hasMatch(value)) {
-                                                      return 'الرجاء إدخال أحرف فقط';
-                                                    }
-                                                  },
-                                                ),
-                                              ))),
+                                      Padding(padding: const EdgeInsets.all(10.0)),
+                                      Container(
+                                        padding: EdgeInsets.only(right: 7),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                            color: Colors.white,
+                                            border:
+                                                Border.all(color: Colors.grey.shade300, width: 1)),
+                                        height: 55,
+                                        width: 190,
+                                        child: DropdownButtonFormField(
+                                          isExpanded: true,
+                                          key: _AddressKey,
+                                          items: areasList.map((value) {
+                                            return DropdownMenuItem(
+                                              value: value,
+                                              child: Text(value['name_ar']),
+                                            );
+                                          }).toList(),
+                                          onChanged: (dynamic value) {
+                                            setState(() {
+                                              address = value['name_ar'];
+                                            });
+                                          },
+                                          validator: (value) {
+                                            if (value == null) {
+                                              return 'الرجاء اختيار الحي';
+                                            }
+                                          },
+                                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontFamily: "Tajawal-m",
+                                              color: Color.fromARGB(255, 73, 75, 82)),
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            border: InputBorder.none,
+                                            contentPadding: EdgeInsets.all(7),
+                                            hintText: 'اختر الحي ',
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Container(
