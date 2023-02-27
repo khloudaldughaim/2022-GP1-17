@@ -78,6 +78,7 @@ class afforCalcFormState extends State<afforCalcForm> {
   final spendings = TextEditingController();
   final loans = TextEditingController();
   double result = 0;
+  bool showResult = false;
   bool showInRange = false;
   List<dynamic> inRangeProp = [];
 
@@ -579,6 +580,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                         int spendings1 = int.parse(spendings.text);
                                                         int loans1 = int.parse(loans.text);
                                                         result = (income1 - spendings1 - loans1) * 0.25;
+                                                        showResult = true;
                                                         inRangeProp.clear();
                                                         showInRange = false;
                                                         address='';
@@ -660,7 +662,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                   Container(
                                     margin: const EdgeInsets.all(13),
                                   ),
-                                  showInRange == true
+                                  showResult == true
                                       ? Column(
                                           children: [
                                             Container(
@@ -787,15 +789,19 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 180,
-                                                        top: 13,
-                                                        bottom: 10),
-                                                    padding: EdgeInsets.only(
-                                                        right: 7, top: 3 ),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
+                                                  showInRange == true
+                                                      ? Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 180,
+                                                                  top: 13,
+                                                                  bottom: 10),
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  right: 7,
+                                                                  top: 3),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     10)),
@@ -821,6 +827,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       onChanged:
                                                           (dynamic value) {
                                                         setState(() {
+                                                          address='';
                                                           address = value['name_ar'];
 
                                                           inRangeProp.clear();
@@ -865,11 +872,35 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                         border:
                                                             InputBorder.none,
                                                         contentPadding:
-                                                            EdgeInsets.only(bottom: 8),
-                                                        hintText: 'تصفية الحي',
-                                                      ),
-                                                    ),
-                                                  ),
+                                                                  EdgeInsets.only(
+                                                                      bottom:
+                                                                          8),
+                                                              hintText:
+                                                                  'تصفية الحي',
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(20),
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 30),
+                                                          child: Text(
+                                                            'لا يوجد لدينا حالياً عقارات تناسب ميزانيتك',
+                                                            style: TextStyle(
+                                                                fontSize: 16.0,
+                                                                fontFamily:
+                                                                    "Tajawal-b",
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        139,
+                                                                        139,
+                                                                        139)),
+                                                          ),
+                                                        ),
                                                   Container(
                                                     height: 210,
                                                     child: Directionality(

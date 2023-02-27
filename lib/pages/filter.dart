@@ -56,7 +56,7 @@ class _FilterPageState extends State<FilterPage> {
   ];
   List areasList = [];
   static final GlobalKey<FormFieldState> _AddressKey = GlobalKey<FormFieldState>();
-  static String? address;
+  static String? address='';
   double property_age = 0.0;
   static int number_of_bathrooms = 0;
   static int number_of_rooms = 0;
