@@ -896,7 +896,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        ' *الحي: ',
+                                        ' الحي: ',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",

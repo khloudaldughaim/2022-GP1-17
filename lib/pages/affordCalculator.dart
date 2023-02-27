@@ -12,6 +12,8 @@ import 'package:nozol_application/pages/landdetailes.dart';
 import 'package:nozol_application/pages/villa.dart';
 import 'package:nozol_application/pages/villadetailes.dart';
 
+import '../Cities/cities.dart';
+import '../Cities/neighborhood.dart';
 import 'apartment.dart';
 import 'building.dart';
 import 'homapage.dart';
@@ -81,29 +83,24 @@ class afforCalcFormState extends State<afforCalcForm> {
 
   int type = 1;
   String type1 = 'فيلا';
-  //double property_age = 0.0;
-  String? city = "الرياض";
 
+  static String? city = "الرياض";
   var citiesList = [
     "الرياض",
     "جدة",
     "مكة",
     "المدينة",
     "الدمام",
-    "الاحساء",
-    "الخبر",
-    "القطيف",
-    "الخفجي",
     "الهفوف",
-    "الطائف",
+    "الطايف",
     "تبوك",
     "بريدة",
     "خميس مشيط",
     "الجبيل",
     "نجران",
     "المبرز",
-    "حايل",
-    "ابها",
+    "حائل",
+    "أبها",
     "ينبع",
     "عرعر",
     "عنيزة",
@@ -113,24 +110,11 @@ class afforCalcFormState extends State<afforCalcForm> {
     "الباحة",
     "بيشة",
     "الرس",
-    "البكيرية",
     "الشفا",
-    "العلا",
-    "القنفذة",
-    "رنية",
-    "رابغ",
-    "النماص",
-    "سراة عبيدة",
-    "رجال المع",
-    "ضباء",
-    "املج",
-    "بقعاء",
-    "رفحاء",
-    "صبيا",
-    "شرورة",
-    "بلجرشي",
-    "دومة الجندل"
   ];
+  List areasList = [];
+  static final GlobalKey<FormFieldState> _AddressKey = GlobalKey<FormFieldState>();
+  static String? address;
 
   void dispose() {
     income.dispose();
@@ -141,6 +125,9 @@ class afforCalcFormState extends State<afforCalcForm> {
 
   @override
   Widget build(BuildContext context) {
+    var tempArea = areas.where((element) =>  (element['city_id'] == 3 ));
+    areasList.addAll(tempArea);
+
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -224,34 +211,39 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 height: 45,
                                                 width: 320,
                                                 child: DropdownButtonFormField(
-                                                  menuMaxHeight: 400,
-                                                  value: city,
-                                                  items:
-                                                      citiesList.map((value) {
-                                                    return DropdownMenuItem(
-                                                      value: value,
-                                                      child: Text(value),
-                                                    );
-                                                  }).toList(),
-                                                  onChanged: (_selectedValue) {
-                                                    setState(() {
-                                                      city = _selectedValue
-                                                          .toString();
-                                                    });
-                                                  },
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontFamily: "Tajawal-m",
-                                                      color: Color.fromARGB(
-                                                          255, 73, 75, 82)),
-                                                  decoration: InputDecoration(
-                                                    isDense: true,
-                                                    border: InputBorder.none,
-                                                    contentPadding:
-                                                        EdgeInsets.all(7),
-                                                    hintText: 'الرياض',
-                                                  ),
-                                                ),
+                                              menuMaxHeight: 400,
+                                              value: city,
+                                              items: citiesList.map((value) {
+                                                return DropdownMenuItem(
+                                                  value: value,
+                                                  child: Text(value),
+                                                );
+                                              }).toList(),
+                                              onChanged: (_selectedValue) async {
+                                                var tempCity = await cities.where((element) =>
+                                                    (element['name_ar'] == _selectedValue));
+                                                var tempArea = await areas.where((element) =>
+                                                    (element['city_id'] ==
+                                                        tempCity.first['city_id']));
+                                                _AddressKey.currentState?.reset();
+                                                areasList.clear();
+                                                areasList.addAll(tempArea);
+
+                                                setState(() {
+                                                  city = _selectedValue.toString();
+                                                });
+                                              },
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontFamily: "Tajawal-m",
+                                                  color: Color.fromARGB(255, 73, 75, 82)),
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.all(7),
+                                                hintText: 'الرياض',
+                                              ),
+                                            ),
                                               ),
                                               SizedBox(
                                                 height: 14,
@@ -577,6 +569,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       vertical: 10),
                                                   child: ElevatedButton(
                                                     onPressed: () async {
+                                                      print(city);
+                                                      print(address);
+                                                      print(city);
                                                       //calculate functionality
                                                       if (_formKey.currentState!.validate()) {
                                                         setState(() {
@@ -586,6 +581,8 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                         result = (income1 - spendings1 - loans1) * 0.25;
                                                         inRangeProp.clear();
                                                         showInRange = false;
+                                                        address='';
+                                                        
 
                                                         HomePageState.allData.forEach((element) {
                                                           if (element is Villa) {
@@ -675,16 +672,19 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       child: Column(
                                                     children: [
                                                       Container(
-                                                          height: 180,
+                                                          height: 160,
                                                           width: 180,
                                                           padding:
                                                               const EdgeInsets
                                                                   .only(
-                                                            top: 43,
+                                                            top: 25,
                                                           ),
                                                           decoration: BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(Radius
+                                                                          .circular(
+                                                                              10)),
                                                               border: Border.all(
                                                                   width: 3.5,
                                                                   color: Color
@@ -719,7 +719,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                               Container(
                                                                 margin:
                                                                     const EdgeInsets
-                                                                        .all(6),
+                                                                        .all(7),
                                                               ),
                                                               Text(
                                                                 '$result',
@@ -784,6 +784,89 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       style: TextStyle(
                                                         fontSize: 22.0,
                                                         fontFamily: "Tajawal-b",
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 180,
+                                                        top: 13,
+                                                        bottom: 10),
+                                                    padding: EdgeInsets.only(
+                                                        right: 7, top: 3 ),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10)),
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .grey.shade300,
+                                                            width: 1)),
+                                                    height: 40,
+                                                    width: 160,
+                                                    child:
+                                                        DropdownButtonFormField(
+                                                      isExpanded: true,
+                                                      key: _AddressKey,
+                                                      items: areasList
+                                                          .map((value) {
+                                                        return DropdownMenuItem(
+                                                          value: value,
+                                                          child: Text(
+                                                              value['name_ar']),
+                                                        );
+                                                      }).toList(),
+                                                      onChanged:
+                                                          (dynamic value) {
+                                                        setState(() {
+                                                          address = value['name_ar'];
+
+                                                          inRangeProp.clear();
+                                                        
+                                                          HomePageState.allData.forEach((element) {
+                                                            if (element is Villa) {
+                                                              final villa = element;
+                                                              if (villa.properties.neighborhood == address && villa.properties.type == type1 && villa.properties.classification == 'للإيجار' && villa.properties.city == city && int.parse(villa.properties.price) <= result) {
+                                                                inRangeProp.add(villa.properties.property_id);
+                                                              }
+                                                            }
+                                                            if (element is Apartment) {
+                                                              final apartment = element;
+                                                              if (apartment.properties.neighborhood == address && apartment.properties.type == type1 && apartment.properties.classification == 'للإيجار' && apartment.properties.city == city && int.parse(apartment.properties.price) <= result) {
+                                                                inRangeProp.add(apartment.properties.property_id);
+                                                              }
+                                                            }
+                                                            if (element is Building) {
+                                                              final building = element;
+                                                              if (building.properties.neighborhood == address && building.properties.type == type1 && building.properties.classification == 'للإيجار' && building.properties.city == city && int.parse(building.properties.price) <= result) {
+                                                                inRangeProp.add(building.properties.property_id);
+                                                              }
+                                                            }
+                                                            if (element is Land) {
+                                                              final land = element;
+                                                              if (land.properties?.neighborhood == address && land.properties!.type == type1 && land.properties!.classification == 'للإيجار' && land.properties!.city == city && int.parse(land.properties!.price) <= result) {
+                                                                inRangeProp.add(land.properties!.property_id);
+                                                              }
+                                                            }
+                                                          });
+                                                        });
+                                                      },
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontFamily:
+                                                              "Tajawal-m",
+                                                          color: Color.fromARGB(
+                                                              255, 73, 75, 82)),
+                                                      decoration:
+                                                          InputDecoration(
+                                                        isDense: true,
+                                                        border:
+                                                            InputBorder.none,
+                                                        contentPadding:
+                                                            EdgeInsets.only(bottom: 8),
+                                                        hintText: 'تصفية الحي',
                                                       ),
                                                     ),
                                                   ),
