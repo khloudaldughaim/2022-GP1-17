@@ -78,6 +78,7 @@ class afforCalcFormState extends State<afforCalcForm> {
   final spendings = TextEditingController();
   final loans = TextEditingController();
   double result = 0;
+  int loans1 = 0;
   bool showResult = false;
   bool showInRange = false;
   List<dynamic> inRangeProp = [];
@@ -85,7 +86,7 @@ class afforCalcFormState extends State<afforCalcForm> {
   int type = 1;
   String type1 = 'فيلا';
 
-  static String? city = "الرياض";
+  String? city = "الرياض";
   var citiesList = [
     "الرياض",
     "جدة",
@@ -126,9 +127,6 @@ class afforCalcFormState extends State<afforCalcForm> {
 
   @override
   Widget build(BuildContext context) {
-    var tempArea = areas.where((element) =>  (element['city_id'] == 3 ));
-    areasList.addAll(tempArea);
-
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -175,17 +173,14 @@ class afforCalcFormState extends State<afforCalcForm> {
                                       height: 550,
                                       width: 350,
                                       decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 202, 216, 227),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
+                                          color: Color.fromARGB(255, 202, 216, 227),
+                                          borderRadius: BorderRadius.all(Radius.circular(10))),
                                       child: Padding(
                                           padding: EdgeInsets.all(20.0),
                                           child: Column(
                                             children: [
                                               Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 230),
+                                                  padding: EdgeInsets.only(left: 230),
                                                   child: Text(
                                                     'المدينة : ',
                                                     style: TextStyle(
@@ -197,62 +192,60 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 height: 7,
                                               ),
                                               Container(
-                                                padding:
-                                                    EdgeInsets.only(right: 7),
+                                                padding: EdgeInsets.only(right: 7),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10)),
+                                                        BorderRadius.all(Radius.circular(10)),
                                                     color: Colors.white,
                                                     border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 1)),
+                                                        color: Colors.grey.shade300, width: 1)),
                                                 height: 45,
                                                 width: 320,
                                                 child: DropdownButtonFormField(
-                                              menuMaxHeight: 400,
-                                              value: city,
-                                              items: citiesList.map((value) {
-                                                return DropdownMenuItem(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              }).toList(),
-                                              onChanged: (_selectedValue) async {
-                                                var tempCity = await cities.where((element) =>
-                                                    (element['name_ar'] == _selectedValue));
-                                                var tempArea = await areas.where((element) =>
-                                                    (element['city_id'] ==
-                                                        tempCity.first['city_id']));
-                                                _AddressKey.currentState?.reset();
-                                                areasList.clear();
-                                                areasList.addAll(tempArea);
+                                                  menuMaxHeight: 400,
+                                                  items: citiesList.map((value) {
+                                                    return DropdownMenuItem(
+                                                      value: value,
+                                                      child: Text(value),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (_selectedValue) async {
+                                                    var tempCity = await cities.where((element) =>
+                                                        (element['name_ar'] == _selectedValue));
+                                                    var tempArea = await areas.where((element) =>
+                                                        (element['city_id'] ==
+                                                            tempCity.first['city_id']));
+                                                    _AddressKey.currentState?.reset();
+                                                    areasList.clear();
+                                                    areasList.addAll(tempArea);
 
-                                                setState(() {
-                                                  city = _selectedValue.toString();
-                                                });
-                                              },
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontFamily: "Tajawal-m",
-                                                  color: Color.fromARGB(255, 73, 75, 82)),
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                border: InputBorder.none,
-                                                contentPadding: EdgeInsets.all(7),
-                                                hintText: 'الرياض',
-                                              ),
-                                            ),
+                                                    setState(() {
+                                                      city = _selectedValue.toString();
+                                                    });
+                                                  },
+                                                  validator: (value) {
+                                                    if (value == null) {
+                                                      return 'الرجاء اختيار المدينة';
+                                                    }
+                                                  },
+                                                  style: TextStyle(
+                                                      fontSize: 16.0,
+                                                      fontFamily: "Tajawal-m",
+                                                      color: Color.fromARGB(255, 73, 75, 82)),
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    border: InputBorder.none,
+                                                    contentPadding: EdgeInsets.all(7),
+                                                    hintText: 'اختر المدينة',
+                                                  ),
+                                                ),
                                               ),
                                               SizedBox(
                                                 height: 14,
                                               ),
                                               //type
                                               Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 215),
+                                                  padding: EdgeInsets.only(left: 215),
                                                   child: Text(
                                                     'نوع العقار :',
                                                     style: TextStyle(
@@ -264,26 +257,20 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 height: 7,
                                               ),
                                               Container(
-                                                padding:
-                                                    EdgeInsets.only(right: 8),
+                                                padding: EdgeInsets.only(right: 8),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                10)),
+                                                        BorderRadius.all(Radius.circular(10)),
                                                     color: Colors.white,
                                                     border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        width: 1)),
+                                                        color: Colors.grey.shade300, width: 1)),
                                                 height: 45,
                                                 width: 320,
                                                 child: DropdownButtonFormField(
                                                     decoration: InputDecoration(
                                                       isDense: true,
                                                       border: InputBorder.none,
-                                                      contentPadding:
-                                                          EdgeInsets.all(7),
+                                                      contentPadding: EdgeInsets.all(7),
                                                     ),
                                                     value: type,
                                                     items: [
@@ -292,14 +279,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                           "فيلا",
                                                           style: TextStyle(
                                                               fontSize: 17.0,
-                                                              fontFamily:
-                                                                  "Tajawal-m",
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      73,
-                                                                      75,
-                                                                      82)),
+                                                              fontFamily: "Tajawal-m",
+                                                              color:
+                                                                  Color.fromARGB(255, 73, 75, 82)),
                                                         ),
                                                         value: 1,
                                                       ),
@@ -308,14 +290,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                           "شقة",
                                                           style: TextStyle(
                                                               fontSize: 17.0,
-                                                              fontFamily:
-                                                                  "Tajawal-m",
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      73,
-                                                                      75,
-                                                                      82)),
+                                                              fontFamily: "Tajawal-m",
+                                                              color:
+                                                                  Color.fromARGB(255, 73, 75, 82)),
                                                         ),
                                                         value: 2,
                                                       ),
@@ -324,14 +301,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                           "ارض",
                                                           style: TextStyle(
                                                               fontSize: 17.0,
-                                                              fontFamily:
-                                                                  "Tajawal-m",
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      73,
-                                                                      75,
-                                                                      82)),
+                                                              fontFamily: "Tajawal-m",
+                                                              color:
+                                                                  Color.fromARGB(255, 73, 75, 82)),
                                                         ),
                                                         value: 3,
                                                       ),
@@ -340,14 +312,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                           "عمارة",
                                                           style: TextStyle(
                                                               fontSize: 17.0,
-                                                              fontFamily:
-                                                                  "Tajawal-m",
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      73,
-                                                                      75,
-                                                                      82)),
+                                                              fontFamily: "Tajawal-m",
+                                                              color:
+                                                                  Color.fromARGB(255, 73, 75, 82)),
                                                         ),
                                                         value: 4,
                                                       )
@@ -355,14 +322,10 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                     onChanged: (int? value) {
                                                       setState(() {
                                                         type = value!;
-                                                        if (type == 1)
-                                                          type1 = 'فيلا';
-                                                        if (type == 2)
-                                                          type1 = 'شقة';
-                                                        if (type == 3)
-                                                          type1 = 'ارض';
-                                                        if (type == 4)
-                                                          type1 = 'عمارة';
+                                                        if (type == 1) type1 = 'فيلا';
+                                                        if (type == 2) type1 = 'شقة';
+                                                        if (type == 3) type1 = 'ارض';
+                                                        if (type == 4) type1 = 'عمارة';
                                                       });
                                                     }),
                                               ),
@@ -370,8 +333,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 height: 14,
                                               ),
                                               Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 170),
+                                                  padding: EdgeInsets.only(left: 170),
                                                   child: Text(
                                                     'الدخل الشهري :',
                                                     style: TextStyle(
@@ -384,45 +346,30 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               ),
                                               Expanded(
                                                   child: Padding(
-                                                      padding:
-                                                          EdgeInsets.all(0),
+                                                      padding: EdgeInsets.all(0),
                                                       child: Directionality(
-                                                        textDirection:
-                                                            TextDirection.rtl,
+                                                        textDirection: TextDirection.rtl,
                                                         child: TextFormField(
                                                           controller: income,
                                                           autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'الراتب وأي مصادر دخل أخرى',
+                                                              AutovalidateMode.onUserInteraction,
+                                                          decoration: InputDecoration(
+                                                            hintText: 'الراتب وأي مصادر دخل أخرى',
                                                             filled: true,
-                                                            fillColor:
-                                                                Colors.white,
-                                                            contentPadding:
-                                                                EdgeInsets.all(
-                                                                    6),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
+                                                            fillColor: Colors.white,
+                                                            contentPadding: EdgeInsets.all(6),
+                                                            enabledBorder: OutlineInputBorder(
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color:
-                                                                    Colors.grey,
+                                                                  BorderRadius.circular(8),
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.grey,
                                                                 width: 0.0,
                                                               ),
                                                             ),
                                                           ),
                                                           validator: (value) {
-                                                            if (!RegExp(
-                                                                    r'[0-9]')
-                                                                .hasMatch(
-                                                                    value!)) {
+                                                            if (!RegExp(r'[0-9]')
+                                                                .hasMatch(value!)) {
                                                               return 'الرجاء إدخال أرقام فقط';
                                                             }
                                                             return null;
@@ -433,8 +380,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 height: 7,
                                               ), //spendings
                                               Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 145),
+                                                  padding: EdgeInsets.only(left: 145),
                                                   child: Text(
                                                     ' الإلتزامات الشهرية :',
                                                     style: TextStyle(
@@ -447,45 +393,30 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               ),
                                               Expanded(
                                                   child: Padding(
-                                                      padding:
-                                                          EdgeInsets.all(0),
+                                                      padding: EdgeInsets.all(0),
                                                       child: Directionality(
-                                                        textDirection:
-                                                            TextDirection.rtl,
+                                                        textDirection: TextDirection.rtl,
                                                         child: TextFormField(
                                                           controller: spendings,
                                                           autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                ' فواتير ماء، كهرب، نفقة...',
+                                                              AutovalidateMode.onUserInteraction,
+                                                          decoration: InputDecoration(
+                                                            hintText: ' فواتير ماء، كهرب، نفقة...',
                                                             filled: true,
-                                                            fillColor:
-                                                                Colors.white,
-                                                            contentPadding:
-                                                                EdgeInsets.all(
-                                                                    6),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
+                                                            fillColor: Colors.white,
+                                                            contentPadding: EdgeInsets.all(6),
+                                                            enabledBorder: OutlineInputBorder(
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color:
-                                                                    Colors.grey,
+                                                                  BorderRadius.circular(8),
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.grey,
                                                                 width: 0.0,
                                                               ),
                                                             ),
                                                           ),
                                                           validator: (value) {
-                                                            if (!RegExp(
-                                                                    r'[0-9]')
-                                                                .hasMatch(
-                                                                    value!)) {
+                                                            if (!RegExp(r'[0-9]')
+                                                                .hasMatch(value!)) {
                                                               return 'الرجاء إدخال أرقام فقط';
                                                             }
                                                             return null;
@@ -497,8 +428,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               ),
                                               //loan
                                               Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 155),
+                                                  padding: EdgeInsets.only(left: 155),
                                                   child: Text(
                                                     ' القروض الشهرية :',
                                                     style: TextStyle(
@@ -511,45 +441,30 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               ),
                                               Expanded(
                                                   child: Padding(
-                                                      padding:
-                                                          EdgeInsets.all(0),
+                                                      padding: EdgeInsets.all(0),
                                                       child: Directionality(
-                                                        textDirection:
-                                                            TextDirection.rtl,
+                                                        textDirection: TextDirection.rtl,
                                                         child: TextFormField(
                                                           controller: loans,
                                                           autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'قرض منزل، سيارة...',
+                                                              AutovalidateMode.onUserInteraction,
+                                                          decoration: InputDecoration(
+                                                            hintText: 'قرض منزل، سيارة...',
                                                             filled: true,
-                                                            fillColor:
-                                                                Colors.white,
-                                                            contentPadding:
-                                                                EdgeInsets.all(
-                                                                    6),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
+                                                            fillColor: Colors.white,
+                                                            contentPadding: EdgeInsets.all(6),
+                                                            enabledBorder: OutlineInputBorder(
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color:
-                                                                    Colors.grey,
+                                                                  BorderRadius.circular(8),
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.grey,
                                                                 width: 0.0,
                                                               ),
                                                             ),
                                                           ),
                                                           validator: (value) {
-                                                            if (!RegExp(
-                                                                    r'[0-9]')
-                                                                .hasMatch(
-                                                                    value!)) {
+                                                            if (value!.isNotEmpty &&
+                                                                !RegExp(r'[0-9]').hasMatch(value)) {
                                                               return 'الرجاء إدخال أرقام فقط';
                                                             }
                                                             return null;
@@ -564,10 +479,8 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 width: 205.0,
                                                 height: 70.0,
                                                 child: Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
+                                                  padding: const EdgeInsets.symmetric(
+                                                      horizontal: 10, vertical: 10),
                                                   child: ElevatedButton(
                                                     onPressed: () async {
                                                       print(city);
@@ -576,89 +489,109 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       //calculate functionality
                                                       if (_formKey.currentState!.validate()) {
                                                         setState(() {
-                                                        int income1 = int.parse(income.text);
-                                                        int spendings1 = int.parse(spendings.text);
-                                                        int loans1 = int.parse(loans.text);
-                                                        result = (income1 - spendings1 - loans1) * 0.25;
-                                                        showResult = true;
-                                                        inRangeProp.clear();
-                                                        showInRange = false;
-                                                        address='';
-                                                        
+                                                          int income1 = int.parse(income.text);
+                                                          int spendings1 =
+                                                              int.parse(spendings.text);
+                                                          if (loans.text.isNotEmpty)
+                                                            loans1 = int.parse(loans.text);
+                                                          result = (income1 - spendings1 - loans1) *
+                                                              0.25;
+                                                          showResult = true;
+                                                          inRangeProp.clear();
+                                                          showInRange = false;
+                                                          address = '';
 
-                                                        HomePageState.allData.forEach((element) {
-                                                          if (element is Villa) {
-                                                            final villa = element;
-                                                            if (villa.properties.type == type1 && villa.properties.classification == 'للإيجار' && villa.properties.city == city && int.parse(villa.properties.price) <= result) {
-                                                              inRangeProp.add(villa.properties.property_id);
+                                                          HomePageState.allData.forEach((element) {
+                                                            if (element is Villa) {
+                                                              final villa = element;
+                                                              if (villa.properties.type == type1 &&
+                                                                  villa.properties.classification ==
+                                                                      'للإيجار' &&
+                                                                  villa.properties.city == city &&
+                                                                  int.parse(
+                                                                          villa.properties.price) <=
+                                                                      result) {
+                                                                inRangeProp.add(
+                                                                    villa.properties.property_id);
+                                                              }
                                                             }
-                                                          }
-                                                          if (element is Apartment) {
-                                                            final apartment = element;
-                                                            if (apartment.properties.type == type1 && apartment.properties.classification == 'للإيجار' && apartment.properties.city == city && int.parse(apartment.properties.price) <= result) {
-                                                              inRangeProp.add(apartment.properties.property_id);
+                                                            if (element is Apartment) {
+                                                              final apartment = element;
+                                                              if (apartment.properties.type ==
+                                                                      type1 &&
+                                                                  apartment.properties
+                                                                          .classification ==
+                                                                      'للإيجار' &&
+                                                                  apartment.properties.city ==
+                                                                      city &&
+                                                                  int.parse(apartment
+                                                                          .properties.price) <=
+                                                                      result) {
+                                                                inRangeProp.add(apartment
+                                                                    .properties.property_id);
+                                                              }
                                                             }
-                                                          }
-                                                          if (element is Building) {
-                                                            final building = element;
-                                                            if (building.properties.type == type1 && building.properties.classification == 'للإيجار' && building.properties.city == city && int.parse(building.properties.price) <= result) {
-                                                              inRangeProp.add(building.properties.property_id);
+                                                            if (element is Building) {
+                                                              final building = element;
+                                                              if (building.properties.type ==
+                                                                      type1 &&
+                                                                  building.properties
+                                                                          .classification ==
+                                                                      'للإيجار' &&
+                                                                  building.properties.city ==
+                                                                      city &&
+                                                                  int.parse(building
+                                                                          .properties.price) <=
+                                                                      result) {
+                                                                inRangeProp.add(building
+                                                                    .properties.property_id);
+                                                              }
                                                             }
-                                                          }
-                                                          if (element is Land) {
-                                                            final land = element;
-                                                            if (land.properties!.type == type1 && land.properties!.classification == 'للإيجار' && land.properties!.city == city && int.parse(land.properties!.price) <= result) {
-                                                              inRangeProp.add(land.properties!.property_id);
+                                                            if (element is Land) {
+                                                              final land = element;
+                                                              if (land.properties!.type == type1 &&
+                                                                  land.properties!.classification ==
+                                                                      'للإيجار' &&
+                                                                  land.properties!.city == city &&
+                                                                  int.parse(
+                                                                          land.properties!.price) <=
+                                                                      result) {
+                                                                inRangeProp.add(
+                                                                    land.properties!.property_id);
+                                                              }
                                                             }
-                                                          }
-                                                        });
+                                                          });
 
-                                                        if(inRangeProp.isNotEmpty){
-                                                          showInRange = true;
-                                                        }
-
+                                                          if (inRangeProp.isNotEmpty) {
+                                                            setState(() {
+                                                              showInRange = true;
+                                                            });
+                                                          }
                                                         });
                                                       }
                                                     },
                                                     style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStateProperty
-                                                              .all(Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      127,
-                                                                      166,
-                                                                      233)),
-                                                      padding:
-                                                          MaterialStateProperty
-                                                              .all(EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          40,
-                                                                      vertical:
-                                                                          5)),
-                                                      shape:
-                                                          MaterialStateProperty
-                                                              .all(
+                                                      backgroundColor: MaterialStateProperty.all(
+                                                          Color.fromARGB(255, 127, 166, 233)),
+                                                      padding: MaterialStateProperty.all(
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 40, vertical: 5)),
+                                                      shape: MaterialStateProperty.all(
                                                         RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(27),
+                                                          borderRadius: BorderRadius.circular(27),
                                                         ),
                                                       ),
                                                     ),
                                                     child: const Text(
                                                       'إحسب',
                                                       style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontFamily:
-                                                              "Tajawal-m"),
+                                                          fontSize: 20, fontFamily: "Tajawal-m"),
                                                     ),
                                                   ),
                                                 ),
                                               )
                                             ],
-                                          ))),    
+                                          ))),
                                   Container(
                                     margin: const EdgeInsets.all(13),
                                   ),
@@ -666,8 +599,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                       ? Column(
                                           children: [
                                             Container(
-                                              margin: const EdgeInsets.only(
-                                                  top: 5, right: 7),
+                                              margin: const EdgeInsets.only(top: 5, right: 7),
                                               child: Column(
                                                 children: [
                                                   Container(
@@ -676,91 +608,50 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       Container(
                                                           height: 160,
                                                           width: 180,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
+                                                          padding: const EdgeInsets.only(
                                                             top: 25,
                                                           ),
                                                           decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .all(Radius
-                                                                          .circular(
-                                                                              10)),
+                                                              borderRadius: BorderRadius.all(
+                                                                  Radius.circular(10)),
                                                               border: Border.all(
                                                                   width: 3.5,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          134,
-                                                                          206,
-                                                                          137))),
+                                                                  color: Color.fromARGB(
+                                                                      255, 134, 206, 137))),
                                                           child: Column(
                                                             children: [
-                                                              Text(
-                                                                  'أقصى حد للإيجار',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            134,
-                                                                            206,
-                                                                            137),
-                                                                    fontSize:
-                                                                        19.0,
-                                                                    fontFamily:
-                                                                        "Tajawal-b",
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                              Text('أقصى حد للإيجار',
+                                                                  style: TextStyle(
+                                                                    color: Color.fromARGB(
+                                                                        255, 134, 206, 137),
+                                                                    fontSize: 19.0,
+                                                                    fontFamily: "Tajawal-b",
+                                                                    fontWeight: FontWeight.bold,
                                                                   ),
-                                                                  textDirection:
-                                                                      TextDirection
-                                                                          .rtl),
+                                                                  textDirection: TextDirection.rtl),
                                                               Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .all(7),
+                                                                margin: const EdgeInsets.all(7),
                                                               ),
                                                               Text(
                                                                 '$result',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          134,
-                                                                          206,
-                                                                          137),
-                                                                  fontSize:
-                                                                      39.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontFamily:
-                                                                      "Tajawal-b",
+                                                                style: TextStyle(
+                                                                  color: Color.fromARGB(
+                                                                      255, 134, 206, 137),
+                                                                  fontSize: 39.0,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  fontFamily: "Tajawal-b",
                                                                 ),
                                                               ),
                                                               Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .all(2),
+                                                                margin: const EdgeInsets.all(2),
                                                               ),
                                                               Text(
                                                                 '  ر.س ',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          134,
-                                                                          206,
-                                                                          137),
-                                                                  fontSize:
-                                                                      19.0,
-                                                                  fontFamily:
-                                                                      "Tajawal-b",
+                                                                style: TextStyle(
+                                                                  color: Color.fromARGB(
+                                                                      255, 134, 206, 137),
+                                                                  fontSize: 19.0,
+                                                                  fontFamily: "Tajawal-b",
                                                                 ),
                                                               ),
                                                             ],
@@ -778,9 +669,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               child: Column(
                                                 children: [
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 90),
+                                                    padding: const EdgeInsets.only(left: 90),
                                                     child: Text(
                                                       'عقارات مناسبة لميزانيتك :',
                                                       style: TextStyle(
@@ -791,225 +680,215 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                   ),
                                                   showInRange == true
                                                       ? Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 180,
-                                                                  top: 13,
-                                                                  bottom: 10),
+                                                          margin: EdgeInsets.only(
+                                                              left: 180, top: 13, bottom: 10),
                                                           padding:
-                                                              EdgeInsets.only(
-                                                                  right: 7,
-                                                                  top: 3),
+                                                              EdgeInsets.only(right: 7, top: 3),
                                                           decoration: BoxDecoration(
-                                                              borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10)),
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .grey.shade300,
-                                                            width: 1)),
-                                                    height: 40,
-                                                    width: 160,
-                                                    child:
-                                                        DropdownButtonFormField(
-                                                      isExpanded: true,
-                                                      key: _AddressKey,
-                                                      items: areasList
-                                                          .map((value) {
-                                                        return DropdownMenuItem(
-                                                          value: value,
-                                                          child: Text(
-                                                              value['name_ar']),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged:
-                                                          (dynamic value) {
-                                                        setState(() {
-                                                          address='';
-                                                          address = value['name_ar'];
+                                                              borderRadius: BorderRadius.all(
+                                                                  Radius.circular(10)),
+                                                              color: Colors.white,
+                                                              border: Border.all(
+                                                                  color: Colors.grey.shade300,
+                                                                  width: 1)),
+                                                          height: 40,
+                                                          width: 160,
+                                                          child: DropdownButtonFormField(
+                                                            isExpanded: true,
+                                                            key: _AddressKey,
+                                                            items: areasList.map((value) {
+                                                              return DropdownMenuItem(
+                                                                value: value,
+                                                                child: Text(value['name_ar']),
+                                                              );
+                                                            }).toList(),
+                                                            onChanged: (dynamic value) {
+                                                              setState(() {
+                                                                address = '';
+                                                                address = value['name_ar'];
 
-                                                          inRangeProp.clear();
-                                                        
-                                                          HomePageState.allData.forEach((element) {
-                                                            if (element is Villa) {
-                                                              final villa = element;
-                                                              if (villa.properties.neighborhood == address && villa.properties.type == type1 && villa.properties.classification == 'للإيجار' && villa.properties.city == city && int.parse(villa.properties.price) <= result) {
-                                                                inRangeProp.add(villa.properties.property_id);
-                                                              }
-                                                            }
-                                                            if (element is Apartment) {
-                                                              final apartment = element;
-                                                              if (apartment.properties.neighborhood == address && apartment.properties.type == type1 && apartment.properties.classification == 'للإيجار' && apartment.properties.city == city && int.parse(apartment.properties.price) <= result) {
-                                                                inRangeProp.add(apartment.properties.property_id);
-                                                              }
-                                                            }
-                                                            if (element is Building) {
-                                                              final building = element;
-                                                              if (building.properties.neighborhood == address && building.properties.type == type1 && building.properties.classification == 'للإيجار' && building.properties.city == city && int.parse(building.properties.price) <= result) {
-                                                                inRangeProp.add(building.properties.property_id);
-                                                              }
-                                                            }
-                                                            if (element is Land) {
-                                                              final land = element;
-                                                              if (land.properties?.neighborhood == address && land.properties!.type == type1 && land.properties!.classification == 'للإيجار' && land.properties!.city == city && int.parse(land.properties!.price) <= result) {
-                                                                inRangeProp.add(land.properties!.property_id);
-                                                              }
-                                                            }
-                                                          });
-                                                        });
-                                                      },
-                                                      style: TextStyle(
-                                                          fontSize: 16.0,
-                                                          fontFamily:
-                                                              "Tajawal-m",
-                                                          color: Color.fromARGB(
-                                                              255, 73, 75, 82)),
-                                                      decoration:
-                                                          InputDecoration(
-                                                        isDense: true,
-                                                        border:
-                                                            InputBorder.none,
-                                                        contentPadding:
-                                                                  EdgeInsets.only(
-                                                                      bottom:
-                                                                          8),
-                                                              hintText:
-                                                                  'تصفية الحي',
+                                                                inRangeProp.clear();
+
+                                                                HomePageState.allData
+                                                                    .forEach((element) {
+                                                                  if (element is Villa) {
+                                                                    final villa = element;
+                                                                    if (villa.properties.neighborhood ==
+                                                                            address &&
+                                                                        villa.properties.type ==
+                                                                            type1 &&
+                                                                        villa.properties
+                                                                                .classification ==
+                                                                            'للإيجار' &&
+                                                                        villa.properties.city ==
+                                                                            city &&
+                                                                        int.parse(villa.properties
+                                                                                .price) <=
+                                                                            result) {
+                                                                      inRangeProp.add(villa
+                                                                          .properties.property_id);
+                                                                    }
+                                                                  }
+                                                                  if (element is Apartment) {
+                                                                    final apartment = element;
+                                                                    if (apartment
+                                                                                .properties.neighborhood ==
+                                                                            address &&
+                                                                        apartment.properties.type ==
+                                                                            type1 &&
+                                                                        apartment.properties
+                                                                                .classification ==
+                                                                            'للإيجار' &&
+                                                                        apartment.properties.city ==
+                                                                            city &&
+                                                                        int.parse(apartment
+                                                                                .properties
+                                                                                .price) <=
+                                                                            result) {
+                                                                      inRangeProp.add(apartment
+                                                                          .properties.property_id);
+                                                                    }
+                                                                  }
+                                                                  if (element is Building) {
+                                                                    final building = element;
+                                                                    if (building.properties.neighborhood ==
+                                                                            address &&
+                                                                        building.properties.type ==
+                                                                            type1 &&
+                                                                        building.properties
+                                                                                .classification ==
+                                                                            'للإيجار' &&
+                                                                        building.properties.city ==
+                                                                            city &&
+                                                                        int.parse(building
+                                                                                .properties
+                                                                                .price) <=
+                                                                            result) {
+                                                                      inRangeProp.add(building
+                                                                          .properties.property_id);
+                                                                    }
+                                                                  }
+                                                                  if (element is Land) {
+                                                                    final land = element;
+                                                                    if (land.properties?.neighborhood ==
+                                                                            address &&
+                                                                        land.properties!.type ==
+                                                                            type1 &&
+                                                                        land.properties!
+                                                                                .classification ==
+                                                                            'للإيجار' &&
+                                                                        land.properties!.city ==
+                                                                            city &&
+                                                                        int.parse(land.properties!
+                                                                                .price) <=
+                                                                            result) {
+                                                                      inRangeProp.add(land
+                                                                          .properties!.property_id);
+                                                                    }
+                                                                  }
+                                                                });
+                                                              });
+                                                            },
+                                                            style: TextStyle(
+                                                                fontSize: 16.0,
+                                                                fontFamily: "Tajawal-m",
+                                                                color: Color.fromARGB(
+                                                                    255, 73, 75, 82)),
+                                                            decoration: InputDecoration(
+                                                              isDense: true,
+                                                              border: InputBorder.none,
+                                                              contentPadding:
+                                                                  EdgeInsets.only(bottom: 8),
+                                                              hintText: 'تصفية الحي',
                                                             ),
                                                           ),
                                                         )
                                                       : Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(20),
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  top: 30),
+                                                          margin: const EdgeInsets.all(20),
+                                                          padding: EdgeInsets.only(top: 30),
                                                           child: Text(
                                                             'لا يوجد لدينا حالياً عقارات تناسب ميزانيتك',
                                                             style: TextStyle(
                                                                 fontSize: 16.0,
-                                                                fontFamily:
-                                                                    "Tajawal-b",
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        139,
-                                                                        139,
-                                                                        139)),
+                                                                fontFamily: "Tajawal-b",
+                                                                color: Color.fromARGB(
+                                                                    255, 139, 139, 139)),
                                                           ),
                                                         ),
                                                   Container(
                                                     height: 210,
                                                     child: Directionality(
-                                                      textDirection:
-                                                          TextDirection.rtl,
+                                                      textDirection: TextDirection.rtl,
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 24,
-                                                                right: 20),
-                                                        child:
-                                                            ListView.separated(
-                                                                physics:
-                                                                    BouncingScrollPhysics(),
-                                                                scrollDirection: Axis
-                                                                    .horizontal,
-                                                                // shrinkWrap: true,
-                                                                separatorBuilder: (context,
-                                                                        index) =>
-                                                                    SizedBox(
-                                                                        width:
-                                                                            20),
-                                                                itemCount:
-                                                                    inRangeProp
-                                                                        .length,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        index) {
-                                                                  for (int i =
-                                                                          0;
-                                                                      i <
-                                                                          HomePageState
-                                                                              .allData
-                                                                              .length;
-                                                                      i++) {
-                                                                    if (HomePageState
-                                                                            .allData[i]
-                                                                        is Villa) {
-                                                                      Villa
-                                                                          villa =
-                                                                          HomePageState.allData[i]
-                                                                              as Villa;
-                                                                      if (villa
-                                                                              .properties
-                                                                              .property_id ==
-                                                                          inRangeProp[
-                                                                              index]) {
-                                                                        return _buildVillaItem(
-                                                                            HomePageState.allData[i]
-                                                                                as Villa,
-                                                                            context);
-                                                                      }
-                                                                    }
-                                                                    if (HomePageState
-                                                                            .allData[i]
-                                                                        is Apartment) {
-                                                                      Apartment
-                                                                          apartment =
-                                                                          HomePageState.allData[i]
-                                                                              as Apartment;
-                                                                      if (apartment
-                                                                              .properties
-                                                                              .property_id ==
-                                                                          inRangeProp[
-                                                                              index]) {
-                                                                        return _buildApartmentItem(
-                                                                            HomePageState.allData[i]
-                                                                                as Apartment,
-                                                                            context);
-                                                                      }
-                                                                    }
-                                                                    if (HomePageState
-                                                                            .allData[i]
-                                                                        is Building) {
-                                                                      Building
-                                                                          building =
-                                                                          HomePageState.allData[i]
-                                                                              as Building;
-                                                                      if (building
-                                                                              .properties
-                                                                              .property_id ==
-                                                                          inRangeProp[
-                                                                              index]) {
-                                                                        return _buildBuildingItem(
-                                                                            HomePageState.allData[i]
-                                                                                as Building,
-                                                                            context);
-                                                                      }
-                                                                    }
-                                                                    if (HomePageState
-                                                                            .allData[i]
-                                                                        is Land) {
-                                                                      Land
-                                                                          land =
-                                                                          HomePageState.allData[i]
-                                                                              as Land;
-                                                                      if (land.properties!
-                                                                              .property_id ==
-                                                                          inRangeProp[
-                                                                              index]) {
-                                                                        return _buildLandItem(
-                                                                            HomePageState.allData[i]
-                                                                                as Land,
-                                                                            context);
-                                                                      }
-                                                                    }
+                                                            EdgeInsets.only(bottom: 24, right: 20),
+                                                        child: ListView.separated(
+                                                            physics: BouncingScrollPhysics(),
+                                                            scrollDirection: Axis.horizontal,
+                                                            // shrinkWrap: true,
+                                                            separatorBuilder: (context, index) =>
+                                                                SizedBox(width: 20),
+                                                            itemCount: inRangeProp.length,
+                                                            itemBuilder: (context, index) {
+                                                              for (int i = 0;
+                                                                  i < HomePageState.allData.length;
+                                                                  i++) {
+                                                                if (HomePageState.allData[i]
+                                                                    is Villa) {
+                                                                  Villa villa = HomePageState
+                                                                      .allData[i] as Villa;
+                                                                  if (villa
+                                                                          .properties.property_id ==
+                                                                      inRangeProp[index]) {
+                                                                    return _buildVillaItem(
+                                                                        HomePageState.allData[i]
+                                                                            as Villa,
+                                                                        context);
                                                                   }
-                                                                  return Container();
-                                                                }),
+                                                                }
+                                                                if (HomePageState.allData[i]
+                                                                    is Apartment) {
+                                                                  Apartment apartment =
+                                                                      HomePageState.allData[i]
+                                                                          as Apartment;
+                                                                  if (apartment
+                                                                          .properties.property_id ==
+                                                                      inRangeProp[index]) {
+                                                                    return _buildApartmentItem(
+                                                                        HomePageState.allData[i]
+                                                                            as Apartment,
+                                                                        context);
+                                                                  }
+                                                                }
+                                                                if (HomePageState.allData[i]
+                                                                    is Building) {
+                                                                  Building building = HomePageState
+                                                                      .allData[i] as Building;
+                                                                  if (building
+                                                                          .properties.property_id ==
+                                                                      inRangeProp[index]) {
+                                                                    return _buildBuildingItem(
+                                                                        HomePageState.allData[i]
+                                                                            as Building,
+                                                                        context);
+                                                                  }
+                                                                }
+                                                                if (HomePageState.allData[i]
+                                                                    is Land) {
+                                                                  Land land = HomePageState
+                                                                      .allData[i] as Land;
+                                                                  if (land.properties!
+                                                                          .property_id ==
+                                                                      inRangeProp[index]) {
+                                                                    return _buildLandItem(
+                                                                        HomePageState.allData[i]
+                                                                            as Land,
+                                                                        context);
+                                                                  }
+                                                                }
+                                                              }
+                                                              return Container();
+                                                            }),
                                                       ),
                                                     ),
                                                   ),
