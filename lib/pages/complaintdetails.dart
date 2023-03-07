@@ -1,9 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:uuid/uuid.dart';
-import '../registration/sign_up.dart';
 
 class ComplaintDetailes extends StatefulWidget {
   final String complaint_id;
@@ -21,6 +17,7 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
   var phone = TextEditingController();
   var email = TextEditingController();
   var reason = TextEditingController();
+  var Admin_Response = TextEditingController();
 
   @override
   void initState() {
@@ -34,12 +31,18 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
     phone = TextEditingController();
     email = TextEditingController();
     reason = TextEditingController();
+    Admin_Response = TextEditingController();
     docs.docs.forEach((element) {
       if (element["complaint_id"] == widget.complaint_id) {
         name = TextEditingController(text: element["name"]);
         phone = TextEditingController(text: element["phone"]);
         email = TextEditingController(text: element["email"]);
         reason = TextEditingController(text: element["reason"]);
+        try{
+          Admin_Response = TextEditingController(text: element["Admin_Respnse"]);
+        }catch(e){
+          Admin_Response = TextEditingController(text: "");
+        }
       }
     });
     setState(() {});
@@ -50,10 +53,10 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          backgroundColor: const Color.fromARGB(255, 127, 166, 233),
           automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 140),
+          title: const Padding(
+            padding: EdgeInsets.only(left: 140),
             child: Text("تفاصيل البلاغ",
               style: TextStyle(
                 fontSize: 17,
@@ -64,12 +67,12 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.white,
                   size: 28,
@@ -85,16 +88,16 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                 SizedBox(
                   width: double.infinity,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 20),
                     child: Form(
                       key: complaintformkey,
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Directionality(
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
@@ -103,12 +106,12 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   labelText: "الأسم :",
-                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: Icon(
+                                  labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                  prefixIcon: const Icon(
                                     Icons.person,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
-                                  fillColor: Color.fromARGB(255, 225, 225, 228),
+                                  fillColor: const Color.fromARGB(255, 225, 225, 228),
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
@@ -118,11 +121,11 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                               ),
                             )
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: TextFormField(
@@ -131,12 +134,12 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
                                   decoration: InputDecoration(
                                     labelText: "الإيميل  :",
-                                    labelStyle: TextStyle(fontFamily: "Tajawal-b"),
-                                    prefixIcon: Icon(
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    prefixIcon: const Icon(
                                       Icons.email,
                                       color: Color.fromARGB(255, 127, 166, 233),
                                     ),
-                                    fillColor: Color.fromARGB(255, 225, 225, 228),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
                                     filled: true,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(66.0),
@@ -146,11 +149,11 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                 ),
                               )
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Directionality(
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
@@ -159,12 +162,12 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   labelText: "رقم الجوال  :",
-                                  labelStyle: TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: Icon(
+                                  labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                  prefixIcon: const Icon(
                                     Icons.phone_android,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
-                                  fillColor: Color.fromARGB(255, 225, 225, 228),
+                                  fillColor: const Color.fromARGB(255, 225, 225, 228),
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
@@ -174,23 +177,23 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                               ),
                             )
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: TextFormField(
-                                  maxLines: 6,
+                                  maxLines: 4,
                                   controller: reason,
                                   readOnly: true,
                                   autovalidateMode: AutovalidateMode.onUserInteraction,
                                   decoration: InputDecoration(
                                     labelText: "سبب البلاغ  :",
-                                    labelStyle: TextStyle(fontFamily: "Tajawal-b"),
-                                    contentPadding:EdgeInsets.all(40.0),
-                                    fillColor: Color.fromARGB(255, 225, 225, 228),
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    contentPadding:const EdgeInsets.all(40.0),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
                                     filled: true,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(33.0),
@@ -199,6 +202,37 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                   ),
                                 ),
                               )
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Admin_Response.text != "" ? 
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  maxLines: 4,
+                                  controller: Admin_Response,
+                                  readOnly: true,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    labelText: "نتائج البلاغ  :",
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    contentPadding:const EdgeInsets.all(40.0),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(33.0),
+                                        borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
+                                  ),
+                                ),
+                              )
+                          )
+                          : Container(),
+                          const SizedBox(
+                            height: 30,
                           ),
                         ],
                       ),

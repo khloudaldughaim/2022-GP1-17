@@ -886,6 +886,7 @@ class _LandDetailesState extends State<LandDetailes> {
                             ),
                           ),
                         ),
+                        output.length != 0 ?
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: Container(
@@ -935,7 +936,18 @@ class _LandDetailesState extends State<LandDetailes> {
                                   }),
                             ),
                           ),
-                        ),
+                        ) : 
+                        Container(
+                          padding: EdgeInsets.only(left:70, bottom: 20),
+                          child: Text(
+                            '! لا يوجد لدينا حالياً عقارات مشابهة',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Tajawal-b",
+                              color: Color.fromARGB(255, 139, 139, 139)
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
