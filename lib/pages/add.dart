@@ -257,8 +257,8 @@ class MyCustomFormState extends State<MyCustomForm> {
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
-              'latitude': mapLatLng.latitude,
-              'longitude': mapLatLng.longitude,
+              'latitude': position.latitude,
+              'longitude': position.longitude,
               'price': price.text,
               'space': space.text,
               'city': city,
@@ -290,8 +290,8 @@ class MyCustomFormState extends State<MyCustomForm> {
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
-              'latitude': mapLatLng.latitude,
-              'longitude': mapLatLng.longitude,
+              'latitude': position.latitude,
+              'longitude': position.longitude,
               'price': price.text,
               'space': space.text,
               'city': city,
@@ -322,8 +322,8 @@ class MyCustomFormState extends State<MyCustomForm> {
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
-              'latitude': mapLatLng.latitude,
-              'longitude': mapLatLng.longitude,
+              'latitude': position.latitude,
+              'longitude': position.longitude,
               'price': price.text,
               'space': space.text,
               'city': city,
@@ -348,8 +348,8 @@ class MyCustomFormState extends State<MyCustomForm> {
               'property_id': property_id,
               'User_id': User_id,
               'classification': classification1,
-              'latitude': mapLatLng.latitude,
-              'longitude': mapLatLng.longitude,
+              'latitude': position.latitude,
+              'longitude': position.longitude,
               'price': price.text,
               'space': space.text,
               'city': city,
@@ -1036,6 +1036,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 ));
                                             setState(() {
                                               markers = markers;
+                                              position = Position.fromMap({
+                                                'latitude': tapped.latitude,
+                                                'longitude': tapped.longitude
+                                              });
                                               print("items ready and set state");
                                             });
 

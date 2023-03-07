@@ -158,7 +158,7 @@ class _MapPageState extends State<mapPage> {
                       ? price_colored(villa.properties.price)
                       : filter_val == "space"
                           ? space_colored(villa.properties.space)
-                          : Color.fromARGB(255, 42, 45, 237),
+                          : Color.fromARGB(255, 127, 166, 233),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -477,7 +477,7 @@ class _MapPageState extends State<mapPage> {
                       ? price_colored(apartment.properties.price)
                       : filter_val == "space"
                           ? space_colored(apartment.properties.space)
-                          : Color.fromARGB(255, 42, 45, 237),
+                          : Color.fromARGB(255, 127, 166, 233),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -798,7 +798,7 @@ class _MapPageState extends State<mapPage> {
                       ? price_colored(building.properties.price)
                       : filter_val == "space"
                           ? space_colored(building.properties.space)
-                          : Color.fromARGB(255, 42, 45, 237),
+                          : Color.fromARGB(255, 127, 166, 233),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -1078,7 +1078,7 @@ class _MapPageState extends State<mapPage> {
                       ? price_colored(land.properties!.price)
                       : filter_val == "space"
                           ? space_colored(land.properties!.space)
-                          : Color.fromARGB(255, 42, 45, 237),
+                          : Color.fromARGB(255, 127, 166, 233),
               onTap: () {
                 Row rowItem = Row(
                   children: [
@@ -1426,41 +1426,32 @@ class _MapPageState extends State<mapPage> {
   price_colored(String price) {
     var num = int.parse(price);
 
-    if (num <= 9999) {
-      return Color.fromARGB(255, 166, 212, 243);
-    }
-    if (num > 9999 && num <= 49999) {
-      return Color.fromARGB(255, 243, 166, 240);
-    }
-    if (num > 49999 && num <= 99999) {
-      return Color.fromARGB(255, 243, 204, 166);
+    if (num <= 99999) {
+      return Color.fromARGB(255, 144, 238, 144);
     }
     if (num > 99999 && num <= 499999) {
-      return Color.fromARGB(255, 180, 166, 243);
+      return Color.fromARGB(255, 50, 205, 50);
     }
     if (num > 499999 && num <= 999999) {
-      return Color.fromARGB(255, 243, 166, 166);
+      return Color.fromARGB(255, 41, 150, 23);
     }
     if (num > 999999 && num <= 1999999) {
-      return Color.fromARGB(255, 166, 240, 243);
+      return Color.fromARGB(255, 253, 219, 83);
     }
     if (num > 1999999 && num <= 2999999) {
-      return Color.fromARGB(255, 119, 124, 118);
+      return Color.fromARGB(255, 251, 177, 23);
     }
     if (num > 2999999 && num <= 3999999) {
-      return Color.fromARGB(255, 119, 52, 107);
+      return Color.fromARGB(255, 242, 132, 22);
     }
     if (num > 3999999 && num <= 4999999) {
-      return Color.fromARGB(255, 115, 107, 99);
+      return Color.fromARGB(255, 231, 97, 97);
     }
     if (num > 4999999 && num <= 5999999) {
-      return Color.fromARGB(255, 72, 107, 131);
+      return Color.fromARGB(255, 228, 34, 23);
     }
-    if (num > 5999999 && num <= 6999999) {
-      return Color.fromARGB(255, 223, 65, 57);
-    }
-    if (num > 6999999) {
-      return Color.fromARGB(255, 211, 175, 103);
+    if (num > 5999999) {
+      return Color.fromARGB(255, 159, 0, 15);
     }
   }
 
@@ -1468,31 +1459,31 @@ class _MapPageState extends State<mapPage> {
     var num = int.parse(space);
 
     if (num <= 299) {
-      return Color.fromARGB(255, 127, 218, 183);
+      return Color.fromARGB(255, 144, 238, 144);
     }
     if (num > 299 && num <= 599) {
-      return Color.fromARGB(255, 20, 160, 90);
+      return Color.fromARGB(255, 50, 205, 50);
     }
     if (num > 599 && num <= 899) {
-      return Color.fromARGB(255, 2, 85, 43);
+      return Color.fromARGB(255, 41, 150, 23);
     }
     if (num > 899 && num <= 1199) {
-      return Color.fromARGB(255, 230, 222, 17);
+      return Color.fromARGB(255, 253, 219, 83);
     }
     if (num > 1199 && num <= 1499) {
-      return Color.fromARGB(255, 182, 143, 36);
+      return Color.fromARGB(255, 251, 177, 23);
     }
     if (num > 1499 && num <= 1799) {
-      return Color.fromARGB(255, 235, 117, 7);
+      return Color.fromARGB(255, 242, 132, 22);
     }
     if (num > 1799 && num <= 2199) {
-      return Color.fromARGB(255, 240, 38, 38);
+      return Color.fromARGB(255, 231, 97, 97);
     }
     if (num > 2199 && num <= 2499) {
-      return Color.fromARGB(255, 170, 6, 6);
+      return Color.fromARGB(255, 228, 34, 23);
     }
     if (num > 2499) {
-      return Color.fromARGB(255, 77, 41, 14);
+      return Color.fromARGB(255, 159, 0, 15);
     }
   }
 

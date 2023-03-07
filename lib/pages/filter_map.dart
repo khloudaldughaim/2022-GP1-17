@@ -403,7 +403,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 2, 85, 43),
+                                            color: Color.fromARGB(255, 41, 150, 23),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -439,7 +439,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 20, 160, 90),
+                                            color: Color.fromARGB(255, 50, 205, 50),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -475,7 +475,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 127, 218, 183),
+                                            color: Color.fromARGB(255, 144, 238, 144),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -518,7 +518,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 235, 117, 7),
+                                            color: Color.fromARGB(255, 242, 132, 22),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -554,7 +554,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 182, 143, 36),
+                                            color: Color.fromARGB(255, 252, 186, 43),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -590,7 +590,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 230, 222, 17),
+                                            color: Color.fromARGB(255, 253, 219, 83),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -633,7 +633,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 77, 41, 14),
+                                            color: Color.fromARGB(255, 159, 0, 15),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -669,7 +669,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 170, 6, 6),
+                                            color: Color.fromARGB(255, 228, 34, 23),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -705,7 +705,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 240, 38, 38),
+                                            color: Color.fromARGB(255, 231, 97, 97),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -742,157 +742,6 @@ class _filterMapState extends State<filterMap> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Text("50K - 99.9K",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Tajawal-m",
-                                              )),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: Color.fromARGB(255, 243, 204, 166),
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: 110,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(68, 178, 178, 178),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text("10K - 49.9K",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Tajawal-m",
-                                              )),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: Color.fromARGB(255, 243, 166, 240),
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: 110,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(68, 178, 178, 178),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text("0 - 9.99K",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Tajawal-m",
-                                              )),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: Color.fromARGB(255, 166, 212, 243),
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              ],
-                            )),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: 110,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(68, 178, 178, 178),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text("1M - 1.99M",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Tajawal-m",
-                                              )),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: Color.fromARGB(255, 166, 240, 243),
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: 110,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(68, 178, 178, 178),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
                                           Text("500K - 999K",
                                               style: TextStyle(
                                                 fontSize: 15,
@@ -903,7 +752,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 243, 166, 166),
+                                            color: Color.fromARGB(255, 41, 150, 23),
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -939,7 +788,43 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 180, 166, 243),
+                                            color: Color.fromARGB(255, 50, 205, 50),
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Container(
+                                      width: 110,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Color.fromARGB(68, 178, 178, 178),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text("0 - 99.9KK",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: "Tajawal-m",
+                                              )),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Color.fromARGB(255, 144, 238, 144),
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -972,42 +857,6 @@ class _filterMapState extends State<filterMap> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Text("4M - 4.99M",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Tajawal-m",
-                                              )),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: Color.fromARGB(255, 115, 107, 99),
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: 110,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(68, 178, 178, 178),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
                                           Text("3M - 3.99M",
                                               style: TextStyle(
                                                 fontSize: 15,
@@ -1018,7 +867,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 119, 52, 107),
+                                            color: Color.fromARGB(255, 242, 132, 22),
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -1054,7 +903,43 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 119, 124, 118),
+                                            color: Color.fromARGB(255, 252, 186, 43),
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Container(
+                                      width: 110,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Color.fromARGB(68, 178, 178, 178),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text("1M - 1.99M",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: "Tajawal-m",
+                                              )),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Color.fromARGB(255, 253, 219, 83),
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -1087,7 +972,7 @@ class _filterMapState extends State<filterMap> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Text(">6,99M",
+                                          Text(">5.99M",
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 fontFamily: "Tajawal-m",
@@ -1097,43 +982,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 211, 175, 103),
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      width: 110,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(68, 178, 178, 178),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text("6M - 6.99M",
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Tajawal-m",
-                                              )),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: Color.fromARGB(255, 223, 65, 57),
+                                            color: Color.fromARGB(255, 159, 0, 15),
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -1169,7 +1018,43 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 72, 107, 131),
+                                            color: Color.fromARGB(255, 228, 34, 23),
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Container(
+                                      width: 110,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Color.fromARGB(68, 178, 178, 178),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text("4M - 4.99M",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: "Tajawal-m",
+                                              )),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Color.fromARGB(255, 231, 97, 97),
                                           ),
                                           SizedBox(
                                             width: 3,
