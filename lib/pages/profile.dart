@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_if_null_operators, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, unnecessary_new
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,10 @@ import 'BuyerBooking.dart';
 import 'edit-profile-info.dart';
 import 'my-property.dart';
 import 'affordCalculator.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:email_launcher/email_launcher.dart';
+
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -477,7 +482,97 @@ class _ProfilePageState extends State<ProfilePage> {
                                       )
                                     ],
                                   )),
-                              SizedBox(
+                              // SizedBox(
+                              //   height: 120,
+                              // ),
+                              ///////////////////////contact us //////////////////////////
+                               SizedBox(
+                                height: 25,
+                              ),
+                              Container(
+                                  width: 350,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color.fromARGB(119, 110, 110, 110),
+                                      width: 1,
+                                    ),
+                                    color: Color.fromARGB(33, 215, 215, 218),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                           String? encodeQueryParameters(
+                                                Map<String, String> params) {
+                                              return params.entries
+                                                  .map((MapEntry<String, String>
+                                                          e) =>
+                                                      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                                  .join('&');
+                                            }
+
+                                           launchUrl(Uri(
+                                              scheme: 'mailto',
+                                              path: '2022gp.group17@gmail.com',
+                                              query: encodeQueryParameters(<
+                                                  String, String>{
+                                                'subject':
+                                                    'طلب تواصل مع فريق نزل',
+                                              }),
+                                            ));             
+
+                                        },
+                                        icon: const Icon(Icons.keyboard_arrow_left),
+                                        color: Colors.grey,
+                                        iconSize: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 145,
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                             String? encodeQueryParameters(
+                                                Map<String, String> params) {
+                                              return params.entries
+                                                  .map((MapEntry<String, String>
+                                                          e) =>
+                                                      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                                  .join('&');
+                                            }
+
+                                           launchUrl(Uri(
+                                              scheme: 'mailto',
+                                              path: '2022gp.group17@gmail.com',
+                                              query: encodeQueryParameters(<
+                                                  String, String>{
+                                                'subject':
+                                                    'طلب تواصل مع فريق نزل',
+                                              }),
+                                            ));             
+
+                                        
+                                          },
+
+                                          child: Text(
+                                            "تواصل معنا",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                              fontFamily: "Tajawal-b",
+                                            ),
+                                          )),
+                                      Icon(
+                                        Icons.headphones,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 137, 139, 145),
+                                      )
+                                    ],
+                                  )),
+
+                                  ///////////////contact us [end]//////////////////
+                            SizedBox(
                                 height: 120,
                               ),
                             ],
