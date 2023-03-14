@@ -228,6 +228,8 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                       return 'الرجاء اختيار المدينة';
                                                     }
                                                   },
+                                                  autovalidateMode:
+                                                      AutovalidateMode.onUserInteraction,
                                                   style: TextStyle(
                                                       fontSize: 16.0,
                                                       fontFamily: "Tajawal-m",

@@ -153,7 +153,7 @@ class _MapPageState extends State<mapPage> {
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
               backgroundColor: filter_val == "type"
-                  ? Color.fromARGB(255, 166, 212, 243)
+                  ? Color.fromARGB(255, 149, 203, 240)
                   : filter_val == "price"
                       ? price_colored(villa.properties.price)
                       : filter_val == "space"
@@ -472,7 +472,7 @@ class _MapPageState extends State<mapPage> {
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
               backgroundColor: filter_val == "type"
-                  ? Color.fromARGB(255, 243, 204, 166)
+                  ? Color.fromARGB(255, 253, 219, 83)
                   : filter_val == "price"
                       ? price_colored(apartment.properties.price)
                       : filter_val == "space"
@@ -793,7 +793,7 @@ class _MapPageState extends State<mapPage> {
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
               backgroundColor: filter_val == "type"
-                  ? Color.fromARGB(255, 243, 166, 240)
+                  ? Color.fromARGB(255, 50, 205, 50)
                   : filter_val == "price"
                       ? price_colored(building.properties.price)
                       : filter_val == "space"
@@ -1073,7 +1073,7 @@ class _MapPageState extends State<mapPage> {
                   letterSpacing: 1.0,
                   fontFamily: 'Roboto Bold'),
               backgroundColor: filter_val == "type"
-                  ? Color.fromARGB(255, 166, 243, 220)
+                  ? Color.fromARGB(255, 231, 97, 97)
                   : filter_val == "price"
                       ? price_colored(land.properties!.price)
                       : filter_val == "space"

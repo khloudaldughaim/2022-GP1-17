@@ -248,7 +248,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 166, 212, 243),
+                                            color: Color.fromARGB(255, 149, 203, 240),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -284,7 +284,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 243, 166, 240),
+                                            color: Color.fromARGB(255, 50, 205, 50),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -320,7 +320,7 @@ class _filterMapState extends State<filterMap> {
                                           ),
                                           Icon(
                                             Icons.circle,
-                                            color: Color.fromARGB(255, 243, 204, 166),
+                                            color: Color.fromARGB(255, 253, 219, 83),
                                           ),
                                           SizedBox(
                                             width: 5,
@@ -334,7 +334,7 @@ class _filterMapState extends State<filterMap> {
                           height: 8,
                         ),
                         Padding(
-                            padding: EdgeInsets.only(left: 270),
+                            padding: EdgeInsets.only(left: 250),
                             child: Container(
                               width: 110,
                               height: 40,
@@ -358,7 +358,7 @@ class _filterMapState extends State<filterMap> {
                                   ),
                                   Icon(
                                     Icons.circle,
-                                    color: Color.fromARGB(255, 166, 243, 220),
+                                    color: Color.fromARGB(255, 231, 97, 97),
                                   ),
                                   SizedBox(
                                     width: 5,

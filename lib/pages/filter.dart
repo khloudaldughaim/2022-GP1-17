@@ -56,7 +56,7 @@ class _FilterPageState extends State<FilterPage> {
   ];
   List areasList = [];
   static final GlobalKey<FormFieldState> _AddressKey = GlobalKey<FormFieldState>();
-  static String? address='';
+  static String? address = '';
   double property_age = 0.0;
   static int number_of_bathrooms = 0;
   static int number_of_rooms = 0;
@@ -142,6 +142,7 @@ class _FilterPageState extends State<FilterPage> {
                         child: SizedBox(
                           width: double.infinity,
                           child: Form(
+                            key: _formKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -154,7 +155,7 @@ class _FilterPageState extends State<FilterPage> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          'نوع العقار :',
+                                          '*نوع العقار :',
                                           style: TextStyle(
                                             fontSize: 20.0,
                                             fontFamily: "Tajawal-b",
@@ -172,7 +173,7 @@ class _FilterPageState extends State<FilterPage> {
                                             border:
                                                 Border.all(color: Colors.grey.shade300, width: 1),
                                           ),
-                                          height: 55,
+                                          height: 50,
                                           width: 150,
                                           child: DropdownButtonFormField(
                                             decoration: InputDecoration(
@@ -541,7 +542,7 @@ class _FilterPageState extends State<FilterPage> {
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
                                         children: [
-                                          Text('المدينة : ',
+                                          Text('*المدينة : ',
                                               style: TextStyle(
                                                 fontSize: 20.0,
                                                 fontFamily: "Tajawal-b",
@@ -558,11 +559,10 @@ class _FilterPageState extends State<FilterPage> {
                                                 color: Colors.white,
                                                 border: Border.all(
                                                     color: Colors.grey.shade300, width: 1)),
-                                            height: 55,
+                                            height: 50,
                                             width: 150,
                                             child: DropdownButtonFormField(
                                               menuMaxHeight: 400,
-                                              value: city,
                                               items: citiesList.map((value) {
                                                 return DropdownMenuItem(
                                                   value: value,
@@ -582,6 +582,12 @@ class _FilterPageState extends State<FilterPage> {
                                                   city = _selectedValue.toString();
                                                 });
                                               },
+                                              validator: (value) {
+                                                if (value == null) {
+                                                  return 'الرجاء اختيار المدينة';
+                                                }
+                                              },
+                                              autovalidateMode: AutovalidateMode.onUserInteraction,
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontFamily: "Tajawal-m",
@@ -590,7 +596,7 @@ class _FilterPageState extends State<FilterPage> {
                                                 isDense: true,
                                                 border: InputBorder.none,
                                                 contentPadding: EdgeInsets.all(7),
-                                                hintText: 'الرياض',
+                                                hintText: 'اختر المدينة',
                                               ),
                                             ),
                                           ),
@@ -604,15 +610,18 @@ class _FilterPageState extends State<FilterPage> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
+                                    SizedBox(
+                                      width: 3,
+                                    ),
                                     Text(
-                                      ' *الحي: ',
+                                      ' الحي: ',
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontFamily: "Tajawal-b",
                                       ),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.all(7),
+                                      margin: const EdgeInsets.all(19),
                                     ),
                                     Padding(padding: const EdgeInsets.all(10.0)),
                                     Container(
@@ -622,8 +631,8 @@ class _FilterPageState extends State<FilterPage> {
                                           color: Colors.white,
                                           border:
                                               Border.all(color: Colors.grey.shade300, width: 1)),
-                                      height: 55,
-                                      width: 190,
+                                      height: 50,
+                                      width: 150,
                                       child: DropdownButtonFormField(
                                         isExpanded: true,
                                         key: _AddressKey,
@@ -1061,26 +1070,6 @@ class _FilterPageState extends State<FilterPage> {
                                           Row(
                                             children: [
                                               Container(
-                                                width: MediaQuery.of(context).size.width / 3,
-                                                child: RadioListTile(
-                                                  title: const Text(
-                                                    'نعم',
-                                                    style: TextStyle(
-                                                        fontSize: 18.0,
-                                                        fontFamily: "Tajawal-m",
-                                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                                  ),
-                                                  value: choice.yes,
-                                                  groupValue: _poolCH,
-                                                  onChanged: (choice? value) {
-                                                    setState(() {
-                                                      _poolCH = value;
-                                                      if (_poolCH == choice.yes) pool = true;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              Container(
                                                 width: MediaQuery.of(context).size.width / 4,
                                                 child: RadioListTile(
                                                   title: const Text(
@@ -1096,6 +1085,26 @@ class _FilterPageState extends State<FilterPage> {
                                                     setState(() {
                                                       _poolCH = value;
                                                       if (_poolCH == choice.no) pool = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width / 3,
+                                                child: RadioListTile(
+                                                  title: const Text(
+                                                    'نعم',
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontFamily: "Tajawal-m",
+                                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                                  ),
+                                                  value: choice.yes,
+                                                  groupValue: _poolCH,
+                                                  onChanged: (choice? value) {
+                                                    setState(() {
+                                                      _poolCH = value;
+                                                      if (_poolCH == choice.yes) pool = true;
                                                     });
                                                   },
                                                 ),
@@ -1142,27 +1151,6 @@ class _FilterPageState extends State<FilterPage> {
                                           Row(
                                             children: [
                                               Container(
-                                                width: MediaQuery.of(context).size.width / 3,
-                                                child: RadioListTile(
-                                                  title: const Text(
-                                                    'نعم',
-                                                    style: TextStyle(
-                                                        fontSize: 18.0,
-                                                        fontFamily: "Tajawal-m",
-                                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                                  ),
-                                                  value: choice.yes,
-                                                  groupValue: _basementCH,
-                                                  onChanged: (choice? value) {
-                                                    setState(() {
-                                                      _basementCH = value;
-                                                      if (_basementCH == choice.yes)
-                                                        basement = true;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              Container(
                                                 width: MediaQuery.of(context).size.width / 4,
                                                 child: RadioListTile(
                                                   title: const Text(
@@ -1179,6 +1167,27 @@ class _FilterPageState extends State<FilterPage> {
                                                       _basementCH = value;
                                                       if (_basementCH == choice.no)
                                                         basement = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width / 3,
+                                                child: RadioListTile(
+                                                  title: const Text(
+                                                    'نعم',
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontFamily: "Tajawal-m",
+                                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                                  ),
+                                                  value: choice.yes,
+                                                  groupValue: _basementCH,
+                                                  onChanged: (choice? value) {
+                                                    setState(() {
+                                                      _basementCH = value;
+                                                      if (_basementCH == choice.yes)
+                                                        basement = true;
                                                     });
                                                   },
                                                 ),
@@ -1228,27 +1237,6 @@ class _FilterPageState extends State<FilterPage> {
                                           Row(
                                             children: [
                                               Container(
-                                                width: MediaQuery.of(context).size.width / 3,
-                                                child: RadioListTile(
-                                                  title: const Text(
-                                                    'نعم',
-                                                    style: TextStyle(
-                                                        fontSize: 18.0,
-                                                        fontFamily: "Tajawal-m",
-                                                        color: Color.fromARGB(255, 73, 75, 82)),
-                                                  ),
-                                                  value: choice.yes,
-                                                  groupValue: _elevatorCH,
-                                                  onChanged: (choice? value) {
-                                                    setState(() {
-                                                      _elevatorCH = value;
-                                                      if (_elevatorCH == choice.yes)
-                                                        elevator = true;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              Container(
                                                 width: MediaQuery.of(context).size.width / 4,
                                                 child: RadioListTile(
                                                   title: const Text(
@@ -1265,6 +1253,27 @@ class _FilterPageState extends State<FilterPage> {
                                                       _elevatorCH = value;
                                                       if (_elevatorCH == choice.no)
                                                         elevator = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width / 3,
+                                                child: RadioListTile(
+                                                  title: const Text(
+                                                    'نعم',
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        fontFamily: "Tajawal-m",
+                                                        color: Color.fromARGB(255, 73, 75, 82)),
+                                                  ),
+                                                  value: choice.yes,
+                                                  groupValue: _elevatorCH,
+                                                  onChanged: (choice? value) {
+                                                    setState(() {
+                                                      _elevatorCH = value;
+                                                      if (_elevatorCH == choice.yes)
+                                                        elevator = true;
                                                     });
                                                   },
                                                 ),
@@ -1309,31 +1318,33 @@ class _FilterPageState extends State<FilterPage> {
                                     ),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        Navigator.pop(context, {
-                                          "type1": type1,
-                                          "propertyUse1": propertyUse1,
-                                          "in_floor": in_floor.text,
-                                          "city": city,
-                                          "address": address,
-                                          "number_of_bathrooms": number_of_bathrooms,
-                                          "number_of_rooms": number_of_rooms,
-                                          "number_of_livingRooms": number_of_livingRooms,
-                                          "number_of_floors": number_of_floors,
-                                          "number_of_apartments": number_of_apartments,
-                                          "pool": pool,
-                                          "poolAll": poolAll,
-                                          "basement": basement,
-                                          "basementAll": basementAll,
-                                          "elevator": elevator,
-                                          "elevatorAll": elevatorAll,
-                                          "ageRange_start": _ageRange.start,
-                                          "ageRange_end": _ageRange.end,
-                                          "MinSpace": MinSpace.text,
-                                          "MaxSpace": MaxSpace.text,
-                                          "MinPrice": MinPrice.text,
-                                          "MaxPrice": MaxPrice.text,
-                                          "FilterValue": true,
-                                        });
+                                        if (_formKey.currentState!.validate()) {
+                                          Navigator.pop(context, {
+                                            "type1": type1,
+                                            "propertyUse1": propertyUse1,
+                                            "in_floor": in_floor.text,
+                                            "city": city,
+                                            "address": address,
+                                            "number_of_bathrooms": number_of_bathrooms,
+                                            "number_of_rooms": number_of_rooms,
+                                            "number_of_livingRooms": number_of_livingRooms,
+                                            "number_of_floors": number_of_floors,
+                                            "number_of_apartments": number_of_apartments,
+                                            "pool": pool,
+                                            "poolAll": poolAll,
+                                            "basement": basement,
+                                            "basementAll": basementAll,
+                                            "elevator": elevator,
+                                            "elevatorAll": elevatorAll,
+                                            "ageRange_start": _ageRange.start,
+                                            "ageRange_end": _ageRange.end,
+                                            "MinSpace": MinSpace.text,
+                                            "MaxSpace": MaxSpace.text,
+                                            "MinPrice": MinPrice.text,
+                                            "MaxPrice": MaxPrice.text,
+                                            "FilterValue": true,
+                                          });
+                                        }
                                       },
                                       style: ButtonStyle(
                                         backgroundColor: MaterialStateProperty.all(
