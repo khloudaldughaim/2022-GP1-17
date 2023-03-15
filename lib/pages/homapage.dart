@@ -48,33 +48,33 @@ class HomePageState extends State<HomePage> {
   static int? number_of_floors;
   static int? number_of_apartments;
   static bool? pool;
-  static bool?  basement;
-  static bool?  elevator;
-  static bool?  poolAll;
-  static bool?  basementAll;
-  static bool?  elevatorAll;
+  static bool? basement;
+  static bool? elevator;
+  static bool? poolAll;
+  static bool? basementAll;
+  static bool? elevatorAll;
   static double? ageRange_start;
   static double? ageRange_end;
   static String? MinSpace;
   static String? MaxSpace;
   static String? MinPrice;
   static String? MaxPrice;
-  static bool isDownloadedData = false ;
+  static bool isDownloadedData = false;
 
 ////////////////////////////////////////////////////////////
- void initState() {
+  void initState() {
     super.initState();
-    // Notifications step 3 
+    // Notifications step 3
     requestPremission();
     getToken();
-     // end of Notifications step 3
+    // end of Notifications step 3
   }
 
-late FirebaseAuth auth = FirebaseAuth.instance;
+  late FirebaseAuth auth = FirebaseAuth.instance;
   late User? user = auth.currentUser;
   late String curentId = user!.uid;
- 
-void requestPremission() async {
+
+  void requestPremission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     NotificationSettings settings = await messaging.requestPermission(
@@ -90,8 +90,7 @@ void requestPremission() async {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
       print("User granted premission");
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
       print("User granted provisional permission");
     } else {
@@ -344,166 +343,168 @@ void requestPremission() async {
   @override
   Widget build(BuildContext context) {
     return isMap
-      ? mapPage(
-          onPressed: () {
-            changeHomeView();
-          },
-        )
-      : SafeArea(
-      top: true,
-      child: DefaultTabController(
-          length: 3,
-          child: Column(
-            children: [
-              Container(
-                height: 120,
-                width: MediaQuery.of(context).size.width,
-                child: AppBar(
-                  backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                  leading: IconButton(
-                    onPressed: () async {
-                      //print(allData);
-                      print("type1 $type1");
-                      print("propertyUse1 $propertyUse1");
-                      print("in_floor $in_floor");
-                      print("city $city");
-                      print("address $address");
-                      print("number_of_bathrooms $number_of_bathrooms");
-                      print("number_of_rooms $number_of_rooms"); //
-                      print("number_of_livingRooms $number_of_livingRooms");
-                      print("number_of_floors $number_of_floors"); //
-                      print("number_of_apartments $number_of_apartments"); //
-                      print("pool $pool");
-                      print("basement $basement"); //
-                      print("elevator $elevator");
-                      print("ageRange_start $ageRange_start");
-                      print("ageRange_end $ageRange_end");
+        ? mapPage(
+            onPressed: () {
+              changeHomeView();
+            },
+          )
+        : SafeArea(
+            top: true,
+            child: DefaultTabController(
+                length: 3,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 120,
+                      width: MediaQuery.of(context).size.width,
+                      child: AppBar(
+                        backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                        leading: IconButton(
+                          onPressed: () async {
+                            //print(allData);
+                            print("type1 $type1");
+                            print("propertyUse1 $propertyUse1");
+                            print("in_floor $in_floor");
+                            print("city $city");
+                            print("address $address");
+                            print("number_of_bathrooms $number_of_bathrooms");
+                            print("number_of_rooms $number_of_rooms"); //
+                            print("number_of_livingRooms $number_of_livingRooms");
+                            print("number_of_floors $number_of_floors"); //
+                            print("number_of_apartments $number_of_apartments"); //
+                            print("pool $pool");
+                            print("basement $basement"); //
+                            print("elevator $elevator");
+                            print("ageRange_start $ageRange_start");
+                            print("ageRange_end $ageRange_end");
 
-                      if (MinSpace == null) {
-                        print('MinSpace empty');
-                      } else {
-                        print(MinSpace);
-                      }
+                            if (MinSpace == null) {
+                              print('MinSpace empty');
+                            } else {
+                              print(MinSpace);
+                            }
 
-                      if (MaxSpace == null) {
-                        print('MaxSpace empty');
-                      } else {
-                        print(MaxSpace);
-                      }
+                            if (MaxSpace == null) {
+                              print('MaxSpace empty');
+                            } else {
+                              print(MaxSpace);
+                            }
 
-                      if (MinPrice == null) {
-                        print('MinPrice empty');
-                      } else {
-                        print(MinPrice);
-                      }
+                            if (MinPrice == null) {
+                              print('MinPrice empty');
+                            } else {
+                              print(MinPrice);
+                            }
 
-                      if (MaxPrice == null) {
-                        print('MaxPrice empty');
-                      } else {
-                        print(MaxPrice);
-                      }
-                      //FilterValue = true;
-                      final FilterResult = await Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => FilterPage()));
-                      setState(() {
-                        type1 = FilterResult["type1"];
-                        propertyUse1 = FilterResult["propertyUse1"];
-                        in_floor = FilterResult["in_floor"];
-                        city = FilterResult["city"];
-                        address = FilterResult["address"];
-                        number_of_bathrooms = FilterResult["number_of_bathrooms"];
-                        number_of_floors = FilterResult["number_of_floors"];
-                        number_of_livingRooms = FilterResult["number_of_livingRooms"];
-                        number_of_rooms = FilterResult["number_of_rooms"];
-                        number_of_apartments = FilterResult["number_of_apartments"];
-                        basement = FilterResult["basement"];
-                        basementAll = FilterResult["basementAll"];
-                        elevator = FilterResult["elevator"];
-                        elevatorAll = FilterResult["elevatorAll"];
-                        pool = FilterResult["pool"];
-                        poolAll = FilterResult["poolAll"];
-                        ageRange_start = FilterResult["ageRange_start"];
-                        ageRange_end = FilterResult["ageRange_end"];
-                        MinPrice = FilterResult["MinPrice"];
-                        MaxPrice = FilterResult["MaxPrice"];
-                        MinSpace = FilterResult["MinSpace"];
-                        MaxSpace = FilterResult["MaxSpace"];
-                        FilterValue = FilterResult["FilterValue"];
-                        print(FilterResult);
-                      });
-                    },
-                    icon: const Icon(Icons.filter_alt_outlined),
-                  ),
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          textAlign: TextAlign.right,
-                          controller: controller,
-                          onChanged: (value) {
+                            if (MaxPrice == null) {
+                              print('MaxPrice empty');
+                            } else {
+                              print(MaxPrice);
+                            }
+                            //FilterValue = true;
+                            final FilterResult = await Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => FilterPage()));
                             setState(() {
-                              // searchItemsForSale.clear();
-                              // searchItemsForRent.clear();
-                              name = value;
+                              type1 = FilterResult["type1"];
+                              propertyUse1 = FilterResult["propertyUse1"];
+                              in_floor = FilterResult["in_floor"];
+                              city = FilterResult["city"];
+                              address = FilterResult["address"];
+                              number_of_bathrooms = FilterResult["number_of_bathrooms"];
+                              number_of_floors = FilterResult["number_of_floors"];
+                              number_of_livingRooms = FilterResult["number_of_livingRooms"];
+                              number_of_rooms = FilterResult["number_of_rooms"];
+                              number_of_apartments = FilterResult["number_of_apartments"];
+                              basement = FilterResult["basement"];
+                              basementAll = FilterResult["basementAll"];
+                              elevator = FilterResult["elevator"];
+                              elevatorAll = FilterResult["elevatorAll"];
+                              pool = FilterResult["pool"];
+                              poolAll = FilterResult["poolAll"];
+                              ageRange_start = FilterResult["ageRange_start"];
+                              ageRange_end = FilterResult["ageRange_end"];
+                              MinPrice = FilterResult["MinPrice"];
+                              MaxPrice = FilterResult["MaxPrice"];
+                              MinSpace = FilterResult["MinSpace"];
+                              MaxSpace = FilterResult["MaxSpace"];
+                              FilterValue = FilterResult["FilterValue"];
+                              print(FilterResult);
                             });
                           },
-                          decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Color.fromARGB(255, 14, 41, 99))),
-                            enabledBorder:
-                                UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                            alignLabelWithHint: true,
-                            hintText: 'ابحث عن الحي أو المدينة أو نوع العقار',
-                            hintStyle: TextStyle(
-                                color: Color.fromARGB(143, 255, 255, 255), fontFamily: "Tajawal-m"),
+                          icon: const Icon(Icons.filter_alt_outlined),
+                        ),
+                        title: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                textAlign: TextAlign.right,
+                                controller: controller,
+                                onChanged: (value) {
+                                  setState(() {
+                                    // searchItemsForSale.clear();
+                                    // searchItemsForRent.clear();
+                                    name = value;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color.fromARGB(255, 14, 41, 99))),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white)),
+                                  alignLabelWithHint: true,
+                                  hintText: 'ابحث عن الحي أو المدينة أو نوع العقار',
+                                  hintStyle: TextStyle(
+                                      color: Color.fromARGB(143, 255, 255, 255),
+                                      fontFamily: "Tajawal-m"),
+                                ),
+                                cursorColor: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.white,
+                            ),
                           ),
-                          cursorColor: Colors.white,
+                        ],
+                        bottom: TabBar(
+                          labelStyle: TextStyle(
+                            fontFamily: "Tajawal-b",
+                            fontWeight: FontWeight.w100,
+                          ),
+                          onTap: (index) {
+                            print("Index of tap is : $index");
+                            indexOfTap = index;
+                          },
+                          indicatorColor: Colors.white,
+                          tabs: [
+                            Tab(
+                              text: 'الكل',
+                            ),
+                            Tab(
+                              text: 'للبيع',
+                            ),
+                            Tab(
+                              text: 'للإيجار',
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  actions: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 20.0),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
                     ),
-                  ],
-                  bottom: TabBar(
-                    labelStyle: TextStyle(
-                      fontFamily: "Tajawal-b",
-                      fontWeight: FontWeight.w100,
-                    ),
-                    onTap: (index) {
-                      print("Index of tap is : $index");
-                      indexOfTap = index;
-                    },
-                    indicatorColor: Colors.white,
-                    tabs: [
-                      Tab(
-                        text: 'الكل',
-                      ),
-                      Tab(
-                        text: 'للبيع',
-                      ),
-                      Tab(
-                        text: 'للإيجار',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // isMap
-              //     ? Expanded(
-              //         child: mapPage(
-              //           onPressed: () {
-              //             changeHomeView();
-              //           },
-              //         ),
-              //       )
-              //     : 
+                    // isMap
+                    //     ? Expanded(
+                    //         child: mapPage(
+                    //           onPressed: () {
+                    //             changeHomeView();
+                    //           },
+                    //         ),
+                    //       )
+                    //     :
                     Expanded(
                       child: Stack(
                         alignment: Alignment.bottomLeft,
@@ -523,7 +524,7 @@ void requestPremission() async {
                                       },
                                     )
                                   : name.isEmpty && FilterValue == true
-                                      ? FilterFunctionState.buildFilterItems() 
+                                      ? FilterFunctionState.buildFilterItems()
                                       : name.isNotEmpty && FilterValue == true
                                           ? FilterFunctionState.buildFilterItems()
                                           : _buildSearchItems(),
@@ -595,12 +596,13 @@ void requestPremission() async {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.all(24),
+                            margin: EdgeInsets.only(bottom: 80, left: 20),
                             child: CircleAvatar(
                               backgroundColor: Color.fromARGB(255, 225, 231, 255),
-                              radius: 30,
+                              radius: 34,
                               child: IconButton(
-                                icon: Icon(Icons.map, color: Color.fromARGB(255, 127, 166, 233)),
+                                icon: Icon(Icons.map,
+                                    color: Color.fromARGB(255, 127, 166, 233), size: 30),
                                 onPressed: () {
                                   changeHomeView();
                                 },
@@ -610,9 +612,9 @@ void requestPremission() async {
                         ],
                       ),
                     ),
-            ],
-          )),
-    );
+                  ],
+                )),
+          );
   }
 }
 

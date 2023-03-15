@@ -42,12 +42,12 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
   var data;
   List<dynamic> output = [];
   bool _fav = false;
-  late String id ;
+  late String id;
 
   void initState() {
     super.initState();
     SimilarPropFunction();
-    if(FirebaseAuth.instance.currentUser != null){
+    if (FirebaseAuth.instance.currentUser != null) {
       id = getuser();
       _isFav();
     }
@@ -251,11 +251,13 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Complaints(
-                                                  property_id: widget.apartment.properties.property_id,
+                                                  property_id:
+                                                      widget.apartment.properties.property_id,
                                                   user_id: widget.apartment.properties.User_id,
                                                   type: widget.apartment.properties.type,
                                                   city: widget.apartment.properties.city,
-                                                  neighborhood: widget.apartment.properties.neighborhood,
+                                                  neighborhood:
+                                                      widget.apartment.properties.neighborhood,
                                                 )),
                                       );
                                     }
@@ -487,23 +489,8 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(
-                                    width: 16,
+                                    width: 5,
                                   ),
                                   Container(
                                     height: 50,
@@ -521,13 +508,36 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                           size: 20,
                                         ),
                                         onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => ChatBody(
-                                                        Freind_id:
-                                                            '${widget.apartment.properties.User_id}',
-                                                      )));
+                                          if (FirebaseAuth.instance.currentUser == null) {
+                                            Fluttertoast.showToast(
+                                              msg: "عذرا لابد من تسجيل الدخول",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                              textColor: Color.fromARGB(255, 252, 253, 255),
+                                              fontSize: 18.0,
+                                            );
+                                          } else if (FirebaseAuth.instance.currentUser!.uid ==
+                                              '${widget.apartment.properties.User_id}') {
+                                            Fluttertoast.showToast(
+                                              msg: "أنت صاحب العقار بالفعل!",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                              textColor: Color.fromARGB(255, 252, 253, 255),
+                                              fontSize: 18.0,
+                                            );
+                                          } else {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => ChatBody(
+                                                          Freind_id:
+                                                              '${widget.apartment.properties.User_id}',
+                                                        )));
+                                          }
                                         },
                                       ),
                                     ),
@@ -605,7 +615,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                               ],
                             )),
                         Padding(
-                          padding: EdgeInsets.only(left: 275, bottom: 16),
+                          padding: EdgeInsets.only(left: 265, bottom: 16),
                           child: Text(
                             "تفاصيل أكثر",
                             style: TextStyle(
@@ -616,7 +626,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 27, left: 27, bottom: 16),
+                          padding: const EdgeInsets.only(right: 30, left: 27, bottom: 16),
                           child: Column(
                             children: [
                               Row(
@@ -707,7 +717,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 232, bottom: 16),
+                          padding: EdgeInsets.only(left: 225, bottom: 16),
                           child: Text(
                             "معلومات إضافية",
                             style: TextStyle(
@@ -719,7 +729,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                         ),
                         '${widget.apartment.properties.description}' == ''
                             ? Container(
-                              height: 50,
+                                height: 50,
                                 alignment: Alignment.center,
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -734,58 +744,13 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                             fontFamily: "Tajawal-l",
                                           ),
                                         ))),
-                            )
-                            : Container(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 24, left: 5, bottom: 16),
-                                child: Text(
-                                  '${widget.apartment.properties.description}',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "Tajawal-l",
-                                  ),
-                                ),
-                              ),
-                            ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 102, bottom: 16),
-                          child: Text(
-                            "الوقت المفضل للجولات العقارية",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Tajawal-m",
-                            ),
-                          ),
-                        ),
-                        '${widget.apartment.properties.TourTime}' == ''
-                            ? Container(
-                                height: 50,
-                                alignment: Alignment.center,
-                                child: Padding(
-                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                                    child: Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: Text(
-                                          'لا يفضل المالك وقت محدد للجولات العقارية !',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "Tajawal-l",
-                                          ),
-                                        ))),
                               )
                             : Container(
                                 alignment: Alignment.topRight,
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                                  padding: EdgeInsets.only(right: 33, left: 5, bottom: 16),
                                   child: Text(
-                                    '${widget.apartment.properties.TourTime}',
+                                    '${widget.apartment.properties.description}',
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -797,7 +762,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                 ),
                               ),
                         Padding(
-                          padding: EdgeInsets.only(left: 320, bottom: 16),
+                          padding: EdgeInsets.only(right: 15, left: 310, bottom: 16),
                           child: Text(
                             "الصور",
                             style: TextStyle(
@@ -826,8 +791,8 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                         ))),
                               )
                             : Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Container(
+                                textDirection: TextDirection.rtl,
+                                child: Container(
                                   height: 200,
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
@@ -838,8 +803,8 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                       separatorBuilder: (context, index) => SizedBox(width: 20),
                                       itemCount: widget.apartment.properties.images.length,
                                       itemBuilder: (context, index) => InkWell(
-                                        onTap: () =>
-                                            openGallery(widget.apartment.properties.images, context),
+                                        onTap: () => openGallery(
+                                            widget.apartment.properties.images, context),
                                         borderRadius: BorderRadius.circular(15),
                                         child: Image.network(
                                           widget.apartment.properties.images[index],
@@ -848,7 +813,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                                     ),
                                   ),
                                 ),
-                            ),
+                              ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -864,7 +829,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(right: 25, left: 5, bottom: 16),
+                              padding: EdgeInsets.only(right: 33, left: 5, bottom: 16),
                               child: Text(
                                 '${widget.apartment.properties.Location}',
                                 textAlign: TextAlign.right,
@@ -878,7 +843,7 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                             ),
                             SizedBox(
                               height: 200.0,
-                              width: 380,
+                              width: 370,
                               child: Stack(
                                 children: [
                                   Padding(
@@ -905,6 +870,51 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                               ),
                             ),
                             SizedBox(height: 30, width: 30),
+                            Padding(
+                              padding: EdgeInsets.only(right: 20, left: 85, bottom: 16),
+                              child: Text(
+                                "الوقت المفضل للجولات العقارية",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-m",
+                                ),
+                              ),
+                            ),
+                            '${widget.apartment.properties.TourTime}' == ''
+                                ? Container(
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                        padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                        child: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: Text(
+                                              'لا يفضل المالك وقت محدد للجولات العقارية !',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.grey[500],
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Tajawal-l",
+                                              ),
+                                            ))),
+                                  )
+                                : Container(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 33, left: 5, bottom: 16),
+                                      child: Text(
+                                        '${widget.apartment.properties.TourTime}',
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey[500],
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "Tajawal-l",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                             Container(
                               margin: const EdgeInsets.only(left: 90, right: 90, bottom: 25),
                               child: ElevatedButton(
@@ -984,66 +994,69 @@ class _ApartmentDetailesState extends State<ApartmentDetailes> {
                             ),
                           ),
                         ),
-                        output.length != 0 ?
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Container(
-                            height: 210,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
-                              child: ListView.separated(
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  // shrinkWrap: true,
-                                  separatorBuilder: (context, index) => SizedBox(width: 20),
-                                  itemCount: output.length,
-                                  itemBuilder: (context, index) {
-                                    for (int i = 0; i < HomePageState.allData.length; i++) {
-                                      if (HomePageState.allData[i] is Villa) {
-                                        Villa villa = HomePageState.allData[i] as Villa;
-                                        if (villa.properties.property_id == output[index]) {
-                                          return _buildVillaItem(
-                                              HomePageState.allData[i] as Villa, context);
-                                        }
-                                      }
-                                      if (HomePageState.allData[i] is Apartment) {
-                                        Apartment apartment = HomePageState.allData[i] as Apartment;
-                                        if (apartment.properties.property_id == output[index]) {
-                                          return _buildApartmentItem(
-                                              HomePageState.allData[i] as Apartment, context);
-                                        }
-                                      }
-                                      if (HomePageState.allData[i] is Building) {
-                                        Building building = HomePageState.allData[i] as Building;
-                                        if (building.properties.property_id == output[index]) {
-                                          return _buildBuildingItem(
-                                              HomePageState.allData[i] as Building, context);
-                                        }
-                                      }
-                                      if (HomePageState.allData[i] is Land) {
-                                        Land land = HomePageState.allData[i] as Land;
-                                        if (land.properties!.property_id == output[index]) {
-                                          return _buildLandItem(
-                                              HomePageState.allData[i] as Land, context);
-                                        }
-                                      }
-                                    }
-                                    return Container();
-                                  }),
-                            ),
-                          ),
-                        ) : 
-                        Container(
-                          padding: EdgeInsets.only(left:70, bottom: 20),
-                          child: Text(
-                            '! لا يوجد لدينا حالياً عقارات مشابهة',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: "Tajawal-b",
-                              color: Color.fromARGB(255, 139, 139, 139)
-                            ),
-                          ),
-                        )
+                        output.length != 0
+                            ? Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Container(
+                                  height: 210,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 20, bottom: 24, right: 20),
+                                    child: ListView.separated(
+                                        physics: BouncingScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        // shrinkWrap: true,
+                                        separatorBuilder: (context, index) => SizedBox(width: 20),
+                                        itemCount: output.length,
+                                        itemBuilder: (context, index) {
+                                          for (int i = 0; i < HomePageState.allData.length; i++) {
+                                            if (HomePageState.allData[i] is Villa) {
+                                              Villa villa = HomePageState.allData[i] as Villa;
+                                              if (villa.properties.property_id == output[index]) {
+                                                return _buildVillaItem(
+                                                    HomePageState.allData[i] as Villa, context);
+                                              }
+                                            }
+                                            if (HomePageState.allData[i] is Apartment) {
+                                              Apartment apartment =
+                                                  HomePageState.allData[i] as Apartment;
+                                              if (apartment.properties.property_id ==
+                                                  output[index]) {
+                                                return _buildApartmentItem(
+                                                    HomePageState.allData[i] as Apartment, context);
+                                              }
+                                            }
+                                            if (HomePageState.allData[i] is Building) {
+                                              Building building =
+                                                  HomePageState.allData[i] as Building;
+                                              if (building.properties.property_id ==
+                                                  output[index]) {
+                                                return _buildBuildingItem(
+                                                    HomePageState.allData[i] as Building, context);
+                                              }
+                                            }
+                                            if (HomePageState.allData[i] is Land) {
+                                              Land land = HomePageState.allData[i] as Land;
+                                              if (land.properties!.property_id == output[index]) {
+                                                return _buildLandItem(
+                                                    HomePageState.allData[i] as Land, context);
+                                              }
+                                            }
+                                          }
+                                          return Container();
+                                        }),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                padding: EdgeInsets.only(left: 70, bottom: 20),
+                                child: Text(
+                                  '! لا يوجد لدينا حالياً عقارات مشابهة',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "Tajawal-b",
+                                      color: Color.fromARGB(255, 139, 139, 139)),
+                                ),
+                              )
                       ],
                     ),
                   ),
