@@ -155,7 +155,12 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
                                 .where("is_show_last_message", isEqualTo: false)
                                 .snapshots(),
                               builder: (context, AsyncSnapshot snapshot) {
-                                 if (snapshot.data.docs.length <  1) {
+                                if(!snapshot.hasData)
+                                {
+                                   print('test phrase');
+                                   return Text("Loading.....");
+                                }
+                          if (snapshot.data!.docs.length <  1) {
                           MassageCounter = 0;
                           print("this is counter: " + MassageCounter.toString());
                           return Column(
@@ -179,7 +184,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
                                     ],
                                  );
                                   } else {
-                                    MassageCounter = snapshot.data.docs.length;
+                                    MassageCounter = snapshot.data!.docs.length;
                                     print("this is counter2: " + MassageCounter.toString());
                                     print("this length of snapshot:"+snapshot.data.docs.length.toString());
                                         return Column(
