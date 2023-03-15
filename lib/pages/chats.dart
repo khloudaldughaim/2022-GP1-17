@@ -5,6 +5,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nozol_application/Chat/ChatBody.dart';
 
+import '../registration/log_in.dart';
+
 class ChatsPage extends StatefulWidget {
   const ChatsPage({Key? key}) : super(key: key);
 
@@ -75,7 +77,48 @@ class _ChatsPageState extends State<ChatsPage> {
         backgroundColor: Color.fromARGB(255, 138, 174, 222),
         actions: [],
       ),
-      body: StreamBuilder(
+      body:  FirebaseAuth.instance.currentUser == null ?
+      Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              SizedBox(height: 70),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 79),
+                                  child: Text(
+                                    "عذراً لابد من تسجيل الدخول ",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: "Tajawal-b",
+                                        color: Color.fromARGB(255, 127, 166, 233)),
+                                    textAlign: TextAlign.center,
+                                  )),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => LogIn()));
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(27))),
+                                ),
+                                child: Text(
+                                  "تسجيل الدخول",
+                                  style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+                                ),
+                              )
+                            ],
+                          )
+      
+      
+      :StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('Standard_user')
               .doc(curentId)

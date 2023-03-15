@@ -103,20 +103,31 @@ void requestPremission() async {
   String? mtoken = " ";
 
   void getToken() async {
-    await FirebaseMessaging.instance.getToken().then((token) {
+  
+       await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
         mtoken = token;
         print("My token is $mtoken");
       });
       saveToken(token!);
     });
+     
+     
   }
 
   void saveToken(String token) async {
-    await FirebaseFirestore.instance
+    if (FirebaseAuth.instance.currentUser == null)
+    {
+      print("this is guset user ;) ");
+    }
+    else
+    {
+ await FirebaseFirestore.instance
         .collection("Standard_user")
         .doc(curentId)
         .update({'token': token});
+    }
+   
   }
 ///////////////////////////////////////////////////////////////////
 
