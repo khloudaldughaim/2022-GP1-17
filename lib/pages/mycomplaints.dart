@@ -42,7 +42,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                         style: TextStyle(
                           fontSize: 17,
                           fontFamily: "Tajawal-b",
-                          color: Color.fromARGB(255, 253, 254, 255),
+                          color: Color.fromRGBO(253, 254, 255, 1),
                         )),
                   ),
                   actions: [
@@ -119,7 +119,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                     color: const Color.fromARGB(119, 110, 110, 110),
                                     width: 1,
                                   ),
-                                  color: const Color.fromARGB(235, 202, 222, 245),
+                                  color: Color.fromARGB(215, 226, 233, 240),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Column(
@@ -142,7 +142,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                             complaint_id: snapshot.data!.docs[index]
                                                                 .data()['complaint_id'])));
                                               },
-                                              child: const Text('تفاصيل البلاغ'),
+                                              child: const Text(
+                                                'تفاصيل البلاغ',
+                                                style: TextStyle(
+                                                    fontSize: 13, fontFamily: "Tajawal-m"),
+                                              ),
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStateProperty.all(
                                                   const Color.fromARGB(255, 127, 166, 233),
@@ -235,7 +239,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                     color: const Color.fromARGB(119, 110, 110, 110),
                                     width: 1,
                                   ),
-                                  color: const Color.fromARGB(235, 202, 222, 245),
+                                  color: Color.fromARGB(215, 226, 233, 240),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Column(
@@ -258,7 +262,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                             complaint_id: snapshot.data!.docs[index]
                                                                 .data()['complaint_id'])));
                                               },
-                                              child: const Text('تفاصيل البلاغ'),
+                                              child: const Text(
+                                                'تفاصيل البلاغ',
+                                                style: TextStyle(
+                                                    fontSize: 13, fontFamily: "Tajawal-m"),
+                                              ),
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStateProperty.all(
                                                   const Color.fromARGB(255, 127, 166, 233),
@@ -351,7 +359,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                                     color: const Color.fromARGB(119, 110, 110, 110),
                                     width: 1,
                                   ),
-                                  color: const Color.fromARGB(235, 202, 222, 245),
+                                  color: Color.fromARGB(215, 226, 233, 240),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Column(
@@ -374,7 +382,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                             complaint_id: snapshot.data!.docs[index]
                                                                 .data()['complaint_id'])));
                                               },
-                                              child: const Text('تفاصيل البلاغ'),
+                                              child: const Text(
+                                                'تفاصيل البلاغ',
+                                                style: TextStyle(
+                                                    fontSize: 13, fontFamily: "Tajawal-m"),
+                                              ),
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStateProperty.all(
                                                   const Color.fromARGB(255, 127, 166, 233),
