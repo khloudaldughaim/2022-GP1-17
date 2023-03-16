@@ -347,31 +347,37 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             ),
                           ),
                           Expanded(
-                            child: TextFormField(
-                              controller: in_floorController,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              decoration: InputDecoration(
-                                hintText: '5',
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: EdgeInsets.all(6),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 0.0,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 75, right: 25),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: in_floorController,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    hintText: '5',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
                                   ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                    }
+                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                      return 'الرجاء إدخال أرقام فقط';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'الرجاء عدم ترك الخانة فارغة!';
-                                }
-                                if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                  return 'الرجاء إدخال أرقام فقط';
-                                }
-                                return null;
-                              },
                             ),
                           ),
                         ],
@@ -392,31 +398,37 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             ),
                           ),
                           Expanded(
-                            child: TextFormField(
-                              controller: spaceController,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              decoration: InputDecoration(
-                                hintText: 'متر ² ',
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: EdgeInsets.all(6),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 0.0,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 75, right: 25),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: spaceController,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    hintText: 'متر ² ',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
                                   ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                    }
+                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                      return 'الرجاء إدخال أرقام فقط';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'الرجاء عدم ترك الخانة فارغة!';
-                                }
-                                if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                  return 'الرجاء إدخال أرقام فقط';
-                                }
-                                return null;
-                              },
                             ),
                           ),
                         ],
@@ -437,31 +449,37 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             ),
                           ),
                           Expanded(
-                            child: TextFormField(
-                              controller: priceController,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              decoration: InputDecoration(
-                                hintText: 'ريال ',
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: EdgeInsets.all(6),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 0.0,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 75, right: 25),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: priceController,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    hintText: 'ريال ',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(6),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.0,
+                                      ),
+                                    ),
                                   ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                    }
+                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                      return 'الرجاء إدخال أرقام فقط';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'الرجاء عدم ترك الخانة فارغة!';
-                                }
-                                if (!RegExp(r'[0-9]').hasMatch(value)) {
-                                  return 'الرجاء إدخال أرقام فقط';
-                                }
-                                return null;
-                              },
                             ),
                           ),
                         ],
@@ -479,7 +497,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                     ),
                                     textDirection: TextDirection.rtl),
                                 Container(
-                                  margin: const EdgeInsets.all(7),
+                                  margin: const EdgeInsets.all(15),
                                 ),
                                 Padding(padding: const EdgeInsets.all(1.0)),
                                 Container(
@@ -488,8 +506,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                       borderRadius: BorderRadius.all(Radius.circular(10)),
                                       color: Colors.white,
                                       border: Border.all(color: Colors.grey.shade300, width: 1)),
-                                  height: 55,
-                                  width: 240,
+                                  height: 50,
+                                  width: 155,
                                   child: DropdownButtonFormField(
                                     isExpanded: true,
                                     menuMaxHeight: 400,
@@ -511,12 +529,6 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                         city = _selectedValue.toString();
                                       });
                                     },
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return 'الرجاء اختيار المدينة';
-                                      }
-                                    },
-                                    autovalidateMode: AutovalidateMode.onUserInteraction,
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontFamily: "Tajawal-m",
@@ -547,7 +559,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.all(14),
+                            margin: const EdgeInsets.all(25),
                           ),
                           Padding(padding: const EdgeInsets.all(5.0)),
                           Container(
@@ -556,8 +568,8 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
                                 color: Colors.white,
                                 border: Border.all(color: Colors.grey.shade300, width: 1)),
-                            height: 55,
-                            width: 243,
+                            height: 50,
+                            width: 155,
                             child: DropdownButtonFormField(
                               isExpanded: true,
                               key: _AddressKey,
@@ -572,12 +584,6 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                   neighborhood = value['name_ar'];
                                 });
                               },
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'الرجاء اختيار الحي';
-                                }
-                              },
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               style: TextStyle(
                                   fontSize: 16.0,
                                   fontFamily: "Tajawal-m",
@@ -651,7 +657,7 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                           ),
                           Expanded(
                               child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 2),
+                                  padding: EdgeInsets.only(left: 75, right: 25),
                                   child: Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: TextFormField(
@@ -1330,56 +1336,63 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                         height: 25,
                       ),
                       //submit button
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 110),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: Text("هل أنت متأكد من تحديث العقار؟"),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text("لا"),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: Text("نعم"),
-                                        onPressed: () {
-                                          try {
-                                            updateData(selectedFiles);
-                                          } catch (e, stack) {
-                                            Fluttertoast.showToast(
-                                              msg: "هناك خطأ ما",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 5,
-                                              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                              textColor: Color.fromARGB(255, 252, 253, 255),
-                                              fontSize: 18.0,
-                                            );
-                                          }
-                                          ;
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                });
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                            padding: MaterialStateProperty.all(
-                                EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
-                          ),
-                          child: Text(
-                            "تحديث",
-                            style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                      Center(
+                        child: SizedBox(
+                          width: 205.0,
+                          height: 70.0,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Text("هل أنت متأكد من تحديث العقار؟"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("لا"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text("نعم"),
+                                            onPressed: () {
+                                              try {
+                                                updateData(selectedFiles);
+                                              } catch (e, stack) {
+                                                Fluttertoast.showToast(
+                                                  msg: "هناك خطأ ما",
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 5,
+                                                  backgroundColor:
+                                                      Color.fromARGB(255, 127, 166, 233),
+                                                  textColor: Color.fromARGB(255, 252, 253, 255),
+                                                  fontSize: 18.0,
+                                                );
+                                              }
+                                              ;
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(horizontal: 40, vertical: 5)),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(27))),
+                              ),
+                              child: Text(
+                                "تحديث",
+                                style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                              ),
+                            ),
                           ),
                         ),
                       ),

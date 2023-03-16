@@ -534,112 +534,121 @@ class _BookingPagestate extends State<boookingPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (bookformkey.currentState!.validate()) {
-                              // DateTime dt =
-                              //     DateTime.parse(datecontrolar.text);
-                              book_id = Uuid().v4();
-                              FirebaseFirestore.instance
-                                  .collection('bookings')
-                                  .where('Date', isEqualTo: datecontrolar.text)
-                                  .where("owner_id", isEqualTo: '${widget.user_id}')
-                                  .where("isAvailable", isEqualTo: false)
-                                  .get()
-                                  .then((element) async {
-                                if (element.docs.isEmpty) {
-                                  try {
+                        Center(
+                          child: SizedBox(
+                            width: 205.0,
+                            height: 70.0,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (bookformkey.currentState!.validate()) {
+                                    // DateTime dt =
+                                    //     DateTime.parse(datecontrolar.text);
+                                    book_id = Uuid().v4();
                                     FirebaseFirestore.instance
                                         .collection('bookings')
-                                        .doc(book_id)
-                                        .set({
-                                      "Date": datecontrolar.text,
-                                      "property_id": '${widget.property_id}',
-                                      "buyer_id": curentId,
-                                      "buyer_name": nameB.text,
-                                      "buyer_email": emailB.text,
-                                      "buyer_phone": phoneB.text,
-                                      "book_type": Booktype,
-                                      "videochat": videochat,
-                                      "status": "pending",
-                                      "owner_id": '${widget.user_id}',
-                                      "Pimage": '${widget.Pimge}',
-                                      "book_id": book_id,
-                                      "isExpired": false,
-                                      "isAvailable": false,
-                                      "reason": " ",
-                                    });
-                                    final ref = FirebaseFirestore.instance
-                                        .collection('bookings')
-                                        .doc(book_id);
+                                        .where('Date', isEqualTo: datecontrolar.text)
+                                        .where("owner_id", isEqualTo: '${widget.user_id}')
+                                        .where("isAvailable", isEqualTo: false)
+                                        .get()
+                                        .then((element) async {
+                                      if (element.docs.isEmpty) {
+                                        try {
+                                          FirebaseFirestore.instance
+                                              .collection('bookings')
+                                              .doc(book_id)
+                                              .set({
+                                            "Date": datecontrolar.text,
+                                            "property_id": '${widget.property_id}',
+                                            "buyer_id": curentId,
+                                            "buyer_name": nameB.text,
+                                            "buyer_email": emailB.text,
+                                            "buyer_phone": phoneB.text,
+                                            "book_type": Booktype,
+                                            "videochat": videochat,
+                                            "status": "pending",
+                                            "owner_id": '${widget.user_id}',
+                                            "Pimage": '${widget.Pimge}',
+                                            "book_id": book_id,
+                                            "isExpired": false,
+                                            "isAvailable": false,
+                                            "reason": " ",
+                                          });
+                                          final ref = FirebaseFirestore.instance
+                                              .collection('bookings')
+                                              .doc(book_id);
 
-                                    book.add(ref);
-                                    print(book);
-                                    FirebaseFirestore.instance
-                                        .collection('properties')
-                                        .doc('${widget.property_id}')
-                                        .update({
-                                      "ArrayOfbooking": book,
-                                    });
-                                    FirebaseFirestore.instance
-                                        .collection('Standard_user')
-                                        .doc(curentId)
-                                        .update({
-                                      "ArrayOfbooking": book,
-                                    });
-                                    Fluttertoast.showToast(
-                                      msg: "تم الحجز بنجاح",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 2,
-                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                      textColor: Color.fromARGB(255, 248, 249, 250),
-                                      fontSize: 18.0,
-                                    );
-                                    Navigator.pop(context);
-                                    var Otoken = await FirebaseFirestore.instance
-                                        .collection('Standard_user')
-                                        .doc('${widget.user_id}')
-                                        .get();
-                                    print('IT WORKS !!!! ' + Otoken['token']);
+                                          book.add(ref);
+                                          print(book);
+                                          FirebaseFirestore.instance
+                                              .collection('properties')
+                                              .doc('${widget.property_id}')
+                                              .update({
+                                            "ArrayOfbooking": book,
+                                          });
+                                          FirebaseFirestore.instance
+                                              .collection('Standard_user')
+                                              .doc(curentId)
+                                              .update({
+                                            "ArrayOfbooking": book,
+                                          });
+                                          Fluttertoast.showToast(
+                                            msg: "تم الحجز بنجاح",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 2,
+                                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                            textColor: Color.fromARGB(255, 248, 249, 250),
+                                            fontSize: 18.0,
+                                          );
+                                          Navigator.pop(context);
+                                          var Otoken = await FirebaseFirestore.instance
+                                              .collection('Standard_user')
+                                              .doc('${widget.user_id}')
+                                              .get();
+                                          print('IT WORKS !!!! ' + Otoken['token']);
 
-                                    sendPushMessege(Otoken['token'], Otoken['name']);
-                                  } catch (e, stack) {
-                                    Fluttertoast.showToast(
-                                      msg: "هناك خطأ ما",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 5,
-                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                      textColor: Color.fromARGB(255, 252, 253, 255),
-                                      fontSize: 18.0,
-                                    );
+                                          sendPushMessege(Otoken['token'], Otoken['name']);
+                                        } catch (e, stack) {
+                                          Fluttertoast.showToast(
+                                            msg: "هناك خطأ ما",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                            textColor: Color.fromARGB(255, 252, 253, 255),
+                                            fontSize: 18.0,
+                                          );
+                                        }
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: "التاريخ محجوز مسبقاً",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 3,
+                                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                          textColor: Color.fromARGB(255, 252, 253, 255),
+                                          fontSize: 18.0,
+                                        );
+                                      }
+                                    });
                                   }
-                                } else {
-                                  Fluttertoast.showToast(
-                                    msg: "التاريخ محجوز مسبقاً",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 3,
-                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                    textColor: Color.fromARGB(255, 252, 253, 255),
-                                    fontSize: 18.0,
-                                  );
-                                }
-                              });
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                            padding: MaterialStateProperty.all(
-                                EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
-                          ),
-                          child: Text(
-                            "حجز",
-                            style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.symmetric(horizontal: 65, vertical: 12)),
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(27))),
+                                ),
+                                child: Text(
+                                  "حجز",
+                                  style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ]))))

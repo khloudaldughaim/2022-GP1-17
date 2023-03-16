@@ -432,7 +432,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(' عقارك: ',
+                                        Text('  عقارك: ',
                                             style: TextStyle(
                                               fontSize: 20.0,
                                               fontFamily: "Tajawal-b",
@@ -513,7 +513,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   color: Colors.white,
                                                   border: Border.all(
                                                       color: Colors.grey.shade300, width: 1)),
-                                              height: 55,
+                                              height: 50,
                                               width: 150,
                                               child: DropdownButtonFormField(
                                                   decoration: InputDecoration(
@@ -585,7 +585,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
-                                              Text(' استخدام العقار: ',
+                                              Text('  استخدام العقار: ',
                                                   style: TextStyle(
                                                     fontSize: 20.0,
                                                     fontFamily: "Tajawal-b",
@@ -653,7 +653,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
-                                                    ' *رقم الدور: ',
+                                                    '  *رقم الدور: ',
                                                     style: TextStyle(
                                                       fontSize: 20.0,
                                                       fontFamily: "Tajawal-b",
@@ -662,7 +662,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   Expanded(
                                                       child: Padding(
                                                           padding:
-                                                              EdgeInsets.only(left: 93, right: 33),
+                                                              EdgeInsets.only(left: 83, right: 25),
                                                           child: Directionality(
                                                             textDirection: TextDirection.rtl,
                                                             child: TextFormField(
@@ -713,7 +713,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        ' *المساحة: ',
+                                        '  *المساحة: ',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
@@ -721,7 +721,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.only(left: 90, right: 35),
+                                              padding: EdgeInsets.only(left: 83, right: 25),
                                               child: Directionality(
                                                 textDirection: TextDirection.rtl,
                                                 child: TextFormField(
@@ -762,7 +762,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        ' *السعر: ',
+                                        '  *السعر: ',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
@@ -773,7 +773,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.only(left: 60, right: 35),
+                                              padding: EdgeInsets.only(left: 83, right: 25),
                                               child: Directionality(
                                                 textDirection: TextDirection.rtl,
                                                 child: TextFormField(
@@ -809,12 +809,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Text(' *إذا كان العقار للإيجار الرجاء إدخال الإيجار الشهري',
-                                      style: TextStyle(
-                                          fontSize: 10.0,
-                                          fontFamily: "Tajawal-b",
-                                          color: Colors.grey),
-                                      textDirection: TextDirection.rtl),
+                                  Row(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: <Widget>[
+                                        Text(' *إذا كان العقار للإيجار الرجاء إدخال الإيجار الشهري',
+                                            style: TextStyle(
+                                                fontSize: 10.0,
+                                                fontFamily: "Tajawal-b",
+                                                color: Colors.grey),
+                                            textDirection: TextDirection.rtl),
+                                      ]),
                                   SizedBox(
                                     height: 30,
                                   ),
@@ -824,14 +828,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         padding: const EdgeInsets.all(10.0),
                                         child: Row(
                                           children: [
-                                            Text('المدينة : ',
+                                            Text('*المدينة : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
                                                 ),
                                                 textDirection: TextDirection.rtl),
                                             Container(
-                                              margin: const EdgeInsets.all(13),
+                                              margin: const EdgeInsets.all(7),
                                             ),
                                             Padding(padding: const EdgeInsets.all(10.0)),
                                             Container(
@@ -842,8 +846,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                                   color: Colors.white,
                                                   border: Border.all(
                                                       color: Colors.grey.shade300, width: 1)),
-                                              height: 55,
-                                              width: 190,
+                                              height: 50,
+                                              width: 155,
                                               child: DropdownButtonFormField(
                                                 isExpanded: true,
                                                 menuMaxHeight: 400,
@@ -896,14 +900,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        ' الحي: ',
+                                        '  *الحي: ',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
                                         ),
                                       ),
                                       Container(
-                                        margin: const EdgeInsets.all(7),
+                                        margin: const EdgeInsets.all(21),
                                       ),
                                       Padding(padding: const EdgeInsets.all(10.0)),
                                       Container(
@@ -913,8 +917,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             color: Colors.white,
                                             border:
                                                 Border.all(color: Colors.grey.shade300, width: 1)),
-                                        height: 55,
-                                        width: 190,
+                                        height: 50,
+                                        width: 155,
                                         child: DropdownButtonFormField(
                                           isExpanded: true,
                                           key: _AddressKey,
@@ -957,15 +961,18 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        ' *الموقع: ',
+                                        '  *الموقع: ',
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: "Tajawal-b",
                                         ),
                                       ),
+                                      Container(
+                                        margin: const EdgeInsets.all(10),
+                                      ),
                                       Expanded(
                                           child: Padding(
-                                              padding: EdgeInsets.only(left: 20, right: 20),
+                                              padding: EdgeInsets.only(left: 83, right: 25),
                                               child: Directionality(
                                                 textDirection: TextDirection.rtl,
                                                 child: TextFormField(
@@ -1505,7 +1512,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                       : Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text('يوجد مسبح : ',
+                                            Text(' يوجد مسبح : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
@@ -1557,16 +1564,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                                             ),
                                           ],
                                         ),
-                                  type == 3
+                                  type == 3 || type == 2
                                       ? Container()
                                       : Container(
-                                          margin: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(15),
                                         ),
                                   type == 1
                                       ? Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text('يوجد قبو : ',
+                                            Text(' يوجد قبو : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
@@ -1621,17 +1628,17 @@ class MyCustomFormState extends State<MyCustomForm> {
                                           ],
                                         )
                                       : Container(),
-                                  type == 3
+                                  type == 3 || type == 2 || type == 4
                                       ? Container()
                                       : Container(
-                                          margin: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(15),
                                         ),
                                   type == 3
                                       ? Container()
                                       : Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text('يوجد مصعد : ',
+                                            Text(' يوجد مصعد : ',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
                                                   fontFamily: "Tajawal-b",
@@ -1895,7 +1902,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                                         ),
                                       ),
                                     ),
-                                  )
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.all(20),
+                                  ),
                                 ],
                               ),
                             ),
