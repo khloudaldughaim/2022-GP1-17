@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_if_null_operators, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, unnecessary_new
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,8 +15,6 @@ import 'my-property.dart';
 import 'affordCalculator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:email_launcher/email_launcher.dart';
-
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -43,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Text("حسابي               ",
                 style: TextStyle(
                   fontSize: 17,
-                  fontFamily: "Tajawal-m",
+                  fontFamily: "Tajawal-b",
                 )),
           ),
           actions: [
@@ -486,7 +483,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               //   height: 120,
                               // ),
                               ///////////////////////contact us //////////////////////////
-                               SizedBox(
+                              SizedBox(
                                 height: 25,
                               ),
                               Container(
@@ -504,25 +501,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                           String? encodeQueryParameters(
-                                                Map<String, String> params) {
-                                              return params.entries
-                                                  .map((MapEntry<String, String>
-                                                          e) =>
-                                                      '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-                                                  .join('&');
-                                            }
+                                          String? encodeQueryParameters(
+                                              Map<String, String> params) {
+                                            return params.entries
+                                                .map((MapEntry<String, String> e) =>
+                                                    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                                .join('&');
+                                          }
 
-                                           launchUrl(Uri(
-                                              scheme: 'mailto',
-                                              path: '2022gp.group17@gmail.com',
-                                              query: encodeQueryParameters(<
-                                                  String, String>{
-                                                'subject':
-                                                    'طلب تواصل مع فريق نزل',
-                                              }),
-                                            ));             
-
+                                          launchUrl(Uri(
+                                            scheme: 'mailto',
+                                            path: '2022gp.group17@gmail.com',
+                                            query: encodeQueryParameters(<String, String>{
+                                              'subject': 'طلب تواصل مع فريق نزل',
+                                            }),
+                                          ));
                                         },
                                         icon: const Icon(Icons.keyboard_arrow_left),
                                         color: Colors.grey,
@@ -533,28 +526,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       TextButton(
                                           onPressed: () {
-                                             String? encodeQueryParameters(
+                                            String? encodeQueryParameters(
                                                 Map<String, String> params) {
                                               return params.entries
-                                                  .map((MapEntry<String, String>
-                                                          e) =>
+                                                  .map((MapEntry<String, String> e) =>
                                                       '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
                                                   .join('&');
                                             }
 
-                                           launchUrl(Uri(
+                                            launchUrl(Uri(
                                               scheme: 'mailto',
                                               path: '2022gp.group17@gmail.com',
-                                              query: encodeQueryParameters(<
-                                                  String, String>{
-                                                'subject':
-                                                    'طلب تواصل مع فريق نزل',
+                                              query: encodeQueryParameters(<String, String>{
+                                                'subject': 'طلب تواصل مع فريق نزل',
                                               }),
-                                            ));             
-
-                                        
+                                            ));
                                           },
-
                                           child: Text(
                                             "تواصل معنا",
                                             style: TextStyle(
@@ -571,8 +558,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ],
                                   )),
 
-                                  ///////////////contact us [end]//////////////////
-                            SizedBox(
+                              ///////////////contact us [end]//////////////////
+                              SizedBox(
                                 height: 120,
                               ),
                             ],

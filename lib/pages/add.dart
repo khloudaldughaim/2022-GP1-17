@@ -38,7 +38,7 @@ class _AddPageState extends State<AddPage> {
         title: Center(
           child: const Text(appTitle,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 17,
                 fontFamily: "Tajawal-b",
               )),
         ),

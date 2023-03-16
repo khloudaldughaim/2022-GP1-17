@@ -27,7 +27,8 @@ class _ChatBodyState extends State<ChatBody> {
     super.initState();
     FriendName();
     saveToken();
-   ///Problem 
+
+    ///Problem
     // FirebaseFirestore.instance
     //     .collection('Standard_user')
     //     .doc(curentId)
@@ -43,13 +44,11 @@ class _ChatBodyState extends State<ChatBody> {
     // });
   }
 
-    String Name = " ";
+  String Name = " ";
 
   Future<void> FriendName() async {
-    final ref = await FirebaseFirestore.instance
-        .collection('Standard_user')
-        .doc(widget.Freind_id)
-        .get();
+    final ref =
+        await FirebaseFirestore.instance.collection('Standard_user').doc(widget.Freind_id).get();
     Name = ref["name"];
     print(widget.Freind_id);
     setState(() {});
@@ -69,7 +68,7 @@ class _ChatBodyState extends State<ChatBody> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 138, 174, 222),
+        backgroundColor: Color.fromARGB(255, 127, 166, 233),
         title: Row(
           children: [
             ClipRRect(
@@ -88,7 +87,10 @@ class _ChatBodyState extends State<ChatBody> {
             ),
             Text(
               Name,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 17,
+                fontFamily: "Tajawal-b",
+              ),
             )
           ],
         ),
@@ -115,9 +117,8 @@ class _ChatBodyState extends State<ChatBody> {
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25))),
+                borderRadius:
+                    BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("Standard_user")
@@ -139,11 +140,9 @@ class _ChatBodyState extends State<ChatBody> {
                         reverse: true,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          bool isMe =
-                              snapshot.data.docs[index]['senderId'] == curentId;
+                          bool isMe = snapshot.data.docs[index]['senderId'] == curentId;
                           return SingleMessage(
-                              message: snapshot.data.docs[index]['message'],
-                              isMe: isMe);
+                              message: snapshot.data.docs[index]['message'], isMe: isMe);
                         });
                   }
                   return Center(child: CircularProgressIndicator());

@@ -189,15 +189,15 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   height: 110,
                   width: MediaQuery.of(context).size.width,
                   child: AppBar(
-                    backgroundColor: Color.fromARGB(255, 138, 174, 222),
+                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
                     automaticallyImplyLeading: false,
                     title: Padding(
                       padding: const EdgeInsets.only(left: 155),
                       child: Text("حجوزاتي",
                           style: TextStyle(
                             fontSize: 17,
-                            fontFamily: "Tajawal-m",
-                            color: Color.fromARGB(255, 231, 232, 233),
+                            fontFamily: "Tajawal-b",
+                            color: Color.fromARGB(255, 252, 253, 255),
                           )),
                     ),
                     actions: [

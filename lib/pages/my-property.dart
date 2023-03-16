@@ -107,7 +107,7 @@ class _myPropertyState extends State<myProperty> {
           padding: const EdgeInsets.only(left: 155),
           child: const Text('عقاراتي',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 17,
                 fontFamily: "Tajawal-b",
               )),
         ),

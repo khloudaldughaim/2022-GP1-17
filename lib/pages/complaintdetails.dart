@@ -38,16 +38,16 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
         phone = TextEditingController(text: element["phone"]);
         email = TextEditingController(text: element["email"]);
         reason = TextEditingController(text: element["reason"]);
-        try{
+        try {
           Admin_Response = TextEditingController(text: element["Admin_Respnse"]);
-        }catch(e){
+        } catch (e) {
           Admin_Response = TextEditingController(text: "");
         }
       }
     });
     setState(() {});
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,12 +58,11 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
           title: const Padding(
             padding: EdgeInsets.only(left: 140),
             child: Text("تفاصيل البلاغ",
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: "Tajawal-m",
-                color: Color.fromARGB(255, 231, 232, 233),
-              )
-            ),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: "Tajawal-b",
+                  color: Color.fromARGB(255, 231, 232, 233),
+                )),
           ),
           actions: [
             Padding(
@@ -97,35 +96,34 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                             height: 10,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: TextFormField(
-                                controller: name,
-                                readOnly: true,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  labelText: "الأسم :",
-                                  labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: const Icon(
-                                    Icons.person,
-                                    color: Color.fromARGB(255, 127, 166, 233),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: name,
+                                  readOnly: true,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    labelText: "الأسم :",
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    prefixIcon: const Icon(
+                                      Icons.person,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                    ),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(66.0),
+                                        borderSide:
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
-                                  fillColor: const Color.fromARGB(255, 225, 225, 228),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(66.0),
-                                      borderSide:
-                                        const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
-                              ),
-                            )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: TextFormField(
@@ -144,44 +142,42 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(66.0),
                                         borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
                                 ),
-                              )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: TextFormField(
-                                controller: phone,
-                                readOnly: true,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  labelText: "رقم الجوال  :",
-                                  labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: const Icon(
-                                    Icons.phone_android,
-                                    color: Color.fromARGB(255, 127, 166, 233),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: phone,
+                                  readOnly: true,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    labelText: "رقم الجوال  :",
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    prefixIcon: const Icon(
+                                      Icons.phone_android,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                    ),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(66.0),
+                                        borderSide:
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
-                                  fillColor: const Color.fromARGB(255, 225, 225, 228),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(66.0),
-                                      borderSide:
-                                        const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
-                              ),
-                            )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: TextFormField(
@@ -192,45 +188,43 @@ class _ComplaintDetailesState extends State<ComplaintDetailes> {
                                   decoration: InputDecoration(
                                     labelText: "سبب البلاغ  :",
                                     labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                    contentPadding:const EdgeInsets.all(40.0),
+                                    contentPadding: const EdgeInsets.all(40.0),
                                     fillColor: const Color.fromARGB(255, 225, 225, 228),
                                     filled: true,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(33.0),
                                         borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
                                 ),
-                              )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
-                          Admin_Response.text != "" ? 
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: TextFormField(
-                                  maxLines: 4,
-                                  controller: Admin_Response,
-                                  readOnly: true,
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  decoration: InputDecoration(
-                                    labelText: "نتائج البلاغ  :",
-                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                    contentPadding:const EdgeInsets.all(40.0),
-                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(33.0),
-                                        borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
-                                  ),
-                                ),
-                              )
-                          )
-                          : Container(),
+                          Admin_Response.text != ""
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      maxLines: 4,
+                                      controller: Admin_Response,
+                                      readOnly: true,
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      decoration: InputDecoration(
+                                        labelText: "نتائج البلاغ  :",
+                                        labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                        contentPadding: const EdgeInsets.all(40.0),
+                                        fillColor: const Color.fromARGB(255, 225, 225, 228),
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(33.0),
+                                            borderSide: const BorderSide(
+                                                width: 0, style: BorderStyle.none)),
+                                      ),
+                                    ),
+                                  ))
+                              : Container(),
                           const SizedBox(
                             height: 30,
                           ),

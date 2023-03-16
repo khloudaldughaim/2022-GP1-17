@@ -34,11 +34,11 @@ class _affordCalcPageState extends State<affordCalcPage> {
         backgroundColor: Color.fromARGB(255, 127, 166, 233),
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: const EdgeInsets.only(left: 125),
+          padding: const EdgeInsets.only(left: 120),
           child: Text("حاسبة التكاليف",
               style: TextStyle(
                 fontSize: 17,
-                fontFamily: "Tajawal-m",
+                fontFamily: "Tajawal-b",
               )),
         ),
         actions: [

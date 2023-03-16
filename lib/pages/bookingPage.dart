@@ -203,10 +203,10 @@ class _BookingPagestate extends State<boookingPage> {
           backgroundColor: Color.fromARGB(255, 127, 166, 233),
           automaticallyImplyLeading: false,
           title: Padding(
-            padding: const EdgeInsets.only(left: 130),
+            padding: const EdgeInsets.only(left: 120),
             child: const Text('حجز جولة عقارية ',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                   fontFamily: "Tajawal-b",
                 )),
           ),

@@ -35,7 +35,7 @@ class _editProfileState extends State<editProfile> {
             child: Text("تعديل المعلومات الشخصية ",
                 style: TextStyle(
                   fontSize: 17,
-                  fontFamily: "Tajawal-m",
+                  fontFamily: "Tajawal-b",
                 )),
           ),
           actions: [
@@ -189,51 +189,58 @@ class _editProfileState extends State<editProfile> {
                             SizedBox(
                               height: 120,
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                if (profileformkey.currentState!.validate()) {
-                                  try {
-                                    FirebaseFirestore.instance
-                                        .collection('Standard_user')
-                                        .doc(curentId)
-                                        .update({
-                                      'name': nameControlar.text,
-                                      'phoneNumber': phoneControlar.text,
-                                    });
+                            SizedBox(
+                              width: 210.0,
+                              height: 70.0,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (profileformkey.currentState!.validate()) {
+                                      try {
+                                        FirebaseFirestore.instance
+                                            .collection('Standard_user')
+                                            .doc(curentId)
+                                            .update({
+                                          'name': nameControlar.text,
+                                          'phoneNumber': phoneControlar.text,
+                                        });
 
-                                    Fluttertoast.showToast(
-                                      msg: "تم التحديث بنجاح",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 2,
-                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                      textColor: Color.fromARGB(255, 248, 249, 250),
-                                      fontSize: 18.0,
-                                    );
-                                  } catch (e, stack) {
-                                    Fluttertoast.showToast(
-                                      msg: "هناك خطأ ما",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 5,
-                                      backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                                      textColor: Color.fromARGB(255, 252, 253, 255),
-                                      fontSize: 18.0,
-                                    );
-                                  }
-                                }
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27))),
-                              ),
-                              child: Text(
-                                "حفظ التغيرات",
-                                style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                        Fluttertoast.showToast(
+                                          msg: "تم التحديث بنجاح",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 2,
+                                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                          textColor: Color.fromARGB(255, 248, 249, 250),
+                                          fontSize: 18.0,
+                                        );
+                                      } catch (e, stack) {
+                                        Fluttertoast.showToast(
+                                          msg: "هناك خطأ ما",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 5,
+                                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                          textColor: Color.fromARGB(255, 252, 253, 255),
+                                          fontSize: 18.0,
+                                        );
+                                      }
+                                    }
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Color.fromARGB(255, 127, 166, 233)),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.symmetric(horizontal: 40, vertical: 5)),
+                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(27))),
+                                  ),
+                                  child: Text(
+                                    "حفظ التغيرات",
+                                    style: TextStyle(fontSize: 18, fontFamily: "Tajawal-m"),
+                                  ),
+                                ),
                               ),
                             ),
                           ]);

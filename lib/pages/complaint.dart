@@ -13,7 +13,12 @@ class Complaints extends StatefulWidget {
   final String city;
   final String neighborhood;
 
-  Complaints({required this.property_id, required this.user_id, required this.type, required this.city, required this.neighborhood});
+  Complaints(
+      {required this.property_id,
+      required this.user_id,
+      required this.type,
+      required this.city,
+      required this.neighborhood});
 
   @override
   State<Complaints> createState() => _ComplaintsState();
@@ -69,7 +74,7 @@ class _ComplaintsState extends State<Complaints> {
             padding: EdgeInsets.only(left: 155),
             child: Text('رفع بلاغ',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                   fontFamily: "Tajawal-b",
                 )),
           ),
@@ -105,39 +110,38 @@ class _ComplaintsState extends State<Complaints> {
                             height: 10,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: TextFormField(
-                                controller: name,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  labelText: "الأسم :",
-                                  labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: const Icon(
-                                    Icons.person,
-                                    color: Color.fromARGB(255, 127, 166, 233),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: name,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    labelText: "الأسم :",
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    prefixIcon: const Icon(
+                                      Icons.person,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                    ),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(66.0),
+                                        borderSide:
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
-                                  fillColor: const Color.fromARGB(255, 225, 225, 228),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(66.0),
-                                      borderSide:
-                                        const BorderSide(width: 0, style: BorderStyle.none)),
+                                  validator: (value) {
+                                    if (value!.length < 2) {
+                                      return "الأسم يجب ان يكون خانتين فأكثر ";
+                                    }
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (value!.length < 2) {
-                                    return "الأسم يجب ان يكون خانتين فأكثر ";
-                                  }
-                                },
-                              ),
-                            )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: TextFormField(
@@ -167,46 +171,44 @@ class _ComplaintsState extends State<Complaints> {
                                     }
                                   },
                                 ),
-                              )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: TextFormField(
-                                controller: phone,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  labelText: "رقم الجوال  :",
-                                  labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                  prefixIcon: const Icon(
-                                    Icons.phone_android,
-                                    color: Color.fromARGB(255, 127, 166, 233),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: phone,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  decoration: InputDecoration(
+                                    labelText: "رقم الجوال  :",
+                                    labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
+                                    prefixIcon: const Icon(
+                                      Icons.phone_android,
+                                      color: Color.fromARGB(255, 127, 166, 233),
+                                    ),
+                                    fillColor: const Color.fromARGB(255, 225, 225, 228),
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(66.0),
+                                        borderSide:
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
-                                  fillColor: const Color.fromARGB(255, 225, 225, 228),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(66.0),
-                                      borderSide:
-                                        const BorderSide(width: 0, style: BorderStyle.none)),
+                                  validator: (value) {
+                                    if (!RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
+                                        .hasMatch(value!)) {
+                                      return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
+                                    }
+                                  },
                                 ),
-                                validator: (value) {
-                                  if (!RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
-                                      .hasMatch(value!)) {
-                                    return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
-                                  }
-                                },
-                              ),
-                            )
-                          ),
+                              )),
                           const SizedBox(
                             height: 30,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: TextFormField(
@@ -216,14 +218,14 @@ class _ComplaintsState extends State<Complaints> {
                                   decoration: InputDecoration(
                                     labelText: "سبب البلاغ  :",
                                     labelStyle: const TextStyle(fontFamily: "Tajawal-b"),
-                                    contentPadding:const EdgeInsets.all(40.0),
+                                    contentPadding: const EdgeInsets.all(40.0),
                                     hintText: 'الإعلان مخالف لشروط الهيئة العامة للعقار',
                                     fillColor: const Color.fromARGB(255, 225, 225, 228),
                                     filled: true,
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(33.0),
                                         borderSide:
-                                          const BorderSide(width: 0, style: BorderStyle.none)),
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty || reason.text.trim() == "") {
@@ -231,91 +233,93 @@ class _ComplaintsState extends State<Complaints> {
                                     }
                                   },
                                 ),
-                              )
-                          ),
+                              )),
                           const SizedBox(
-                          height: 30,
+                            height: 30,
                           ),
                           ElevatedButton(
                             onPressed: () async {
                               showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content:
-                                        const Text("هل أنت متأكد من أنك ترغب في رفع بلاغ على هذا الإعلان ؟"),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text("لا"),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: const Text("نعم"),
-                                        onPressed: () {
-                                          if (complaintformkey.currentState!.validate()) {
-                                            complaint_id = const Uuid().v4();
-                                            try {
-                                              FirebaseFirestore.instance
-                                                .collection('Complaints')
-                                                .doc(complaint_id)
-                                                .set({
-                                                "complaint_id": complaint_id,
-                                                "property_id": widget.property_id,
-                                                "user_id": curentId,
-                                                "name": name.text,
-                                                "email": email.text,
-                                                "phone": phone.text,
-                                                "reason": reason.text,
-                                                "status": status,
-                                                "date": "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} ${DateTime.now().hour}:${DateTime.now().minute}",
-                                                "type": widget.type,
-                                                "city": widget.city,
-                                                "neighborhood": widget.neighborhood,
-                                              });
-                                              
-                                              Fluttertoast.showToast(
-                                                msg: "تم رفع البلاغ بنجاح ، سيتواصل معك فريق الدعم قريبا !",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.CENTER,
-                                                timeInSecForIosWeb: 2,
-                                                backgroundColor: const Color.fromARGB(255, 127, 166, 233),
-                                                textColor: const Color.fromARGB(255, 248, 249, 250),
-                                                fontSize: 18.0,
-                                              );
-
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => const MyComplaints()
-                                                )
-                                              );
-
-                                            } catch (e) {
-                                              Fluttertoast.showToast(
-                                                msg: "هناك خطأ ما",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.CENTER,
-                                                timeInSecForIosWeb: 5,
-                                                backgroundColor: const Color.fromARGB(255, 127, 166, 233),
-                                                textColor: const Color.fromARGB(255, 252, 253, 255),
-                                                fontSize: 18.0,
-                                              );
-                                            }
-                                          }else{
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: const Text(
+                                          "هل أنت متأكد من أنك ترغب في رفع بلاغ على هذا الإعلان ؟"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text("لا"),
+                                          onPressed: () {
                                             Navigator.of(context).pop();
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                }
-                              );
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text("نعم"),
+                                          onPressed: () {
+                                            if (complaintformkey.currentState!.validate()) {
+                                              complaint_id = const Uuid().v4();
+                                              try {
+                                                FirebaseFirestore.instance
+                                                    .collection('Complaints')
+                                                    .doc(complaint_id)
+                                                    .set({
+                                                  "complaint_id": complaint_id,
+                                                  "property_id": widget.property_id,
+                                                  "user_id": curentId,
+                                                  "name": name.text,
+                                                  "email": email.text,
+                                                  "phone": phone.text,
+                                                  "reason": reason.text,
+                                                  "status": status,
+                                                  "date":
+                                                      "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} ${DateTime.now().hour}:${DateTime.now().minute}",
+                                                  "type": widget.type,
+                                                  "city": widget.city,
+                                                  "neighborhood": widget.neighborhood,
+                                                });
+
+                                                Fluttertoast.showToast(
+                                                  msg:
+                                                      "تم رفع البلاغ بنجاح ، سيتواصل معك فريق الدعم قريبا !",
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 2,
+                                                  backgroundColor:
+                                                      const Color.fromARGB(255, 127, 166, 233),
+                                                  textColor:
+                                                      const Color.fromARGB(255, 248, 249, 250),
+                                                  fontSize: 18.0,
+                                                );
+
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const MyComplaints()));
+                                              } catch (e) {
+                                                Fluttertoast.showToast(
+                                                  msg: "هناك خطأ ما",
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 5,
+                                                  backgroundColor:
+                                                      const Color.fromARGB(255, 127, 166, 233),
+                                                  textColor:
+                                                      const Color.fromARGB(255, 252, 253, 255),
+                                                  fontSize: 18.0,
+                                                );
+                                              }
+                                            } else {
+                                              Navigator.of(context).pop();
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
                             },
                             style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(const Color.fromARGB(255, 127, 166, 233)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromARGB(255, 127, 166, 233)),
                               padding: MaterialStateProperty.all(
                                   const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
                               shape: MaterialStateProperty.all(

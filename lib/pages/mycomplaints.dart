@@ -34,15 +34,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                 height: 110,
                 width: MediaQuery.of(context).size.width,
                 child: AppBar(
-                  backgroundColor: const Color.fromARGB(255, 127, 166, 233),
+                  backgroundColor: Color.fromARGB(255, 127, 166, 233),
                   automaticallyImplyLeading: false,
                   title: const Padding(
                     padding: EdgeInsets.only(left: 155),
                     child: Text("بلاغاتي",
                         style: TextStyle(
                           fontSize: 17,
-                          fontFamily: "Tajawal-m",
-                          color: Color.fromARGB(255, 231, 232, 233),
+                          fontFamily: "Tajawal-b",
+                          color: Color.fromARGB(255, 253, 254, 255),
                         )),
                   ),
                   actions: [
@@ -129,7 +129,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          padding:
+                                              const EdgeInsets.only(top: 10, left: 10, bottom: 5),
                                           child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
@@ -157,7 +158,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           width: 30,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          padding:
+                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
@@ -175,18 +177,22 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 height: 10,
                                               ),
                                               Text("تاريخ البلاغ : " +
-                                                snapshot.data!.docs[index].data()['date']),
+                                                  snapshot.data!.docs[index].data()['date']),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top:5, left : 20, right: 20, bottom: 5),
-                                      child: Text('العقار المبلغ عنه : ' 
-                                        + snapshot.data!.docs[index].data()['type'] + ", "
-                                        + snapshot.data!.docs[index].data()['city'] + ", "
-                                        + snapshot.data!.docs[index].data()['neighborhood'],
+                                      padding: const EdgeInsets.only(
+                                          top: 5, left: 20, right: 20, bottom: 5),
+                                      child: Text(
+                                        'العقار المبلغ عنه : ' +
+                                            snapshot.data!.docs[index].data()['type'] +
+                                            ", " +
+                                            snapshot.data!.docs[index].data()['city'] +
+                                            ", " +
+                                            snapshot.data!.docs[index].data()['neighborhood'],
                                         textAlign: TextAlign.right,
                                       ),
                                     ),
@@ -239,7 +245,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          padding:
+                                              const EdgeInsets.only(top: 10, left: 10, bottom: 5),
                                           child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
@@ -267,7 +274,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           width: 30,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          padding:
+                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
@@ -285,18 +293,22 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 height: 10,
                                               ),
                                               Text("تاريخ البلاغ : " +
-                                                snapshot.data!.docs[index].data()['date']),
+                                                  snapshot.data!.docs[index].data()['date']),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top:5, left : 20, right: 20, bottom: 5),
-                                      child: Text('العقار المبلغ عنه : ' 
-                                        + snapshot.data!.docs[index].data()['type'] + ", "
-                                        + snapshot.data!.docs[index].data()['city'] + ", "
-                                        + snapshot.data!.docs[index].data()['neighborhood'],
+                                      padding: const EdgeInsets.only(
+                                          top: 5, left: 20, right: 20, bottom: 5),
+                                      child: Text(
+                                        'العقار المبلغ عنه : ' +
+                                            snapshot.data!.docs[index].data()['type'] +
+                                            ", " +
+                                            snapshot.data!.docs[index].data()['city'] +
+                                            ", " +
+                                            snapshot.data!.docs[index].data()['neighborhood'],
                                         textAlign: TextAlign.right,
                                       ),
                                     ),
@@ -307,8 +319,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                           );
                         }
                       }),
-                      //tab3 (بانتظار المعالجة)
-                      FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  //tab3 (بانتظار المعالجة)
+                  FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       future: FirebaseFirestore.instance
                           .collection('Complaints')
                           .where('user_id', isEqualTo: id)
@@ -349,7 +361,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          padding:
+                                              const EdgeInsets.only(top: 10, left: 10, bottom: 5),
                                           child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
@@ -377,7 +390,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           width: 30,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          padding:
+                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
@@ -395,18 +409,22 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 height: 10,
                                               ),
                                               Text("تاريخ البلاغ : " +
-                                                snapshot.data!.docs[index].data()['date']),
+                                                  snapshot.data!.docs[index].data()['date']),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top:5, left : 20, right: 20, bottom: 5),
-                                      child: Text('العقار المبلغ عنه : ' 
-                                        + snapshot.data!.docs[index].data()['type'] + ", "
-                                        + snapshot.data!.docs[index].data()['city'] + ", "
-                                        + snapshot.data!.docs[index].data()['neighborhood'],
+                                      padding: const EdgeInsets.only(
+                                          top: 5, left: 20, right: 20, bottom: 5),
+                                      child: Text(
+                                        'العقار المبلغ عنه : ' +
+                                            snapshot.data!.docs[index].data()['type'] +
+                                            ", " +
+                                            snapshot.data!.docs[index].data()['city'] +
+                                            ", " +
+                                            snapshot.data!.docs[index].data()['neighborhood'],
                                         textAlign: TextAlign.right,
                                       ),
                                     ),

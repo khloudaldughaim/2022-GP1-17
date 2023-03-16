@@ -25,12 +25,12 @@ class _MessageTextFieldState extends State<MessageTextField> {
   late FirebaseAuth auth = FirebaseAuth.instance;
   late User? user = auth.currentUser;
   late String curentId = user!.uid;
-   late StreamSubscription streamSub;
+  late StreamSubscription streamSub;
 
   void initState() {
     super.initState();
     initInfo();
-     streamSub = FirebaseFirestore.instance
+    streamSub = FirebaseFirestore.instance
         .collection('Standard_user')
         .doc(curentId)
         .collection('messages')
@@ -47,24 +47,20 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
   void dispose() {
     // TODO: implement dispose
-   streamSub.cancel();
-      super.dispose();
-
+    streamSub.cancel();
+    super.dispose();
   }
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   initInfo() async {
-    var androidInitialize =
-        const AndroidInitializationSettings("@mipmap/ic_launcher");
-    var initializationSettings =
-        InitializationSettings(android: androidInitialize);
+    var androidInitialize = const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings = InitializationSettings(android: androidInitialize);
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) async {
+      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
         final String? payload = notificationResponse.payload;
         if (notificationResponse.payload != null) {
           debugPrint('notification payload: $payload');
@@ -81,8 +77,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("...................onMessage................");
-      print(
-          "onMessage: ${message.notification?.title}/${message.notification?.body}");
+      print("onMessage: ${message.notification?.title}/${message.notification?.body}");
 
       BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
           message.notification!.body.toString(),
@@ -90,8 +85,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
           contentTitle: message.notification!.title.toString(),
           htmlFormatContentTitle: true);
 
-      AndroidNotificationDetails androidPlatformChannelSpecifics =
-          AndroidNotificationDetails(
+      AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
         "dbfood",
         "dbfood",
         importance: Importance.high,
@@ -102,8 +96,8 @@ class _MessageTextFieldState extends State<MessageTextField> {
 
       NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, platformChannelSpecifics,
+      await flutterLocalNotificationsPlugin.show(
+          0, message.notification?.title, message.notification?.body, platformChannelSpecifics,
           payload: message.data['body']);
     });
   }
@@ -241,7 +235,6 @@ class _MessageTextFieldState extends State<MessageTextField> {
                         'count_messages_unseen': FieldValue.increment(1),
                         'is_show_last_message': false,
                         'date': DateTime.now(),
-
                       });
                       print('DDDDDDDDDDONE 11111111');
                     } else {
@@ -255,8 +248,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                         "last_msg": message,
                         'count_messages_unseen': FieldValue.increment(1),
                         'is_show_last_message': false,
-                                            'date': DateTime.now(),
-
+                        'date': DateTime.now(),
                       });
                       print('DDDDDDDDDDONE 222222222');
                     }
@@ -270,7 +262,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromARGB(255, 104, 83, 219),
+                color: Color.fromARGB(255, 127, 166, 233),
               ),
               child: Icon(
                 Icons.send,

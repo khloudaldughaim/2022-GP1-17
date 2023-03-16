@@ -231,15 +231,15 @@ class _myBookingsState extends State<ownerBooking> {
                   height: 110,
                   width: MediaQuery.of(context).size.width,
                   child: AppBar(
-                    backgroundColor: Color.fromARGB(255, 138, 174, 222),
+                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
                     automaticallyImplyLeading: false,
                     title: Padding(
                       padding: const EdgeInsets.only(left: 100),
                       child: Text("طلبات الجولة العقارية",
                           style: TextStyle(
                             fontSize: 17,
-                            fontFamily: "Tajawal-m",
-                            color: Color.fromARGB(255, 231, 232, 233),
+                            fontFamily: "Tajawal-b",
+                            color: Color.fromARGB(255, 255, 255, 255),
                           )),
                     ),
                     actions: [
