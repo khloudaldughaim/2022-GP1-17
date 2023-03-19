@@ -26,6 +26,7 @@ class _MyComplaintsState extends State<MyComplaints> {
     return SafeArea(
       child: Scaffold(
         body: DefaultTabController(
+         initialIndex : 2,
           length: 3,
           child: Column(
             children: [
