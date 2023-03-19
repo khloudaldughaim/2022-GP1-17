@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:nozol_application/Chat/ChatBody.dart';
 
 import '../registration/log_in.dart';
@@ -246,7 +247,11 @@ class _ChatsPageState extends State<ChatsPage> {
                                               ),
                                             ),
                                           ),
-                                        ));
+                                        ),
+                                        shape: Border(
+        bottom: BorderSide( width : 0.6, color: Colors.grey),
+    ),
+                                        );
                             }
                             return LinearProgressIndicator();
                           },

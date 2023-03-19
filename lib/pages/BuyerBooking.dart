@@ -180,6 +180,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
     return SafeArea(
       child: Scaffold(
           body: DefaultTabController(
+                     initialIndex : 2,
+
         length: 3,
         child: Column(
           children: [
@@ -253,9 +255,15 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     ) {
                       if (!snapshot.hasData) {
                         return Center(
-                          child: Text("no data"),
+                          child: Text("لا توجد حجوزات"),
                         );
-                      } else {
+                      }
+                       else if (snapshot.data!.docs.length < 1){
+                          return Center(
+                            child: Text("لا توجد حجوزات ماضية "),
+                          );
+                      }
+                       else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
@@ -592,12 +600,20 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         child: Builder(
                           builder: (context) {
                             if (currentIndex == 0) {
+                              if ( canceled.length ==0)
+                              {
+                                 return Center(
+                            child: Text("لا توجد حجوزات قيد ملغاة"),
+                          );
+                              }
+
                               return Column(
                                 children: [
                                   Expanded(
                                     child: SizedBox(
                                       //height: 525,
-                                      child: ListView.separated(
+                                      child:  
+                                         ListView.separated(
                                         itemCount: canceled.length,
                                         separatorBuilder: (BuildContext context, int index) {
                                           return SizedBox(height: 10);
@@ -615,7 +631,16 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 ],
                               );
                             }
+                            
+
                             if (currentIndex == 1) {
+                            
+                             if ( rejected.length ==0)
+                              {
+                                 return Center(
+                            child: Text("لا توجد حجوزات مرفوضة"),
+                          );
+                              }
                               return ListView.separated(
                                 itemCount: rejected.length,
                                 separatorBuilder: (BuildContext context, int index) {
@@ -626,7 +651,14 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 },
                               );
                             }
+                           
                             if (currentIndex == 2) {
+                               if ( accepted.length ==0)
+                              {
+                                 return Center(
+                            child: Text("لا توجد حجوزات مقبولة"),
+                          );
+                              }
                               return ListView.separated(
                                 itemCount: accepted.length,
                                 separatorBuilder: (BuildContext context, int index) {
@@ -637,6 +669,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 },
                               );
                             }
+                      
                             return Container();
                           },
                         ),
@@ -659,7 +692,13 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         return Center(
                           child: Text("no data"),
                         );
-                      } else {
+                      } 
+                     else if (snapshot.data!.docs.length < 1){
+                          return Center(
+                            child: Text("لا توجد حجوزات قيد المعالجة"),
+                          );
+                      }
+                      else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(

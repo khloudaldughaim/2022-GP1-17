@@ -222,6 +222,7 @@ class _myBookingsState extends State<ownerBooking> {
     return SafeArea(
       child: Scaffold(
           body: DefaultTabController(
+        initialIndex : 2,
         length: 3,
         child: Column(
           children: [
@@ -297,7 +298,13 @@ class _myBookingsState extends State<ownerBooking> {
                         return Center(
                           child: Text("no data"),
                         );
-                      } else {
+                      } 
+                       else if (snapshot.data!.docs.length < 1){
+                          return Center(
+                            child: Text("لا توجد حجوزات قيد المعالجة"),
+                          );
+                      }
+                      else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
@@ -689,7 +696,13 @@ class _myBookingsState extends State<ownerBooking> {
                         return Center(
                           child: Text("no data"),
                         );
-                      } else {
+                      } 
+                      else if (snapshot.data!.docs.length < 1){
+                          return Center(
+                            child: Text("لا توجد حجوزات قيد المعالجة"),
+                          );
+                      }
+                      else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
