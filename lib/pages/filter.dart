@@ -27,6 +27,8 @@ class _FilterPageState extends State<FilterPage> {
   static final MinPrice = TextEditingController();
   static final MaxPrice = TextEditingController();
   static String? city = "الرياض";
+  static int lll = 1;
+
   var citiesList = [
     "الرياض",
     "جدة",
@@ -54,7 +56,7 @@ class _FilterPageState extends State<FilterPage> {
     "الرس",
     "الشفا",
   ];
-  List areasList = [];
+  static List areasList = [];
   static final GlobalKey<FormFieldState> _AddressKey = GlobalKey<FormFieldState>();
   static String? address = '';
   double property_age = 0.0;
@@ -74,9 +76,17 @@ class _FilterPageState extends State<FilterPage> {
   static bool elevatorAll = false;
   static RangeValues _ageRange = const RangeValues(0, 100);
   static bool? FilterValue;
+  var tempCity;
+  var tempArea;
 
   @override
   Widget build(BuildContext context) {
+    if (lll == 1) {
+      tempCity = cities.where((element) => (element['name_ar'] == "الرياض"));
+      tempArea = areas.where((element) => (element['city_id'] == tempCity.first['city_id']));
+      areasList.clear();
+      areasList.addAll(tempArea);
+    }
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -563,6 +573,7 @@ class _FilterPageState extends State<FilterPage> {
                                             width: 150,
                                             child: DropdownButtonFormField(
                                               menuMaxHeight: 400,
+                                              value: city,
                                               items: citiesList.map((value) {
                                                 return DropdownMenuItem(
                                                   value: value,
@@ -570,9 +581,9 @@ class _FilterPageState extends State<FilterPage> {
                                                 );
                                               }).toList(),
                                               onChanged: (_selectedValue) async {
-                                                var tempCity = await cities.where((element) =>
+                                                tempCity = await cities.where((element) =>
                                                     (element['name_ar'] == _selectedValue));
-                                                var tempArea = await areas.where((element) =>
+                                                tempArea = await areas.where((element) =>
                                                     (element['city_id'] ==
                                                         tempCity.first['city_id']));
                                                 _AddressKey.currentState?.reset();
@@ -580,6 +591,8 @@ class _FilterPageState extends State<FilterPage> {
                                                 areasList.addAll(tempArea);
                                                 setState(() {
                                                   city = _selectedValue.toString();
+                                                  address = "";
+                                                  lll = 3;
                                                 });
                                               },
                                               validator: (value) {
@@ -596,7 +609,6 @@ class _FilterPageState extends State<FilterPage> {
                                                 isDense: true,
                                                 border: InputBorder.none,
                                                 contentPadding: EdgeInsets.all(7),
-                                                hintText: 'اختر المدينة',
                                               ),
                                             ),
                                           ),
@@ -655,6 +667,11 @@ class _FilterPageState extends State<FilterPage> {
                                           isDense: true,
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.all(7),
+                                          hintText: address,
+                                          hintStyle: TextStyle(
+                                            fontSize: 16.0,
+                                            fontFamily: "Tajawal-m",
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -1399,7 +1416,8 @@ class _FilterPageState extends State<FilterPage> {
                                         setState(() {
                                           type = 1;
                                           type1 = 'فيلا';
-                                          city = 'الرياض';
+                                          city = "الرياض";
+                                          address = "";
                                           _ageRange = RangeValues(0, 100);
                                           number_of_bathrooms = 0;
                                           number_of_apartments = 0;
@@ -1410,6 +1428,7 @@ class _FilterPageState extends State<FilterPage> {
                                           _basementCH = choice.no;
                                           _elevatorCH = choice.no;
                                           _AddressKey.currentState?.reset();
+                                          lll = 1;
                                         });
 
                                         FilterValue = false;
