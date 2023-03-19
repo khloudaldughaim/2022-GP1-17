@@ -63,12 +63,15 @@ class _BuyerBookingsState extends State<BuyerBooking> {
       FlutterLocalNotificationsPlugin();
 
   initInfo() async {
-    var androidInitialize = const AndroidInitializationSettings("@mipmap/ic_launcher");
-    var initializationSettings = InitializationSettings(android: androidInitialize);
+    var androidInitialize =
+        const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize);
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) async {
         final String? payload = notificationResponse.payload;
         if (notificationResponse.payload != null) {
           debugPrint('notification payload: $payload');
@@ -82,7 +85,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("...................onMessage................");
-      print("onMessage: ${message.notification?.title}/${message.notification?.body}");
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}");
 
       BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
           message.notification!.body.toString(),
@@ -90,7 +94,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
           contentTitle: message.notification!.title.toString(),
           htmlFormatContentTitle: true);
 
-      AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
         "dbfood",
         "dbfood",
         importance: Importance.high,
@@ -101,8 +106,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
 
       NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
-      await flutterLocalNotificationsPlugin.show(
-          0, message.notification?.title, message.notification?.body, platformChannelSpecifics,
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, platformChannelSpecifics,
           payload: message.data['body']);
     });
   }
@@ -180,8 +185,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
     return SafeArea(
       child: Scaffold(
           body: DefaultTabController(
-                     initialIndex : 2,
-
+        initialIndex: 2,
         length: 3,
         child: Column(
           children: [
@@ -251,19 +255,18 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         .get(),
                     builder: (
                       BuildContext context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot,
                     ) {
                       if (!snapshot.hasData) {
                         return Center(
                           child: Text("لا توجد حجوزات"),
                         );
-                      }
-                       else if (snapshot.data!.docs.length < 1){
-                          return Center(
-                            child: Text("لا توجد حجوزات ماضية "),
-                          );
-                      }
-                       else {
+                      } else if (snapshot.data!.docs.length < 1) {
+                        return Center(
+                          child: Text("لا توجد حجوزات ماضية "),
+                        );
+                      } else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
@@ -287,8 +290,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                       width: 160,
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
-                                          image: NetworkImage(
-                                              snapshot.data!.docs[index].data()['Pimage']),
+                                          image: NetworkImage(snapshot
+                                              .data!.docs[index]
+                                              .data()['Pimage']),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -306,158 +310,188 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                           SizedBox(
                                             height: 9,
                                           ),
-                                          if (snapshot.data!.docs[index].data()['status'] ==
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['status'] ==
                                               'aproved')
                                             Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                   border: Border.all(
                                                     width: 1.5,
-                                                    color: Color.fromARGB(255, 19, 238, 30),
+                                                    color: Color.fromARGB(
+                                                        255, 19, 238, 30),
                                                   ),
                                                 ),
                                                 width: 85,
-                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 4),
                                                 child: Center(
                                                   child: Text(
                                                     'حجز مقبول',
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontFamily: "Tajawal-m",
                                                     ),
                                                   ),
                                                 )),
-                                          if (snapshot.data!.docs[index].data()['status'] ==
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['status'] ==
                                               'cansled')
                                             Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                   border: Border.all(
                                                     width: 1.5,
-                                                    color: Color.fromARGB(255, 115, 116, 121),
+                                                    color: Color.fromARGB(
+                                                        255, 115, 116, 121),
                                                   ),
                                                 ),
                                                 width: 85,
-                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 4),
                                                 child: Center(
                                                   child: Text(
                                                     'حجز ملغي',
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontFamily: "Tajawal-m",
                                                     ),
                                                   ),
                                                 )),
-                                          if (snapshot.data!.docs[index].data()['status'] ==
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['status'] ==
                                               'pending')
                                             Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                   border: Border.all(
                                                     width: 1.5,
-                                                    color: Color.fromARGB(255, 233, 198, 82),
+                                                    color: Color.fromARGB(
+                                                        255, 233, 198, 82),
                                                   ),
                                                 ),
                                                 width: 140,
-                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 4),
                                                 child: Center(
                                                   child: Text(
                                                     'حجز لم تتم معالجته',
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontFamily: "Tajawal-m",
                                                     ),
                                                   ),
                                                 )),
-                                          if (snapshot.data!.docs[index].data()['status'] ==
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['status'] ==
                                               'dicline')
                                             Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                   border: Border.all(
                                                     width: 1.5,
-                                                    color: Color.fromARGB(255, 245, 11, 11),
+                                                    color: Color.fromARGB(
+                                                        255, 245, 11, 11),
                                                   ),
                                                 ),
                                                 width: 85,
-                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 4),
                                                 child: Center(
                                                   child: Text(
                                                     'حجز مرفوض',
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontFamily: "Tajawal-m",
                                                     ),
                                                   ),
                                                 )),
-                                          if (snapshot.data!.docs[index].data()['status'] ==
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['status'] ==
                                               'deleted')
                                             Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                   border: Border.all(
                                                     width: 1.5,
-                                                    color: Color.fromARGB(255, 7, 5, 1),
+                                                    color: Color.fromARGB(
+                                                        255, 7, 5, 1),
                                                   ),
                                                 ),
                                                 width: 140,
-                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 4),
                                                 child: Center(
                                                   child: Text(
                                                     'عقار محذوف ',
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontFamily: "Tajawal-m",
                                                     ),
                                                   ),
                                                 )),
-                                          if (snapshot.data!.docs[index].data()['status'] ==
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['status'] ==
                                               'suspended')
                                             Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                   border: Border.all(
                                                     width: 1.5,
-                                                    color: Color.fromARGB(255, 221, 136, 9),
+                                                    color: Color.fromARGB(
+                                                        255, 221, 136, 9),
                                                   ),
                                                 ),
                                                 width: 140,
-                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 4),
                                                 child: Center(
                                                   child: Text(
                                                     'عقار موقوف ',
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontFamily: "Tajawal-m",
                                                     ),
                                                   ),
@@ -465,45 +499,58 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          RegExp("[a-zA-Z]").hasMatch(
-                                                  snapshot.data!.docs[index].data()['buyer_name'])
+                                          RegExp("[a-zA-Z]").hasMatch(snapshot
+                                                  .data!.docs[index]
+                                                  .data()['buyer_name'])
                                               ? Text("" +
-                                                  snapshot.data!.docs[index].data()['buyer_name'] +
+                                                  snapshot.data!.docs[index]
+                                                      .data()['buyer_name'] +
                                                   "    : صاحب الحجز ")
                                               : Text(" صاحب الحجز :   " +
-                                                  snapshot.data!.docs[index].data()['buyer_name']),
+                                                  snapshot.data!.docs[index]
+                                                      .data()['buyer_name']),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(" نوع الجولة :   " +
-                                              snapshot.data!.docs[index].data()['book_type']),
-                                          if (snapshot.data!.docs[index].data()['book_type'] ==
+                                              snapshot.data!.docs[index]
+                                                  .data()['book_type']),
+                                          if (snapshot.data!.docs[index]
+                                                  .data()['book_type'] ==
                                               'افتراضية')
                                             Text(" التطبيق :   " +
-                                                snapshot.data!.docs[index].data()['videochat']),
+                                                snapshot.data!.docs[index]
+                                                    .data()['videochat']),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(" رقم الحاجز :   " +
-                                              snapshot.data!.docs[index].data()['buyer_phone']),
+                                              snapshot.data!.docs[index]
+                                                  .data()['buyer_phone']),
                                           SizedBox(
                                             height: 5,
                                           ),
                                           Text(" التاريخ :   " +
-                                              snapshot.data!.docs[index].data()['Date']),
+                                              snapshot.data!.docs[index]
+                                                  .data()['Date']),
                                           ElevatedButton(
                                             onPressed: () {
-                                              realtyDetails(
-                                                  snapshot.data!.docs[index].data()['property_id']);
+                                              realtyDetails(snapshot
+                                                  .data!.docs[index]
+                                                  .data()['property_id']);
                                             },
                                             child: Text('تفاصيل العقار'),
                                             style: ButtonStyle(
-                                              backgroundColor: MaterialStateProperty.all(
-                                                Color.fromARGB(255, 82, 155, 210),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                Color.fromARGB(
+                                                    255, 82, 155, 210),
                                               ),
                                               shape: MaterialStateProperty.all(
                                                   RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(27))),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              27))),
                                             ),
                                           ),
                                         ],
@@ -540,21 +587,26 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Text('ملغاة ', style: TextStyle(fontSize: 18)),
+                            child:
+                                Text('ملغاة ', style: TextStyle(fontSize: 18)),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Text('مرفوضة', style: TextStyle(fontSize: 18)),
+                            child:
+                                Text('مرفوضة', style: TextStyle(fontSize: 18)),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Text('مقبولة', style: TextStyle(fontSize: 18)),
+                            child:
+                                Text('مقبولة', style: TextStyle(fontSize: 18)),
                           ),
                         ],
                         onPressed: (int newIndex) async {
                           setState(() {
                             currentIndex = newIndex;
-                            for (int index = 0; index < isSelected.length; index++) {
+                            for (int index = 0;
+                                index < isSelected.length;
+                                index++) {
                               if (index == newIndex) {
                                 isSelected[index] = true;
                               } else {
@@ -573,13 +625,15 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                   icon: Icons.light,
                                   title: Text(
                                     "تنبيه",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   description: Text(
                                     " عدد العقارات الملغاة من قبل المشترين هو " +
                                         canceled.length.toString(),
                                   ),
-                                  primaryColor: Color.fromARGB(255, 216, 201, 151),
+                                  primaryColor:
+                                      Color.fromARGB(255, 216, 201, 151),
                                   barrierColor: Colors.transparent,
                                   toastDuration: Duration(seconds: 2),
                                   // width: 3,
@@ -600,11 +654,10 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         child: Builder(
                           builder: (context) {
                             if (currentIndex == 0) {
-                              if ( canceled.length ==0)
-                              {
-                                 return Center(
-                            child: Text("لا توجد حجوزات قيد ملغاة"),
-                          );
+                              if (canceled.isEmpty) {
+                                return Center(
+                                  child: Text("لا توجد حجوزات قيد ملغاة"),
+                                );
                               }
 
                               return Column(
@@ -612,16 +665,18 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                   Expanded(
                                     child: SizedBox(
                                       //height: 525,
-                                      child:  
-                                         ListView.separated(
+                                      child: ListView.separated(
                                         itemCount: canceled.length,
-                                        separatorBuilder: (BuildContext context, int index) {
+                                        separatorBuilder:
+                                            (BuildContext context, int index) {
                                           return SizedBox(height: 10);
                                         },
-                                        itemBuilder: (BuildContext context, int index) {
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
                                           return Column(
                                             children: [
-                                              _buildCanceledItem(canceled[index]),
+                                              _buildCanceledItem(
+                                                  canceled[index]),
                                             ],
                                           );
                                         },
@@ -631,19 +686,17 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 ],
                               );
                             }
-                            
 
                             if (currentIndex == 1) {
-                            
-                             if ( rejected.length ==0)
-                              {
-                                 return Center(
-                            child: Text("لا توجد حجوزات مرفوضة"),
-                          );
+                              if (rejected.isEmpty) {
+                                return Center(
+                                  child: Text("لا توجد حجوزات مرفوضة"),
+                                );
                               }
                               return ListView.separated(
                                 itemCount: rejected.length,
-                                separatorBuilder: (BuildContext context, int index) {
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
                                   return SizedBox(height: 10);
                                 },
                                 itemBuilder: (BuildContext context, int index) {
@@ -651,17 +704,17 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 },
                               );
                             }
-                           
+
                             if (currentIndex == 2) {
-                               if ( accepted.length ==0)
-                              {
-                                 return Center(
-                            child: Text("لا توجد حجوزات مقبولة"),
-                          );
+                              if (accepted.isEmpty) {
+                                return Center(
+                                  child: Text("لا توجد حجوزات مقبولة"),
+                                );
                               }
                               return ListView.separated(
                                 itemCount: accepted.length,
-                                separatorBuilder: (BuildContext context, int index) {
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
                                   return SizedBox(height: 10);
                                 },
                                 itemBuilder: (BuildContext context, int index) {
@@ -669,7 +722,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                 },
                               );
                             }
-                      
+
                             return Container();
                           },
                         ),
@@ -686,19 +739,18 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                         .get(),
                     builder: (
                       BuildContext context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot,
                     ) {
                       if (!snapshot.hasData) {
                         return Center(
                           child: Text("no data"),
                         );
-                      } 
-                     else if (snapshot.data!.docs.length < 1){
-                          return Center(
-                            child: Text("لا توجد حجوزات قيد المعالجة"),
-                          );
-                      }
-                      else {
+                      } else if (snapshot.data!.docs.length < 1) {
+                        return Center(
+                          child: Text("لا توجد حجوزات قيد المعالجة"),
+                        );
+                      } else {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
@@ -722,8 +774,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                       width: 160,
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
-                                          image: NetworkImage(
-                                              snapshot.data!.docs[index].data()['Pimage']),
+                                          image: NetworkImage(snapshot
+                                              .data!.docs[index]
+                                              .data()['Pimage']),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -751,81 +804,106 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        RegExp("[a-zA-Z]").hasMatch(
-                                                snapshot.data!.docs[index].data()['buyer_name'])
+                                        RegExp("[a-zA-Z]").hasMatch(snapshot
+                                                .data!.docs[index]
+                                                .data()['buyer_name'])
                                             ? Text("" +
-                                                snapshot.data!.docs[index].data()['buyer_name'] +
+                                                snapshot.data!.docs[index]
+                                                    .data()['buyer_name'] +
                                                 "    : صاحب الحجز ")
                                             : Text(" صاحب الحجز :   " +
-                                                snapshot.data!.docs[index].data()['buyer_name']),
+                                                snapshot.data!.docs[index]
+                                                    .data()['buyer_name']),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(" نوع الجولة :   " +
-                                            snapshot.data!.docs[index].data()['book_type']),
-                                        if (snapshot.data!.docs[index].data()['book_type'] ==
+                                            snapshot.data!.docs[index]
+                                                .data()['book_type']),
+                                        if (snapshot.data!.docs[index]
+                                                .data()['book_type'] ==
                                             'افتراضية')
                                           Text(" التطبيق :   " +
-                                              snapshot.data!.docs[index].data()['videochat']),
+                                              snapshot.data!.docs[index]
+                                                  .data()['videochat']),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(" رقم الحاجز :   " +
-                                            snapshot.data!.docs[index].data()['buyer_phone']),
+                                            snapshot.data!.docs[index]
+                                                .data()['buyer_phone']),
                                         SizedBox(
                                           height: 5,
                                         ),
                                         Text(" التاريخ :   " +
-                                            snapshot.data!.docs[index].data()['Date']),
+                                            snapshot.data!.docs[index]
+                                                .data()['Date']),
                                         Row(
                                           children: [
                                             ElevatedButton(
                                               onPressed: () async {
                                                 await FirebaseFirestore.instance
                                                     .collection('bookings')
-                                                    .doc(snapshot.data!.docs[index]
+                                                    .doc(snapshot
+                                                        .data!.docs[index]
                                                         .data()['book_id'])
                                                     .update({
                                                   "status": "cansled",
                                                   "isAvailable": true,
                                                 });
-                                                var btoken = await FirebaseFirestore.instance
-                                                    .collection('Standard_user')
-                                                    .doc(snapshot.data!.docs[index]
-                                                        .data()['owner_id'])
-                                                    .get();
-                                                print('IT WORKS !!!! ' + btoken['token']);
+                                                var btoken =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection(
+                                                            'Standard_user')
+                                                        .doc(snapshot
+                                                            .data!.docs[index]
+                                                            .data()['owner_id'])
+                                                        .get();
+                                                print('IT WORKS !!!! ' +
+                                                    btoken['token']);
                                                 // end of Notifications step 4
                                                 getBookings();
                                                 // Notifications step 5
-                                                var Bname =
-                                                    snapshot.data!.docs[index].data()['buyer_name'];
-                                                sendPushMessege(btoken['token'], Bname);
+                                                var Bname = snapshot
+                                                    .data!.docs[index]
+                                                    .data()['buyer_name'];
+                                                sendPushMessege(
+                                                    btoken['token'], Bname);
                                                 //end of  Notifications step 5
                                               },
                                               child: Text('إلغاء الحجز'),
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(
-                                                    Color.fromARGB(255, 245, 68, 82)),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(27))),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Color.fromARGB(
+                                                            255, 245, 68, 82)),
+                                                shape: MaterialStateProperty
+                                                    .all(RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(27))),
                                               ),
                                             ),
                                           ],
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
-                                            realtyDetails(
-                                                snapshot.data!.docs[index].data()['property_id']);
+                                            realtyDetails(snapshot
+                                                .data!.docs[index]
+                                                .data()['property_id']);
                                           },
                                           child: Text('تفاصيل العقار'),
                                           style: ButtonStyle(
-                                            backgroundColor: MaterialStateProperty.all(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
                                               Color.fromARGB(255, 82, 155, 210),
                                             ),
-                                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(27))),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            27))),
                                           ),
                                         ),
                                       ],
@@ -919,8 +997,11 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 10,
                   ),
                   RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
-                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
-                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                      ? Text("" +
+                          (bookingModel.buyerName ?? "") +
+                          "    : صاحب الحجز ")
+                      : Text(
+                          " صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -958,9 +1039,10 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     },
                     child: Text('إلغاء الحجز'),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 245, 68, 82)),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 245, 68, 82)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(27))),
                     ),
                   ),
                   ElevatedButton(
@@ -972,8 +1054,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       backgroundColor: MaterialStateProperty.all(
                         Color.fromARGB(255, 82, 155, 210),
                       ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(27))),
                     ),
                   ),
                 ],
@@ -1051,8 +1133,11 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 10,
                   ),
                   RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
-                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
-                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                      ? Text("" +
+                          (bookingModel.buyerName ?? "") +
+                          "    : صاحب الحجز ")
+                      : Text(
+                          " صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -1080,8 +1165,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       backgroundColor: MaterialStateProperty.all(
                         Color.fromARGB(255, 82, 155, 210),
                       ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(27))),
                     ),
                   ),
                 ],
@@ -1159,8 +1244,11 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 10,
                   ),
                   RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
-                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
-                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                      ? Text("" +
+                          (bookingModel.buyerName ?? "") +
+                          "    : صاحب الحجز ")
+                      : Text(
+                          " صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -1184,8 +1272,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       backgroundColor: MaterialStateProperty.all(
                         Color.fromARGB(255, 82, 155, 210),
                       ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(27))),
                     ),
                   ),
                 ],
@@ -1263,8 +1351,11 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 10,
                   ),
                   RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
-                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الإلغاء ")
-                      : Text(" صاحب الإلغاء :   " + (bookingModel.buyerName ?? "")),
+                      ? Text("" +
+                          (bookingModel.buyerName ?? "") +
+                          "    : صاحب الإلغاء ")
+                      : Text(" صاحب الإلغاء :   " +
+                          (bookingModel.buyerName ?? "")),
                   SizedBox(
                     height: 5,
                   ),
@@ -1288,8 +1379,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       backgroundColor: MaterialStateProperty.all(
                         Color.fromARGB(255, 82, 155, 210),
                       ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(27))),
                     ),
                   ),
                 ],
@@ -1343,7 +1434,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               Villa villa = Villa.fromMap(element.data());
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+                MaterialPageRoute(
+                    builder: (context) => VillaDetailes(villa: villa)),
               );
             }
             ;
@@ -1351,7 +1443,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               Apartment apartment = Apartment.fromMap(element.data());
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ApartmentDetailes(apartment: apartment)),
               );
             }
             ;
@@ -1359,7 +1453,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               Building building = Building.fromMap(element.data());
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+                MaterialPageRoute(
+                    builder: (context) => BuildingDetailes(building: building)),
               );
             }
             ;
@@ -1367,7 +1462,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               Land land = Land.fromJson(element.data());
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LandDetailes(land: land)),
+                MaterialPageRoute(
+                    builder: (context) => LandDetailes(land: land)),
               );
             }
             ;

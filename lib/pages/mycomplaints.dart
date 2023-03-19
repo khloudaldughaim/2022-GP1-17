@@ -26,7 +26,7 @@ class _MyComplaintsState extends State<MyComplaints> {
     return SafeArea(
       child: Scaffold(
         body: DefaultTabController(
-         initialIndex : 2,
+          initialIndex: 2,
           length: 3,
           child: Column(
             children: [
@@ -51,8 +51,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                       padding: const EdgeInsets.only(right: 20.0),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => const NavigationBarPage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const NavigationBarPage()));
                         },
                         child: const Icon(
                           Icons.arrow_forward_ios,
@@ -97,11 +100,16 @@ class _MyComplaintsState extends State<MyComplaints> {
                           .get(),
                       builder: (
                         BuildContext context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot,
                       ) {
                         if (!snapshot.hasData) {
                           return const Center(
                             child: Text("لا يوجد بلاغات"),
+                          );
+                        } else if (snapshot.data!.docs.length < 1) {
+                          return Center(
+                            child: Text("لا توجد بلاغات تمت معالجتها"),
                           );
                         } else {
                           return ListView.builder(
@@ -117,7 +125,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                 height: 115,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: const Color.fromARGB(119, 110, 110, 110),
+                                    color: const Color.fromARGB(
+                                        119, 110, 110, 110),
                                     width: 1,
                                   ),
                                   color: Color.fromARGB(215, 226, 233, 240),
@@ -127,11 +136,12 @@ class _MyComplaintsState extends State<MyComplaints> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 10, bottom: 5),
                                           child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
@@ -139,22 +149,31 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => ComplaintDetailes(
-                                                            complaint_id: snapshot.data!.docs[index]
-                                                                .data()['complaint_id'])));
+                                                        builder: (context) =>
+                                                            ComplaintDetailes(
+                                                                complaint_id: snapshot
+                                                                        .data!
+                                                                        .docs[index]
+                                                                        .data()[
+                                                                    'complaint_id'])));
                                               },
                                               child: const Text(
                                                 'تفاصيل البلاغ',
                                                 style: TextStyle(
-                                                    fontSize: 13, fontFamily: "Tajawal-m"),
+                                                    fontSize: 13,
+                                                    fontFamily: "Tajawal-m"),
                                               ),
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(
-                                                  const Color.fromARGB(255, 127, 166, 233),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                  const Color.fromARGB(
+                                                      255, 127, 166, 233),
                                                 ),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(27))),
+                                                shape: MaterialStateProperty
+                                                    .all(RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(27))),
                                               ),
                                             ),
                                           ),
@@ -163,10 +182,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           width: 30,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          padding: const EdgeInsets.only(
+                                              top: 17, right: 10, bottom: 5),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: [
                                               const Text(
                                                 'بلاغ تمت معالجته',
@@ -182,7 +202,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 height: 10,
                                               ),
                                               Text("تاريخ البلاغ : " +
-                                                  snapshot.data!.docs[index].data()['date']),
+                                                  snapshot.data!.docs[index]
+                                                      .data()['date']),
                                             ],
                                           ),
                                         ),
@@ -190,14 +211,20 @@ class _MyComplaintsState extends State<MyComplaints> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 5, left: 20, right: 20, bottom: 5),
+                                          top: 5,
+                                          left: 20,
+                                          right: 20,
+                                          bottom: 5),
                                       child: Text(
                                         'العقار المبلغ عنه : ' +
-                                            snapshot.data!.docs[index].data()['type'] +
+                                            snapshot.data!.docs[index]
+                                                .data()['type'] +
                                             ", " +
-                                            snapshot.data!.docs[index].data()['city'] +
+                                            snapshot.data!.docs[index]
+                                                .data()['city'] +
                                             ", " +
-                                            snapshot.data!.docs[index].data()['neighborhood'],
+                                            snapshot.data!.docs[index]
+                                                .data()['neighborhood'],
                                         textAlign: TextAlign.right,
                                       ),
                                     ),
@@ -217,11 +244,16 @@ class _MyComplaintsState extends State<MyComplaints> {
                           .get(),
                       builder: (
                         BuildContext context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot,
                       ) {
                         if (!snapshot.hasData) {
                           return const Center(
                             child: Text("لا يوجد بلاغات"),
+                          );
+                        } else if (snapshot.data!.docs.length < 1) {
+                          return Center(
+                            child: Text("لا توجد بلاغات قيد المعالجة"),
                           );
                         } else {
                           return ListView.builder(
@@ -237,7 +269,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                 height: 115,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: const Color.fromARGB(119, 110, 110, 110),
+                                    color: const Color.fromARGB(
+                                        119, 110, 110, 110),
                                     width: 1,
                                   ),
                                   color: Color.fromARGB(215, 226, 233, 240),
@@ -247,11 +280,12 @@ class _MyComplaintsState extends State<MyComplaints> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 10, bottom: 5),
                                           child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
@@ -259,22 +293,31 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => ComplaintDetailes(
-                                                            complaint_id: snapshot.data!.docs[index]
-                                                                .data()['complaint_id'])));
+                                                        builder: (context) =>
+                                                            ComplaintDetailes(
+                                                                complaint_id: snapshot
+                                                                        .data!
+                                                                        .docs[index]
+                                                                        .data()[
+                                                                    'complaint_id'])));
                                               },
                                               child: const Text(
                                                 'تفاصيل البلاغ',
                                                 style: TextStyle(
-                                                    fontSize: 13, fontFamily: "Tajawal-m"),
+                                                    fontSize: 13,
+                                                    fontFamily: "Tajawal-m"),
                                               ),
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(
-                                                  const Color.fromARGB(255, 127, 166, 233),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                  const Color.fromARGB(
+                                                      255, 127, 166, 233),
                                                 ),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(27))),
+                                                shape: MaterialStateProperty
+                                                    .all(RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(27))),
                                               ),
                                             ),
                                           ),
@@ -283,10 +326,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           width: 30,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          padding: const EdgeInsets.only(
+                                              top: 17, right: 10, bottom: 5),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: [
                                               const Text(
                                                 'بلاغ قيد المعالجة',
@@ -302,7 +346,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 height: 10,
                                               ),
                                               Text("تاريخ البلاغ : " +
-                                                  snapshot.data!.docs[index].data()['date']),
+                                                  snapshot.data!.docs[index]
+                                                      .data()['date']),
                                             ],
                                           ),
                                         ),
@@ -310,14 +355,20 @@ class _MyComplaintsState extends State<MyComplaints> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 5, left: 20, right: 20, bottom: 5),
+                                          top: 5,
+                                          left: 20,
+                                          right: 20,
+                                          bottom: 5),
                                       child: Text(
                                         'العقار المبلغ عنه : ' +
-                                            snapshot.data!.docs[index].data()['type'] +
+                                            snapshot.data!.docs[index]
+                                                .data()['type'] +
                                             ", " +
-                                            snapshot.data!.docs[index].data()['city'] +
+                                            snapshot.data!.docs[index]
+                                                .data()['city'] +
                                             ", " +
-                                            snapshot.data!.docs[index].data()['neighborhood'],
+                                            snapshot.data!.docs[index]
+                                                .data()['neighborhood'],
                                         textAlign: TextAlign.right,
                                       ),
                                     ),
@@ -337,11 +388,16 @@ class _MyComplaintsState extends State<MyComplaints> {
                           .get(),
                       builder: (
                         BuildContext context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot,
                       ) {
                         if (!snapshot.hasData) {
                           return const Center(
                             child: Text("لا يوجد بلاغات"),
+                          );
+                        } else if (snapshot.data!.docs.length < 1) {
+                          return Center(
+                            child: Text("لا توجد بلاغات بانتظار المعالجة"),
                           );
                         } else {
                           return ListView.builder(
@@ -357,7 +413,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                 height: 115,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: const Color.fromARGB(119, 110, 110, 110),
+                                    color: const Color.fromARGB(
+                                        119, 110, 110, 110),
                                     width: 1,
                                   ),
                                   color: Color.fromARGB(215, 226, 233, 240),
@@ -367,11 +424,12 @@ class _MyComplaintsState extends State<MyComplaints> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10, left: 10, bottom: 5),
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 10, bottom: 5),
                                           child: SizedBox(
                                             width: 150,
                                             child: ElevatedButton(
@@ -379,22 +437,31 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => ComplaintDetailes(
-                                                            complaint_id: snapshot.data!.docs[index]
-                                                                .data()['complaint_id'])));
+                                                        builder: (context) =>
+                                                            ComplaintDetailes(
+                                                                complaint_id: snapshot
+                                                                        .data!
+                                                                        .docs[index]
+                                                                        .data()[
+                                                                    'complaint_id'])));
                                               },
                                               child: const Text(
                                                 'تفاصيل البلاغ',
                                                 style: TextStyle(
-                                                    fontSize: 13, fontFamily: "Tajawal-m"),
+                                                    fontSize: 13,
+                                                    fontFamily: "Tajawal-m"),
                                               ),
                                               style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(
-                                                  const Color.fromARGB(255, 127, 166, 233),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                  const Color.fromARGB(
+                                                      255, 127, 166, 233),
                                                 ),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(27))),
+                                                shape: MaterialStateProperty
+                                                    .all(RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(27))),
                                               ),
                                             ),
                                           ),
@@ -403,10 +470,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           width: 30,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                          padding: const EdgeInsets.only(
+                                              top: 17, right: 10, bottom: 5),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: [
                                               const Text(
                                                 'بلاغ بانتظار المعالجة',
@@ -422,7 +490,8 @@ class _MyComplaintsState extends State<MyComplaints> {
                                                 height: 10,
                                               ),
                                               Text("تاريخ البلاغ : " +
-                                                  snapshot.data!.docs[index].data()['date']),
+                                                  snapshot.data!.docs[index]
+                                                      .data()['date']),
                                             ],
                                           ),
                                         ),
@@ -430,14 +499,20 @@ class _MyComplaintsState extends State<MyComplaints> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 5, left: 20, right: 20, bottom: 5),
+                                          top: 5,
+                                          left: 20,
+                                          right: 20,
+                                          bottom: 5),
                                       child: Text(
                                         'العقار المبلغ عنه : ' +
-                                            snapshot.data!.docs[index].data()['type'] +
+                                            snapshot.data!.docs[index]
+                                                .data()['type'] +
                                             ", " +
-                                            snapshot.data!.docs[index].data()['city'] +
+                                            snapshot.data!.docs[index]
+                                                .data()['city'] +
                                             ", " +
-                                            snapshot.data!.docs[index].data()['neighborhood'],
+                                            snapshot.data!.docs[index]
+                                                .data()['neighborhood'],
                                         textAlign: TextAlign.right,
                                       ),
                                     ),
@@ -469,21 +544,25 @@ class _MyComplaintsState extends State<MyComplaints> {
             Villa villa = Villa.fromMap(element.data());
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => VillaDetailes(villa: villa)),
+              MaterialPageRoute(
+                  builder: (context) => VillaDetailes(villa: villa)),
             );
           }
           if (element.data()["type"] == "شقة") {
             Apartment apartment = Apartment.fromMap(element.data());
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ApartmentDetailes(apartment: apartment)),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ApartmentDetailes(apartment: apartment)),
             );
           }
           if (element.data()["type"] == "عمارة") {
             Building building = Building.fromMap(element.data());
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BuildingDetailes(building: building)),
+              MaterialPageRoute(
+                  builder: (context) => BuildingDetailes(building: building)),
             );
           }
           if (element.data()["type"] == "ارض") {
