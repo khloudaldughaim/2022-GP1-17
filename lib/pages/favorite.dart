@@ -95,7 +95,11 @@ class _FavoritePageState extends State<FavoritePage> {
     if (snapshot.hasData) {
       _handleData(snapshot.data!);
       if (favoriteList.isEmpty) {
-        return Center(child: Text("لا يوجد عقارات في المفضلة"));
+        return Center(
+            child: Text(
+          "لا يوجد عقارات في المفضلة",
+          style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+        ));
       } else {
         return _handleListItems(favoriteList);
       }

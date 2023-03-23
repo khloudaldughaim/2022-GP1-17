@@ -132,7 +132,10 @@ class _ChatsPageState extends State<ChatsPage> {
                 if (snapshot.hasData) {
                   if (snapshot.data.docs.length < 1) {
                     return Center(
-                      child: Text("لا توجد محادثات بعد"),
+                      child: Text(
+                        "لا توجد محادثات بعد",
+                        style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                      ),
                     );
                   }
                   return ListView.builder(
@@ -180,78 +183,78 @@ class _ChatsPageState extends State<ChatsPage> {
                             if (asyncSnapshot.hasData) {
                               var friend = asyncSnapshot.data;
                               return ListTile(
-                                  onLongPress: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return showAlertDialog(context, friendId);
-                                      },
-                                    );
-                                  },
-                                  leading: ClipRRect(
-                                    borderRadius: BorderRadius.circular(80),
-                                    child: CachedNetworkImage(
-                                      imageUrl: "https://wallpapercave.com/wp/wp9566480.png",
-                                      placeholder: (conteext, url) => CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) => Icon(
-                                        Icons.error,
-                                      ),
-                                      height: 50,
+                                onLongPress: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return showAlertDialog(context, friendId);
+                                    },
+                                  );
+                                },
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(80),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "https://wallpapercave.com/wp/wp9566480.png",
+                                    placeholder: (conteext, url) => CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => Icon(
+                                      Icons.error,
                                     ),
+                                    height: 50,
                                   ),
-                                  title: Text(
-                                    friend['name'],
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontFamily: "Tajawal-m",
-                                    ),
+                                ),
+                                title: Text(
+                                  friend['name'],
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontFamily: "Tajawal-m",
                                   ),
-                                  subtitle: Container(
-                                    child: Text(
-                                      "$lastMsg",
-                                      style: TextStyle(color: Colors.grey),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                ),
+                                subtitle: Container(
+                                  child: Text(
+                                    "$lastMsg",
+                                    style: TextStyle(color: Colors.grey),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ChatBody(
-                                                  Freind_id: friend['userId'],
-                                                )));
-                                  },
-                                  trailing: BadgeCounter == 0
-                                      ? SizedBox()
-                                      : Material(
-                                          borderRadius: BorderRadius.circular(8),
-                                          color: Color.fromARGB(255, 127, 166, 233),
-                                          child: SizedBox(
-                                            width: 18,
-                                            height: 18,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 5,
-                                                right: 5,
-                                                top: 2,
-                                                bottom: 1,
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  '${BadgeCounter > 99 ? '99+' : BadgeCounter}',
-                                                  style: const TextStyle(
-                                                    fontSize: 11,
-                                                    color: Colors.white,
-                                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ChatBody(
+                                                Freind_id: friend['userId'],
+                                              )));
+                                },
+                                trailing: BadgeCounter == 0
+                                    ? SizedBox()
+                                    : Material(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Color.fromARGB(255, 127, 166, 233),
+                                        child: SizedBox(
+                                          width: 18,
+                                          height: 18,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 5,
+                                              right: 5,
+                                              top: 2,
+                                              bottom: 1,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '${BadgeCounter > 99 ? '99+' : BadgeCounter}',
+                                                style: const TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        shape: Border(
-        bottom: BorderSide( width : 0.6, color: Colors.grey),
-    ),
-                                        );
+                                      ),
+                                shape: Border(
+                                  bottom: BorderSide(width: 0.6, color: Colors.grey),
+                                ),
+                              );
                             }
                             return LinearProgressIndicator();
                           },

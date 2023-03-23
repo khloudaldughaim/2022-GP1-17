@@ -67,16 +67,8 @@ class _BookingPagestate extends State<boookingPage> {
   List<Suser> curentuserInfo = [];
 
 //  DateTime dt = DateTime.parse('2020-01-02 03:04:05');
-  final datecontrolar = TextEditingController(
-      text: DateTime.now().year.toString() +
-          "-" +
-          DateTime.now().month.toString() +
-          "-" +
-          DateTime.now().day.toString() +
-          " " +
-          DateTime.now().hour.toString() +
-          ":" +
-          DateTime.now().minute.toString());
+
+  final datecontrolar = TextEditingController(text: DateTime.now().toString().substring(0, 16));
   var nameB = TextEditingController();
   var phoneB = TextEditingController();
   var emailB = TextEditingController();
@@ -306,6 +298,8 @@ class _BookingPagestate extends State<boookingPage> {
                                         .then((element) async {
                                       if (element.docs.isEmpty) {
                                         print("noooooooooooooooooooooooot");
+                                        print(datecontrolar.text);
+                                        print(DateTime.now());
                                       } else {
                                         print("محجوووووووووووووووووووز");
                                         getmassege();
@@ -543,8 +537,7 @@ class _BookingPagestate extends State<boookingPage> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (bookformkey.currentState!.validate()) {
-                                    // DateTime dt =
-                                    //     DateTime.parse(datecontrolar.text);
+                                    //  DateTime dt = DateTime.parse(datecontrolar.text);
                                     book_id = Uuid().v4();
                                     FirebaseFirestore.instance
                                         .collection('bookings')
