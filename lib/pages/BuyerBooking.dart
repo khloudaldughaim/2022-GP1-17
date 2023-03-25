@@ -216,6 +216,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   ),
                 ],
                 bottom: const TabBar(
+                  isScrollable: true,
                   labelStyle: TextStyle(
                     fontFamily: "Tajawal-b",
                     fontWeight: FontWeight.w100,
@@ -275,7 +276,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                             )),
                             shadowColor: Color.fromARGB(255, 47, 46, 46),
                             child: Container(
-                              height: 240,
+                              height: 220,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Color.fromARGB(255, 180, 178, 178),
@@ -310,7 +311,9 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                               realtyDetails(
                                                   snapshot.data!.docs[index].data()['property_id']);
                                             },
-                                            child: Text('تفاصيل العقار'),
+                                            child: Text('تفاصيل العقار',
+                                              style: TextStyle(fontFamily: "Tajawal-m"),
+                                            ),
                                             style: ButtonStyle(
                                               backgroundColor: MaterialStateProperty.all(
                                                 Color.fromARGB(255, 127, 166, 233),
@@ -330,6 +333,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                     child: SizedBox(
                                       height: 300,
                                       child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
                                           SizedBox(
                                             height: 9,
@@ -343,7 +347,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     Radius.circular(10),
                                                   ),
                                                 ),
-                                                width: 130,
+                                                width: 150,
                                                 padding: EdgeInsets.symmetric(vertical: 4),
                                                 child: Center(
                                                   child: Text(
@@ -365,7 +369,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     Radius.circular(10),
                                                   ),
                                                 ),
-                                                width: 130,
+                                                width: 150,
                                                 padding: EdgeInsets.symmetric(vertical: 4),
                                                 child: Center(
                                                   child: Text(
@@ -387,7 +391,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     Radius.circular(10),
                                                   ),
                                                 ),
-                                                width: 130,
+                                                width: 150,
                                                 padding: EdgeInsets.symmetric(vertical: 4),
                                                 child: Center(
                                                   child: Text(
@@ -409,7 +413,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     Radius.circular(10),
                                                   ),
                                                 ),
-                                                width: 130,
+                                                width: 150,
                                                 padding: EdgeInsets.symmetric(vertical: 4),
                                                 child: Center(
                                                   child: Text(
@@ -431,7 +435,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     Radius.circular(10),
                                                   ),
                                                 ),
-                                                width: 130,
+                                                width: 150,
                                                 padding: EdgeInsets.symmetric(vertical: 4),
                                                 child: Center(
                                                   child: Text(
@@ -453,7 +457,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                                     Radius.circular(10),
                                                   ),
                                                 ),
-                                                width: 140,
+                                                width: 150,
                                                 padding: EdgeInsets.symmetric(vertical: 4),
                                                 child: Center(
                                                   child: Text(
@@ -512,18 +516,16 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 185, 217, 243),
+                        color: Color.fromARGB(255, 193, 216, 255),
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: ToggleButtons(
                         isSelected: isSelected,
                         selectedColor: Colors.white,
                         color: Color.fromARGB(255, 2, 73, 144),
-                        fillColor: Color.fromARGB(255, 82, 155, 210),
+                        fillColor: Color.fromARGB(255, 127, 166, 233),
                         renderBorder: false,
                         borderWidth: 1,
-                        borderColor: Colors.lightBlue.shade900,
-                        selectedBorderColor: Colors.lightBlue,
                         borderRadius: BorderRadius.circular(50),
                         // highlightColor: Color.fromARGB(255, 238, 238, 243),
                         children: <Widget>[
@@ -706,7 +708,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                             )),
                             shadowColor: Color.fromARGB(255, 0, 0, 0),
                             child: Container(
-                              height: 240,
+                              height: 235,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Color.fromARGB(255, 180, 178, 178),
@@ -715,142 +717,151 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                     Radius.circular(15),
                                   )),
                               // ignore: prefer_const_constructors
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(
                                 children: [
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            height: 140,
-                                            width: 160,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                    snapshot.data!.docs[index].data()['Pimage']),
-                                                fit: BoxFit.cover,
-                                              ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                                        child: Container(
+                                          height: 140,
+                                          width: 160,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  snapshot.data!.docs[index].data()['Pimage']),
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              realtyDetails(
-                                                  snapshot.data!.docs[index].data()['property_id']);
-                                            },
-                                            child: Text('تفاصيل العقار'),
-                                            style: ButtonStyle(
-                                              backgroundColor: MaterialStateProperty.all(
-                                                Color.fromARGB(255, 127, 166, 233),
-                                              ),
-                                              shape: MaterialStateProperty.all(
-                                                  RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(27))),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 3),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 9,
-                                        ),
-                                        Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromARGB(189, 203, 216, 240),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(10),
-                                              ),
-                                            ),
-                                            width: 130,
-                                            padding: EdgeInsets.symmetric(vertical: 4),
-                                            child: Center(
-                                              child: Text(
-                                                'حجز قيد المعالجة',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(255, 42, 42, 43),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: "Tajawal-m",
-                                                ),
-                                              ),
-                                            )),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        RegExp("[a-zA-Z]").hasMatch(
-                                                snapshot.data!.docs[index].data()['buyer_name'])
-                                            ? Text("" +
-                                                snapshot.data!.docs[index].data()['buyer_name'] +
-                                                "    : صاحب الحجز ")
-                                            : Text(" صاحب الحجز :   " +
-                                                snapshot.data!.docs[index].data()['buyer_name']),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(" نوع الجولة :   " +
-                                            snapshot.data!.docs[index].data()['book_type']),
-                                        if (snapshot.data!.docs[index].data()['book_type'] ==
-                                            'افتراضية')
-                                          Text(" التطبيق :   " +
-                                              snapshot.data!.docs[index].data()['videochat']),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(" رقم الحاجز :   " +
-                                            snapshot.data!.docs[index].data()['buyer_phone']),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(" التاريخ :   " +
-                                            snapshot.data!.docs[index].data()['Date']),
-                                        Row(
+                                        )
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(bottom: 3),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                await FirebaseFirestore.instance
-                                                    .collection('bookings')
-                                                    .doc(snapshot.data!.docs[index]
-                                                        .data()['book_id'])
-                                                    .update({
-                                                  "status": "cansled",
-                                                  "isAvailable": true,
-                                                });
-                                                var btoken = await FirebaseFirestore.instance
-                                                    .collection('Standard_user')
-                                                    .doc(snapshot.data!.docs[index]
-                                                        .data()['owner_id'])
-                                                    .get();
-                                                print('IT WORKS !!!! ' + btoken['token']);
-                                                // end of Notifications step 4
-                                                getBookings();
-                                                // Notifications step 5
-                                                var Bname =
-                                                    snapshot.data!.docs[index].data()['buyer_name'];
-                                                sendPushMessege(btoken['token'], Bname);
-                                                //end of  Notifications step 5
-                                              },
-                                              child: Text('إلغاء الحجز'),
-                                              style: ButtonStyle(
-                                                backgroundColor: MaterialStateProperty.all(
-                                                    Color.fromARGB(255, 245, 68, 82)),
-                                                shape: MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(27))),
-                                              ),
+                                            SizedBox(
+                                              height: 9,
                                             ),
+                                            Container(
+                                                decoration: BoxDecoration(
+                                                  color: Color.fromARGB(189, 203, 216, 240),
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(10),
+                                                  ),
+                                                ),
+                                                width: 150,
+                                                padding: EdgeInsets.symmetric(vertical: 4),
+                                                child: Center(
+                                                  child: Text(
+                                                    'حجز قيد المعالجة',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(255, 42, 42, 43),
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontFamily: "Tajawal-m",
+                                                    ),
+                                                  ),
+                                                )),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            RegExp("[a-zA-Z]").hasMatch(
+                                                    snapshot.data!.docs[index].data()['buyer_name'])
+                                                ? Text("" +
+                                                    snapshot.data!.docs[index].data()['buyer_name'] +
+                                                    "    : صاحب الحجز ")
+                                                : Text(" صاحب الحجز :   " +
+                                                    snapshot.data!.docs[index].data()['buyer_name']),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(" نوع الجولة :   " +
+                                                snapshot.data!.docs[index].data()['book_type']),
+                                            if (snapshot.data!.docs[index].data()['book_type'] ==
+                                                'افتراضية')
+                                              Text(" التطبيق :   " +
+                                                  snapshot.data!.docs[index].data()['videochat']),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(" رقم الحاجز :   " +
+                                                snapshot.data!.docs[index].data()['buyer_phone']),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(" التاريخ :   " +
+                                                snapshot.data!.docs[index].data()['Date']),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(40,0,40,0),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            realtyDetails(
+                                                snapshot.data!.docs[index].data()['property_id']);
+                                          },
+                                          child: Text('تفاصيل العقار',
+                                            style: TextStyle(fontFamily: "Tajawal-m"),
+                                          ),
+                                          style: ButtonStyle(
+                                            backgroundColor: MaterialStateProperty.all(
+                                              Color.fromARGB(255, 127, 166, 233),
+                                            ),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(27))),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(35,0,35,0),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            await FirebaseFirestore.instance
+                                                .collection('bookings')
+                                                .doc(snapshot.data!.docs[index]
+                                                    .data()['book_id'])
+                                                .update({
+                                              "status": "cansled",
+                                              "isAvailable": true,
+                                            });
+                                            var btoken = await FirebaseFirestore.instance
+                                                .collection('Standard_user')
+                                                .doc(snapshot.data!.docs[index]
+                                                    .data()['owner_id'])
+                                                .get();
+                                            print('IT WORKS !!!! ' + btoken['token']);
+                                            // end of Notifications step 4
+                                            getBookings();
+                                            // Notifications step 5
+                                            var Bname =
+                                                snapshot.data!.docs[index].data()['buyer_name'];
+                                            sendPushMessege(btoken['token'], Bname);
+                                            //end of  Notifications step 5
+                                          },
+                                          child: Text('إلغاء الحجز',
+                                            style: TextStyle(fontFamily: "Tajawal-m"),
+                                          ),
+                                          style: ButtonStyle(
+                                            backgroundColor: MaterialStateProperty.all(
+                                                Color.fromARGB(255, 245, 68, 82)),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(27))),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -884,7 +895,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
       )),
       shadowColor: Color.fromARGB(255, 0, 0, 0),
       child: Container(
-        height: 290,
+        height: 235,
         decoration: BoxDecoration(
             border: Border.all(
               color: Color.fromARGB(255, 180, 178, 178),
@@ -893,73 +904,103 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               Radius.circular(15),
             )),
         // ignore: prefer_const_constructors
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-              child: Container(
-                height: 140,
-                width: 160,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(bookingModel.pimage ?? ""),
-                    fit: BoxFit.cover,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Container(
+                    height: 140,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(bookingModel.pimage ?? ""),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 3),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 9,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(193, 203, 238, 204),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
+                SizedBox(
+                  width: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 3),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 9,
                       ),
-                      width: 130,
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Center(
-                        child: Text(
-                          'حجز مقبول',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 31, 92, 40),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Tajawal-m",
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(193, 203, 238, 204),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
                           ),
-                        ),
-                      )),
-                  SizedBox(
-                    height: 10,
+                          width: 150,
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Center(
+                            child: Text(
+                              'حجز مقبول',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 31, 92, 40),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
+                          ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
+                          : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(" نوع الجولة : " + (bookingModel.bookType ?? "")),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      if (bookingModel.bookType == "افتراضية")
+                        Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
+                      Text(" رقم الحاجز :  " + (bookingModel.buyerPhone ?? "")),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(" التاريخ :   " + (bookingModel.date ?? "")),
+                    ],
                   ),
-                  RegExp("[a-zA-Z]").hasMatch(bookingModel.buyerName.toString())
-                      ? Text("" + (bookingModel.buyerName ?? "") + "    : صاحب الحجز ")
-                      : Text(" صاحب الحجز :   " + (bookingModel.buyerName ?? "")),
-                  SizedBox(
-                    height: 5,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(35,0,35,0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      realtyDetails(bookingModel.propertyId ?? "");
+                    },
+                    child: Text('تفاصيل العقار',
+                      style: TextStyle(fontFamily: "Tajawal-m"),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 127, 166, 233),
+                      ),
+                      shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                    ),
                   ),
-                  Text(" نوع الجولة : " + (bookingModel.bookType ?? "")),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  if (bookingModel.bookType == "افتراضية")
-                    Text(" التطبيق :  " + (bookingModel.videochat ?? "")),
-                  Text(" رقم الحاجز :  " + (bookingModel.buyerPhone ?? "")),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(" التاريخ :   " + (bookingModel.date ?? "")),
-                  ElevatedButton(
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(35,0,35,0),
+                  child: ElevatedButton(
                     onPressed: () async {
                       await FirebaseFirestore.instance
                           .collection('bookings')
@@ -980,28 +1021,17 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                       sendPushMessege(btoken['token'], Bname.toString());
                       //end of  Notifications step 5
                     },
-                    child: Text('إلغاء الحجز'),
+                    child: Text('إلغاء الحجز',
+                      style: TextStyle(fontFamily: "Tajawal-m"),
+                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 245, 68, 82)),
                       shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      realtyDetails(bookingModel.propertyId ?? "");
-                    },
-                    child: Text('تفاصيل العقار'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(255, 127, 166, 233),
-                      ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
@@ -1019,7 +1049,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
       )),
       shadowColor: Color.fromARGB(255, 0, 0, 0),
       child: Container(
-        height: 270,
+        height: 220,
         decoration: BoxDecoration(
             border: Border.all(
               color: Color.fromARGB(255, 180, 178, 178),
@@ -1033,15 +1063,37 @@ class _BuyerBookingsState extends State<BuyerBooking> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Container(
-                height: 140,
-                width: 160,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(bookingModel.pimage ?? ""),
-                    fit: BoxFit.cover,
+              child: Column(
+                children: [
+                  Container(
+                    height: 140,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(bookingModel.pimage ?? ""),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      realtyDetails(bookingModel.propertyId ?? "");
+                    },
+                    child: Text('تفاصيل العقار',
+                      style: TextStyle(fontFamily: "Tajawal-m"),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 127, 166, 233),
+                      ),
+                      shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -1050,6 +1102,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
             Padding(
               padding: const EdgeInsets.only(bottom: 3),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
                     height: 9,
@@ -1061,7 +1114,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                           Radius.circular(10),
                         ),
                       ),
-                      width: 130,
+                      width: 150,
                       padding: EdgeInsets.symmetric(vertical: 4),
                       child: Center(
                         child: Text(
@@ -1098,19 +1151,6 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 5,
                   ),
                   Text(" سبب الرفض :   " + (bookingModel.reason ?? "")),
-                  ElevatedButton(
-                    onPressed: () {
-                      realtyDetails(bookingModel.propertyId ?? "");
-                    },
-                    child: Text('تفاصيل العقار'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(255, 127, 166, 233),
-                      ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -1137,15 +1177,37 @@ class _BuyerBookingsState extends State<BuyerBooking> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Container(
-                height: 140,
-                width: 160,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(bookingModel.pimage ?? ""),
-                    fit: BoxFit.cover,
+              child: Column(
+                children: [
+                  Container(
+                    height: 140,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(bookingModel.pimage ?? ""),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      realtyDetails(bookingModel.propertyId ?? "");
+                    },
+                    child: Text('تفاصيل العقار',
+                      style: TextStyle(fontFamily: "Tajawal-m"),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 127, 166, 233),
+                      ),
+                      shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -1154,6 +1216,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
             Padding(
               padding: const EdgeInsets.only(bottom: 3),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
                     height: 9,
@@ -1169,7 +1232,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                           color: Color.fromARGB(255, 238, 212, 19),
                         ),
                       ),
-                      width: 85,
+                      width: 150,
                       padding: EdgeInsets.symmetric(vertical: 4),
                       child: Center(
                         child: Text(
@@ -1202,19 +1265,6 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 5,
                   ),
                   Text(" التاريخ :   " + (bookingModel.date ?? "")),
-                  ElevatedButton(
-                    onPressed: () {
-                      realtyDetails(bookingModel.propertyId ?? "");
-                    },
-                    child: Text('تفاصيل العقار'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(255, 127, 166, 233),
-                      ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -1234,7 +1284,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
       )),
       shadowColor: Color.fromARGB(255, 0, 0, 0),
       child: Container(
-        height: 250,
+        height: 220,
         decoration: BoxDecoration(
             border: Border.all(
               color: Color.fromARGB(255, 180, 178, 178),
@@ -1248,16 +1298,39 @@ class _BuyerBookingsState extends State<BuyerBooking> {
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Container(
-                height: 140,
-                width: 160,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(bookingModel.pimage ?? ""),
-                    fit: BoxFit.cover,
+              child: Column(
+                children: [
+                  Container(
+                    height: 140,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(bookingModel.pimage ?? ""),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      realtyDetails(bookingModel.propertyId ?? "");
+                    },
+                    child: Text('تفاصيل العقار',
+                      style: TextStyle(fontFamily: "Tajawal-m"),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 127, 166, 233),
+                      ),
+                      shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
+                    ),
+                  ),
+                ],
               ),
+              
             ),
             SizedBox(
               width: 10,
@@ -1265,6 +1338,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
             Padding(
               padding: const EdgeInsets.only(bottom: 3),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(
                     height: 9,
@@ -1276,7 +1350,7 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                           Radius.circular(10),
                         ),
                       ),
-                      width: 130,
+                      width: 150,
                       padding: EdgeInsets.symmetric(vertical: 4),
                       child: Center(
                         child: Text(
@@ -1309,19 +1383,6 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                     height: 5,
                   ),
                   Text(" التاريخ :   " + (bookingModel.date ?? "")),
-                  ElevatedButton(
-                    onPressed: () {
-                      realtyDetails(bookingModel.propertyId ?? "");
-                    },
-                    child: Text('تفاصيل العقار'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(255, 127, 166, 233),
-                      ),
-                      shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
-                    ),
-                  ),
                 ],
               ),
             ),

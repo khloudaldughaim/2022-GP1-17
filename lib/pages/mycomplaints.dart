@@ -66,6 +66,7 @@ class _MyComplaintsState extends State<MyComplaints> {
                     ),
                   ],
                   bottom: const TabBar(
+                    isScrollable: true,
                     labelStyle: TextStyle(
                       fontFamily: "Tajawal-b",
                       fontWeight: FontWeight.w100,
@@ -105,11 +106,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                       ) {
                         if (!snapshot.hasData) {
                           return const Center(
-                            child: Text("لا يوجد بلاغات"),
+                            child: Text("لا يوجد بلاغات",
+                              style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                            ),
                           );
                         } else if (snapshot.data!.docs.length < 1) {
                           return Center(
-                            child: Text("لا توجد بلاغات تمت معالجتها"),
+                            child: Text("لا توجد بلاغات تمت معالجتها",
+                              style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                            ),
                           );
                         } else {
                           return ListView.builder(
@@ -249,11 +254,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                       ) {
                         if (!snapshot.hasData) {
                           return const Center(
-                            child: Text("لا يوجد بلاغات"),
+                            child: Text("لا يوجد بلاغات",
+                              style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                            ),
                           );
                         } else if (snapshot.data!.docs.length < 1) {
                           return Center(
-                            child: Text("لا توجد بلاغات قيد المعالجة"),
+                            child: Text("لا توجد بلاغات قيد المعالجة",
+                              style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                            ),
                           );
                         } else {
                           return ListView.builder(
@@ -393,11 +402,15 @@ class _MyComplaintsState extends State<MyComplaints> {
                       ) {
                         if (!snapshot.hasData) {
                           return const Center(
-                            child: Text("لا يوجد بلاغات"),
+                            child: Text("لا يوجد بلاغات",
+                              style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                            ),
                           );
                         } else if (snapshot.data!.docs.length < 1) {
                           return Center(
-                            child: Text("لا توجد بلاغات بانتظار المعالجة"),
+                            child: Text("لا توجد بلاغات بانتظار المعالجة",
+                              style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                            ),
                           );
                         } else {
                           return ListView.builder(
