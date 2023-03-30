@@ -31,53 +31,54 @@ def model (id):
    df=df.drop(columns=['description','images','elevator', 'pool', 'User_id', 'number_of_apartment' , 'longitude','TourTime', 'property_age','number_of_room', 'in_floor','number_of_livingRooms','number_of_bathroom', 'propertyUse', 'basement', 'number_of_floors','ArrayOfbooking']) 
    df=df.drop(columns=['neighborhood','number_of_floor','latitude','Location', 'classification']) 
    # copy the data 
-   df_sklearn = df.copy() 
+   df_copy = df.copy() 
    
   # apply normalization techniques 
    column = 'price' 
    c2 = 'space' 
-   df_sklearn[column] = MinMaxScaler().fit_transform(np.array(df_sklearn[column]).reshape(-1,1)) 
-   df_sklearn[c2] = MinMaxScaler().fit_transform(np.array(df_sklearn[c2]).reshape(-1,1)) 
+   df_copy[column] = MinMaxScaler().fit_transform(np.array(df_copy[column]).reshape(-1,1)) 
+   df_copy[c2] = MinMaxScaler().fit_transform(np.array(df_copy[c2]).reshape(-1,1)) 
     
-   encoded_data = pd.get_dummies(df_sklearn, columns = ['city', 'type']) 
+   encoded_data = pd.get_dummies(df_copy, columns = ['city', 'type']) 
+   # the property we want to recomend to :
    property1 = encoded_data.loc[encoded_data['property_id'] == id] 
+   #properties
    encoded_data = encoded_data[encoded_data.property_id != id]
-   nbrs = NearestNeighbors(n_neighbors=3).fit(encoded_data.drop(columns=['property_id'])) 
+   nbrs = NearestNeighbors(n_neighbors=5).fit(encoded_data.drop(columns=['property_id'])) 
    distances , indices = nbrs.kneighbors(property1.drop(columns=['property_id'])) 
    distance = distances[0] 
    simelrty = []
-   for x in range(3):
+   for x in range(5):
     defrence = (1-distance[x])*100
     simelrty.append(defrence)
    sum =0
    avr =0
-   for s in range(3):
+   for s in range(5):
      sum += simelrty[s]
-   avr = sum/3
-   print(indices)
+   avr = sum/5
    print(avr)
 
-   ss = [] 
-   test =0
+   recommend_item = [] 
+   index =0
    for i in indices :
      print(type(encoded_data.iloc[i]['property_id']))
      jsonObj = json.loads(encoded_data.iloc[i]['property_id'].to_json())
      print(type(jsonObj))
      for key, value in jsonObj.items(): 
-      if (simelrty[test]>80):
-       print(simelrty[test])
-       ss.append(value)
-      test+=1
+      if (simelrty[index]>=80):
+       print(simelrty[index])
+       recommend_item.append(value)
+      index+=1
 
-   return json.dumps(ss)
+   return json.dumps(recommend_item)
 
 
 
 @app.route('/api', methods = ['GET'])
 def get_recommendations():
   property_id = str(request.args['query'])
-  sim = model(property_id) 
-  return sim
+  recommend_list = model(property_id) 
+  return recommend_list
   
 
 
