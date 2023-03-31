@@ -310,7 +310,7 @@ class _myBookingsState extends State<ownerBooking> {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                            margin: EdgeInsets.fromLTRB(5, 10, 10, 5),
                             clipBehavior: Clip.antiAlias,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
@@ -353,16 +353,16 @@ class _myBookingsState extends State<ownerBooking> {
                                             realtyDetails(
                                                 snapshot.data!.docs[index].data()['property_id']);
                                           },
-                                          child: Text('تفاصيل العقار',
+                                          child: Text(
+                                            'تفاصيل العقار',
                                             style: TextStyle(fontFamily: "Tajawal-m"),
                                           ),
                                           style: ButtonStyle(
                                             backgroundColor: MaterialStateProperty.all(
                                               Color.fromARGB(255, 127, 166, 233),
                                             ),
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(27))),
+                                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(27))),
                                           ),
                                         ),
                                       ],
@@ -728,7 +728,7 @@ class _myBookingsState extends State<ownerBooking> {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) => Card(
-                            margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                            margin: EdgeInsets.fromLTRB(5, 10, 10, 5),
                             clipBehavior: Clip.antiAlias,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
@@ -801,10 +801,12 @@ class _myBookingsState extends State<ownerBooking> {
                                             RegExp("[a-zA-Z]").hasMatch(
                                                     snapshot.data!.docs[index].data()['buyer_name'])
                                                 ? Text("" +
-                                                    snapshot.data!.docs[index].data()['buyer_name'] +
+                                                    snapshot.data!.docs[index]
+                                                        .data()['buyer_name'] +
                                                     "    : صاحب الحجز ")
                                                 : Text(" صاحب الحجز :   " +
-                                                    snapshot.data!.docs[index].data()['buyer_name']),
+                                                    snapshot.data!.docs[index]
+                                                        .data()['buyer_name']),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -839,7 +841,8 @@ class _myBookingsState extends State<ownerBooking> {
                                             realtyDetails(
                                                 snapshot.data!.docs[index].data()['property_id']);
                                           },
-                                          child: Text('تفاصيل العقار',
+                                          child: Text(
+                                            'تفاصيل العقار',
                                             style: TextStyle(fontFamily: "Tajawal-m"),
                                           ),
                                           style: ButtonStyle(
@@ -856,16 +859,14 @@ class _myBookingsState extends State<ownerBooking> {
                                         onPressed: () async {
                                           await FirebaseFirestore.instance
                                               .collection('bookings')
-                                              .doc(snapshot.data!.docs[index]
-                                                  .data()['book_id'])
+                                              .doc(snapshot.data!.docs[index].data()['book_id'])
                                               .update({
                                             "status": "aproved",
                                           });
                                           // Notifications step 4
                                           var Otoken = await FirebaseFirestore.instance
                                               .collection('Standard_user')
-                                              .doc(snapshot.data!.docs[index]
-                                                  .data()['buyer_id'])
+                                              .doc(snapshot.data!.docs[index].data()['buyer_id'])
                                               .get();
                                           print('IT WORKS !!!! ' + Otoken['token']);
                                           // end of Notifications step 4
@@ -874,8 +875,7 @@ class _myBookingsState extends State<ownerBooking> {
 
                                           var ONwerName = await FirebaseFirestore.instance
                                               .collection('Standard_user')
-                                              .doc(snapshot.data!.docs[index]
-                                                  .data()['owner_id'])
+                                              .doc(snapshot.data!.docs[index].data()['owner_id'])
                                               .get();
 
                                           // Notifications step 5
@@ -883,15 +883,15 @@ class _myBookingsState extends State<ownerBooking> {
                                           //end of  Notifications step 5
                                           getBookings();
                                         },
-                                        child: Text('قبول',
+                                        child: Text(
+                                          'قبول',
                                           style: TextStyle(fontFamily: "Tajawal-m"),
                                         ),
                                         style: ButtonStyle(
                                           backgroundColor: MaterialStateProperty.all(
                                               Color.fromARGB(255, 72, 169, 138)),
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(27))),
+                                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(27))),
                                         ),
                                       ),
                                       SizedBox(
@@ -915,39 +915,31 @@ class _myBookingsState extends State<ownerBooking> {
                                                           onPressed: () async {
                                                             await FirebaseFirestore.instance
                                                                 .collection('bookings')
-                                                                .doc(snapshot
-                                                                    .data!.docs[index]
+                                                                .doc(snapshot.data!.docs[index]
                                                                     .data()['book_id'])
                                                                 .update({
                                                               "reason": reason.text,
                                                               "status": "dicline",
                                                             });
                                                             Navigator.of(context).pop();
-                                                            var btoken =
-                                                                await FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'Standard_user')
-                                                                    .doc(snapshot
-                                                                        .data!.docs[index]
-                                                                        .data()['buyer_id'])
-                                                                    .get();
-                                                            print('IT WORKS !!!! ' +
-                                                                btoken['token']);
+                                                            var btoken = await FirebaseFirestore
+                                                                .instance
+                                                                .collection('Standard_user')
+                                                                .doc(snapshot.data!.docs[index]
+                                                                    .data()['buyer_id'])
+                                                                .get();
+                                                            print(
+                                                                'IT WORKS !!!! ' + btoken['token']);
 
-                                                            var ONwerName =
-                                                                await FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'Standard_user')
-                                                                    .doc(snapshot
-                                                                        .data!.docs[index]
-                                                                        .data()['owner_id'])
-                                                                    .get();
+                                                            var ONwerName = await FirebaseFirestore
+                                                                .instance
+                                                                .collection('Standard_user')
+                                                                .doc(snapshot.data!.docs[index]
+                                                                    .data()['owner_id'])
+                                                                .get();
 
                                                             RejectsendPushMessege(
-                                                                btoken['token'],
-                                                                ONwerName['name']);
+                                                                btoken['token'], ONwerName['name']);
                                                             getBookings();
                                                           },
                                                           child: Text("حفظ"))
@@ -956,15 +948,15 @@ class _myBookingsState extends State<ownerBooking> {
 
                                           getBookings();
                                         },
-                                        child: Text('رفض',
+                                        child: Text(
+                                          'رفض',
                                           style: TextStyle(fontFamily: "Tajawal-m"),
                                         ),
                                         style: ButtonStyle(
                                           backgroundColor: MaterialStateProperty.all(
                                               Color.fromARGB(255, 245, 68, 82)),
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(27))),
+                                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(27))),
                                         ),
                                       ),
                                     ],
@@ -987,7 +979,7 @@ class _myBookingsState extends State<ownerBooking> {
 //////////  EXTERNAL METHODS
   Card _buildAcceptedItem(BookingModel bookingModel) {
     return Card(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+      margin: EdgeInsets.fromLTRB(5, 10, 10, 5),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -1028,7 +1020,8 @@ class _myBookingsState extends State<ownerBooking> {
                     onPressed: () {
                       realtyDetails(bookingModel.propertyId ?? "");
                     },
-                    child: Text('تفاصيل العقار',
+                    child: Text(
+                      'تفاصيل العقار',
                       style: TextStyle(fontFamily: "Tajawal-m"),
                     ),
                     style: ButtonStyle(
@@ -1104,7 +1097,7 @@ class _myBookingsState extends State<ownerBooking> {
 
   Card _buildRejectedItem(BookingModel bookingModel) {
     return Card(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+      margin: EdgeInsets.fromLTRB(5, 10, 10, 5),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -1145,7 +1138,8 @@ class _myBookingsState extends State<ownerBooking> {
                     onPressed: () {
                       realtyDetails(bookingModel.propertyId ?? "");
                     },
-                    child: Text('تفاصيل العقار',
+                    child: Text(
+                      'تفاصيل العقار',
                       style: TextStyle(fontFamily: "Tajawal-m"),
                     ),
                     style: ButtonStyle(
@@ -1225,7 +1219,7 @@ class _myBookingsState extends State<ownerBooking> {
 
   Card _buildFinishedItem(BookingModel bookingModel) {
     return Card(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+      margin: EdgeInsets.fromLTRB(5, 10, 10, 5),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -1266,7 +1260,8 @@ class _myBookingsState extends State<ownerBooking> {
                     onPressed: () {
                       realtyDetails(bookingModel.propertyId ?? "");
                     },
-                    child: Text('تفاصيل العقار',
+                    child: Text(
+                      'تفاصيل العقار',
                       style: TextStyle(fontFamily: "Tajawal-m"),
                     ),
                     style: ButtonStyle(
@@ -1346,7 +1341,7 @@ class _myBookingsState extends State<ownerBooking> {
 
   Card _buildCanceledItem(BookingModel bookingModel) {
     return Card(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+      margin: EdgeInsets.fromLTRB(5, 10, 10, 5),
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -1387,7 +1382,8 @@ class _myBookingsState extends State<ownerBooking> {
                     onPressed: () {
                       realtyDetails(bookingModel.propertyId ?? "");
                     },
-                    child: Text('تفاصيل العقار',
+                    child: Text(
+                      'تفاصيل العقار',
                       style: TextStyle(fontFamily: "Tajawal-m"),
                     ),
                     style: ButtonStyle(
