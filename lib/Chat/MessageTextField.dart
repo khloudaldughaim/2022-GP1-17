@@ -204,7 +204,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                 });
 
                 ///////////Friend user //////////////
-                await FirebaseFirestore.instance
+                 FirebaseFirestore.instance
                     .collection('Standard_user')
                     .doc(widget.friendId)
                     .collection('messages')
@@ -220,10 +220,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   FirebaseFirestore.instance
                       .collection('Standard_user')
                       .doc(widget.friendId)
-                      .collection('messages')
+                      .collection('messages').doc(curentId)
                       .get()
                       .then((isExsist) async {
-                    if (isExsist.docs.isEmpty) {
+                    if (!isExsist.exists) {
                       print(" PART ONE 111111");
                       FirebaseFirestore.instance
                           .collection('Standard_user')
