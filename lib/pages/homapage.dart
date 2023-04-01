@@ -899,16 +899,27 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                           fontFamily: "Tajawal-l",
                         ),
                       ),
-                      Text(
-                        'ريال ${type.properties.price}',
-                        style: TextStyle(
-                          height: 2,
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Tajawal-l",
+                      '${type.properties.classification}' == 'للإيجار' ?
+                        Text(
+                          'ريال شهريا ${type.properties.price}',
+                          style: TextStyle(
+                            height: 2,
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
+                        ):
+                        Text(
+                          'ريال ${type.properties.price}',
+                          style: TextStyle(
+                            height: 2,
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   SizedBox(
@@ -928,7 +939,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                             width: 4,
                           ),
                           Text(
-                            '${type.properties.city}',
+                            '${type.properties.neighborhood} , ${type.properties.city}',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,

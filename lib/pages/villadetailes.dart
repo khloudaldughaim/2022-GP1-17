@@ -60,6 +60,7 @@ class _VillaDetailesState extends State<VillaDetailes> {
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded;
+    //output = ["001ac7c1-67b1-4ac3-bbf4-6db8baf2e6cc", "001ac7c1-67b1-4ac3-bbf4-6db8baf2e6cc" ,"001ac7c1-67b1-4ac3-bbf4-6db8baf2e6cc"];
     setState(() {});
   }
 
@@ -379,6 +380,17 @@ class _VillaDetailesState extends State<VillaDetailes> {
                             fontFamily: "Tajawal-m",
                           ),
                         ),
+                        '${widget.villa.properties.classification}' == "للإيجار" ?
+                        Text(
+                          'ريال شهريا ${widget.villa.properties.price}',
+                          style: TextStyle(
+                            height: 2,
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-m",
+                          ),
+                        ):
                         Text(
                           'ريال ${widget.villa.properties.price}',
                           style: TextStyle(
@@ -1181,46 +1193,46 @@ class _GalleryWidgetState extends State<GalleryWidget> {
 Widget _buildVillaItem(Villa villa, BuildContext context) {
   Row rowItem = Row(
     children: [
-      Icon(
-        Icons.hotel,
-        color: Colors.white,
-        size: 18,
-      ),
-      SizedBox(
-        width: 3,
-      ),
-      Text(
-        '${villa.number_of_room}',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Tajawal-l",
-        ),
-      ),
-      SizedBox(
-        width: 10,
-      ),
-      Icon(
-        Icons.bathtub,
-        color: Colors.white,
-        size: 15,
-      ),
-      SizedBox(
-        width: 1,
-      ),
-      Text(
-        '${villa.number_of_bathroom}',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Tajawal-l",
-        ),
-      ),
-      SizedBox(
-        width: 10,
-      ),
+      // Icon(
+      //   Icons.hotel,
+      //   color: Colors.white,
+      //   size: 18,
+      // ),
+      // SizedBox(
+      //   width: 3,
+      // ),
+      // Text(
+      //   '${villa.number_of_room}',
+      //   style: TextStyle(
+      //     color: Colors.white,
+      //     fontSize: 14,
+      //     fontWeight: FontWeight.bold,
+      //     fontFamily: "Tajawal-l",
+      //   ),
+      // ),
+      // SizedBox(
+      //   width: 10,
+      // ),
+      // Icon(
+      //   Icons.bathtub,
+      //   color: Colors.white,
+      //   size: 15,
+      // ),
+      // SizedBox(
+      //   width: 1,
+      // ),
+      // Text(
+      //   '${villa.number_of_bathroom}',
+      //   style: TextStyle(
+      //     color: Colors.white,
+      //     fontSize: 14,
+      //     fontWeight: FontWeight.bold,
+      //     fontFamily: "Tajawal-l",
+      //   ),
+      // ),
+      // SizedBox(
+      //   width: 10,
+      // ),
       Icon(
         Icons.square_foot,
         color: Colors.white,
@@ -1249,46 +1261,46 @@ Widget _buildVillaItem(Villa villa, BuildContext context) {
 Widget _buildApartmentItem(Apartment apartment, BuildContext context) {
   Row rowItem = Row(
     children: [
-      Icon(
-        Icons.hotel,
-        color: Colors.white,
-        size: 18,
-      ),
-      SizedBox(
-        width: 3,
-      ),
-      Text(
-        '${apartment.number_of_room}',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Tajawal-l",
-        ),
-      ),
-      SizedBox(
-        width: 10,
-      ),
-      Icon(
-        Icons.bathtub,
-        color: Colors.white,
-        size: 15,
-      ),
-      SizedBox(
-        width: 1,
-      ),
-      Text(
-        '${apartment.number_of_bathroom}',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Tajawal-l",
-        ),
-      ),
-      SizedBox(
-        width: 10,
-      ),
+      // Icon(
+      //   Icons.hotel,
+      //   color: Colors.white,
+      //   size: 18,
+      // ),
+      // SizedBox(
+      //   width: 3,
+      // ),
+      // Text(
+      //   '${apartment.number_of_room}',
+      //   style: TextStyle(
+      //     color: Colors.white,
+      //     fontSize: 14,
+      //     fontWeight: FontWeight.bold,
+      //     fontFamily: "Tajawal-l",
+      //   ),
+      // ),
+      // SizedBox(
+      //   width: 10,
+      // ),
+      // Icon(
+      //   Icons.bathtub,
+      //   color: Colors.white,
+      //   size: 15,
+      // ),
+      // SizedBox(
+      //   width: 1,
+      // ),
+      // Text(
+      //   '${apartment.number_of_bathroom}',
+      //   style: TextStyle(
+      //     color: Colors.white,
+      //     fontSize: 14,
+      //     fontWeight: FontWeight.bold,
+      //     fontFamily: "Tajawal-l",
+      //   ),
+      // ),
+      // SizedBox(
+      //   width: 10,
+      // ),
       Icon(
         Icons.square_foot,
         color: Colors.white,
@@ -1383,7 +1395,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
         textDirection: TextDirection.ltr,
         child: Container(
           height: 210,
-          width: 250,
+          width: 260,
           decoration: '${type.properties.images.length}' == '0'
               ? BoxDecoration(
                   image: DecorationImage(
@@ -1462,6 +1474,17 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                             fontFamily: "Tajawal-l",
                           ),
                         ),
+                        '${type.properties.classification}' == 'للإيجار' ?
+                        Text(
+                          'ريال شهريا ${type.properties.price}',
+                          style: TextStyle(
+                            height: 2,
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Tajawal-l",
+                          ),
+                        ):
                         Text(
                           'ريال ${type.properties.price}',
                           style: TextStyle(
@@ -1491,7 +1514,7 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                               width: 4,
                             ),
                             Text(
-                              '${type.properties.city}',
+                              '${type.properties.neighborhood} , ${type.properties.city}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
