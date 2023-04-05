@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
 import '../pages/navigationbar.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -68,8 +69,7 @@ class _SignUpState extends State<SignUp> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Welcome()),
+                                    MaterialPageRoute(builder: (context) => Welcome()),
                                   );
                                 },
                                 child: Icon(
@@ -97,26 +97,23 @@ class _SignUpState extends State<SignUp> {
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
                                 controller: _usernameController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.person,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: "  الأسم  :",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-m"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-m"),
                                   fillColor: Color.fromARGB(255, 225, 225, 228),
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty ||
-                                      _usernameController.text.trim() == "") {
+                                  if (value!.isEmpty || _usernameController.text.trim() == "") {
                                     return "الأسم مطلوب ";
                                   }
                                   if (RegExp(r'[0-9]').hasMatch(value)) {
@@ -136,28 +133,25 @@ class _SignUpState extends State<SignUp> {
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
                                 controller: _emailController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.mail,
                                     color: Color.fromARGB(255, 127, 166, 233),
                                   ),
                                   labelText: " البريد الإلكتروني :",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-m"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-m"),
                                   hintText: "exampel@gmail.com",
                                   hintStyle: TextStyle(fontSize: 10),
                                   fillColor: Color.fromARGB(255, 225, 225, 228),
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty ||
-                                      _emailController.text.trim() == "") {
+                                  if (value!.isEmpty || _emailController.text.trim() == "") {
                                     return "البريد الألكتروني مطلوب ";
                                   } else if (!RegExp(
                                           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
@@ -171,44 +165,139 @@ class _SignUpState extends State<SignUp> {
                           height: 23,
                         ),
                         Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: TextFormField(
-                                  controller: _phonenumberController,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  decoration: InputDecoration(
-                                    prefixIcon: Icon(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 225, 225, 228),
+                                  borderRadius: BorderRadius.circular(66.0),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(
                                       Icons.phone_android,
                                       color: Color.fromARGB(255, 127, 166, 233),
-                                      size: 19,
+                                      size: 20,
                                     ),
-                                    labelText: "رقم الجوال :",
-                                    labelStyle:
-                                        TextStyle(fontFamily: "Tajawal-m"),
-                                    hintText: "05xxxxxxxx",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    fillColor:
-                                        Color.fromARGB(255, 225, 225, 228),
-                                    filled: true,
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(66.0),
-                                        borderSide: const BorderSide(
-                                            width: 0, style: BorderStyle.none)),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "رقم الجوال مطلوب ";
-                                    }
-                                    if (!RegExp(
-                                            r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
-                                        .hasMatch(value)) {
-                                      return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
-                                    }
-                                  }),
-                            )),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                      child: InternationalPhoneNumberInput(
+                                        onInputChanged: (PhoneNumber number) {
+                                          setState(() {});
+                                        },
+                                        countries: ["SA"],
+                                        maxLength: 9,
+                                        inputBorder: InputBorder.none,
+                                        onInputValidated: (bool value) {
+                                          print(value);
+                                        },
+                                        selectorConfig: SelectorConfig(
+                                            selectorType: PhoneInputSelectorType.DROPDOWN,
+                                            trailingSpace: false,
+                                            // countryComparator:(valu,val){},
+                                            leadingPadding: 0.0,
+                                            showFlags: false),
+                                        ignoreBlank: false,
+                                        autoValidateMode: AutovalidateMode.onUserInteraction,
+                                        selectorTextStyle: TextStyle(color: Colors.black),
+                                        initialValue: PhoneNumber(
+                                          dialCode: "+966",
+                                          isoCode: "SA",
+                                          phoneNumber: "5XXXXXXXX",
+                                        ),
+                                        textFieldController: _phonenumberController,
+                                        formatInput: false,
+                                        inputDecoration: InputDecoration(
+                                          isDense: true,
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(66.0),
+                                              borderSide: const BorderSide(
+                                                  width: 0, style: BorderStyle.none)),
+                                          // contentPadding: EdgeInsets.symmetric(
+                                          //     horizontal: screenWidth * 4, vertical: screenWidth * 4),
+                                          labelText: "رقم الجوال :",
+                                          labelStyle: TextStyle(fontFamily: "Tajawal-m"),
+                                          hintText: '5XXXXXXXX',
+                                          hintStyle: TextStyle(fontSize: 10),
+                                          filled: true,
+                                          fillColor: Color.fromARGB(255, 225, 225, 228),
+                                          // enabledBorder: OutlineInputBorder(
+                                          //     borderRadius: BorderRadius.circular(screenWidth * 200),
+                                          //     borderSide:
+                                          //         BorderSide(width: .3, color: theme.lightTextColor)),
+                                          // focusedBorder: OutlineInputBorder(
+                                          //     borderRadius: BorderRadius.circular(screenWidth * 200),
+                                          //     borderSide: BorderSide(
+                                          //         width: .6,
+                                          //         color: !tutorPhoneNumberValid
+                                          //             ? theme.redColor
+                                          //             : theme.yellowColor)),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(66.0),
+                                              borderSide: const BorderSide(
+                                                  width: 0, style: BorderStyle.none)),
+                                        ),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "رقم الجوال مطلوب ";
+                                          }
+                                          if (!value.startsWith('5')) {
+                                            return 'الرقم يجب ان يبدأ ب 5';
+                                          }
+                                        },
+                                        keyboardType: TextInputType.numberWithOptions(
+                                            signed: true, decimal: true),
+                                        onSaved: (PhoneNumber number) {
+                                          print('On Saved: $number');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                          ),
+
+                          // TextFormField(
+                          //     controller: _phonenumberController,
+                          //     autovalidateMode:
+                          //         AutovalidateMode.onUserInteraction,
+                          //     decoration: InputDecoration(
+                          //       prefixIcon: Icon(
+                          //         Icons.phone_android,
+                          //         color: Color.fromARGB(255, 127, 166, 233),
+                          //         size: 19,
+                          //       ),
+                          //       labelText: "رقم الجوال :",
+                          //       labelStyle:
+                          //           TextStyle(fontFamily: "Tajawal-m"),
+                          //       hintText: "05xxxxxxxx",
+                          //       hintStyle: TextStyle(fontSize: 10),
+                          //       fillColor:
+                          //           Color.fromARGB(255, 225, 225, 228),
+                          //       filled: true,
+                          //       border: OutlineInputBorder(
+                          //           borderRadius:
+                          //               BorderRadius.circular(66.0),
+                          //           borderSide: const BorderSide(
+                          //               width: 0, style: BorderStyle.none)),
+                          //     ),
+                          //     validator: (value) {
+                          //       if (value!.isEmpty) {
+                          //         return "رقم الجوال مطلوب ";
+                          //       }
+                          //       if (!RegExp(
+                          //               r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$')
+                          //           .hasMatch(value)) {
+                          //         return 'أدخل رقم الجوال بالشكل الصحيح\n (05xxxxxxxx)';
+                          //       }
+                          //     }),
+                        ),
                         SizedBox(
                           height: 23,
                         ),
@@ -219,8 +308,7 @@ class _SignUpState extends State<SignUp> {
                               child: TextFormField(
                                 obscureText: true,
                                 controller: _passwordController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.lock,
@@ -228,8 +316,7 @@ class _SignUpState extends State<SignUp> {
                                     size: 19,
                                   ),
                                   labelText: "كلمة المرور:",
-                                  labelStyle:
-                                      TextStyle(fontFamily: "Tajawal-m"),
+                                  labelStyle: TextStyle(fontFamily: "Tajawal-m"),
                                   hintText:
                                       "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ",
                                   hintStyle: TextStyle(fontSize: 10),
@@ -237,29 +324,25 @@ class _SignUpState extends State<SignUp> {
                                   filled: true,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(66.0),
-                                      borderSide: const BorderSide(
-                                          width: 0, style: BorderStyle.none)),
+                                      borderSide:
+                                          const BorderSide(width: 0, style: BorderStyle.none)),
                                 ),
                                 validator: (value) {
                                   RegExp uper = RegExp(r"(?=.*[A-Z])");
                                   RegExp numb = RegExp(r"[0-9]");
                                   RegExp small = RegExp(r"(?=.*[a-z])");
-                                  if (value!.isEmpty ||
-                                      _passwordController.text.trim() == "") {
+                                  if (value!.isEmpty || _passwordController.text.trim() == "") {
                                     return "كلمة السر مطلوبة";
                                   } else if (value.length < 8 &&
                                       !uper.hasMatch(value) &&
                                       !numb.hasMatch(value) &&
                                       !small.hasMatch(value)) {
                                     return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة وصغيرة ";
-                                  } else if (value.length < 8 &&
-                                      !uper.hasMatch(value)) {
+                                  } else if (value.length < 8 && !uper.hasMatch(value)) {
                                     return "كلمة المرور يجب ان يكون من 8 خانات واحرف كبيرة ";
-                                  } else if (value.length < 8 &&
-                                      !small.hasMatch(value)) {
+                                  } else if (value.length < 8 && !small.hasMatch(value)) {
                                     return "كلمة المرور يجب ان يكون من 8 خانات واحرف وصغيرة ";
-                                  } else if (!uper.hasMatch(value) &&
-                                      !small.hasMatch(value)) {
+                                  } else if (!uper.hasMatch(value) && !small.hasMatch(value)) {
                                     return "كلمة المرور يجب ان تحتوي على احرف كبيرة و وصغيرة ";
                                   } else if (value.length < 8) {
                                     return "كلمة المرور يجب ان تكون من 8 خانات فأكثر";
@@ -282,8 +365,7 @@ class _SignUpState extends State<SignUp> {
                               textDirection: TextDirection.rtl,
                               child: TextFormField(
                                   obscureText: true,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
                                   decoration: InputDecoration(
                                     //suffix: Icon(
                                     // Icons.visibility,
@@ -296,22 +378,18 @@ class _SignUpState extends State<SignUp> {
                                       size: 19,
                                     ),
                                     labelText: "تأكيد كلمة المرور:",
-                                    labelStyle:
-                                        TextStyle(fontFamily: "Tajawal-m"),
-                                    fillColor:
-                                        Color.fromARGB(255, 225, 225, 228),
+                                    labelStyle: TextStyle(fontFamily: "Tajawal-m"),
+                                    fillColor: Color.fromARGB(255, 225, 225, 228),
                                     filled: true,
                                     border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(66.0),
-                                        borderSide: const BorderSide(
-                                            width: 0, style: BorderStyle.none)),
+                                        borderRadius: BorderRadius.circular(66.0),
+                                        borderSide:
+                                            const BorderSide(width: 0, style: BorderStyle.none)),
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "تأكيد كلمة المرور مطلوب ";
-                                    } else if (value !=
-                                        _passwordController.text.trim()) {
+                                    } else if (value != _passwordController.text.trim()) {
                                       return "كلمة المرور غير مطابقة ";
                                     }
                                   }),
@@ -326,8 +404,7 @@ class _SignUpState extends State<SignUp> {
                                 await FirebaseAuth.instance
                                     .createUserWithEmailAndPassword(
                                         email: _emailController.text.trim(),
-                                        password:
-                                            _passwordController.text.trim())
+                                        password: _passwordController.text.trim())
                                     .then((value) {
                                   final suser = Suser(
                                     name: _usernameController.text,
@@ -339,18 +416,13 @@ class _SignUpState extends State<SignUp> {
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 2,
-                                    backgroundColor:
-                                        Color.fromARGB(255, 127, 166, 233),
-                                    textColor:
-                                        Color.fromARGB(255, 248, 249, 250),
+                                    backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                                    textColor: Color.fromARGB(255, 248, 249, 250),
                                     fontSize: 18.0,
                                   );
                                   createSuser(suser);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              NavigationBarPage()));
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => NavigationBarPage()));
                                 });
                               }
                             } on FirebaseAuthException catch (error) {
@@ -359,8 +431,7 @@ class _SignUpState extends State<SignUp> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text("خطأ"),
-                                      content: Text(
-                                          "البريد الألكتروني موجود مسبقاً"),
+                                      content: Text("البريد الألكتروني موجود مسبقاً"),
                                       actions: <Widget>[
                                         TextButton(
                                           child: Text("حسناً"),
@@ -374,19 +445,16 @@ class _SignUpState extends State<SignUp> {
                             }
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 127, 166, 233)),
+                            backgroundColor:
+                                MaterialStateProperty.all(Color.fromARGB(255, 127, 166, 233)),
                             padding: MaterialStateProperty.all(
-                                EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 10)),
+                                EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
                             shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27))),
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(27))),
                           ),
                           child: Text(
                             "إنشاء حساب",
-                            style: TextStyle(
-                                fontSize: 20, fontFamily: "Tajawal-m"),
+                            style: TextStyle(fontSize: 20, fontFamily: "Tajawal-m"),
                           ),
                         ),
                         SizedBox(
@@ -409,8 +477,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             Text(
                               "  لديك حساب ؟     ",
-                              style: TextStyle(
-                                  fontSize: 14, fontFamily: "Tajawal-l"),
+                              style: TextStyle(fontSize: 14, fontFamily: "Tajawal-l"),
                             ),
                           ],
                         ),
@@ -437,8 +504,7 @@ Future createSuser(Suser suser) async {
   suser.userid = Uid;
 
   final json = suser.toJson();
-  final docSuser =
-      FirebaseFirestore.instance.collection('Standard_user').doc(Uid);
+  final docSuser = FirebaseFirestore.instance.collection('Standard_user').doc(Uid);
   await docSuser.set(json);
 }
 
