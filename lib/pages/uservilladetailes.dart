@@ -428,21 +428,6 @@ class VillaDetailes extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.whatsapp,
-                                        color: Color.fromARGB(255, 127, 166, 233),
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(
                                     width: 16,
                                   ),
@@ -450,16 +435,10 @@ class VillaDetailes extends StatelessWidget {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 127, 166, 233).withOpacity(0.1),
+                                      color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.message,
-                                        color: Color.fromARGB(255, 127, 166, 233),
-                                        size: 20,
-                                      ),
-                                    ),
+                                    child: Center(),
                                   ),
                                 ],
                               ),

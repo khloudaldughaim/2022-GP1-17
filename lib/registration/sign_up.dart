@@ -408,7 +408,7 @@ class _SignUpState extends State<SignUp> {
                                     .then((value) {
                                   final suser = Suser(
                                     name: _usernameController.text,
-                                    phoneNumber: _phonenumberController.text,
+                                    phoneNumber: "0" + _phonenumberController.text,
                                     email: _emailController.text,
                                   ); //creat user in database
                                   Fluttertoast.showToast(

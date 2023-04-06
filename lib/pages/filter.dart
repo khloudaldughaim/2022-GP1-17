@@ -349,6 +349,9 @@ class _FilterPageState extends State<FilterPage> {
                                                                 AutovalidateMode.onUserInteraction,
                                                             decoration: InputDecoration(
                                                               hintText: '5 ',
+                                                              hintStyle: TextStyle(
+                                                                color: Colors.grey,
+                                                              ),
                                                               filled: true,
                                                               fillColor: Colors.white,
                                                               contentPadding: EdgeInsets.all(6),
