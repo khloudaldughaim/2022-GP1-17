@@ -234,13 +234,27 @@ class MyCustomFormState extends State<MyCustomForm> {
     showAlertDialog(BuildContext context) {
       // set up the buttons
       Widget cancelButton = TextButton(
-        child: Text("إلغاء"),
+        child: Text(
+          "إلغاء",
+          style: TextStyle(
+            fontFamily: "Tajawal-m",
+            fontSize: 17,
+            color: Color.fromARGB(255, 127, 166, 233),
+          ),
+        ),
         onPressed: () async {
           Navigator.of(context).pop();
         },
       );
       Widget continueButton = TextButton(
-        child: Text("تأكيد"),
+        child: Text(
+          "تأكيد",
+          style: TextStyle(
+            fontFamily: "Tajawal-m",
+            fontSize: 17,
+            color: Color.fromARGB(255, 127, 166, 233),
+          ),
+        ),
         onPressed: () async {
           final FirebaseAuth auth = FirebaseAuth.instance;
           final User? user = auth.currentUser;
@@ -388,8 +402,14 @@ class MyCustomFormState extends State<MyCustomForm> {
       );
       // set up the AlertDialog
       AlertDialog alert = AlertDialog(
-        title: Text("تأكيد"),
-        content: Text("هل أنت متأكد من أنك تريد إضافة هذا العقار؟"),
+        content: Text(
+          "هل أنت متأكد من أنك تريد إضافة هذا العقار؟",
+          style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+          textDirection: TextDirection.rtl,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         actions: [
           cancelButton,
           continueButton,

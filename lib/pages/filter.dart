@@ -165,7 +165,15 @@ class _FilterPageState extends State<FilterPage> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '*نوع العقار :',
+                                          '*',
+                                          style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontFamily: "Tajawal-b",
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        Text(
+                                          'نوع العقار :',
                                           style: TextStyle(
                                             fontSize: 20.0,
                                             fontFamily: "Tajawal-b",
@@ -555,7 +563,15 @@ class _FilterPageState extends State<FilterPage> {
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
                                         children: [
-                                          Text('*المدينة : ',
+                                          Text(
+                                            '*',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontFamily: "Tajawal-b",
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          Text('المدينة : ',
                                               style: TextStyle(
                                                 fontSize: 20.0,
                                                 fontFamily: "Tajawal-b",

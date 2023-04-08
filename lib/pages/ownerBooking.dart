@@ -856,33 +856,84 @@ class _myBookingsState extends State<ownerBooking> {
                                       ),
                                       ElevatedButton(
                                         //APPROVE BUTTON
-                                        onPressed: () async {
-                                          await FirebaseFirestore.instance
-                                              .collection('bookings')
-                                              .doc(snapshot.data!.docs[index].data()['book_id'])
-                                              .update({
-                                            "status": "aproved",
-                                          });
-                                          // Notifications step 4
-                                          var Otoken = await FirebaseFirestore.instance
-                                              .collection('Standard_user')
-                                              .doc(snapshot.data!.docs[index].data()['buyer_id'])
-                                              .get();
-                                          print('IT WORKS !!!! ' + Otoken['token']);
-                                          // end of Notifications step 4
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  content: Text(
+                                                    " هل انت متأكد من رغبتك بقبول الحجز؟",
+                                                    style: TextStyle(
+                                                        fontFamily: "Tajawal-m", fontSize: 17),
+                                                    textDirection: TextDirection.rtl,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: Text(
+                                                        "إلغاء",
+                                                        style: TextStyle(
+                                                          fontFamily: "Tajawal-m",
+                                                          fontSize: 17,
+                                                          color: Color.fromARGB(255, 127, 166, 233),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: Text(
+                                                        "تأكيد",
+                                                        style: TextStyle(
+                                                          fontFamily: "Tajawal-m",
+                                                          fontSize: 17,
+                                                          color: Color.fromARGB(255, 127, 166, 233),
+                                                        ),
+                                                      ),
+                                                      onPressed: () async {
+                                                        await FirebaseFirestore.instance
+                                                            .collection('bookings')
+                                                            .doc(snapshot.data!.docs[index]
+                                                                .data()['book_id'])
+                                                            .update({
+                                                          "status": "aproved",
+                                                        });
+                                                        // Notifications step 4
+                                                        var Otoken = await FirebaseFirestore
+                                                            .instance
+                                                            .collection('Standard_user')
+                                                            .doc(snapshot.data!.docs[index]
+                                                                .data()['buyer_id'])
+                                                            .get();
+                                                        print('IT WORKS !!!! ' + Otoken['token']);
+                                                        // end of Notifications step 4
 
-                                          // setState(() {});
+                                                        // setState(() {});
 
-                                          var ONwerName = await FirebaseFirestore.instance
-                                              .collection('Standard_user')
-                                              .doc(snapshot.data!.docs[index].data()['owner_id'])
-                                              .get();
+                                                        var ONwerName = await FirebaseFirestore
+                                                            .instance
+                                                            .collection('Standard_user')
+                                                            .doc(snapshot.data!.docs[index]
+                                                                .data()['owner_id'])
+                                                            .get();
 
-                                          // Notifications step 5
-                                          sendPushMessege(Otoken['token'], ONwerName['name']);
-                                          //end of  Notifications step 5
-                                          getBookings();
+                                                        // Notifications step 5
+                                                        sendPushMessege(
+                                                            Otoken['token'], ONwerName['name']);
+                                                        //end of  Notifications step 5
+                                                        getBookings();
+
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              });
                                         },
+
                                         child: Text(
                                           'قبول',
                                           style: TextStyle(fontFamily: "Tajawal-m"),
@@ -903,7 +954,15 @@ class _myBookingsState extends State<ownerBooking> {
                                           showDialog(
                                               context: context,
                                               builder: ((context) => AlertDialog(
-                                                    title: Text("من فضلك ماهو سبب الرفض ؟"),
+                                                    title: Text(
+                                                      "اذا كنت متأكدًا من رغبتك برفض الحجز فما هو سبب الرفض من فضلك ؟",
+                                                      style: TextStyle(
+                                                          fontFamily: "Tajawal-m", fontSize: 17),
+                                                      textDirection: TextDirection.rtl,
+                                                    ),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(15),
+                                                    ),
                                                     content: TextField(
                                                       autofocus: true,
                                                       controller: reason,
@@ -911,6 +970,20 @@ class _myBookingsState extends State<ownerBooking> {
                                                           hintText: "الوقت غير مناسب "),
                                                     ),
                                                     actions: [
+                                                      TextButton(
+                                                        child: Text(
+                                                          "إالغاء",
+                                                          style: TextStyle(
+                                                            fontFamily: "Tajawal-m",
+                                                            fontSize: 17,
+                                                            color:
+                                                                Color.fromARGB(255, 127, 166, 233),
+                                                          ),
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                      ),
                                                       TextButton(
                                                           onPressed: () async {
                                                             await FirebaseFirestore.instance
@@ -942,7 +1015,15 @@ class _myBookingsState extends State<ownerBooking> {
                                                                 btoken['token'], ONwerName['name']);
                                                             getBookings();
                                                           },
-                                                          child: Text("حفظ"))
+                                                          child: Text(
+                                                            "حفظ",
+                                                            style: TextStyle(
+                                                              fontFamily: "Tajawal-m",
+                                                              fontSize: 17,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                            ),
+                                                          ))
                                                     ],
                                                   )));
 

@@ -828,26 +828,75 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
                                         child: ElevatedButton(
-                                          onPressed: () async {
-                                            await FirebaseFirestore.instance
-                                                .collection('bookings')
-                                                .doc(snapshot.data!.docs[index].data()['book_id'])
-                                                .update({
-                                              "status": "cansled",
-                                              "isAvailable": true,
-                                            });
-                                            var btoken = await FirebaseFirestore.instance
-                                                .collection('Standard_user')
-                                                .doc(snapshot.data!.docs[index].data()['owner_id'])
-                                                .get();
-                                            print('IT WORKS !!!! ' + btoken['token']);
-                                            // end of Notifications step 4
-                                            getBookings();
-                                            // Notifications step 5
-                                            var Bname =
-                                                snapshot.data!.docs[index].data()['buyer_name'];
-                                            sendPushMessege(btoken['token'], Bname);
-                                            //end of  Notifications step 5
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    content: Text(
+                                                      " هل انت متأكد من رغبتك بإلغاء الحجز",
+                                                      style: TextStyle(
+                                                          fontFamily: "Tajawal-m", fontSize: 17),
+                                                      textDirection: TextDirection.rtl,
+                                                    ),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(15),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child: Text(
+                                                          "إلغاء",
+                                                          style: TextStyle(
+                                                            fontFamily: "Tajawal-m",
+                                                            fontSize: 17,
+                                                            color:
+                                                                Color.fromARGB(255, 127, 166, 233),
+                                                          ),
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: Text(
+                                                          "تأكيد",
+                                                          style: TextStyle(
+                                                            fontFamily: "Tajawal-m",
+                                                            fontSize: 17,
+                                                            color:
+                                                                Color.fromARGB(255, 127, 166, 233),
+                                                          ),
+                                                        ),
+                                                        onPressed: () async {
+                                                          await FirebaseFirestore.instance
+                                                              .collection('bookings')
+                                                              .doc(snapshot.data!.docs[index]
+                                                                  .data()['book_id'])
+                                                              .update({
+                                                            "status": "cansled",
+                                                            "isAvailable": true,
+                                                          });
+                                                          var btoken = await FirebaseFirestore
+                                                              .instance
+                                                              .collection('Standard_user')
+                                                              .doc(snapshot.data!.docs[index]
+                                                                  .data()['owner_id'])
+                                                              .get();
+                                                          print('IT WORKS !!!! ' + btoken['token']);
+                                                          // end of Notifications step 4
+                                                          getBookings();
+                                                          // Notifications step 5
+                                                          var Bname = snapshot.data!.docs[index]
+                                                              .data()['buyer_name'];
+                                                          sendPushMessege(btoken['token'], Bname);
+                                                          //end of  Notifications step 5
+
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
                                           },
                                           child: Text(
                                             'إلغاء الحجز',

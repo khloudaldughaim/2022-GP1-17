@@ -1348,16 +1348,37 @@ class _UpdateApartmentState extends State<UpdateApartment> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        content: Text("هل أنت متأكد من تحديث العقار؟"),
+                                        content: Text(
+                                          "هل أنت متأكد من تحديث العقار؟",
+                                          style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
                                         actions: <Widget>[
                                           TextButton(
-                                            child: Text("لا"),
+                                            child: Text(
+                                              "إالغاء",
+                                              style: TextStyle(
+                                                fontFamily: "Tajawal-m",
+                                                fontSize: 17,
+                                                color: Color.fromARGB(255, 127, 166, 233),
+                                              ),
+                                            ),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
                                           ),
                                           TextButton(
-                                            child: Text("نعم"),
+                                            child: Text(
+                                              "تأكيد",
+                                              style: TextStyle(
+                                                fontFamily: "Tajawal-m",
+                                                fontSize: 17,
+                                                color: Color.fromARGB(255, 127, 166, 233),
+                                              ),
+                                            ),
                                             onPressed: () {
                                               try {
                                                 updateData(selectedFiles);
