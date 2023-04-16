@@ -22,7 +22,14 @@ class _ChatsPageState extends State<ChatsPage> {
 
   showAlertDialog(BuildContext context, friendId) {
     Widget cancelButton = TextButton(
-      child: Text("إلغاء"),
+      child: Text(
+        "إلغاء",
+        style: TextStyle(
+          fontFamily: "Tajawal-m",
+          fontSize: 17,
+          color: Color.fromARGB(255, 127, 166, 233),
+        ),
+      ),
       onPressed: () async {
         Navigator.of(context).pop();
       },
@@ -59,10 +66,27 @@ class _ChatsPageState extends State<ChatsPage> {
             print(e);
           }
         },
-        child: Text('حذف'));
+        child: Text(
+          'حذف',
+          style: TextStyle(
+            fontFamily: "Tajawal-m",
+            fontSize: 17,
+            color: Color.fromARGB(255, 127, 166, 233),
+          ),
+        ));
     AlertDialog alert = AlertDialog(
-        title: Text("حذف محادثة"),
-        content: Text("هل تريد حذف المحادثة؟"),
+        title: Text(
+          "حذف محادثة",
+          style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+        ),
+        content: Text(
+          "هل تريد حذف المحادثة؟",
+          style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+          textDirection: TextDirection.rtl,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         actions: [cancelButton, DeleteButton]);
 
     return alert;

@@ -430,11 +430,24 @@ class _SignUpState extends State<SignUp> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text("خطأ"),
-                                      content: Text("البريد الألكتروني موجود مسبقاً"),
+                                      content: Text(
+                                        "البريد الألكتروني موجود مسبقاً",
+                                        style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                                        textDirection: TextDirection.rtl,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
                                       actions: <Widget>[
                                         TextButton(
-                                          child: Text("حسناً"),
+                                          child: Text(
+                                            "حسناً",
+                                            style: TextStyle(
+                                              fontFamily: "Tajawal-m",
+                                              fontSize: 17,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                            ),
+                                          ),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },

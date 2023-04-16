@@ -244,16 +244,36 @@ class _ComplaintsState extends State<Complaints> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       content: const Text(
-                                          "هل أنت متأكد من أنك ترغب في رفع بلاغ على هذا الإعلان ؟"),
+                                        "هل أنت متأكد من أنك ترغب في رفع بلاغ على هذا الإعلان ؟",
+                                        style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+                                        textDirection: TextDirection.rtl,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
                                       actions: <Widget>[
                                         TextButton(
-                                          child: const Text("لا"),
+                                          child: const Text(
+                                            "إلغاء",
+                                            style: TextStyle(
+                                              fontFamily: "Tajawal-m",
+                                              fontSize: 17,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                            ),
+                                          ),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
                                         ),
                                         TextButton(
-                                          child: const Text("نعم"),
+                                          child: const Text(
+                                            "تأكيد",
+                                            style: TextStyle(
+                                              fontFamily: "Tajawal-m",
+                                              fontSize: 17,
+                                              color: Color.fromARGB(255, 127, 166, 233),
+                                            ),
+                                          ),
                                           onPressed: () {
                                             if (complaintformkey.currentState!.validate()) {
                                               complaint_id = const Uuid().v4();
