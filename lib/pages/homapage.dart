@@ -336,7 +336,13 @@ class HomePageState extends State<HomePage> {
     // return _handleListItems(searchItems);
 
     _handleSearchItems(allData);
-    if (searchItems.isEmpty) return Center(child: Text("لم يتم العثور على نتائج"));
+    if (searchItems.isEmpty) 
+    return Center(
+      child: Text("لم يتم العثور على نتائج",
+      style: TextStyle(
+        fontFamily: "Tajawal-b",
+        ),
+      ));
     return handleListItems(searchItems);
   }
 
@@ -532,27 +538,45 @@ class HomePageState extends State<HomePage> {
                                   ? handleListItems(forRent)
                                   : name.isEmpty && FilterValue == true
                                       ? FilterForRent.isEmpty
-                                          ? Center(child: Text("لم يتم العثور على نتائج"))
+                                          ? Center(child: Text("لم يتم العثور على نتائج",
+                                          style: TextStyle(
+                                            fontFamily: "Tajawal-b",
+                                          ),))
                                           : handleListItems(FilterForRent)
                                       : name.isNotEmpty && FilterValue == true
                                           ? FilterForRent.isEmpty
-                                              ? Center(child: Text("لم يتم العثور على نتائج"))
+                                              ? Center(child: Text("لم يتم العثور على نتائج",
+                                              style: TextStyle(
+                                            fontFamily: "Tajawal-b",
+                                          ),))
                                               : handleListItems(FilterForRent)
                                           : searchItemsForRent.isEmpty
-                                              ? Center(child: Text("لم يتم العثور على نتائج"))
+                                              ? Center(child: Text("لم يتم العثور على نتائج",
+                                              style: TextStyle(
+                                            fontFamily: "Tajawal-b",
+                                          ),))
                                               : handleListItems(searchItemsForRent),
                               name.isEmpty && FilterValue == false
                                   ? handleListItems(forSale)
                                   : name.isEmpty && FilterValue == true
                                       ? FilterForSale.isEmpty
-                                          ? Center(child: Text("لم يتم العثور على نتائج"))
+                                          ? Center(child: Text("لم يتم العثور على نتائج",
+                                          style: TextStyle(
+                                            fontFamily: "Tajawal-b",
+                                          ),))
                                           : handleListItems(FilterForSale)
                                       : name.isNotEmpty && FilterValue == true
                                           ? FilterForSale.isEmpty
-                                              ? Center(child: Text("لم يتم العثور على نتائج"))
+                                              ? Center(child: Text("لم يتم العثور على نتائج",
+                                              style: TextStyle(
+                                            fontFamily: "Tajawal-b",
+                                          ),))
                                               : handleListItems(FilterForSale)
                                           : searchItemsForSale.isEmpty
-                                              ? Center(child: Text("لم يتم العثور على نتائج"))
+                                              ? Center(child: Text("لم يتم العثور على نتائج",
+                                              style: TextStyle(
+                                            fontFamily: "Tajawal-b",
+                                          ),))
                                               : handleListItems(searchItemsForSale),
 
                               // name.isEmpty && FilterValue == false

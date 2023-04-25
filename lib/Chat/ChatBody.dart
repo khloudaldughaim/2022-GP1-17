@@ -132,7 +132,11 @@ class _ChatBodyState extends State<ChatBody> {
                   if (snapshot.hasData) {
                     if (snapshot.data.docs.length < 1) {
                       return Center(
-                        child: Text("لا توجد رسائل بعد"),
+                        child: Text("لا توجد رسائل بعد",
+                        style: TextStyle(
+                        fontFamily: "Tajawal-b",
+                        ),
+                      ),
                       );
                     }
                     return ListView.builder(

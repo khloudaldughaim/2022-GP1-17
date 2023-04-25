@@ -47169,7 +47169,13 @@ class FilterFunctionState extends State<FilterFunction> {
     } else {
       handleFilterItems(HomePageState.allData);
     }
-    if (HomePageState.FilteredItems.isEmpty) return Center(child: Text("لم يتم العثور على نتائج"));
+    if (HomePageState.FilteredItems.isEmpty) 
+    return Center(
+      child: Text("لم يتم العثور على نتائج",
+      style: TextStyle(
+        fontFamily: "Tajawal-b",
+        ),
+      ));
     return HomePageState.handleListItems(HomePageState.FilteredItems);
   }
 

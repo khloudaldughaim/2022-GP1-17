@@ -401,7 +401,7 @@ class _MapPageState extends State<mapPage> {
                                                               width: 4,
                                                             ),
                                                             Text(
-                                                              '${villa.properties.city}',
+                                                              '${villa.properties.neighborhood} , ${villa.properties.city}',
                                                               style: TextStyle(
                                                                 color: Colors.white,
                                                                 fontSize: 14,
@@ -682,7 +682,7 @@ class _MapPageState extends State<mapPage> {
                                                         width: 4,
                                                       ),
                                                       Text(
-                                                        '${villa.properties.city}',
+                                                        '${villa.properties.neighborhood} , ${villa.properties.city}',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 14,
@@ -1018,7 +1018,7 @@ class _MapPageState extends State<mapPage> {
                                                               width: 4,
                                                             ),
                                                             Text(
-                                                              '${apartment.properties.city}',
+                                                              '${apartment.properties.neighborhood} , ${apartment.properties.city}',
                                                               style: TextStyle(
                                                                 color: Colors.white,
                                                                 fontSize: 14,
@@ -1301,7 +1301,7 @@ class _MapPageState extends State<mapPage> {
                                                         width: 4,
                                                       ),
                                                       Text(
-                                                        '${apartment.properties.city}',
+                                                        '${apartment.properties.neighborhood} , ${apartment.properties.city}',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 14,
@@ -1597,7 +1597,7 @@ class _MapPageState extends State<mapPage> {
                                                               width: 4,
                                                             ),
                                                             Text(
-                                                              '${building.properties.city}',
+                                                              '${building.properties.neighborhood} , ${building.properties.city}',
                                                               style: TextStyle(
                                                                 color: Colors.white,
                                                                 fontSize: 14,
@@ -1839,7 +1839,7 @@ class _MapPageState extends State<mapPage> {
                                                         width: 4,
                                                       ),
                                                       Text(
-                                                        '${building.properties.city}',
+                                                        '${building.properties.neighborhood} , ${building.properties.city}',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 14,
@@ -2135,7 +2135,7 @@ class _MapPageState extends State<mapPage> {
                                                               width: 4,
                                                             ),
                                                             Text(
-                                                              '${land.properties!.city}',
+                                                              '${land.properties!.neighborhood} , ${land.properties!.city}',
                                                               style: TextStyle(
                                                                 color: Colors.white,
                                                                 fontSize: 14,
@@ -2378,7 +2378,7 @@ class _MapPageState extends State<mapPage> {
                                                         width: 4,
                                                       ),
                                                       Text(
-                                                        '${land.properties!.city}',
+                                                        '${land.properties!.neighborhood} , ${land.properties!.city}',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 14,
