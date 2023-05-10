@@ -78,20 +78,26 @@ class _myPropertyState extends State<myProperty> {
   }
 
   Widget _handleSnapshot(AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return Center(child: CircularProgressIndicator());
-    }
+    // if (snapshot.connectionState == ConnectionState.waiting) {
+    //   return Center(child: CircularProgressIndicator());
+    // }
     if (snapshot.hasError) {
       return Text("حصل خطأً ما");
     }
     if (!snapshot.hasData) {
-      return Text("لا يوجد بيانات");
+      return Text("");
     }
     if (snapshot.hasData) {
+      _handleData(snapshot.data!);
       if (userData.isEmpty) {
-        _handleData(snapshot.data!);
+        return Center(
+            child: Text(
+          "لا يوجد لديك عقارات",
+          style: TextStyle(fontFamily: "Tajawal-m", fontSize: 17),
+        ));
+      } else {
+        return _handleListItems(userData);
       }
-      return _handleListItems(userData);
     }
     return Container();
   }
