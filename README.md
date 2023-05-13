@@ -78,5 +78,10 @@ Moreover, Nozol provide for it users an advance recommendation system which work
  <li> Tap on the APK file and tap Yes when prompted</li> 
  <li> The app will begin installing on your device, then you can open it </li> 
  </ul> 
+ 
+ <h2>💻 To Launch The Admin Website</h2>
+ <ol>
+ <li> Visit website link: https://nozool.000webhostapp.com/ </li>
+ </ol>
 
 
