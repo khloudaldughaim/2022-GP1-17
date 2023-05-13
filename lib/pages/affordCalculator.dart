@@ -82,6 +82,7 @@ class afforCalcFormState extends State<afforCalcForm> {
   bool showResult = false;
   bool showInRange = false;
   List<dynamic> inRangeProp = [];
+  bool neighborhood = false;
 
   int type = 1;
   String type1 = 'فيلا';
@@ -681,130 +682,241 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                     ),
                                                   ),
                                                   showInRange == true
-                                                      ? Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 180, top: 13, bottom: 10),
-                                                          padding:
-                                                              EdgeInsets.only(right: 7, top: 3),
-                                                          decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(10)),
-                                                              color: Colors.white,
-                                                              border: Border.all(
-                                                                  color: Colors.grey.shade300,
-                                                                  width: 1)),
-                                                          height: 40,
-                                                          width: 160,
-                                                          child: DropdownButtonFormField(
-                                                            isExpanded: true,
-                                                            key: _AddressKey,
-                                                            items: areasList.map((value) {
-                                                              return DropdownMenuItem(
-                                                                value: value,
-                                                                child: Text(value['name_ar']),
-                                                              );
-                                                            }).toList(),
-                                                            onChanged: (dynamic value) {
-                                                              setState(() {
-                                                                address = '';
-                                                                address = value['name_ar'];
+                                                      ? Row(children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                left: 165, top: 13, bottom: 10),
+                                                            padding:
+                                                                EdgeInsets.only(right: 7, top: 3),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.all(
+                                                                    Radius.circular(10)),
+                                                                color: Colors.white,
+                                                                border: Border.all(
+                                                                    color: Colors.grey.shade300,
+                                                                    width: 1)),
+                                                            height: 40,
+                                                            width: 150,
+                                                            child: DropdownButtonFormField(
+                                                              isExpanded: true,
+                                                              key: _AddressKey,
+                                                              items: areasList.map((value) {
+                                                                return DropdownMenuItem(
+                                                                  value: value,
+                                                                  child: Text(value['name_ar']),
+                                                                );
+                                                              }).toList(),
+                                                              onChanged: (dynamic value) {
+                                                                setState(() {
+                                                                  neighborhood = true;
+                                                                  address = '';
+                                                                  address = value['name_ar'];
 
-                                                                inRangeProp.clear();
+                                                                  inRangeProp.clear();
 
-                                                                HomePageState.allData
-                                                                    .forEach((element) {
-                                                                  if (element is Villa) {
-                                                                    final villa = element;
-                                                                    if (villa.properties.neighborhood ==
-                                                                            address &&
-                                                                        villa.properties.type ==
-                                                                            type1 &&
-                                                                        villa.properties
-                                                                                .classification ==
-                                                                            'للإيجار' &&
-                                                                        villa.properties.city ==
-                                                                            city &&
-                                                                        int.parse(villa.properties
-                                                                                .price) <=
-                                                                            result) {
-                                                                      inRangeProp.add(villa
-                                                                          .properties.property_id);
+                                                                  HomePageState.allData
+                                                                      .forEach((element) {
+                                                                    if (element is Villa) {
+                                                                      final villa = element;
+                                                                      if (villa.properties.neighborhood ==
+                                                                              address &&
+                                                                          villa.properties.type ==
+                                                                              type1 &&
+                                                                          villa.properties
+                                                                                  .classification ==
+                                                                              'للإيجار' &&
+                                                                          villa.properties.city ==
+                                                                              city &&
+                                                                          int.parse(villa.properties
+                                                                                  .price) <=
+                                                                              result) {
+                                                                        inRangeProp.add(villa
+                                                                            .properties
+                                                                            .property_id);
+                                                                      }
                                                                     }
-                                                                  }
-                                                                  if (element is Apartment) {
-                                                                    final apartment = element;
-                                                                    if (apartment
-                                                                                .properties.neighborhood ==
-                                                                            address &&
-                                                                        apartment.properties.type ==
-                                                                            type1 &&
-                                                                        apartment.properties
-                                                                                .classification ==
-                                                                            'للإيجار' &&
-                                                                        apartment.properties.city ==
-                                                                            city &&
-                                                                        int.parse(apartment
-                                                                                .properties
-                                                                                .price) <=
-                                                                            result) {
-                                                                      inRangeProp.add(apartment
-                                                                          .properties.property_id);
+                                                                    if (element is Apartment) {
+                                                                      final apartment = element;
+                                                                      if (apartment
+                                                                                  .properties.neighborhood ==
+                                                                              address &&
+                                                                          apartment.properties
+                                                                                  .type ==
+                                                                              type1 &&
+                                                                          apartment.properties
+                                                                                  .classification ==
+                                                                              'للإيجار' &&
+                                                                          apartment.properties
+                                                                                  .city ==
+                                                                              city &&
+                                                                          int.parse(apartment
+                                                                                  .properties
+                                                                                  .price) <=
+                                                                              result) {
+                                                                        inRangeProp.add(apartment
+                                                                            .properties
+                                                                            .property_id);
+                                                                      }
                                                                     }
-                                                                  }
-                                                                  if (element is Building) {
-                                                                    final building = element;
-                                                                    if (building.properties.neighborhood ==
-                                                                            address &&
-                                                                        building.properties.type ==
-                                                                            type1 &&
-                                                                        building.properties
-                                                                                .classification ==
-                                                                            'للإيجار' &&
-                                                                        building.properties.city ==
-                                                                            city &&
-                                                                        int.parse(building
-                                                                                .properties
-                                                                                .price) <=
-                                                                            result) {
-                                                                      inRangeProp.add(building
-                                                                          .properties.property_id);
+                                                                    if (element is Building) {
+                                                                      final building = element;
+                                                                      if (building.properties.neighborhood ==
+                                                                              address &&
+                                                                          building.properties
+                                                                                  .type ==
+                                                                              type1 &&
+                                                                          building.properties
+                                                                                  .classification ==
+                                                                              'للإيجار' &&
+                                                                          building.properties
+                                                                                  .city ==
+                                                                              city &&
+                                                                          int.parse(building
+                                                                                  .properties
+                                                                                  .price) <=
+                                                                              result) {
+                                                                        inRangeProp.add(building
+                                                                            .properties
+                                                                            .property_id);
+                                                                      }
                                                                     }
-                                                                  }
-                                                                  if (element is Land) {
-                                                                    final land = element;
-                                                                    if (land.properties?.neighborhood ==
-                                                                            address &&
-                                                                        land.properties!.type ==
-                                                                            type1 &&
-                                                                        land.properties!
-                                                                                .classification ==
-                                                                            'للإيجار' &&
-                                                                        land.properties!.city ==
-                                                                            city &&
-                                                                        int.parse(land.properties!
-                                                                                .price) <=
-                                                                            result) {
-                                                                      inRangeProp.add(land
-                                                                          .properties!.property_id);
+                                                                    if (element is Land) {
+                                                                      final land = element;
+                                                                      if (land.properties?.neighborhood ==
+                                                                              address &&
+                                                                          land.properties!.type ==
+                                                                              type1 &&
+                                                                          land.properties!
+                                                                                  .classification ==
+                                                                              'للإيجار' &&
+                                                                          land.properties!.city ==
+                                                                              city &&
+                                                                          int.parse(land.properties!
+                                                                                  .price) <=
+                                                                              result) {
+                                                                        inRangeProp.add(land
+                                                                            .properties!
+                                                                            .property_id);
+                                                                      }
                                                                     }
-                                                                  }
+                                                                  });
                                                                 });
-                                                              });
-                                                            },
-                                                            style: TextStyle(
-                                                                fontSize: 16.0,
-                                                                fontFamily: "Tajawal-m",
-                                                                color: Color.fromARGB(
-                                                                    255, 73, 75, 82)),
-                                                            decoration: InputDecoration(
-                                                              isDense: true,
-                                                              border: InputBorder.none,
-                                                              contentPadding:
-                                                                  EdgeInsets.only(bottom: 8),
-                                                              hintText: 'تصفية الحي',
+                                                              },
+                                                              style: TextStyle(
+                                                                  fontSize: 16.0,
+                                                                  fontFamily: "Tajawal-m",
+                                                                  color: Color.fromARGB(
+                                                                      255, 73, 75, 82)),
+                                                              decoration: InputDecoration(
+                                                                isDense: true,
+                                                                border: InputBorder.none,
+                                                                contentPadding:
+                                                                    EdgeInsets.only(bottom: 8),
+                                                                hintText: 'تصفية الحي',
+                                                              ),
                                                             ),
                                                           ),
-                                                        )
+                                                          neighborhood == true
+                                                              ? IconButton(
+                                                                  icon: Icon(
+                                                                    Icons.restart_alt,
+                                                                    color: const Color.fromARGB(
+                                                                        255, 127, 166, 233),
+                                                                    size: 23,
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    setState(() {
+                                                                      address = "";
+                                                                      neighborhood = false;
+                                                                      print(address);
+                                                                      _AddressKey.currentState
+                                                                          ?.reset();
+                                                                      inRangeProp.clear();
+                                                                      HomePageState.allData
+                                                                          .forEach((element) {
+                                                                        if (element is Villa) {
+                                                                          final villa = element;
+                                                                          if (villa.properties
+                                                                                      .type ==
+                                                                                  type1 &&
+                                                                              villa.properties.classification ==
+                                                                                  'للإيجار' &&
+                                                                              villa.properties
+                                                                                      .city ==
+                                                                                  city &&
+                                                                              int.parse(villa
+                                                                                      .properties
+                                                                                      .price) <=
+                                                                                  result) {
+                                                                            inRangeProp.add(villa
+                                                                                .properties
+                                                                                .property_id);
+                                                                          }
+                                                                        }
+                                                                        if (element is Apartment) {
+                                                                          final apartment = element;
+                                                                          if (apartment.properties
+                                                                                      .type ==
+                                                                                  type1 &&
+                                                                              apartment.properties
+                                                                                      .classification ==
+                                                                                  'للإيجار' &&
+                                                                              apartment.properties
+                                                                                      .city ==
+                                                                                  city &&
+                                                                              int.parse(apartment
+                                                                                      .properties
+                                                                                      .price) <=
+                                                                                  result) {
+                                                                            inRangeProp.add(
+                                                                                apartment.properties
+                                                                                    .property_id);
+                                                                          }
+                                                                        }
+                                                                        if (element is Building) {
+                                                                          final building = element;
+                                                                          if (building.properties
+                                                                                      .type ==
+                                                                                  type1 &&
+                                                                              building.properties
+                                                                                      .classification ==
+                                                                                  'للإيجار' &&
+                                                                              building.properties
+                                                                                      .city ==
+                                                                                  city &&
+                                                                              int.parse(building
+                                                                                      .properties
+                                                                                      .price) <=
+                                                                                  result) {
+                                                                            inRangeProp.add(building
+                                                                                .properties
+                                                                                .property_id);
+                                                                          }
+                                                                        }
+                                                                        if (element is Land) {
+                                                                          final land = element;
+                                                                          if (land.properties!
+                                                                                      .type ==
+                                                                                  type1 &&
+                                                                              land.properties!.classification ==
+                                                                                  'للإيجار' &&
+                                                                              land.properties!
+                                                                                      .city ==
+                                                                                  city &&
+                                                                              int.parse(land
+                                                                                      .properties!
+                                                                                      .price) <=
+                                                                                  result) {
+                                                                            inRangeProp.add(land
+                                                                                .properties!
+                                                                                .property_id);
+                                                                          }
+                                                                        }
+                                                                      });
+                                                                    });
+                                                                  })
+                                                              : Container(),
+                                                        ])
                                                       : Container(
                                                           margin: const EdgeInsets.all(20),
                                                           padding: EdgeInsets.only(top: 30),
@@ -1203,27 +1315,27 @@ Widget _buildItem(void Function()? onTap, Row rowItem, dynamic type) {
                             fontFamily: "Tajawal-l",
                           ),
                         ),
-                        '${type.properties.classification}' == 'للإيجار' ?
-                        Text(
-                          'ريال شهريا ${type.properties.price}',
-                          style: TextStyle(
-                            height: 2,
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Tajawal-l",
-                          ),
-                        ):
-                        Text(
-                          'ريال ${type.properties.price}',
-                          style: TextStyle(
-                            height: 2,
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Tajawal-l",
-                          ),
-                        ),
+                        '${type.properties.classification}' == 'للإيجار'
+                            ? Text(
+                                'ريال شهريا ${type.properties.price}',
+                                style: TextStyle(
+                                  height: 2,
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-l",
+                                ),
+                              )
+                            : Text(
+                                'ريال ${type.properties.price}',
+                                style: TextStyle(
+                                  height: 2,
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Tajawal-l",
+                                ),
+                              ),
                       ],
                     ),
                     SizedBox(
