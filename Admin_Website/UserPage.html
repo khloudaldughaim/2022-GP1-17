@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tajawal">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav>
+        <img src="images\logo.png" alt="logo" style="order: 2; width: 60px; margin-right: 10px;">
+        <h2 style="order:1; font-size: 30px; color:rgb(28, 79, 142); font-family: Tajawal; margin-bottom: 14px;">نزل
+        </h2>
+
+    </nav>
+
+    <div class="sidenav">
+
+        <div class="logo">
+            <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="logo"
+                id="nozol" style="order: 2;">
+            <h2
+                style="order: 1;  margin-right: -28px;  font-family: Tajawal; display: inline-block; overflow: hidden; white-space: nowrap;">
+                سارة عبد الله</h2>
+            <button class="logOut">
+                <i class="fas fa-sign-out" style="color: #fff; "></i></button>
+        </div>
+        <Hr style="margin-top:-40px; color: rgba(10, 6, 6, 0.932);">
+        </Hr><br><br>
+
+        <!-- <ul> -->
+        <li id="home"><a href="home.html">الرئيسية</a> <i class="fas fa-home"></i> </li>
+        <li> <a href="complaintsPage.html">الشكاوى</a> <i class="fas fa-exclamation"></i></li>
+
+        <!-- </ul> -->
+    </div>
+
+
+
+    <div class="whiteContainer1">
+        <img src="https://static.wixstatic.com/media/2f1322_f3a1e04f5a8b4f079d90c5d659231aba.gif" alt=""
+            style="width: 230px;">
+        <div id="User-info"></div>
+
+        <div id="normal-user-buttons">
+            <button class="trash" style="margin-bottom: 20px;"><i class="fa-solid fa-trash"></i></button>
+            <button class="hide-user"><i class="fa-regular fa-eye-slash"></i></button>
+        </div>
+    </div>
+    <div class="whiteContainer2" id="tableDiv" style="text-align: center;">
+        <div id="button-div"><button class="choice" id="hide-choice">العقارات المعروضة</button> <button class="choice"
+                id="unhide-choice">العقارات المحجوبة </button></div>
+
+        <h2 id="shortsen" style="margin: 20px;"></h2>
+
+        <table id="propTable">
+            <thead>
+                <tr>
+                    <th> المدينة</th>
+                    <th>الحي</th>
+                    <th>النوع</th>
+                    <th>التصنيف</th>
+                    <th>تفاصيل العقار</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
+            <tbody id="user-prop">
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+    <script>
+        var UserId = localStorage.getItem('UserId');
+        // document.getElementById("hhh").innerHTML = UserId;
+
+
+        var userProp = firestore.collection("properties").where("User_id", "==", UserId);
+        var HiddenUserProp = firestore.collection("Hidden_properties").where("User_id", "==", UserId);
+        var english = /^[A-Za-z0-9]*$/;
+
+        firestore.collection("Standard_user").doc(UserId).get().then((doc) => {
+            if(english.test( doc.data().name ))
+            {
+                $("#User-info").append(`
+        <h3 id="hhh" style="display: inline-block; overflow: hidden; white-space: nowrap; margin-right: 10px; color: rgb(39, 38, 38);">  ${doc.data().name} :الاسم</h3> <br>
+        <h3 id="hhh" style="display: inline-block; overflow: hidden; white-space: nowrap; margin-right: 10px;  color: rgb(39, 38, 38);"><a href="mailto: ${doc.data().Email}" style = " color: black;">  ${doc.data().Email} : البريد الإلكتروني  </a> </h3> <br>
+        <h3 id="hhh" style="display: inline-block; overflow: hidden; white-space: nowrap; margin-right: 10px;  color: rgb(39, 38, 38);">رقم الجوال :  ${doc.data().phoneNumber} </h3>    
+`)
+            }else
+            {
+                $("#User-info").append(`
+        <h3 id="hhh" style="display: inline-block; overflow: hidden; white-space: nowrap; margin-right: 10px; color: rgb(39, 38, 38);"> الاسم : ${doc.data().name} </h3> <br>
+        <h3 id="hhh" style="display: inline-block; overflow: hidden; white-space: nowrap; margin-right: 10px;  color: rgb(39, 38, 38);"><a href="mailto: ${doc.data().Email}" style = " color: black;">  ${doc.data().Email} : البريد الإلكتروني  </a> </h3> <br>
+        <h3 id="hhh" style="display: inline-block; overflow: hidden; white-space: nowrap; margin-right: 10px;  color: rgb(39, 38, 38);">رقم الجوال :  ${doc.data().phoneNumber} </h3>    
+`)
+            }
+           
+        })
+
+        userProp.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                //display normal properties 
+                $("#user-prop").append(`
+<tr data-id="${doc.id}">
+<td>${doc.data().city}</td>
+<td>${doc.data().neighborhood}</td>
+<td>${doc.data().type}</td>
+<td>${doc.data().classification}</td>
+<td><button class="prop" id ="normalprop" data-id="${doc.data().property_id}">مشاهدة العقار</button></td>
+<td><button class="hide"><i class="fa-regular fa-eye-slash"></i></button> <button  data-id="normal-trash" class="trashProp"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+            });
+        })
+        //display hidden prop
+        $(document).on("click", "#unhide-choice", function () {
+            //console.log("")
+            $("#user-prop").html("");
+            document.getElementById("shortsen").innerHTML = "";
+
+            HiddenUserProp.get().then((snapshot) => {
+                if (snapshot.docs.length == 0) {
+                    $("#shortsen").append(`لا توجد عقارات محجوبة`)
+
+                    console.log("no ffff")
+                }
+                else {
+                    snapshot.forEach((doc) => {
+                        $("#user-prop").append(`
+<tr data-id="${doc.id}">
+<td>${doc.data().city}</td>
+<td>${doc.data().neighborhood}</td>
+<td>${doc.data().type}</td>
+<td>${doc.data().classification}</td>
+<td><button class="prop" id = 'hideprop' data-id="${doc.data().property_id}">مشاهدة العقار</button></td>
+<td><button class="unhide"><i class="fa-regular fa-eye"></i></button> <button data-id="hide-trash" class="trashProp"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+                    });
+                }
+
+            })
+        })
+        //display normal prop
+        $(document).on("click", "#hide-choice", function () {
+
+            $("#user-prop").html("");
+            document.getElementById("shortsen").innerHTML = "";
+
+            userProp.get().then((snapshot) => {
+                if (snapshot.docs.length == 0) {
+                    $("#shortsen").append(`لا توجد عقارات معروضة`)
+
+                    console.log("no ffff")
+                }
+                else {
+                    snapshot.forEach((doc) => {
+                        $("#user-prop").append(`
+<tr data-id="${doc.id}">
+<td>${doc.data().city}</td>
+<td>${doc.data().neighborhood}</td>
+<td>${doc.data().type}</td>
+<td>${doc.data().classification}</td>
+<td><button class="prop" id ="normalprop" data-id="${doc.data().property_id}" >مشاهدة العقار</button></td>
+<td><button class="hide"><i class="fa-regular fa-eye-slash"></i></button>  <button  data-id="normal-trash" class="trashProp"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+                    });
+                }
+
+            })
+        })
+
+        //delete prop
+        $(document).on("click", ".trashProp", function () {
+            var property_id = $(this).parent().parent().data("id");
+            console.log(property_id);
+            var hideORnormal = $(this).data("id");
+            console.log(hideORnormal);
+            if (hideORnormal == 'normal-trash') {
+                var con = confirm("لن تتمكن من إعادة هذا العقار إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+                if (con == true) {
+                    // change status of bookin into deleted 
+                    firestore.collection("bookings").where("property_id", "==", property_id).get().then((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            firestore.collection("bookings").doc(doc.id).update({
+                                "status": "deleted",
+                                "isExpired": true,
+                            })
+                                .then(() => {
+                                    console.log("Document successfully updated!");
+                                })
+                                .catch((error) => {
+                                    // The document probably doesn't exist.
+                                    console.error("Error updating document: ", error);
+                                });
+
+                        })
+                    });
+                    //delete property
+                    firestore.collection("properties").doc(property_id).delete().then(() => {
+                        $(this).parent().parent().hide();
+                        console.log("Document successfully deleted!");
+                    })
+
+                }
+            }
+            else {
+                var con = confirm("لن تتمكن من إعادة هذا العقار إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+                if (con == true) {
+                     // change status of bookin into deleted 
+                     firestore.collection("bookings").where("property_id", "==", property_id).get().then((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            firestore.collection("bookings").doc(doc.id).update({
+                                "status": "deleted",
+                                "isExpired": true,
+                            })
+                                .then(() => {
+                                    console.log("Document successfully updated!");
+                                })
+                                .catch((error) => {
+                                    // The document probably doesn't exist.
+                                    console.error("Error updating document: ", error);
+                                });
+
+                        })
+                    });
+                    //delete property
+                    firestore.collection("Hidden_properties").doc(property_id).delete().then(() => {
+                        $(this).parent().parent().hide();
+                        console.log("Document successfully deleted!");
+                    })
+
+                }
+            }
+
+        })
+
+        //hide prop
+        $(document).on("click", ".hide", function () {
+            var property_id = $(this).parent().parent().data("id");
+            console.log(property_id);
+            firestore.collection("properties").doc(property_id).get().then((doc) => {
+                console.log(doc.data())
+                firestore.collection("Hidden_properties").doc(property_id).set(doc.data());
+                doc.ref.delete();
+                $(this).parent().parent().hide();
+                console.log("DELETED PROP");
+            })
+        })
+
+
+        //unhide prop
+        $(document).on("click", ".unhide", function () {
+            var property_id = $(this).parent().parent().data("id");
+            console.log(property_id);
+            firestore.collection("Hidden_properties").doc(property_id).get().then((doc) => {
+                console.log(doc.data())
+                firestore.collection("properties").doc(property_id).set(doc.data());
+                doc.ref.delete();
+                $(this).parent().parent().hide();
+                console.log("DELETED PROP");
+            })
+        })
+
+
+        // hide user 
+        $(document).on("click", ".hide-user", function () {
+            var key = firestore.collection("Standard_user").doc(UserId)
+            //get the document from firebase
+            Hide_Properties(UserId);
+            key.get().then((doc) => {
+
+                //insert the document to hidden users
+                firestore.collection("Hidden_uesr").doc(UserId).set(doc.data())
+                    .then(() => {
+                        console.log("Document successfully written!");
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+                /////////////////Delete from standerd user///////////////////
+                firestore.collection("Standard_user").doc(UserId).delete().then(() => {
+                    console.log("Document successfully deleted!");
+                    localStorage.setItem("UserId", UserId)
+                    window.location = 'HideUserPage.html';
+                }).catch((error) => {
+                    console.error("Error removing document: ", error);
+                });
+
+            })
+
+        })
+
+        function Hide_Properties(hide_key) {
+            firestore.collection("properties").where("User_id", "==", hide_key).get().then((snapshot) => {
+                snapshot.forEach((doc) => {
+                    // console.log(doc.data());
+                    firestore.collection("Hidden_properties").doc(doc.data().property_id).set(doc.data());
+                    // firestore.collection("properties").doc(doc.data().property_id).delete();
+                    doc.ref.delete();
+                    console.log("DELETED PROP");
+                })
+            })
+
+        }
+
+        //delete user 
+        $(document).on("click", ".trash", function () {
+            var deletedprop = firestore.collection("properties").where("User_id", "==", UserId);
+            var con = confirm("لن تتمكن من إعادة المستخدم إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+            if (con == true) {
+                deletedprop.get().then((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        firestore.collection("bookings").where("property_id", "==", doc.id).get().then((snapshot) => {
+                                snapshot.forEach((val) => {
+                                    firestore.collection("bookings").doc(val.id).update({
+                                        "status": "deleted",
+                                        "isExpired": true,
+                                    })
+                                        .then(() => {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch((error) => {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+
+                                })
+                            });
+                       doc.ref.delete();
+                    });
+                })
+                firestore.collection("Standard_user").doc(UserId).delete().then(() => {
+
+                    // firebase.auth().delete_key.delete(); 
+                    console.log("Document successfully deleted!");
+                    location.href = "home.html";
+                }).catch((error) => {
+                    console.error("Error removing document: ", error);
+                });
+            }
+        })
+
+
+
+        $(document).on("click", "#normalprop", function () {
+            propertyID = $(this).data("id");
+            console.log(propertyID);
+            localStorage.setItem("property_id", propertyID)
+            window.location = 'propertyDetails.html';
+        })
+
+        $(document).on("click", "#hideprop", function () {
+            propertyID = $(this).data("id");
+            console.log(propertyID);
+            localStorage.setItem("property_id", propertyID)
+            window.location = 'HidePropertyDetails.html';
+        })
+
+    </script>
+
+</body>
+
+</html>

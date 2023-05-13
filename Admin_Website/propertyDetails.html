@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tajawal">
+    <link rel="stylesheet" href="style.css" />
+
+    <title>detalis</title>
+
+    <style>
+.details-container{
+    display: flex;
+    justify-content:flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;   
+    background-color: #fff; 
+    margin-left: 20%; 
+    margin-top: 70px; 
+    margin-right: 5%;
+    /* width: 700px; */
+    border-radius: 30px;
+}
+
+.details-img{
+    width: 650px;
+    height: 500px;
+    border-radius: 20px;
+}
+.infoDetails{
+    font-family: Tajawal;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.bigTitle{
+    font-family: Tajawal;
+    font-size: 30px;
+}
+textarea{
+    margin-bottom: 20px;
+}
+
+ 
+
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="images\logo.png" alt="logo" style="order: 2; width: 60px; margin-right: 10px;">
+        <h2 style="order:1; font-size: 26px; color:rgb(28, 79, 142); font-family: Tajawal; margin-bottom: 14px;">نزل</h2>
+        
+    </nav>
+
+    <div class="sidenav">
+
+        <div class="logo">
+        <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="logo" id="nozol" style="order: 2;">
+        <h2 style="order: 1;  margin-right: -28px;  font-family: Tajawal; display: inline-block; overflow: hidden; white-space: nowrap;"  >سارة عبد الله</h2>
+        <button  class="logOut">
+               <i class="fas fa-sign-out" style="color: #fff; "></i></button>
+        </div>
+        <Hr style="margin-top:-40px; color: rgba(10, 6, 6, 0.932);"></Hr><br><br>
+        
+                <!-- <ul> -->
+        <li id="home"><a href="home.html" >الرئيسية</a> <i class="fas fa-home"></i> </li>
+        <li> <a href="complaintsPage.html">الشكاوى</a> <i class="fas fa-exclamation"></i></li>
+        
+                <!-- </ul> -->
+             </div>
+              
+
+
+
+         <!-- start -->
+        <div class="details-container">
+            <div style="display: flex; flex-direction: row-reverse; margin-right: 5%; margin-top: 5%;" class="details-img-container">
+            </div>
+            <div class="details-text" style="display: flex; flex-direction: column; margin-right: 5%; text-align: end; justify-content: space-between;">        
+             </div>
+        </div> 
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+        <script src="firebase.js"></script>
+
+ <script>
+        var property_id = localStorage.getItem('property_id');
+        console.log(property_id)
+        var this_property = firestore.collection("properties").doc(property_id);
+        var tihs_owner;
+        var owner_email ='llll';
+this_property.get().then((doc) => {
+    tihs_owner = doc.data().User_id;
+    firestore.collection("Standard_user").doc(tihs_owner).get().then((value) => {
+        owner_email = value.data().Email; 
+        console.log(owner_email);
+   
+
+    if(doc.data().images.length == 0)
+    {
+        $(".details-img-container").append(`
+<img class="details-img" style = " border: solid 1px black;"
+                    src="https://clipground.com/images/no-image-png-5.jpg"
+                    alt="صورة">
+
+                    <div style="display: flex; flex-direction: column; margin-right:15%; justify-content: center;">
+
+                    <button class="hide" style=" padding: 20px 50px; margin-bottom: 30px;"><i class="fa-regular fa-eye-slash"></i></button>
+                    <button style=" padding: 20px 50px; margin-bottom: 30px; " id="sendToOwner"><a href="mailto:${owner_email}"> <i style= "color: white;" class="fa-solid fa-envelope"></i> </a></button>
+                    <button class="trashProp" style=" padding: 20px 50px; "><i class="fa-solid fa-trash"></i></button>
+
+                </div>
+`)
+            
+    }
+    else
+    {
+        $(".details-img-container").append(`
+            <img class="details-img"
+                    src="${doc.data().images[0]}"
+                    alt="صورة">
+
+                    <div style="display: flex; flex-direction: column; margin-right:15%; justify-content: center;">
+                    <button class="hide" data-id="${doc.data().property_id}" style=" padding: 20px 50px; margin-bottom: 30px;"><i class="fa-regular fa-eye-slash"></i></button>
+                    <button style=" padding: 20px 50px; margin-bottom: 30px; " id="sendToOwner"><a href="mailto:${owner_email}"> <i style= "color: white;" class="fa-solid fa-envelope"></i> </a></button>
+                    <button class="trashProp" data-id="${doc.data().property_id}" style=" padding: 20px 50px; "><i class="fa-solid fa-trash"></i></button>
+                </div>
+`)
+    }
+
+if(doc.data().type == 'فيلا')
+{
+$(".details-text").append(`
+ <h2 style="margin-top: 20px; margin-bottom: 30px;" class = "bigTitle">معلومات العقار</h2> 
+ <p class = 'infoDetails'>   <strong> نوع العقار : </strong> ${doc.data().type} </p>
+ <p class = 'infoDetails'>   <strong>  المدينة: </strong> ${doc.data().city} </p>
+ <p class = 'infoDetails'>   <strong>   الموقع: </strong> ${doc.data().Location} </p>
+ <p class = 'infoDetails'>   <strong>  التصنيف: </strong> ${doc.data().classification} </p>
+ <p class = 'infoDetails'>   <strong>  الحي: </strong> ${doc.data().neighborhood} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الحمامات : </strong> ${doc.data().number_of_bathroom} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الأدوار: </strong> ${doc.data().number_of_floor} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الغرف: </strong> ${doc.data().number_of_room} </p>
+ <p class = 'infoDetails'>   <strong>  عدد غرف المعيشة: </strong> ${doc.data().number_of_livingRooms} </p>
+ <p class = 'infoDetails'>   <strong>  السعر: </strong> ${doc.data().price} </p>
+ <p class = 'infoDetails'>   <strong>  عمر العقار: </strong> ${doc.data().property_age} </p>
+ <p class = 'infoDetails'>   <strong>  المساحة: </strong> ${doc.data().space} </p>
+
+`)
+if(doc.data().description != "")
+{
+     
+    $(".details-text").append(`
+    <p class = 'infoDetails'>   <strong>  معلومات اضافية: </strong>  
+        ${doc.data().description}  </p>
+
+`)
+
+}
+}
+
+
+else if (doc.data().type == 'شقة')
+{
+    $(".details-text").append(`
+    <h2 style="margin-top: 20px; margin-bottom: 30px;" class = "bigTitle">معلومات العقار</h2> 
+    <p class = 'infoDetails'>   <strong> نوع العقار : </strong> ${doc.data().type} </p>
+ <p class = 'infoDetails'>   <strong>  المدينة: </strong> ${doc.data().city} </p>
+ <p class = 'infoDetails'>   <strong>   الموقع: </strong> ${doc.data().Location} </p>
+ <p class = 'infoDetails'>   <strong>  التصنيف: </strong> ${doc.data().classification} </p>
+ <p class = 'infoDetails'>   <strong>  الحي: </strong> ${doc.data().neighborhood} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الحمامات : </strong> ${doc.data().number_of_bathroom} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الأدوار: </strong> ${doc.data().number_of_floor} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الغرف: </strong> ${doc.data().number_of_room} </p>
+ <p class = 'infoDetails'>   <strong>  عدد غرف المعيشة: </strong> ${doc.data().number_of_livingRooms} </p>
+ <p class = 'infoDetails'>   <strong>  السعر: </strong> ${doc.data().price} </p>
+ <p class = 'infoDetails'>   <strong>  عمر العقار: </strong> ${doc.data().property_age} </p>
+ <p class = 'infoDetails'>   <strong>  المساحة: </strong> ${doc.data().space} </p>
+
+`)
+if(doc.data().description != "")
+{
+ $(".details-text").append(`
+ <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="75"rows="7"
+readonly> ${doc.data().description}</textarea>
+
+`)
+}
+}
+
+else if (doc.data().type == 'عمارة')
+{
+    $(".details-text").append(`
+    <h2 style="margin-top: 20px; margin-bottom: 30px;" class = "bigTitle">معلومات العقار</h2> 
+
+    <p class = 'infoDetails'>   <strong> نوع العقار : </strong> ${doc.data().type} </p>
+ <p class = 'infoDetails'>   <strong>  المدينة: </strong> ${doc.data().city} </p>
+ <p class = 'infoDetails'>   <strong>   الموقع: </strong> ${doc.data().Location} </p>
+ <p class = 'infoDetails'>   <strong>  التصنيف: </strong> ${doc.data().classification} </p>
+ <p class = 'infoDetails'>   <strong>  الحي: </strong> ${doc.data().neighborhood} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الأدوار: </strong> ${doc.data().number_of_floor} </p>
+ <p class = 'infoDetails'>   <strong>  عدد الشقق: </strong> ${doc.data().number_of_apartment} </p>
+ <p class = 'infoDetails'>   <strong>  السعر: </strong> ${doc.data().price} </p>
+ <p class = 'infoDetails'>   <strong>  عمر العقار: </strong> ${doc.data().property_age} </p>
+ <p class = 'infoDetails'>   <strong>  المساحة: </strong> ${doc.data().space} </p>
+
+`)
+if(doc.data().description != "")
+{
+ $(".details-text").append(`
+ <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="75"rows="7"
+readonly> ${doc.data().description}</textarea>
+
+`)
+}
+}
+else if (doc.data().type == 'ارض')
+{
+    $(".details-text").append(`
+    <h2 style="margin-top: 20px; margin-bottom: 30px;" class = "bigTitle">معلومات العقار</h2> 
+
+    <p class = 'infoDetails'>   <strong> نوع العقار : </strong> ${doc.data().type} </p>
+ <p class = 'infoDetails'>   <strong>  المدينة: </strong> ${doc.data().city} </p>
+ <p class = 'infoDetails'>   <strong>   الموقع: </strong> ${doc.data().Location} </p>
+ <p class = 'infoDetails'>   <strong>  التصنيف: </strong> ${doc.data().classification} </p>
+ <p class = 'infoDetails'>   <strong>  الحي: </strong> ${doc.data().neighborhood} </p>
+ <p class = 'infoDetails'>   <strong>  نوع الأرض  : </strong> ${doc.data().propertyUse} </p>
+ <p class = 'infoDetails'>   <strong>  السعر: </strong> ${doc.data().price} </p>
+ <p class = 'infoDetails'>   <strong>  المساحة: </strong> ${doc.data().space} </p>
+
+`)
+if(doc.data().description != "")
+{
+ $(".details-text").append(`
+ <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="75"rows="7"
+readonly> ${doc.data().description}</textarea>
+
+`)
+}
+}
+})
+})
+
+//delete function
+  $(document).on("click", ".trashProp", function () {
+            var property_id = $(this).data("id");
+            var con = confirm("لن تتمكن من إعادة هذا العقار إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+            if (con == true) {
+
+                 // change status of bookin into deleted 
+                 firestore.collection("bookings").where("property_id", "==", property_id).get().then((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            firestore.collection("bookings").doc(doc.id).update({
+                                "status": "deleted",
+                                "isExpired": true,
+                            })
+                                .then(() => {
+                                    console.log("Document successfully updated!");
+                                })
+                                .catch((error) => {
+                                    // The document probably doesn't exist.
+                                    console.error("Error updating document: ", error);
+                                });
+
+                        })
+                    });
+                    //delete property
+                    
+                firestore.collection("properties").doc(property_id).delete().then(() => {
+                    location.href = "home.html";
+                    alert("تم حذف العقار بنجاح")
+                    console.log("Document successfully deleted!");
+                })
+
+            }
+        }) 
+
+        $(document).on("click", ".hide", function () {
+            var property_id = $(this).data("id");
+            firestore.collection("properties").doc(property_id).get().then((doc) => {
+                console.log(doc.data())
+                firestore.collection("Hidden_properties").doc(property_id).set(doc.data()).then(()=>{
+                doc.ref.delete();
+                localStorage.setItem("property_id",  property_id  )
+                window.location = 'HidePropertyDetails.html';      
+                }
+                );
+              
+            })
+        }) 
+
+
+
+      
+</script>
+
+ </script>
+</body>
+</html>

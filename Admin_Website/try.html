@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+
+    <title>dash board</title>
+</head>
+<body>
+    <nav>
+        <label class="logo">نزل</label>
+    </nav>
+        
+<h2></h2>
+    <div class="header_fixed">
+        <h1 class="cap"> active users </h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>User name</th>
+                    <th>Email</th>
+                    <th>phone number</th>
+                    <th>properties</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody id="stander-user">
+            </tbody>
+            </table>
+
+
+<h1 class="cap">property</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>User name</th>
+                        <th>Email</th>
+                        <th>phone number</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody id="user-prop">
+                </tbody>
+                </table>
+
+ <button  class="logOut"
+    style="padding-left: 2rem; padding-right: 2rem; height: 40px; position:relative; left:20%;  border-radius: 90px;
+    background-color: #3e7fbf;
+    color: #fff;
+   font-size: 1rem;">تسجيل الخروج</button>
+
+
+    </div>
+
+    
+ <footer>
+<h1 class="someText">develped by Nozol team 
+</h1>
+ </footer>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" 
+integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" 
+crossorigin="anonymous"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getFirestore, doc, collection, getDocs, getDoc} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    // Your web app's Firebase configuration
+    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication 
+    const firebaseConfig = {
+  apiKey: "AIzaSyAr1mN4YcMISQr10muc7xYj155Gliy8Krc",
+  authDomain: "nozol-aadd3.firebaseapp.com",
+  projectId: "nozol-aadd3",
+  storageBucket: "nozol-aadd3.appspot.com",
+  messagingSenderId: "842086655256",
+  appId: "1:842086655256:web:703792101d41eae8696a6d"
+};
+
+      // Initialize Firebase services 
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore()
+      const auth = getAuth()
+    ///////////////////logout/////////////////     
+  const logout = document.querySelector('.logOut')
+  logout.addEventListener("click", () => {
+      const conf = confirm("هل انت متأكد من تسجيل الخروج؟")
+
+      if (conf == true) {
+          signOut(auth)
+              .then(() => {
+                  console.log("user log out")
+                  window.location.replace("login.html")
+              })
+              .catch((err) => {
+                  console.log(err.message)
+              })
+
+          
+      }
+    
+
+  });
+
+// const dbRef = firebase.database().ref(); 
+// const nozolDb = dbRef.child('nozol-aadd3');
+var users = await getDocs(collection(db, "Standard_user"));
+var Huers = await getDocs(collection(db, "Hidden_uesr"));
+
+//display users list oreation
+users.forEach((doc) => {
+
+$("#stander-user").append(`
+
+<tr data-id="${doc.id}">
+<td>${doc.data().name}</td>
+<td>${doc.data().Email}</td>
+<td>${doc.data().phoneNumber}</td>
+<td><button class="prop">view properties</button></td>
+<td><button class="hide"><i class="fa-regular fa-eye-slash"></i></button> <button class="trash"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+});
+
+
+
+//display hidden uesrs opreation
+Huers.forEach((doc) => {
+
+$("#stander-user").append(`
+<tr data-id="${doc.id}">
+<td>${doc.data().name}</td>
+<td>${doc.data().Email}</td>
+<td>${doc.data().phoneNumber}</td>
+<td><button class="prop">view properties</button></td>
+<td><button class="unhide"><i class="fa-regular fa-eye"></i></button> <button class="trash"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+});
+
+//delete opreation 
+$(document).on("click", ".trash", function(){
+var delete_key = $(this).parent().parent().data("id");
+console.log(delete_key);
+var deletedprop  = db.collection("properties").where("user_id", "==", delete_key);
+var con = confirm("لن تتمكن من إعادة المستخدم إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+if(con == true)
+{
+deletedprop.get().then((snapshot) => {
+snapshot.forEach((doc) => {
+doc.ref.delete();
+});
+})
+db.collection("Standard_user").doc(delete_key).delete().then(() => {
+$(this).parent().parent().hide();
+console.log("Document successfully deleted!");
+
+}).catch((error) => {
+    console.error("Error removing document: ", error);
+});
+}
+})
+//enfd of delete opreation 
+
+
+$(document).on("click", ".prop", function(){
+    $("#user-prop").html("");
+var property_key = $(this).parent().parent().data("id");
+// console.log(property_key);
+var user_properties = firestore.collection("properties").where("user_id", "==", property_key);
+
+if(user_properties == null)
+{
+    console.log("ERRROORRR")
+}
+else{
+user_properties.get().then((snapshot) => {
+snapshot.forEach((doc) => {
+$("#user-prop").append(`
+<tr data-id="${doc.id}">
+<td>${doc.data().space}</td>
+<td>${doc.data().purpose}</td>
+<td>${doc.data().neighborhood}</td>
+<td><button class="unhide"><i class="fa-regular fa-eye"></i></button> <button class="trashProp"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+});
+
+})
+
+}
+
+})
+
+
+
+
+$(document).on("click", ".trashProp", function(){
+var property_id = $(this).parent().parent().data("id");
+var con = confirm("لن تتمكن من إعادة هذا العقار إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+if (con == true)
+{
+
+firestore.collection("properties").doc(property_id).delete().then(() => {
+$(this).parent().parent().hide();
+console.log("Document successfully deleted!");
+})
+
+}})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Nam1='';
+var mail1='';
+var num1='';
+var oldId1='';
+
+
+var Nam='';
+var mail='';
+var num='';
+var oldId='';
+//Hide opreation 
+// $(document).on("click", ".hide", function(){
+// var hide_key = $(this).parent().parent().data("id");
+//var key = firestore.collection("Standard_user").doc('')
+// console.log(hide_key);
+// //get the document from firebase
+// key.get().then((doc) => {
+//         Nam = doc.data().name;
+//         mail = doc.data().Email;
+//         num = doc.data().phoneNumber;
+//         oldId = doc.data().userId;
+//    // console.log("Document data:");
+
+// //insert the document to hidden users
+// firestore.collection("Hidden_uesr").doc(hide_key).add({
+//     Email: mail,
+//     name: Nam,
+//     phoneNumber: num,
+//     userId : hide_key,
+// })
+// .then(() => {
+//     console.log("Document successfully written!");
+// })
+// .catch((error) => {
+//     console.error("Error writing document: ", error);
+// });
+// ///////////////////Delete from standerd user///////////////////
+// firestore.collection("Standard_user").doc(hide_key).delete().then(() => {
+//     $(this).parent().parent().hide();
+//     console.log("Document successfully deleted!");
+
+// }).catch((error) => {
+//     console.error("Error removing document: ", error);
+// });
+
+// })
+
+// })
+//End of hide opreation 
+
+
+
+//Unhide opreation  
+// $(document).on("click", ".unhide", function(){
+// var Unhide_key = $(this).parent().parent().data("id");
+
+//var key = firestore.collection("Hidden_uesr").doc(Unhide_key);
+// //get the document from firebase
+// key.get().then((doc) => {
+//         Nam1 = doc.data().name;
+//         mail1 = doc.data().Email;
+//         num1 = doc.data().phoneNumber;
+//         oldId1 = doc.data().userId;
+//        console.log("Document data:", Nam1);
+   
+//insert the document to hidden users
+// firestore.collection("Standard_user").add({
+//     Email: mail1,
+//     name: Nam1,
+//     phoneNumber: num1,
+//     userId : oldId1,
+// })
+// .then(() => {
+//     console.log("Document successfully written!");
+// })
+// .catch((error) => {
+//     console.error("Error writing document: ", error);
+// });
+// ///////////////////Delete from standerd user///////////////////
+// firestore.collection("Hidden_uesr").doc(Unhide_key).delete().then(() => {
+//     $(this).parent().parent().hide();
+//     console.log("Document successfully deleted!");
+
+// }).catch((error) => {
+//     console.error("Error removing document: ", error);
+// });
+//  })
+
+//})
+//End of Unhide opreation 
+
+</script>
+
+
+
+
+
+
+    
+
+
+</body>
+</html>
+
+

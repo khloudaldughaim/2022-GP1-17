@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tajawal">
+    <link rel="stylesheet" href="style.css" />
+
+    <title>dash board</title>
+</head>
+
+<body>
+    <nav>
+        <img src="images\logo.png" alt="logo" style="order: 2; width: 60px; margin-right: 10px;">
+        <h2 style="order:1; font-size: 26px; color:rgb(28, 79, 142); font-family: Tajawal; margin-bottom: 14px;">نزل
+        </h2>
+
+    </nav>
+
+    <div class="sidenav">
+
+        <div class="logo">
+            <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="logo"
+                id="nozol" style="order: 2;">
+            <h2
+                style="order: 1;  margin-right: -28px;  font-family: Tajawal; display: inline-block; overflow: hidden; white-space: nowrap;">
+                سارة عبد الله</h2>
+            <button class="logOut">
+                <i class="fas fa-sign-out" style="color: #fff; "></i></button>
+        </div>
+        <Hr style="margin-top:-40px; color: rgba(10, 6, 6, 0.932);">
+        </Hr><br><br>
+
+        <!-- <ul> -->
+        <li id="home"><a href="home.html">الرئيسية</a> <i class="fas fa-home"></i> </li>
+        <li> <a href="complaintsPage.html">الشكاوى</a> <i class="fas fa-exclamation"></i></li>
+
+        <!-- </ul> -->
+    </div>
+
+    <div id="statical-things" style=" margin-left: 20%; margin-top: 50px;">
+
+    </div>
+
+    <div id="button-div-home">
+        <button class="choice-home" id="hide-choice-home">الحسابات المعروضة</button>
+        <button class="choice-home" id="unhide-choice-home">الحسابات المحجوبة </button>
+    </div>
+
+    <h2 id="shortsen" style="margin-left: 50%; margin-top: 10px; font-family: Tajawal;"></h2>
+
+
+    <div class="header_fixed">
+        <!-- <h1 class="cap"> active users </h1> -->
+        <table>
+            <thead>
+                <tr>
+                    <th>اسم المستخدم</th>
+                    <th>البريد</th>
+                    <th>رقم الجوال</th>
+                    <th>العقارات</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
+            <tbody id="stander-user">
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <footer>
+        <h1 class="someText">develped by Nozol team
+        </h1>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+        // Your web app's Firebase configuration
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication 
+        const firebaseConfig = {
+            apiKey: "AIzaSyAr1mN4YcMISQr10muc7xYj155Gliy8Krc",
+            authDomain: "nozol-aadd3.firebaseapp.com",
+            projectId: "nozol-aadd3",
+            storageBucket: "nozol-aadd3.appspot.com",
+            messagingSenderId: "842086655256",
+            appId: "1:842086655256:web:703792101d41eae8696a6d"
+        };
+
+        // Initialize Firebase services 
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth()
+        ///////////////////logout/////////////////     
+        const logout = document.querySelector('.logOut')
+        logout.addEventListener("click", () => {
+            const conf = confirm("هل انت متأكد من تسجيل الخروج؟")
+
+            if (conf == true) {
+                signOut(auth)
+                    .then(() => {
+                        console.log("user log out")
+                        window.location.replace("index.html")
+                    })
+                    .catch((err) => {
+                        console.log(err.message)
+                    })
+
+
+            }
+
+
+        });
+
+    </script>
+
+
+    <script>
+
+        // const dbRef = firebase.database().ref(); 
+        // const nozolDb = dbRef.child('nozol-aadd3');
+        var users = firestore.collection("Standard_user");
+        var Huers = firestore.collection("Hidden_uesr");
+        var properties_list = firestore.collection("properties");
+        var booking_list = firestore.collection("bookings");
+        var Current_users_counter = 0;
+        var Current_properties_counter = 0;
+        var Current_bookings_counter = 0;
+
+
+
+        users.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                Current_users_counter = Current_users_counter + 1;
+            })
+            $("#statical-things").append(`
+<div id="static">
+        <i class="fas fa-users"  style = " background-color: #8b6fdc;"></i>
+           <div class="info">
+            <h3>${Current_users_counter}</h3>
+            <span>عدد المستخدمين</span>
+        </div>
+     </div>
+`)
+        })
+
+
+        properties_list.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                Current_properties_counter = Current_properties_counter + 1;
+            })
+            $("#statical-things").append(`
+<div id="static">
+    <i class="fas fa-building" style = "background-color: #e05ba9;"></i>
+    <div class="info">
+            <h3>${Current_properties_counter}</h3>
+            <span>عدد العقارات</span>
+        </div>
+     </div>
+`)
+        })
+
+
+        booking_list.get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                Current_bookings_counter = Current_bookings_counter + 1;
+            })
+            $("#statical-things").append(`
+<div id="static">
+    <i class="fas fa-search-location" style = "background-color: #6a81dc;"></i>
+        <div class="info">
+            <h3>${Current_bookings_counter}</h3>
+            <span>عدد الجولات العقارية</span>
+        </div>
+     </div>
+`)
+        })
+        //end of static info code 
+
+
+
+        //display users list opreation
+        users.get().then((snapshot) => {
+            if (snapshot.docs.length == 0) {
+                    $("#shortsen").append(`لا يوجد مستخدمين معروضين`)
+                    console.log("no standerd user")
+                }
+                else {
+            snapshot.forEach((doc) => {
+                $("#stander-user").append(`
+
+<tr data-id="${doc.id}">
+<td>${doc.data().name}</td>
+<td>${doc.data().Email}</td>
+<td>${doc.data().phoneNumber}</td>
+<td><button class="prop">مشاهدة الحساب</button></td>
+<td><button class="hide"><i class="fa-regular fa-eye-slash"></i></button> <button data-id="normal-trash" class="trash"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+            });
+
+        }
+            $('#hide-choice-home').css("background", "rgba(162, 189, 229, 0.874)");
+        })
+
+        //display hidden uesrs opreation
+
+        $(document).on("click", "#unhide-choice-home", function () {
+            $("#stander-user").html("");
+            document.getElementById("shortsen").innerHTML = "";
+
+            Huers.get().then((snapshot) => {
+                if (snapshot.docs.length == 0) {
+                    $("#shortsen").append(`لا يوجد مستخدمين محجوبين`)
+
+                    console.log("no standerd user")
+                }
+                else{
+                snapshot.forEach((doc) => {
+
+                    $("#stander-user").append(`
+<tr data-id="${doc.id}">
+<td>${doc.data().name}</td>
+<td>${doc.data().Email}</td>
+<td>${doc.data().phoneNumber}</td>
+<td><button class="Hprop">مشاهدة الحساب</button></td>
+<td><button class="unhide"><i class="fa-regular fa-eye"></i></button> <button data-id="hide-trash" class="trash"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+                });
+            }
+                $('#unhide-choice-home').css("background", "rgba(162, 189, 229, 0.874)");
+                $('#hide-choice-home').css("background", "rgb(146, 178, 226)");
+                $("#hide-choice-home").hover(function () {
+                    $(this).css("background", "rgba(162, 189, 229, 0.874)");
+                 })//.mouseleave(function () {
+                //     $(this).css("background", "rgb(146, 178, 226)");
+                // });
+            })
+        })
+
+
+        //display normal user again (by button)
+        $(document).on("click", "#hide-choice-home", function () {
+
+            $("#stander-user").html("");
+            document.getElementById("shortsen").innerHTML = "";
+
+            users.get().then((snapshot) => {
+                if (snapshot.docs.length == 0) {
+                    $("#shortsen").append(`لا يوجد مستخدمين معروضين`)
+
+                    console.log("no standerd user")
+                }
+                else{
+
+                
+                snapshot.forEach((doc) => {
+
+                    $("#stander-user").append(`
+
+<tr data-id="${doc.id}">
+<td>${doc.data().name}</td>
+<td>${doc.data().Email}</td>
+<td>${doc.data().phoneNumber}</td>
+<td><button class="prop">مشاهدة الحساب</button></td>
+<td><button class="hide"><i class="fa-regular fa-eye-slash"></i></button> <button data-id="normal-trash" class="trash"><i class="fa-solid fa-trash"></i></button></td>
+</tr>
+`)
+
+                });
+            }
+                $('#hide-choice-home').css("background", "rgba(162, 189, 229, 0.874)");
+                $('#unhide-choice-home').css("background", "rgb(146, 178, 226)");
+                $("#unhide-choice-home").hover(function () {
+                    $(this).css("background", "rgba(162, 189, 229, 0.874)");
+                })
+            })
+
+        })
+
+        //delete opreation 
+        $(document).on("click", ".trash", function () {
+            var delete_key = $(this).parent().parent().data("id");
+            var hideORnormal = $(this).data("id")
+            console.log(delete_key);
+            console.log(hideORnormal);
+            if (hideORnormal == "normal-trash") {
+                var deletedprop = firestore.collection("properties").where("User_id", "==", delete_key);
+                var con = confirm("لن تتمكن من إعادة المستخدم إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+                if (con == true) {
+                    deletedprop.get().then((snapshot) => { ////////
+
+                        //delete bookings
+                        snapshot.forEach((doc) => {
+                            firestore.collection("bookings").where("property_id", "==", doc.id).get().then((snapshot) => {
+                                snapshot.forEach((val) => {
+                                    firestore.collection("bookings").doc(val.id).update({
+                                        "status": "deleted",
+                                        "isExpired": true,
+                                    })
+                                        .then(() => {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch((error) => {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+
+                                })
+                            });
+                            //delete property 
+                            doc.ref.delete();
+                        });
+                    })
+                    firestore.collection("Standard_user").doc(delete_key).delete().then(() => {
+                        $(this).parent().parent().hide();
+                        // firebase.auth().delete_key.delete(); //****//
+                        console.log("Document successfully deleted!");
+
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
+                }
+            }
+            else {
+                console.log("i am in else ;) ")
+                var deletedprop = firestore.collection("Hidden_properties").where("User_id", "==", delete_key);
+                var con = confirm("لن تتمكن من إعادة المستخدم إذا حذفته، هل انت متأكد من القيام بهذه العملية؟");
+                if (con == true) {
+                    deletedprop.get().then((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            firestore.collection("bookings").where("property_id", "==", doc.id).get().then((snapshot) => {
+                                snapshot.forEach((val) => {
+                                    firestore.collection("bookings").doc(val.id).update({
+                                        "status": "deleted",
+                                        "isExpired": true,
+                                    })
+                                        .then(() => {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch((error) => {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+
+                                })
+                            });
+                            doc.ref.delete();
+                        });
+                    })
+                    firestore.collection("Hidden_uesr").doc(delete_key).delete().then(() => {
+                        $(this).parent().parent().hide();
+                        // firebase.auth().delete_key.delete(); //****//
+                        console.log("Document successfully deleted!");
+
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
+                }
+
+            }
+
+        })
+        //enfd of delete opreation 
+
+
+        //show properties 
+        $(document).on("click", ".prop", function () {
+            var property_key = $(this).parent().parent().data("id");
+
+            localStorage.setItem("UserId", property_key)
+            window.location = 'UserPage.html';
+
+        })
+
+
+        $(document).on("click", ".Hprop", function () {
+            var property_key = $(this).parent().parent().data("id");
+
+            localStorage.setItem("UserId", property_key)
+            window.location = 'HideUserPage.html';
+
+        })
+        var unHideName = '';
+        var unHideMail = '';
+        var UnHideNumber = '';
+        var UnHideId = '';
+
+        var hideName = '';
+        var hideMail = '';
+        var hideNumber = '';
+        var HideId = '';
+
+        //Hide opreation 
+        $(document).on("click", ".hide", function () {
+            var hide_key = $(this).parent().parent().data("id");
+            var key = firestore.collection("Standard_user").doc(hide_key)
+            console.log(hide_key);
+            //get the document from firebase
+            Hide_Properties(hide_key);
+            key.get().then((doc) => {
+                hideName = doc.data().name;
+                hideMail = doc.data().Email;
+                hideNumber = doc.data().phoneNumber;
+                HideId = doc.data().userId; // I dont need it actually 
+                console.log("Document data:" + hideMail);
+
+                //insert the document to hidden users
+                firestore.collection("Hidden_uesr").doc(hide_key).set(doc.data()
+                    // Email: hideMail,
+                    // name: hideName,
+                    // phoneNumber: hideNumber,
+                    // userId: hide_key,
+                )
+                    .then(() => {
+                        console.log("Document successfully written!");
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+                /////////////////Delete from standerd user///////////////////
+                firestore.collection("Standard_user").doc(hide_key).delete().then(() => {
+                    $(this).parent().parent().hide();
+                    console.log("Document successfully deleted!");
+                    // location.reload();
+
+                }).catch((error) => {
+                    console.error("Error removing document: ", error);
+                });
+
+            })
+        })
+        //End of hide opreation 
+
+        function Hide_Properties(hide_key) {
+            firestore.collection("properties").where("User_id", "==", hide_key).get().then((snapshot) => {
+                snapshot.forEach((doc) => {
+                    // console.log(doc.data());
+                    firestore.collection("Hidden_properties").doc(doc.data().property_id).set(doc.data());
+                    // firestore.collection("properties").doc(doc.data().property_id).delete();
+                    doc.ref.delete();
+                    console.log("DELETED PROP");
+                })
+            })
+
+        }
+
+
+        //Unhide opreation  
+        $(document).on("click", ".unhide", function () {
+            var Unhide_key = $(this).parent().parent().data("id");
+            var key = firestore.collection("Hidden_uesr").doc(Unhide_key);
+            UNhide_Properties(Unhide_key);
+
+            //get the document from firebase
+            key.get().then((doc) => {
+                unHideName = doc.data().name;
+                unHideMail = doc.data().Email;
+                UnHideNumber = doc.data().phoneNumber;
+                UnHideId = Unhide_key;
+                console.log("Document data:", unHideName);
+
+                // insert the document to hidden users
+                firestore.collection("Standard_user").doc(Unhide_key).set({
+                    Email: unHideMail,
+                    name: unHideName,
+                    phoneNumber: UnHideNumber,
+                    userId: UnHideId,
+                })
+                    .then(() => {
+                        console.log("Document successfully written!");
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+                ///////////////////Delete from standerd user///////////////////
+                firestore.collection("Hidden_uesr").doc(Unhide_key).delete().then(() => {
+                    $(this).parent().parent().hide();
+                    console.log("Document successfully deleted!");
+                    // location.reload();
+
+                }).catch((error) => {
+                    console.error("Error removing document: ", error);
+                });
+            })
+
+        })
+        //End of Unhide opreation 
+
+
+        function UNhide_Properties(unhide_key) {
+            firestore.collection("Hidden_properties").where("User_id", "==", unhide_key).get().then((snapshot) => {
+                snapshot.forEach((doc) => {
+                    // console.log(doc.data());
+                    firestore.collection("properties").doc(doc.data().property_id).set(doc.data());
+                    // doc.delete();
+                    // firestore.collection("Hidden_properties").doc(doc.data().property_id).delete();
+                    doc.ref.delete();
+                    console.log("DELETED PROP");
+                })
+            })
+        }
+
+    </script>
+
+</body>
+
+</html>

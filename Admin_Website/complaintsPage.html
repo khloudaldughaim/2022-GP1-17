@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tajawal">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <title>Complaints</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      background-color: #E5E7Eb;
+    }
+
+    #button-div {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      height: fit-content;
+      padding: 20px;
+      margin: 30px;
+      margin-left: 20%;
+      /* background-color: rgb(255, 255, 255); */
+
+    }
+
+    .three-buttons {
+      width: 300px;
+      height: 100px;
+      /* margin-left:30%px; */
+      border: none;
+      /* color: #ebebeb; */
+      color: #ffffff;
+      background-color: rgb(176, 162, 206);
+      /* border-radius: 20px; */
+      font-size: 25px;
+      font-family: Tajawal;
+    }
+
+    .three-buttons:hover {
+      color: #414040;
+      background-color: rgba(218, 201, 233, 0.612);
+
+    }
+
+
+    #nav-div {
+      /* position: sticky; */
+      background-color: rgb(255, 255, 255);
+      border: thin;
+      box-shadow: 2px 3px 5px rgb(140, 146, 147);
+      ;
+      height: 50px;
+      width: 100%;
+    }
+
+    #Complaints-div {
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      width: 1000px;
+      /* height: fit-content; */
+      background-color: rgb(255, 255, 255);
+      margin: 30px;
+      margin-left: 25%;
+      margin-top: -20px;
+      border-radius: 50px;
+    }
+
+    #Complaints-div>div {
+      padding: 20px;
+      background-color: rgb(255, 255, 255);
+    }
+
+    #compalint-img {
+      width: 250px;
+      height: 250px;
+      border-radius: 30px;
+    }
+
+    .compalint-button {
+      display: flex;
+      flex-direction: column;
+      /* justify-content: space-between; */
+      align-items: center;
+      justify-content: center;
+
+    }
+
+    .compalint-button button {
+      border-radius: 5px;
+      border: solid 1px;
+      font-size: 13px;
+      font-weight: 300;
+      width: 80px;
+      height: 40px;
+      font-family: Tajawal;
+      background-color: #ffffff;
+      margin-top: 30px;
+      margin-left: 30px;
+    }
+
+    .compalint-button button:hover {
+      background-color: #00000036;
+    }
+
+    .done {
+      border-color: rgb(102, 205, 171);
+      color: rgb(102, 205, 171);
+
+    }
+
+    .progras {
+      border-color: rgb(199, 51, 143);
+      color: rgb(199, 51, 143);
+
+    }
+
+    .Contact {
+      border-color: rgb(98, 174, 240);
+      color: rgb(98, 174, 240);
+    }
+
+    .detail {
+      border-color: rgb(112, 49, 230);
+      color: rgb(112, 49, 230);
+
+    }
+
+    #compalint-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+    }
+
+    p {
+      text-align: end;
+      font-family: Tajawal;
+      font-size: 20px;
+    }
+
+    .show-popup {
+      background-color: aqua;
+
+    }
+
+
+    .pop-up {
+      position: fixed;
+      border-top: solid 5px cornflowerblue;
+      display: flex;
+      justify-content: center;
+      /* align-items: center; */
+      flex-direction: column;
+      text-align: center;
+      margin-top: 15%;
+      z-index: 1;
+      margin-left: 35%;
+      background-color: #ffffff;
+      width: 600px;
+      height: 300px;
+      border-radius: 30px;
+      box-shadow: 2px 3px 5px rgb(140, 146, 147);
+      ;
+      top: 0;
+      left: 0;
+
+    }
+
+    .pop-up textarea {
+      height: 70px;
+      width: 400px;
+      resize: none;
+      cursor: auto;
+      margin-left: 100px;
+      text-align: end;
+    }
+
+    .pop-up h3 {
+      margin-bottom: 15px;
+      /* margin-top: -70px; */
+      text-align: center;
+      font-family: Tajawal;
+      font-weight: 400;
+    }
+
+    .pop-up div h2 {
+      /* margin-bottom: 100px; */
+      margin-top: 20px;
+      text-align: center;
+      font-family: Tajawal;
+      /* font-size: 20px; */
+    }
+
+    .popup-button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 30px;
+      margin-bottom: 30px;
+
+    }
+
+    .popup-button button {
+      /* margin-top: 80px; */
+      text-align: center;
+      font-family: Tajawal;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 13px;
+      font-weight: 100;
+      width: 90px;
+      height: 40px;
+      color: #ffffff;
+      /* background-color: #b0c4e2; */
+      /* font-size: 20px; */
+    }
+
+    .no-response {
+      background-color: rgb(169, 105, 242);
+    }
+
+    .cancle {
+      background-color: rgb(232, 119, 168);
+
+    }
+
+    .send {
+      background-color: rgb(99, 141, 214);
+
+    }
+
+    .popup-button .send:hover {
+      background-color: rgba(99, 141, 214, 0.45);
+
+    }
+
+    .popup-button .no-response:hover {
+      background-color: rgba(169, 105, 242, 0.434);
+
+    }
+
+
+
+    .popup-button .cancle:hover {
+      background-color: rgba(232, 119, 168, 0.468);
+
+    }
+
+    .pop-middle {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      height: fit-content;
+      flex-grow: 5;
+      /* width: fit-content; */
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <img src="images\logo.png" alt="logo" style="order: 2; width: 60px; margin-right: 10px;">
+    <h2 style="order:1; font-size: 30px; color:rgb(28, 79, 142); font-family: Tajawal; margin-bottom: 14px;">نزل</h2>
+
+  </nav>
+
+  <div class="sidenav">
+
+    <div class="logo">
+      <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="logo" id="nozol"
+        style="order: 2;">
+      <h2
+        style="order: 1;  margin-right: -28px;  font-family: Tajawal; display: inline-block; overflow: hidden; white-space: nowrap;">
+        سارة عبد الله</h2>
+      <button class="logOut">
+        <i class="fas fa-sign-out" style="color: #fff; "></i></button>
+    </div>
+    <Hr style="margin-top:-40px; color: rgba(10, 6, 6, 0.932);">
+    </Hr><br><br>
+
+    <!-- <ul> -->
+    <li id="home"><a href="home.html">الرئيسية</a> <i class="fas fa-home"></i> </li>
+    <li> <a href="complaintsPage.html">الشكاوى</a> <i class="fas fa-exclamation"></i></li>
+
+    <!-- </ul> -->
+  </div>
+
+
+
+
+  <div id="button-div">
+    <button class="three-buttons" id="done-list">تمت معالجتها</button>
+    <button class="three-buttons" id="prog-list">قيد المعالجة</button>
+    <button class="three-buttons" id="new-list">شكاوى جديدة</button>
+  </div>
+
+  <a href=""></a>
+
+  <div class="big-div">
+
+  </div>
+
+  <div class="show-popup">
+    <div class="pop-up">
+      <div>
+        <h2>معالجة البلاغ</h2>
+      </div>
+      <div class="pop-middle">
+        <h3>أخبر المستخدم بالإجراء المتخذ لمعالجة البلاغ</h3>
+        <textarea name="" id="text-erea" cols="20" rows="10" placeholder="اكتب هنا"></textarea>
+      </div>
+      <div class="popup-button"><button class="no-response">إرسال بلا إخبار المستخدم</button> <button
+          class="cancle">تراجع عن العملية</button> <button class="send">إرسال</button></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+  <script src="firebase.js"></script>
+
+
+  <script>
+    var new_complaints = firestore.collection("Complaints");
+    var image = 'https://firebasestorage.googleapis.com/v0/b/nozol-aadd3.appspot.com/o/propertyImages%2FOlupRMww8yTHJBZAk20lzskq3Qg1%2Fimage_picker1109388411059902021.webp?alt=media&token=2c63b87f-e71c-416a-82ce-7fb560f403b4';
+
+    $(".pop-up ").hide();
+
+    new_complaints.where("status", "==", 1).get().then((snapshot) => {
+      if (snapshot.docs.length == 0) {
+        $(".big-div").append(`<h1 style ="margin-left: 45%;   font-family: Tajawal;"> لا توجد شكاوى جديدة </h1>`)
+
+      }
+      else {
+        snapshot.forEach((doc) => {
+
+          idd = doc.data().property_id;
+
+          firestore.collection("properties").doc(idd).get().then((element) => {
+            image = element.data().images[0];
+            console.log(element.data().images[0]);
+            if (element.data().images.length == 0) {
+
+              $(".big-div").append(`
+        <li>
+          <div id="Complaints-div" class="${doc.data().complaint_id}">
+              <div style="order: 3; border-radius: 30px;" ><img src="https://clipground.com/images/no-image-png-5.jpg" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2; ; flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail" data-id="${doc.data().property_id}" >تفاصيل العقار</button>
+                  <button class="progras" data-id="${doc.data().complaint_id}">قيد المعالجة</button>
+                  <button class="done" data-id="${doc.data().complaint_id}">إتمام المعالجة</button>
+
+              </div>
+          </div>
+          </li>
+`)
+
+            }
+
+            else {
+              $(".big-div").append(`
+        <li>
+          <div id="Complaints-div" class="${doc.data().complaint_id}">
+              <div style="order: 3; border-radius: 30px;" ><img src="${image}" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2; ; flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail" data-id="${doc.data().property_id}" >تفاصيل العقار</button>
+                  <button class="progras" data-id="${doc.data().complaint_id}">قيد المعالجة</button>
+                  <button class="done" data-id="${doc.data().complaint_id}">إتمام المعالجة</button>
+
+              </div>
+          </div>
+          </li>
+`)
+            }
+          });
+          $('#new-list').css("background", "rgba(176, 162, 206, 0.591)");
+
+          // $("#new-list").style()
+        })
+      } //else 
+    })
+
+
+    $(document).on("click", "#new-list", function () {
+      $(".big-div").html("");
+      $('#new-list').css("background", "rgba(176, 162, 206, 0.591)");
+      $('#prog-list').css("background", " rgb(176, 162, 206)");
+      $('#done-list').css("background", " rgb(176, 162, 206)");
+      new_complaints.where("status", "==", 1).get().then((snapshot) => {
+
+        if (snapshot.docs.length == 0) {
+          $(".big-div").append(`<h1 style ="margin-left: 45%;   font-family: Tajawal;"> لا توجد شكاوى جديدة  </h1>`)
+
+        }
+
+        else {
+          snapshot.forEach((doc) => {
+            idd = doc.data().property_id;
+            firestore.collection("properties").doc(idd).get().then((element) => {
+              image = element.data().images[0];
+              console.log(element.data().images[0]);
+              if (element.data().images.length == 0) {
+                $(".big-div").append(`
+<li>
+          <div id="Complaints-div" class="${doc.data().complaint_id}" >
+              <div style="order: 3; border-radius: 30px;" ><img src="https://clipground.com/images/no-image-png-5.jpg" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2;  flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail" data-id="${doc.data().property_id}" >تفاصيل العقار</button>
+                  <button class="progras" data-id="${doc.data().complaint_id}">قيد المعالجة</button>
+                  <button class="done" data-id="${doc.data().complaint_id}">إتمام المعالجة</button>
+
+              </div>
+          </div>
+          </li>
+`)
+              }
+              else {
+                $(".big-div").append(`
+<li>
+          <div id="Complaints-div" class="${doc.data().complaint_id}" >
+              <div style="order: 3; border-radius: 30px;" ><img src="${image}" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2;  flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail" data-id="${doc.data().property_id}" >تفاصيل العقار</button>
+                  <button class="progras" data-id="${doc.data().complaint_id}">قيد المعالجة</button>
+                  <button class="done" data-id="${doc.data().complaint_id}">إتمام المعالجة</button>
+
+              </div>
+          </div>
+          </li>
+`)
+              }
+            });
+          })
+        }
+      })
+    })
+
+    $(document).on("click", "#prog-list", function () {
+      $(".big-div").html("");
+
+      $('#prog-list').css("background", "rgba(176, 162, 206, 0.591)");
+      $('#new-list').css("background", " rgb(176, 162, 206)");
+      $('#done-list').css("background", " rgb(176, 162, 206)");
+      new_complaints.where("status", "==", 2).get().then((snapshot) => {
+        if (snapshot.docs.length == 0) {
+          $(".big-div").append(`<h1 style ="margin-left: 45%;   font-family: Tajawal;"> لا توجد شكاوى قيد المعالجة </h1>`)
+
+        }
+        else {
+          snapshot.forEach((doc) => {
+            idd = doc.data().property_id;
+            firestore.collection("properties").doc(idd).get().then((element) => {
+              if (element.data().images.length == 0) {
+                image = 'https://clipground.com/images/no-image-png-5.jpg'
+              }
+              else {
+                image = element.data().images[0];
+                console.log(element.data().images[0]);
+              }
+
+
+              $(".big-div").append(`
+<li>
+          <div id="Complaints-div" class="${doc.data().complaint_id}" >
+              <div style="order: 3; border-radius: 30px;" ><img src="${image}" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2;  flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail" data-id="${doc.data().property_id}">تفاصيل العقار</button>
+                  <button class="done" id="${doc.data().complaint_id}"  data-id="${doc.data().complaint_id}">إتمام المعالجة</button>
+
+              </div>
+          </div>
+          </li>
+`)
+
+            });
+
+
+          })
+
+        }
+
+      })
+    })
+
+
+    $(document).on("click", "#done-list", function () {
+      $(".big-div").html("");
+
+      $('#done-list').css("background", "rgba(176, 162, 206, 0.591)");
+      $('#new-list').css("background", " rgb(176, 162, 206)");
+      $('#prog-list').css("background", " rgb(176, 162, 206)");
+
+      new_complaints.where("status", "==", 3).get().then((snapshot) => {
+        if (snapshot.docs.length == 0) {
+          $(".big-div").append(`<h1 style ="margin-left: 45%;   font-family: Tajawal;"> لا توجد شكاوى معالجة  </h1>`)
+
+        }
+
+        else {
+          snapshot.forEach((doc) => {
+            idd = doc.data().property_id;
+            firestore.collection("properties").doc(idd).get().then((element) => {
+              image = element.data().images[0];
+              console.log(element.data().images[0]);
+              if (element.data().images.length == 0) {
+
+                $(".big-div").append(`
+<li>
+          <div id="Complaints-div">
+              <div style="order: 3; border-radius: 30px;" ><img src="https://clipground.com/images/no-image-png-5.jpg" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2; flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact" style="margin-bottom: 10px;"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail"  style="margin-bottom: 34px;" data-id="${doc.data().property_id}">تفاصيل العقار</button>
+
+              </div>
+          </div>
+          </li>
+`)
+              }
+
+              else {
+
+
+                $(".big-div").append(`
+<li>
+          <div id="Complaints-div">
+              <div style="order: 3; border-radius: 30px;" ><img src="${image}" alt="صورة" id="compalint-img"></div>
+          
+              <div id="compalint-text" style="order: 2; flex-grow: 2;">
+                  <p>اسم صاحب البلاغ : ${doc.data().name} </p> <br>
+                  <p style="font-weight: 600;">  :سبب البلاغ</p> <br>
+                  <textarea style="border: none; resize: none; text-align: end; font-family: Tajawal; font-size: 15px;" cols="30" rows="7" readonly > ${doc.data().reason} </textarea>
+  
+              </div>
+              <div class= "compalint-button" data-id="${doc.data().user_id}" style="order: 1; border-radius: 30px;" >
+                <button class= "Contact" style="margin-bottom: 10px;"><a href="mailto:${doc.data().email}">تواصل مع رافع البلاغ</a></button>
+                  <button class="detail"  style="margin-bottom: 34px;" data-id="${doc.data().property_id}">تفاصيل العقار</button>
+
+              </div>
+          </div>
+          </li>
+`)
+              }
+            });
+
+          })
+        }
+
+      })
+    })
+
+    //قيد المعالجة
+
+    $(document).on("click", ".progras", function () {
+      var progras_key = $(this).data("id");
+      console.log(progras_key);
+      firestore.collection("Complaints").doc(progras_key).update({
+        // Admin_Respnse : "hiiiii" ,
+        status: 2
+      })
+      $(this).parent().parent().hide();
+    })
+
+
+    $(document).on("click", ".done", function () {
+      $(".pop-up").hide();
+      var done_key = $(this).data("id");
+      console.log(done_key);
+      $(".pop-up").data('id', done_key);
+      $(".pop-up").show();
+    })
+
+
+
+
+    $(document).on("click", ".send", function () {
+
+      var done_key = $(".pop-up").data("id");
+      console.log(done_key);
+      let text = $("#text-erea").val();
+      console.log(text)
+      if (text == null || text == "") {
+        alert("قم بتعبئة الحقل الفارغ او قم باختيار (إرسال بلا إخبار المستخدم) ")
+      }
+      else {
+        firestore.collection("Complaints").doc(done_key).update({
+          Admin_Respnse: text,
+          status: 3
+        })
+        $(".pop-up").hide();
+        $('.' + done_key).hide();
+        alert("تم إتمام البلاغ بنجاح");
+        //  $(this).parent().parent().hide();
+      }
+      $("#text-erea").val("");
+
+    })
+
+    $(document).on("click", ".no-response", function () {
+
+      var done_key = $(".pop-up").data("id");
+      console.log(done_key);
+      let text = 'تم الوقوف على العقار واتخاذ الإجراء المناسب';
+      firestore.collection("Complaints").doc(done_key).update({
+        Admin_Respnse: text,
+        status: 3
+      })
+
+      $(".pop-up").hide();
+      $('.' + done_key).hide();
+      alert("تم إتمام البلاغ بنجاح");
+    })
+
+    $(document).on("click", ".cancle", function () {
+      $(".pop-up").hide();
+    })
+
+
+
+    $(document).on("click", ".detail", function () {
+      propertyID = $(this).data("id");
+      console.log(propertyID);
+      localStorage.setItem("property_id", propertyID)
+      window.location = 'propertyDetails.html';
+    })
+  </script>
+</body>
+
+</html>
