@@ -80,8 +80,6 @@ Moreover, Nozol provide for it users an advance recommendation system which work
  </ul> 
  
  <h2>💻 To Launch The Admin Website</h2>
- <ol>
- <li> Visit website link: https://nozool.000webhostapp.com/ </li>
- </ol>
+ <h4>Visit website link: https://nozool.000webhostapp.com/ </h4>
 
 
