@@ -70,6 +70,7 @@ dependencies:
   url_launcher: ^6.0.9
   email_launcher: ^1.1.1
   intl_phone_number_input: ^0.7.2
+  flutter_localization: ^0.1.9
 
 
 dev_dependencies:

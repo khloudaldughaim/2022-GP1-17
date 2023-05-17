@@ -12,6 +12,7 @@ import 'package:nozol_application/registration/sign_up.dart';
 import 'package:nozol_application/registration/splash.dart';
 import 'package:nozol_application/registration/welcom_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   // Notifications step 1
@@ -32,14 +33,19 @@ class MyApp extends StatelessWidget {
   // of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, initialRoute: '/', routes: {
-      '/': (context) => const Splash(),
-      '/welcome': (context) => const Welcome(),
-      '/signup': (context) => const SignUp(),
-      '/login': (context) => const LogIn(),
-      '/homepage': (context) => HomePage(),
-      '/NavigationBar': (context) => const NavigationBarPage(),
-      '/forgetPassword': (context) => const forgetPassword(),
-    });
+    return MaterialApp(
+        localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+        supportedLocales: [Locale('en'), Locale('ar')],
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Splash(),
+          '/welcome': (context) => const Welcome(),
+          '/signup': (context) => const SignUp(),
+          '/login': (context) => const LogIn(),
+          '/homepage': (context) => HomePage(),
+          '/NavigationBar': (context) => const NavigationBarPage(),
+          '/forgetPassword': (context) => const forgetPassword(),
+        });
   }
 }
