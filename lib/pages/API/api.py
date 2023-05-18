@@ -18,32 +18,35 @@ app = Flask(__name__)
 cred = credentials.Certificate("nozol-aadd3-firebase-adminsdk-ozhbi-a894fc47c1.json") 
 firebase_admin.initialize_app(cred) 
 
-
-
-
-
 def model (id): 
 
    db = firestore.client() 
    properties = list(db.collection(u'properties').stream()) 
    properties_dict = list(map(lambda x: x.to_dict(), properties)) 
    df = pd.DataFrame(properties_dict , ) 
-   df=df.drop(columns=['description','images','elevator', 'pool', 'User_id', 'number_of_apartment' , 'longitude','TourTime', 'property_age','number_of_room', 'in_floor','number_of_livingRooms','number_of_bathroom', 'propertyUse', 'basement', 'number_of_floors','ArrayOfbooking']) 
+
+   # drop irrelevant attributes except (property_id, city, type, price, space)
+   df=df.drop(columns=['description','images','elevator', 'pool', 'User_id', 'number_of_apartment' , 'longitude','TourTime', 'property_age',
+                       'number_of_room', 'in_floor','number_of_livingRooms','number_of_bathroom', 'propertyUse', 'basement', 'number_of_floors','ArrayOfbooking']) 
    df=df.drop(columns=['neighborhood','number_of_floor','latitude','Location', 'classification']) 
    # copy the data 
    df_copy = df.copy() 
-   
-  # apply normalization techniques 
+
+   # apply normalization  
    column = 'price' 
    c2 = 'space' 
    df_copy[column] = MinMaxScaler().fit_transform(np.array(df_copy[column]).reshape(-1,1)) 
    df_copy[c2] = MinMaxScaler().fit_transform(np.array(df_copy[c2]).reshape(-1,1)) 
-    
+   # apply one hot encoding  
    encoded_data = pd.get_dummies(df_copy, columns = ['city', 'type']) 
+
+
    # the property we want to recomend to :
    property1 = encoded_data.loc[encoded_data['property_id'] == id] 
-   #properties
+
    encoded_data = encoded_data[encoded_data.property_id != id]
+
+   #apply KNN
    nbrs = NearestNeighbors(n_neighbors=5).fit(encoded_data.drop(columns=['property_id'])) 
    distances , indices = nbrs.kneighbors(property1.drop(columns=['property_id'])) 
    distance = distances[0] 
@@ -51,12 +54,6 @@ def model (id):
    for x in range(5):
     defrence = (1-distance[x])*100
     simelrty.append(defrence)
-   sum =0
-   avr =0
-   for s in range(5):
-     sum += simelrty[s]
-   avr = sum/5
-   print(avr)
 
    recommend_item = [] 
    index =0
@@ -82,6 +79,8 @@ def get_recommendations():
   
 
 
+if __name__ == "__main__":
+  app.run(host="0.0.0.0")
 
 
 
