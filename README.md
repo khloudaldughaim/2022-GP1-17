@@ -26,16 +26,24 @@ Moreover, Nozol provide for it users an advance recommendation system which work
  </p>
     
  <h2>🎯 Current Supported Features </h2>
- <h4>salers, byuers and renters are able to:</h4>
+ <h4>Property owners, byuers and renters are able to:</h4>
  <ul>
  <li>Register/log in/log out</li>
  <li>Add/Delete property</li>
  <li>Edit property's Information </li>
  <li>view propertie List </li>
  <li>view properties details </li>
- <li> Reset Password </li>
+ <li>Reset Password </li>
  <li>Edit Personal Profile</li>
- <li> search for a property</li>
+ <li>search for a property</li>
+ <li>filter properties</li>
+ <li>view properties on the map</li>
+ <li>filter the map by cololring the markers</li>
+ <li>direct messaging</li>
+ <li>book a property tour</li>
+ <li>rental affordability calculator</li>
+ <li>add to favorite</li>
+ <li>file a complaint</li>
  </ul>
     
  <h2>Technology Used </h2>
