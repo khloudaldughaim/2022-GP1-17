@@ -35,7 +35,7 @@ class _affordCalcPageState extends State<affordCalcPage> {
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 120),
-          child: Text("حاسبة التكاليف",
+          child: Text("حاسبة القدرة المالية",
               style: TextStyle(
                 fontSize: 17,
                 fontFamily: "Tajawal-b",
@@ -157,7 +157,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 6.0),
                                         child: Text(
-                                          'حاسبة التكاليف تحسب مقدار الإيجار المناسب لميزانيتك',
+                                          'حاسبة القدرة المالية تحسب مقدار الإيجار المناسب لميزانيتك',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 15.0,
@@ -183,7 +183,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               Padding(
                                                   padding: EdgeInsets.only(left: 230),
                                                   child: Text(
-                                                    'المدينة : ',
+                                                    '* المدينة : ',
                                                     style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontFamily: "Tajawal-b",
@@ -248,9 +248,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               ),
                                               //type
                                               Padding(
-                                                  padding: EdgeInsets.only(left: 215),
+                                                  padding: EdgeInsets.only(left: 210),
                                                   child: Text(
-                                                    'نوع العقار :',
+                                                    '* نوع العقار :',
                                                     style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontFamily: "Tajawal-b",
@@ -338,7 +338,7 @@ class afforCalcFormState extends State<afforCalcForm> {
                                               Padding(
                                                   padding: EdgeInsets.only(left: 170),
                                                   child: Text(
-                                                    'الدخل الشهري :',
+                                                    '* الدخل الشهري :',
                                                     style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontFamily: "Tajawal-b",
@@ -371,11 +371,13 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                             ),
                                                           ),
                                                           validator: (value) {
-                                                            if (!RegExp(r'[0-9]')
-                                                                .hasMatch(value!)) {
-                                                              return 'الرجاء إدخال أرقام فقط';
-                                                            }
-                                                            return null;
+                                                            if (value == null || value.isEmpty) {
+                                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                                      return 'الرجاء إدخال أرقام فقط';
+                                                    }
+                                                    return null;
                                                           },
                                                         ),
                                                       ))),
@@ -383,9 +385,9 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                 height: 7,
                                               ), //spendings
                                               Padding(
-                                                  padding: EdgeInsets.only(left: 145),
+                                                  padding: EdgeInsets.only(left: 136),
                                                   child: Text(
-                                                    ' الإلتزامات الشهرية :',
+                                                    ' * الإلتزامات الشهرية :',
                                                     style: TextStyle(
                                                       fontSize: 18.0,
                                                       fontFamily: "Tajawal-b",
@@ -418,11 +420,13 @@ class afforCalcFormState extends State<afforCalcForm> {
                                                             ),
                                                           ),
                                                           validator: (value) {
-                                                            if (!RegExp(r'[0-9]')
-                                                                .hasMatch(value!)) {
-                                                              return 'الرجاء إدخال أرقام فقط';
-                                                            }
-                                                            return null;
+                                                            if (value == null || value.isEmpty) {
+                                                      return 'الرجاء عدم ترك الخانة فارغة!';
+                                                    }
+                                                    if (!RegExp(r'[0-9]').hasMatch(value)) {
+                                                      return 'الرجاء إدخال أرقام فقط';
+                                                    }
+                                                    return null;;
                                                           },
                                                         ),
                                                       ))),

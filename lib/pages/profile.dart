@@ -455,7 +455,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         iconSize: 30,
                                       ),
                                       SizedBox(
-                                        width: 110,
+                                        width: 80,
                                       ),
                                       TextButton(
                                           onPressed: () {
@@ -465,7 +465,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     builder: (context) => affordCalcPage()));
                                           },
                                           child: Text(
-                                            "  حاسبة التكاليف",
+                                            "حاسبة القدرة المالية",
                                             style: TextStyle(
                                               fontSize: 18,
                                               color: Color.fromARGB(255, 127, 166, 233),
