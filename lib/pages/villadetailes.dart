@@ -622,7 +622,7 @@ class _VillaDetailesState extends State<VillaDetailes> {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                            'https://blaonline.org.za/wp-content/uploads/2021/05/2750635_gray-circle-login-user-icon-png-transparent-png.jpg'),
+                                            'https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg'),
                                         fit: BoxFit.cover,
                                       ),
                                       shape: BoxShape.circle,
