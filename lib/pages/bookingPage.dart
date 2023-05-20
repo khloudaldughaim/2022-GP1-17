@@ -266,7 +266,7 @@ class _BookingPagestate extends State<boookingPage> {
                             child: Directionality(
                               textDirection: TextDirection.rtl,
                               child: DateTimePicker(
-                                  locale: Locale('ar'),
+                                  // locale: Locale('ar'),
                                   autovalidate: true,
                                   type: DateTimePickerType.dateTime,
                                   dateMask: 'hh:mma -  d MMM, yyyy ',
