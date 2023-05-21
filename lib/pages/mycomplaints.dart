@@ -431,11 +431,11 @@ class _MyComplaintsState extends State<MyComplaints> {
                                           ),
                                         ),
                                         const SizedBox(
-                                          width: 15,
+                                          width: 10,
                                         ),
                                         Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 17, right: 10, bottom: 5),
+                                              const EdgeInsets.only(top: 17, right: 5, bottom: 5),
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [

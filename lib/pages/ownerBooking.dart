@@ -336,8 +336,8 @@ class _myBookingsState extends State<ownerBooking> {
                                     child: Column(
                                       children: [
                                         Container(
-                                          height: 140,
-                                          width: 160,
+                                          height: 130,
+                                          width: 140,
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: NetworkImage(
@@ -407,46 +407,48 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     )),
 
-                                                     ////////////////
-                                      SizedBox(width: 0,),
-                                       Column(
-                                         children: [
-                                           Container(
-                                             height: 36,
-                                             width: 30,
-                                    // margin: EdgeInsets.fromLTRB(0,0,1,0),
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                             child:
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                                              child: 
-                                      IconButton(
-                                              // Here the Massage button
-                                              hoverColor: Colors.grey,
-                                              icon: Icon(
-                                                Icons.message,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                size:21,
-                                              ),
-                                              onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => ChatBody(
-                                                                Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                    
-                                                              )));
-                                                }
-                                              
-                                      ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                      ////////////////
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 0,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 36,
+                                                      width: 30,
+                                                      // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                                                      decoration: BoxDecoration(
+                                                        // color: Color.fromARGB(121, 182, 201, 235),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                        child: IconButton(
+                                                            // Here the Massage button
+                                                            hoverColor: Colors.grey,
+                                                            icon: Icon(
+                                                              Icons.message,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                              size: 21,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatBody(
+                                                                            Freind_id: snapshot
+                                                                                .data!.docs[index]
+                                                                                .data()['buyer_id'],
+                                                                          )));
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                ////////////////
                                               ],
                                             ),
                                           if (snapshot.data!.docs[index].data()['status'] ==
@@ -461,7 +463,7 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     ),
                                                     width: 145,
-                                                    padding: EdgeInsets.fromLTRB(0,4,0,4),
+                                                    padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
                                                     child: Center(
                                                       child: Text(
                                                         'حجز لم تتم معالجته',
@@ -473,46 +475,48 @@ class _myBookingsState extends State<ownerBooking> {
                                                         ),
                                                       ),
                                                     )),
-                                                      ////////////////
-                                      SizedBox(width: 1,),
-                                       Column(
-                                         children: [
-                                           Container(
-                                             height: 36,
-                                             width: 30,
-                                    // margin: EdgeInsets.fromLTRB(0,0,1,0),
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                             child:
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                                              child: 
-                                      IconButton(
-                                              // Here the Massage button
-                                              hoverColor: Colors.grey,
-                                              icon: Icon(
-                                                Icons.message,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                size:21,
-                                              ),
-                                              onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => ChatBody(
-                                                                Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                    
-                                                              )));
-                                                }
-                                              
-                                      ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                      ////////////////
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 1,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 36,
+                                                      width: 30,
+                                                      // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                                                      decoration: BoxDecoration(
+                                                        // color: Color.fromARGB(121, 182, 201, 235),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                        child: IconButton(
+                                                            // Here the Massage button
+                                                            hoverColor: Colors.grey,
+                                                            icon: Icon(
+                                                              Icons.message,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                              size: 21,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatBody(
+                                                                            Freind_id: snapshot
+                                                                                .data!.docs[index]
+                                                                                .data()['buyer_id'],
+                                                                          )));
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                ////////////////
                                               ],
                                             ),
                                           if (snapshot.data!.docs[index].data()['status'] ==
@@ -540,46 +544,48 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     )),
 
-                                                     ////////////////
-                                      SizedBox(width: 1,),
-                                       Column(
-                                         children: [
-                                           Container(
-                                             height: 36,
-                                             width: 30,
-                                    // margin: EdgeInsets.fromLTRB(0,0,1,0),
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                             child:
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                                              child: 
-                                      IconButton(
-                                              // Here the Massage button
-                                              hoverColor: Colors.grey,
-                                              icon: Icon(
-                                                Icons.message,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                size:21,
-                                              ),
-                                              onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => ChatBody(
-                                                                Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                    
-                                                              )));
-                                                }
-                                              
-                                      ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                      ////////////////
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 1,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 36,
+                                                      width: 30,
+                                                      // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                                                      decoration: BoxDecoration(
+                                                        // color: Color.fromARGB(121, 182, 201, 235),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                        child: IconButton(
+                                                            // Here the Massage button
+                                                            hoverColor: Colors.grey,
+                                                            icon: Icon(
+                                                              Icons.message,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                              size: 21,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatBody(
+                                                                            Freind_id: snapshot
+                                                                                .data!.docs[index]
+                                                                                .data()['buyer_id'],
+                                                                          )));
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                ////////////////
                                               ],
                                             ),
                                           if (snapshot.data!.docs[index].data()['status'] ==
@@ -607,46 +613,48 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     )),
 
-                                                     ////////////////
-                                      SizedBox(width: 1,),
-                                       Column(
-                                         children: [
-                                           Container(
-                                             height: 36,
-                                             width: 30,
-                                    // margin: EdgeInsets.fromLTRB(0,0,1,0),
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                             child:
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                                              child: 
-                                      IconButton(
-                                              // Here the Massage button
-                                              hoverColor: Colors.grey,
-                                              icon: Icon(
-                                                Icons.message,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                size:21,
-                                              ),
-                                              onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => ChatBody(
-                                                                Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                    
-                                                              )));
-                                                }
-                                              
-                                      ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                      ////////////////
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 1,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 36,
+                                                      width: 30,
+                                                      // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                                                      decoration: BoxDecoration(
+                                                        // color: Color.fromARGB(121, 182, 201, 235),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                        child: IconButton(
+                                                            // Here the Massage button
+                                                            hoverColor: Colors.grey,
+                                                            icon: Icon(
+                                                              Icons.message,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                              size: 21,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatBody(
+                                                                            Freind_id: snapshot
+                                                                                .data!.docs[index]
+                                                                                .data()['buyer_id'],
+                                                                          )));
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                ////////////////
                                               ],
                                             ),
                                           if (snapshot.data!.docs[index].data()['status'] ==
@@ -674,46 +682,48 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     )),
 
-                                                     ////////////////
-                                      SizedBox(width: 1,),
-                                       Column(
-                                         children: [
-                                           Container(
-                                             height: 36,
-                                             width: 30,
-                                    // margin: EdgeInsets.fromLTRB(0,0,1,0),
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                             child:
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                                              child: 
-                                      IconButton(
-                                              // Here the Massage button
-                                              hoverColor: Colors.grey,
-                                              icon: Icon(
-                                                Icons.message,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                size:21,
-                                              ),
-                                              onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => ChatBody(
-                                                                Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                    
-                                                              )));
-                                                }
-                                              
-                                      ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                      ////////////////
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 1,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 36,
+                                                      width: 30,
+                                                      // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                                                      decoration: BoxDecoration(
+                                                        // color: Color.fromARGB(121, 182, 201, 235),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                        child: IconButton(
+                                                            // Here the Massage button
+                                                            hoverColor: Colors.grey,
+                                                            icon: Icon(
+                                                              Icons.message,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                              size: 21,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatBody(
+                                                                            Freind_id: snapshot
+                                                                                .data!.docs[index]
+                                                                                .data()['buyer_id'],
+                                                                          )));
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                ////////////////
                                               ],
                                             ),
                                           if (snapshot.data!.docs[index].data()['status'] ==
@@ -741,46 +751,48 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     )),
 
-                                                     ////////////////
-                                      SizedBox(width: 1,),
-                                       Column(
-                                         children: [
-                                           Container(
-                                             height: 36,
-                                             width: 30,
-                                    // margin: EdgeInsets.fromLTRB(0,0,1,0),
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                             child:
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0,0,0,0),
-                                              child: 
-                                      IconButton(
-                                              // Here the Massage button
-                                              hoverColor: Colors.grey,
-                                              icon: Icon(
-                                                Icons.message,
-                                                color: Color.fromARGB(255, 127, 166, 233),
-                                                size:21,
-                                              ),
-                                              onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => ChatBody(
-                                                                Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                    
-                                                              )));
-                                                }
-                                              
-                                      ),
-                                             ),
-                                           ),
-                                         ],
-                                       ),
-                                      ////////////////
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 1,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      height: 36,
+                                                      width: 30,
+                                                      // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                                                      decoration: BoxDecoration(
+                                                        // color: Color.fromARGB(121, 182, 201, 235),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                        child: IconButton(
+                                                            // Here the Massage button
+                                                            hoverColor: Colors.grey,
+                                                            icon: Icon(
+                                                              Icons.message,
+                                                              color: Color.fromARGB(
+                                                                  255, 127, 166, 233),
+                                                              size: 21,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatBody(
+                                                                            Freind_id: snapshot
+                                                                                .data!.docs[index]
+                                                                                .data()['buyer_id'],
+                                                                          )));
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                ////////////////
                                               ],
                                             ),
                                           SizedBox(
@@ -1023,8 +1035,8 @@ class _myBookingsState extends State<ownerBooking> {
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
                                         child: Container(
-                                          height: 140,
-                                          width: 160,
+                                          height: 130,
+                                          width: 140,
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: NetworkImage(
@@ -1055,59 +1067,54 @@ class _myBookingsState extends State<ownerBooking> {
                                                       ),
                                                     ),
                                                     width: 85,
-                                                    
                                                     padding: EdgeInsets.symmetric(vertical: 4),
                                                     child: Center(
-                                                      child:
-                                                          Text(
-                                                            'حجز جديد',
-                                                            style: TextStyle(
-                                                              color: Color.fromARGB(255, 42, 42, 43),
-                                                              fontSize: 14,
-                                                              fontWeight: FontWeight.bold,
-                                                              fontFamily: "Tajawal-m",
-                                                            ),
-                                                          ),
-
-                                                        
+                                                      child: Text(
+                                                        'حجز جديد',
+                                                        style: TextStyle(
+                                                          color: Color.fromARGB(255, 42, 42, 43),
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Tajawal-m",
+                                                        ),
+                                                      ),
                                                     )),
 
-                                                    ////////////////
-                                      SizedBox(width: 5,),
-                                       Container(
-                                         height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      // color: Color.fromARGB(121, 182, 201, 235),
-                                      shape: BoxShape.circle,
-                                    ),
-                                         child:
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
-                                          child: 
-                                      IconButton(
-                                          // Here the Massage button
-                                          hoverColor: Colors.grey,
-                                          icon: Icon(
-                                            Icons.message,
-                                            color: Color.fromARGB(255, 127, 166, 233),
-                                            size:20,
-                                          ),
-                                          onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => ChatBody(
-                                                            Freind_id:  snapshot.data!.docs[index].data()['buyer_id'],
-                                                                
-                                                          )));
-                                            }
-                                          
-                                      ),
-                                         ),
-                                       ),
+                                                ////////////////
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Container(
+                                                  height: 30,
+                                                  width: 30,
+                                                  decoration: BoxDecoration(
+                                                    // color: Color.fromARGB(121, 182, 201, 235),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
+                                                    child: IconButton(
+                                                        // Here the Massage button
+                                                        hoverColor: Colors.grey,
+                                                        icon: Icon(
+                                                          Icons.message,
+                                                          color: Color.fromARGB(255, 127, 166, 233),
+                                                          size: 20,
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => ChatBody(
+                                                                        Freind_id: snapshot
+                                                                            .data!.docs[index]
+                                                                            .data()['buyer_id'],
+                                                                      )));
+                                                        }),
+                                                  ),
+                                                ),
 
-                                      ////////////////
+                                                ////////////////
                                               ],
                                             ),
                                             SizedBox(
@@ -1148,7 +1155,7 @@ class _myBookingsState extends State<ownerBooking> {
                                     ],
                                   ),
                                   Row(
-                                  children: [
+                                    children: [
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(45, 0, 45, 0),
                                         child: ElevatedButton(
@@ -1169,105 +1176,104 @@ class _myBookingsState extends State<ownerBooking> {
                                           ),
                                         ),
                                       ),
-                                     // Column(
-                                       // children: [
-                                         // Row(
-                                            //children: [
-                                              ElevatedButton(
-                                                //APPROVE BUTTON
-                                                onPressed: () {
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext context) {
-                                                        return AlertDialog(
-                                                          content: Text(
-                                                            " هل انت متأكد من رغبتك بقبول الحجز؟",
-                                                            style: TextStyle(
-                                                                fontFamily: "Tajawal-m", fontSize: 17),
-                                                            textDirection: TextDirection.rtl,
-                                                          ),
-                                                          shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(15),
-                                                          ),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              child: Text(
-                                                                "إلغاء",
-                                                                style: TextStyle(
-                                                                  fontFamily: "Tajawal-m",
-                                                                  fontSize: 17,
-                                                                  color: Color.fromARGB(255, 127, 166, 233),
-                                                                ),
-                                                              ),
-                                                              onPressed: () {
-                                                                Navigator.of(context).pop();
-                                                              },
-                                                            ),
-                                                            TextButton(
-                                                              child: Text(
-                                                                "تأكيد",
-                                                                style: TextStyle(
-                                                                  fontFamily: "Tajawal-m",
-                                                                  fontSize: 17,
-                                                                  color: Color.fromARGB(255, 127, 166, 233),
-                                                                ),
-                                                              ),
-                                                              onPressed: () async {
-                                                                await FirebaseFirestore.instance
-                                                                    .collection('bookings')
-                                                                    .doc(snapshot.data!.docs[index]
-                                                                        .data()['book_id'])
-                                                                    .update({
-                                                                  "status": "aproved",
-                                                                });
-                                                                // Notifications step 4
-                                                                var Otoken = await FirebaseFirestore
-                                                                    .instance
-                                                                    .collection('Standard_user')
-                                                                    .doc(snapshot.data!.docs[index]
-                                                                        .data()['buyer_id'])
-                                                                    .get();
-                                                                print('IT WORKS !!!! ' + Otoken['token']);
-                                                                // end of Notifications step 4
+                                      // Column(
+                                      // children: [
+                                      // Row(
+                                      //children: [
+                                      ElevatedButton(
+                                        //APPROVE BUTTON
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  content: Text(
+                                                    " هل انت متأكد من رغبتك بقبول الحجز؟",
+                                                    style: TextStyle(
+                                                        fontFamily: "Tajawal-m", fontSize: 17),
+                                                    textDirection: TextDirection.rtl,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: Text(
+                                                        "إلغاء",
+                                                        style: TextStyle(
+                                                          fontFamily: "Tajawal-m",
+                                                          fontSize: 17,
+                                                          color: Color.fromARGB(255, 127, 166, 233),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: Text(
+                                                        "تأكيد",
+                                                        style: TextStyle(
+                                                          fontFamily: "Tajawal-m",
+                                                          fontSize: 17,
+                                                          color: Color.fromARGB(255, 127, 166, 233),
+                                                        ),
+                                                      ),
+                                                      onPressed: () async {
+                                                        await FirebaseFirestore.instance
+                                                            .collection('bookings')
+                                                            .doc(snapshot.data!.docs[index]
+                                                                .data()['book_id'])
+                                                            .update({
+                                                          "status": "aproved",
+                                                        });
+                                                        // Notifications step 4
+                                                        var Otoken = await FirebaseFirestore
+                                                            .instance
+                                                            .collection('Standard_user')
+                                                            .doc(snapshot.data!.docs[index]
+                                                                .data()['buyer_id'])
+                                                            .get();
+                                                        print('IT WORKS !!!! ' + Otoken['token']);
+                                                        // end of Notifications step 4
 
-                                                                // setState(() {});
+                                                        // setState(() {});
 
-                                                                var ONwerName = await FirebaseFirestore
-                                                                    .instance
-                                                                    .collection('Standard_user')
-                                                                    .doc(snapshot.data!.docs[index]
-                                                                        .data()['owner_id'])
-                                                                    .get();
+                                                        var ONwerName = await FirebaseFirestore
+                                                            .instance
+                                                            .collection('Standard_user')
+                                                            .doc(snapshot.data!.docs[index]
+                                                                .data()['owner_id'])
+                                                            .get();
 
-                                                                // Notifications step 5
-                                                                sendPushMessege(
-                                                                    Otoken['token'], ONwerName['name']);
-                                                                //end of  Notifications step 5
-                                                                getBookings();
+                                                        // Notifications step 5
+                                                        sendPushMessege(
+                                                            Otoken['token'], ONwerName['name']);
+                                                        //end of  Notifications step 5
+                                                        getBookings();
 
-                                                                Navigator.of(context).pop();
-                                                              },
-                                                            ),
-                                                          ],
-                                                        );
-                                                      });
-                                                },
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        },
 
-                                                child: Text(
-                                                  'قبول',
-                                                  style: TextStyle(fontFamily: "Tajawal-m"),
-                                                ),
-                                                style: ButtonStyle(
-                                                  backgroundColor: MaterialStateProperty.all(
-                                                      Color.fromARGB(255, 72, 169, 138)),
-                                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(27))),
-                                                ),
-                                              ),
-                                          //  ],
-                                          //),
-        
-                                     
+                                        child: Text(
+                                          'قبول',
+                                          style: TextStyle(fontFamily: "Tajawal-m"),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all(
+                                              Color.fromARGB(255, 72, 169, 138)),
+                                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(27))),
+                                        ),
+                                      ),
+                                      //  ],
+                                      //),
+
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -1364,11 +1370,10 @@ class _myBookingsState extends State<ownerBooking> {
                                         ),
                                       ),
 
-                                    //         ]),
+                                      //         ]),
 
-                                            
-                                    // ],
-                                    //   ),
+                                      // ],
+                                      //   ),
                                     ],
                                   ),
                                 ],
@@ -1414,8 +1419,8 @@ class _myBookingsState extends State<ownerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1456,26 +1461,66 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 9,
                   ),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(193, 203, 238, 204),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      width: 150,
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Center(
-                        child: Text(
-                          'حجز مقبول',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 31, 92, 40),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Tajawal-m",
+                  Row(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(193, 203, 238, 204),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
                           ),
-                        ),
-                      )),
+                          width: 150,
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Center(
+                            child: Text(
+                              'حجز مقبول',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 31, 92, 40),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          )),
+                      ////////////////
+                      SizedBox(
+                        width: 1,
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 36,
+                            width: 30,
+                            // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                            decoration: BoxDecoration(
+                              // color: Color.fromARGB(121, 182, 201, 235),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: IconButton(
+                                  // Here the Massage button
+                                  hoverColor: Colors.grey,
+                                  icon: Icon(
+                                    Icons.message,
+                                    color: Color.fromARGB(255, 127, 166, 233),
+                                    size: 21,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChatBody(
+                                                  Freind_id: bookingModel.buyerId ?? "",
+                                                )));
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -1532,8 +1577,8 @@ class _myBookingsState extends State<ownerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1574,26 +1619,66 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 9,
                   ),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(187, 234, 193, 193),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      width: 150,
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Center(
-                        child: Text(
-                          'حجز مرفوض',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 124, 38, 38),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Tajawal-m",
+                  Row(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(187, 234, 193, 193),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
                           ),
-                        ),
-                      )),
+                          width: 150,
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Center(
+                            child: Text(
+                              'حجز مرفوض',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 124, 38, 38),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          )),
+                      ////////////////
+                      SizedBox(
+                        width: 1,
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 36,
+                            width: 30,
+                            // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                            decoration: BoxDecoration(
+                              // color: Color.fromARGB(121, 182, 201, 235),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: IconButton(
+                                  // Here the Massage button
+                                  hoverColor: Colors.grey,
+                                  icon: Icon(
+                                    Icons.message,
+                                    color: Color.fromARGB(255, 127, 166, 233),
+                                    size: 21,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChatBody(
+                                                  Freind_id: bookingModel.buyerId ?? "",
+                                                )));
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -1654,8 +1739,8 @@ class _myBookingsState extends State<ownerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1776,8 +1861,8 @@ class _myBookingsState extends State<ownerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1818,26 +1903,66 @@ class _myBookingsState extends State<ownerBooking> {
                   SizedBox(
                     height: 9,
                   ),
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(180, 207, 208, 212),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      width: 150,
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Center(
-                        child: Text(
-                          'حجز ملغي',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 50, 50, 50),
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Tajawal-m",
+                  Row(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(180, 207, 208, 212),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
                           ),
-                        ),
-                      )),
+                          width: 150,
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Center(
+                            child: Text(
+                              'حجز ملغي',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 50, 50, 50),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Tajawal-m",
+                              ),
+                            ),
+                          )),
+                      ////////////////
+                      SizedBox(
+                        width: 1,
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 36,
+                            width: 30,
+                            // margin: EdgeInsets.fromLTRB(0,0,1,0),
+                            decoration: BoxDecoration(
+                              // color: Color.fromARGB(121, 182, 201, 235),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: IconButton(
+                                  // Here the Massage button
+                                  hoverColor: Colors.grey,
+                                  icon: Icon(
+                                    Icons.message,
+                                    color: Color.fromARGB(255, 127, 166, 233),
+                                    size: 21,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChatBody(
+                                                  Freind_id: bookingModel.buyerId ?? "",
+                                                )));
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 10,
                   ),

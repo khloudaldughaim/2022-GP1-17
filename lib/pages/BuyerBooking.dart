@@ -293,8 +293,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                       child: Column(
                                         children: [
                                           Container(
-                                            height: 140,
-                                            width: 160,
+                                            height: 130,
+                                            width: 140,
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: NetworkImage(
@@ -726,8 +726,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                                       Padding(
                                           padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
                                           child: Container(
-                                            height: 140,
-                                            width: 160,
+                                            height: 130,
+                                            width: 140,
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: NetworkImage(
@@ -961,8 +961,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1117,8 +1117,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1232,8 +1232,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
@@ -1354,8 +1354,8 @@ class _BuyerBookingsState extends State<BuyerBooking> {
               child: Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: 160,
+                    height: 130,
+                    width: 140,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(bookingModel.pimage ?? ""),
