@@ -1,6 +1,8 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nozol_application/pages/homapage.dart';
 
 import '../Cities/cities.dart';
@@ -430,11 +432,13 @@ class _FilterPageState extends State<FilterPage> {
                                                 ),
                                                 validator: (value) {
                                                   if (value!.length > 6) {
-                                                    return 'الرقم يجب الا يزيد عن 6 خانات';
+                                                    //return 'الرقم يجب الا يزيد عن 6 خانات';
+                                                    getmassege("الرقم يجب الا يزيد عن 6 خانات");
                                                   }
                                                   if (value.isNotEmpty &&
                                                       !RegExp(r'[0-9]').hasMatch(value)) {
-                                                    return 'الرجاء إدخال أرقام فقط';
+                                                    //return 'الرجاء إدخال أرقام فقط';
+                                                    getmassege('الرجاء إدخال أرقام فقط');
                                                   }
                                                   return null;
                                                 },
@@ -466,7 +470,8 @@ class _FilterPageState extends State<FilterPage> {
                                                 validator: (value) {
                                                   if (value!.isNotEmpty &&
                                                       !RegExp(r'[0-9]').hasMatch(value)) {
-                                                    return 'الرجاء إدخال أرقام فقط';
+                                                    //return 'الرجاء إدخال أرقام فقط';
+                                                    getmassege('الرجاء إدخال أرقام فقط');
                                                   }
                                                   return null;
                                                 },
@@ -514,7 +519,8 @@ class _FilterPageState extends State<FilterPage> {
                                                 validator: (value) {
                                                   if (value!.isNotEmpty &&
                                                       !RegExp(r'[0-9]').hasMatch(value)) {
-                                                    return 'الرجاء إدخال أرقام فقط';
+                                                    //return 'الرجاء إدخال أرقام فقط';
+                                                    getmassege('الرجاء إدخال أرقام فقط');
                                                   }
                                                   return null;
                                                 },
@@ -546,7 +552,8 @@ class _FilterPageState extends State<FilterPage> {
                                                 validator: (value) {
                                                   if (value!.isNotEmpty &&
                                                       !RegExp(r'[0-9]').hasMatch(value)) {
-                                                    return 'الرجاء إدخال أرقام فقط';
+                                                    //return 'الرجاء إدخال أرقام فقط';
+                                                    getmassege('الرجاء إدخال أرقام فقط');
                                                   }
                                                   return null;
                                                 },
@@ -1491,6 +1498,18 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ),
       ),
+    );
+  }
+  void getmassege(String val) {
+    print("$val");
+    Fluttertoast.showToast(
+      msg: "$val",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Color.fromARGB(255, 252, 251, 251),
+      textColor: Color.fromARGB(255, 187, 0, 0),
+      fontSize: 14.0
     );
   }
 }
